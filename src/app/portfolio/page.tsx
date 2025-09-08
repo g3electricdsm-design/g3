@@ -43,7 +43,7 @@ export default function Portfolio() {
   };
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-earle-black">
       {/* Navigation */}
       <Navigation currentPath="/portfolio" />
 
@@ -64,7 +64,7 @@ export default function Portfolio() {
       </section>
 
       {/* Portfolio Grid */}
-      <section className="py-20">
+      <section className="py-20 bg-earle-black">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Filter Tabs */}
           <div className="flex flex-wrap justify-center gap-4 mb-12">
@@ -136,8 +136,8 @@ export default function Portfolio() {
 
           {/* CTA Section */}
           <div className="text-center mt-16">
-            <h2 className="font-megrim text-3xl text-earle-black mb-4">Like What You See?</h2>
-            <p className="font-raleway text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
+            <h2 className="font-megrim text-3xl text-white mb-4">Like What You See?</h2>
+            <p className="font-raleway text-lg text-white-smoke mb-8 max-w-2xl mx-auto">
               Let&apos;s discuss your next electrical project. We&apos;re committed to delivering the same quality and safety standards you see in our portfolio.
             </p>
             <Link 
@@ -151,17 +151,17 @@ export default function Portfolio() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-white-smoke py-12">
+      <footer className="bg-earle-black py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <h3 className="font-megrim text-2xl text-earle-black mb-4">G3 Electric</h3>
-            <p className="font-raleway text-gray-600 mb-4">Safe & Dependable Electrical Services</p>
+            <h3 className="font-megrim text-2xl text-white mb-4">G3 Electric</h3>
+            <p className="font-raleway text-white-smoke mb-4">Safe & Dependable Electrical Services</p>
             <div className="flex justify-center space-x-6">
-              <Link href="/services" className="text-gray-600 hover:text-purple font-raleway">Services</Link>
+              <Link href="/services" className="text-white-smoke hover:text-purple font-raleway">Services</Link>
               <Link href="/portfolio" className="text-purple font-raleway">Portfolio</Link>
-              <Link href="/pricing" className="text-gray-600 hover:text-purple font-raleway">Pricing</Link>
-              <Link href="/about" className="text-gray-600 hover:text-purple font-raleway">About</Link>
-              <Link href="/contact" className="text-gray-600 hover:text-purple font-raleway">Contact</Link>
+              <Link href="/pricing" className="text-white-smoke hover:text-purple font-raleway">Pricing</Link>
+              <Link href="/about" className="text-white-smoke hover:text-purple font-raleway">About</Link>
+              <Link href="/contact" className="text-white-smoke hover:text-purple font-raleway">Contact</Link>
             </div>
           </div>
         </div>

@@ -45,7 +45,7 @@ export default function Contact() {
   };
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-earle-black">
       {/* Navigation */}
       <Navigation currentPath="/contact" />
 
@@ -66,12 +66,12 @@ export default function Contact() {
       </section>
 
       {/* Contact Content */}
-      <section className="py-20">
+      <section className="py-20 bg-earle-black">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             {/* Contact Info */}
             <div>
-              <h2 className="font-megrim text-3xl text-earle-black mb-8">Contact Information</h2>
+              <h2 className="font-megrim text-3xl text-white mb-8">Contact Information</h2>
               
               <div className="space-y-6 mb-8">
                 <div className="flex items-start">

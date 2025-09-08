@@ -4,7 +4,7 @@ import Navigation from "@/components/Navigation";
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-earle-black">
       {/* Navigation */}
       <Navigation currentPath="/" />
 
@@ -44,17 +44,17 @@ export default function Home() {
       </section>
 
       {/* Services Preview */}
-      <section className="py-20 bg-white-smoke">
+      <section className="py-20 bg-earle-black">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="font-megrim text-4xl text-earle-black mb-4">Our Services</h2>
-            <p className="font-raleway text-lg text-gray-600 max-w-2xl mx-auto">
+            <h2 className="font-megrim text-4xl text-white mb-4">Our Services</h2>
+            <p className="font-raleway text-lg text-white-smoke max-w-2xl mx-auto">
               From residential lighting to commercial builds, we handle all your electrical needs with safety and precision.
             </p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div className="bg-white rounded-lg shadow-sm text-center hover:shadow-md transition-shadow overflow-hidden">
+            <div className="bg-white-smoke rounded-lg shadow-sm text-center hover:shadow-md transition-shadow overflow-hidden">
               <div className="h-32 bg-gradient-to-br from-purple/20 to-phlox/20 flex items-center justify-center">
                 <BoltIcon className="h-12 w-12 text-purple" />
               </div>
@@ -64,7 +64,7 @@ export default function Home() {
               </div>
             </div>
             
-            <div className="bg-white rounded-lg shadow-sm text-center hover:shadow-md transition-shadow overflow-hidden">
+            <div className="bg-white-smoke rounded-lg shadow-sm text-center hover:shadow-md transition-shadow overflow-hidden">
               <div className="h-32 bg-gradient-to-br from-hookers-green/20 to-purple/20 flex items-center justify-center">
                 <HomeIcon className="h-12 w-12 text-hookers-green" />
               </div>
@@ -74,7 +74,7 @@ export default function Home() {
               </div>
             </div>
             
-            <div className="bg-white rounded-lg shadow-sm text-center hover:shadow-md transition-shadow overflow-hidden">
+            <div className="bg-white-smoke rounded-lg shadow-sm text-center hover:shadow-md transition-shadow overflow-hidden">
               <div className="h-32 bg-gradient-to-br from-earle-black/20 to-hookers-green/20 flex items-center justify-center">
                 <BuildingOfficeIcon className="h-12 w-12 text-earle-black" />
               </div>
@@ -84,7 +84,7 @@ export default function Home() {
               </div>
             </div>
             
-            <div className="bg-white rounded-lg shadow-sm text-center hover:shadow-md transition-shadow overflow-hidden">
+            <div className="bg-white-smoke rounded-lg shadow-sm text-center hover:shadow-md transition-shadow overflow-hidden">
               <div className="h-32 bg-gradient-to-br from-phlox/20 to-purple/20 flex items-center justify-center">
                 <ShieldCheckIcon className="h-12 w-12 text-phlox" />
               </div>
@@ -114,17 +114,17 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-white-smoke py-12">
+      <footer className="bg-earle-black py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <h3 className="font-megrim text-2xl text-earle-black mb-4">G3 Electric</h3>
-            <p className="font-raleway text-gray-600 mb-4">Safe & Dependable Electrical Services</p>
+            <h3 className="font-megrim text-2xl text-white mb-4">G3 Electric</h3>
+            <p className="font-raleway text-white-smoke mb-4">Safe & Dependable Electrical Services</p>
             <div className="flex justify-center space-x-6">
-              <Link href="/services" className="text-gray-600 hover:text-purple font-raleway">Services</Link>
-              <Link href="/portfolio" className="text-gray-600 hover:text-purple font-raleway">Portfolio</Link>
-              <Link href="/pricing" className="text-gray-600 hover:text-purple font-raleway">Pricing</Link>
-              <Link href="/about" className="text-gray-600 hover:text-purple font-raleway">About</Link>
-              <Link href="/contact" className="text-gray-600 hover:text-purple font-raleway">Contact</Link>
+              <Link href="/services" className="text-white-smoke hover:text-purple font-raleway">Services</Link>
+              <Link href="/portfolio" className="text-white-smoke hover:text-purple font-raleway">Portfolio</Link>
+              <Link href="/pricing" className="text-white-smoke hover:text-purple font-raleway">Pricing</Link>
+              <Link href="/about" className="text-white-smoke hover:text-purple font-raleway">About</Link>
+              <Link href="/contact" className="text-white-smoke hover:text-purple font-raleway">Contact</Link>
               <Link href="/pay" className="text-purple hover:text-phlox font-raleway font-semibold">Pay Bill</Link>
             </div>
           </div>
