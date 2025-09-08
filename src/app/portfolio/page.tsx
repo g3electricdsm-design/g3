@@ -208,15 +208,15 @@ export default function Portfolio() {
                 </div>
 
                 {/* Always visible content for smaller items */}
-                <div className="absolute bottom-4 left-4 right-4 text-white md:hidden">
+                <div className="absolute bottom-4 left-4 right-4 text-earle-black md:hidden">
                   <div className="flex items-center gap-2 mb-2">
-                    <span className="text-purple-300">{getCategoryIcon(item.category)}</span>
-                    <span className="font-montserrat text-sm font-medium">{item.category}</span>
-                    <span className="text-gray-300">•</span>
-                    <span className="text-purple-300">{getTypeIcon(item.type)}</span>
-                    <span className="font-montserrat text-sm font-medium">{item.type}</span>
+                    <span className="text-purple">{getCategoryIcon(item.category)}</span>
+                    <span className="font-montserrat text-sm font-medium text-earle-black">{item.category}</span>
+                    <span className="text-gray-600">•</span>
+                    <span className="text-purple">{getTypeIcon(item.type)}</span>
+                    <span className="font-montserrat text-sm font-medium text-earle-black">{item.type}</span>
                   </div>
-                  <h3 className="font-montserrat text-lg font-semibold mb-1">{item.title}</h3>
+                  <h3 className="font-montserrat text-lg font-semibold mb-1 text-earle-black">{item.title}</h3>
                 </div>
               </div>
             ))}

@@ -149,8 +149,9 @@ export default function PayBill() {
                       required
                       value={formData.invoiceNumber}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple focus:border-transparent font-raleway"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple focus:border-purple font-raleway text-earle-black"
                       placeholder="e.g., INV-2024-001"
+                      aria-describedby="invoiceNumber-error"
                     />
                   </div>
                   <div>
@@ -164,8 +165,9 @@ export default function PayBill() {
                       required
                       value={formData.amount}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple focus:border-transparent font-raleway"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple focus:border-purple font-raleway text-earle-black"
                       placeholder="$0.00"
+                      aria-describedby="amount-error"
                     />
                   </div>
                 </div>
@@ -173,16 +175,17 @@ export default function PayBill() {
                   <label htmlFor="email" className="block font-montserrat text-sm font-medium text-earle-black mb-2">
                     Email Address *
                   </label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    required
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple focus:border-transparent font-raleway"
-                    placeholder="your.email@example.com"
-                  />
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      required
+                      value={formData.email}
+                      onChange={handleInputChange}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple focus:border-purple font-raleway text-earle-black"
+                      placeholder="your.email@example.com"
+                      aria-describedby="email-error"
+                    />
                 </div>
               </div>
 
@@ -201,9 +204,10 @@ export default function PayBill() {
                       required
                       value={formData.cardNumber}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple focus:border-transparent font-raleway"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple focus:border-purple font-raleway text-earle-black"
                       placeholder="1234 5678 9012 3456"
                       maxLength={19}
+                      aria-describedby="cardNumber-error"
                     />
                   </div>
                   
@@ -212,33 +216,35 @@ export default function PayBill() {
                       <label htmlFor="expiryDate" className="block font-montserrat text-sm font-medium text-earle-black mb-2">
                         Expiry Date *
                       </label>
-                      <input
-                        type="text"
-                        id="expiryDate"
-                        name="expiryDate"
-                        required
-                        value={formData.expiryDate}
-                        onChange={handleInputChange}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple focus:border-transparent font-raleway"
-                        placeholder="MM/YY"
-                        maxLength={5}
-                      />
+                    <input
+                      type="text"
+                      id="expiryDate"
+                      name="expiryDate"
+                      required
+                      value={formData.expiryDate}
+                      onChange={handleInputChange}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple focus:border-purple font-raleway text-earle-black"
+                      placeholder="MM/YY"
+                      maxLength={5}
+                      aria-describedby="expiryDate-error"
+                    />
                     </div>
                     <div>
                       <label htmlFor="cvv" className="block font-montserrat text-sm font-medium text-earle-black mb-2">
                         CVV *
                       </label>
-                      <input
-                        type="text"
-                        id="cvv"
-                        name="cvv"
-                        required
-                        value={formData.cvv}
-                        onChange={handleInputChange}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple focus:border-transparent font-raleway"
-                        placeholder="123"
-                        maxLength={4}
-                      />
+                    <input
+                      type="text"
+                      id="cvv"
+                      name="cvv"
+                      required
+                      value={formData.cvv}
+                      onChange={handleInputChange}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple focus:border-purple font-raleway text-earle-black"
+                      placeholder="123"
+                      maxLength={4}
+                      aria-describedby="cvv-error"
+                    />
                     </div>
                   </div>
                   
@@ -253,8 +259,9 @@ export default function PayBill() {
                       required
                       value={formData.cardholderName}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple focus:border-transparent font-raleway"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple focus:border-purple font-raleway text-earle-black"
                       placeholder="John Doe"
+                      aria-describedby="cardholderName-error"
                     />
                   </div>
                 </div>

@@ -130,18 +130,18 @@ export default function Contact() {
               </div>
 
               {/* Calendly Integration Placeholder */}
-              <div className="bg-white-smoke p-6 rounded-lg">
-                <h3 className="font-montserrat text-xl font-semibold text-earle-black mb-4">Schedule a Consultation</h3>
-                <p className="font-raleway text-gray-600 mb-4">
-                  Prefer to schedule a specific time? Use our online booking system to find a time that works for you.
-                </p>
-                <button className="bg-purple text-white px-6 py-3 rounded-lg font-montserrat font-semibold hover:bg-phlox transition-colors">
-                  Book Online
-                </button>
-                <p className="font-raleway text-xs text-gray-500 mt-2">
-                  *Calendly integration coming soon
-                </p>
-              </div>
+                <div className="bg-white-smoke p-6 rounded-lg border border-gray-200">
+                  <h3 className="font-montserrat text-xl font-semibold text-earle-black mb-4">Schedule a Consultation</h3>
+                  <p className="font-raleway text-gray-700 mb-4">
+                    Prefer to schedule a specific time? Use our online booking system to find a time that works for you.
+                  </p>
+                  <button className="bg-purple text-white px-6 py-3 rounded-lg font-montserrat font-semibold hover:bg-phlox transition-colors focus:ring-2 focus:ring-purple focus:ring-offset-2">
+                    Book Online
+                  </button>
+                  <p className="font-raleway text-sm text-gray-600 mt-2">
+                    *Calendly integration coming soon
+                  </p>
+                </div>
             </div>
 
             {/* Quote Request Form */}
@@ -162,8 +162,9 @@ export default function Contact() {
                       required
                       value={formData.name}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple focus:border-transparent font-raleway"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple focus:border-purple font-raleway text-earle-black"
                       placeholder="Your full name"
+                      aria-describedby="name-error"
                     />
                   </div>
                   <div>
@@ -177,8 +178,9 @@ export default function Contact() {
                       required
                       value={formData.email}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple focus:border-transparent font-raleway"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple focus:border-purple font-raleway text-earle-black"
                       placeholder="your.email@example.com"
+                      aria-describedby="email-error"
                     />
                   </div>
                 </div>
@@ -187,15 +189,16 @@ export default function Contact() {
                   <label htmlFor="phone" className="block font-montserrat text-sm font-medium text-earle-black mb-2">
                     Phone Number
                   </label>
-                  <input
-                    type="tel"
-                    id="phone"
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handleInputChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple focus:border-transparent font-raleway"
-                    placeholder="(555) 123-4567"
-                  />
+                    <input
+                      type="tel"
+                      id="phone"
+                      name="phone"
+                      value={formData.phone}
+                      onChange={handleInputChange}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple focus:border-purple font-raleway text-earle-black"
+                      placeholder="(555) 123-4567"
+                      aria-describedby="phone-error"
+                    />
                 </div>
 
                 {/* Project Details */}
@@ -203,14 +206,15 @@ export default function Contact() {
                   <label htmlFor="projectType" className="block font-montserrat text-sm font-medium text-earle-black mb-2">
                     Project Type *
                   </label>
-                  <select
-                    id="projectType"
-                    name="projectType"
-                    required
-                    value={formData.projectType}
-                    onChange={handleInputChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple focus:border-transparent font-raleway"
-                  >
+                    <select
+                      id="projectType"
+                      name="projectType"
+                      required
+                      value={formData.projectType}
+                      onChange={handleInputChange}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple focus:border-purple font-raleway text-earle-black"
+                      aria-describedby="projectType-error"
+                    >
                     <option value="">Select project type</option>
                     <option value="residential">Residential</option>
                     <option value="commercial">Commercial</option>
@@ -222,15 +226,16 @@ export default function Contact() {
                   <label htmlFor="description" className="block font-montserrat text-sm font-medium text-earle-black mb-2">
                     Project Description
                   </label>
-                  <textarea
-                    id="description"
-                    name="description"
-                    rows={4}
-                    value={formData.description}
-                    onChange={handleInputChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple focus:border-transparent font-raleway"
-                    placeholder="Please describe your project in detail..."
-                  />
+                    <textarea
+                      id="description"
+                      name="description"
+                      rows={4}
+                      value={formData.description}
+                      onChange={handleInputChange}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple focus:border-purple font-raleway text-earle-black"
+                      placeholder="Please describe your project in detail..."
+                      aria-describedby="description-error"
+                    />
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -243,7 +248,8 @@ export default function Contact() {
                       name="budget"
                       value={formData.budget}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple focus:border-transparent font-raleway"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple focus:border-purple font-raleway text-earle-black"
+                      aria-describedby="budget-error"
                     >
                       <option value="">Select budget range</option>
                       <option value="under-1000">Under $1,000</option>
@@ -262,7 +268,8 @@ export default function Contact() {
                       name="timeline"
                       value={formData.timeline}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple focus:border-transparent font-raleway"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple focus:border-purple font-raleway text-earle-black"
+                      aria-describedby="timeline-error"
                     >
                       <option value="">Select timeline</option>
                       <option value="asap">ASAP</option>
@@ -278,15 +285,16 @@ export default function Contact() {
                   <label htmlFor="workArea" className="block font-montserrat text-sm font-medium text-earle-black mb-2">
                     Size of Work Area
                   </label>
-                  <input
-                    type="text"
-                    id="workArea"
-                    name="workArea"
-                    value={formData.workArea}
-                    onChange={handleInputChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple focus:border-transparent font-raleway"
-                    placeholder="e.g., 200 sq ft, entire house, 3 rooms, etc."
-                  />
+                    <input
+                      type="text"
+                      id="workArea"
+                      name="workArea"
+                      value={formData.workArea}
+                      onChange={handleInputChange}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple focus:border-purple font-raleway text-earle-black"
+                      placeholder="e.g., 200 sq ft, entire house, 3 rooms, etc."
+                      aria-describedby="workArea-error"
+                    />
                 </div>
 
                 {/* Services Needed */}
@@ -323,20 +331,21 @@ export default function Contact() {
                   <label htmlFor="message" className="block font-montserrat text-sm font-medium text-earle-black mb-2">
                     Additional Message
                   </label>
-                  <textarea
-                    id="message"
-                    name="message"
-                    rows={3}
-                    value={formData.message}
-                    onChange={handleInputChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple focus:border-transparent font-raleway"
-                    placeholder="Any additional information or questions..."
-                  />
+                    <textarea
+                      id="message"
+                      name="message"
+                      rows={3}
+                      value={formData.message}
+                      onChange={handleInputChange}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple focus:border-purple font-raleway text-earle-black"
+                      placeholder="Any additional information or questions..."
+                      aria-describedby="message-error"
+                    />
                 </div>
 
                 <button
                   type="submit"
-                  className="w-full bg-purple text-white py-4 px-6 rounded-lg font-montserrat font-semibold text-lg hover:bg-phlox transition-colors"
+                  className="w-full bg-purple text-white py-4 px-6 rounded-lg font-montserrat font-semibold text-lg hover:bg-phlox focus:ring-2 focus:ring-purple focus:ring-offset-2 transition-colors"
                 >
                   Request Free Quote
                 </button>
