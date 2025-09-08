@@ -214,21 +214,25 @@ export default function About() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {team.map((member, index) => (
-              <div key={index} className="bg-white p-6 rounded-lg shadow-sm text-center">
-                <div className="w-20 h-20 bg-purple rounded-full flex items-center justify-center mx-auto mb-4">
-                  <UserGroupIcon className="h-10 w-10 text-white" />
+              <div key={index} className="bg-white rounded-lg shadow-sm text-center overflow-hidden">
+                <div className="h-48 bg-gradient-to-br from-purple/20 to-phlox/20 flex items-center justify-center">
+                  <div className="w-24 h-24 bg-purple/30 rounded-full flex items-center justify-center">
+                    <UserGroupIcon className="h-12 w-12 text-purple" />
+                  </div>
                 </div>
-                <h3 className="font-montserrat text-xl font-semibold text-earle-black mb-2">{member.name}</h3>
-                <p className="font-raleway text-purple font-medium mb-2">{member.role}</p>
-                <p className="font-raleway text-gray-600 text-sm mb-4">{member.experience}</p>
-                <div>
-                  <h4 className="font-montserrat text-sm font-semibold text-earle-black mb-2">Specialties:</h4>
-                  <div className="flex flex-wrap justify-center gap-2">
-                    {member.specialties.map((specialty, specIndex) => (
-                      <span key={specIndex} className="px-3 py-1 bg-purple-100 text-purple-800 text-xs font-raleway rounded-full">
-                        {specialty}
-                      </span>
-                    ))}
+                <div className="p-6">
+                  <h3 className="font-montserrat text-xl font-semibold text-earle-black mb-2">{member.name}</h3>
+                  <p className="font-raleway text-purple font-medium mb-2">{member.role}</p>
+                  <p className="font-raleway text-gray-600 text-sm mb-4">{member.experience}</p>
+                  <div>
+                    <h4 className="font-montserrat text-sm font-semibold text-earle-black mb-2">Specialties:</h4>
+                    <div className="flex flex-wrap justify-center gap-2">
+                      {member.specialties.map((specialty, specIndex) => (
+                        <span key={specIndex} className="px-3 py-1 bg-purple-100 text-purple-800 text-xs font-raleway rounded-full">
+                          {specialty}
+                        </span>
+                      ))}
+                    </div>
                   </div>
                 </div>
               </div>

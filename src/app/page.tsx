@@ -27,8 +27,14 @@ export default function Home() {
       </nav>
 
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-purple to-phlox text-white py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <section className="relative bg-gradient-to-br from-purple to-phlox text-white py-20 overflow-hidden">
+        {/* Background Image Placeholder */}
+        <div className="absolute inset-0 bg-gradient-to-br from-purple/90 to-phlox/90">
+          <div className="absolute inset-0 bg-black/20"></div>
+        </div>
+        
+        {/* Hero Content */}
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="font-megrim text-5xl md:text-6xl mb-6">
             Safe & Dependable
           </h2>
@@ -66,28 +72,44 @@ export default function Home() {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div className="bg-white p-6 rounded-lg shadow-sm text-center hover:shadow-md transition-shadow">
-              <BoltIcon className="h-12 w-12 text-purple mx-auto mb-4" />
-              <h3 className="font-montserrat text-xl font-semibold text-earle-black mb-2">Lighting</h3>
-              <p className="font-raleway text-gray-600">Custom lighting solutions for every space</p>
+            <div className="bg-white rounded-lg shadow-sm text-center hover:shadow-md transition-shadow overflow-hidden">
+              <div className="h-32 bg-gradient-to-br from-purple/20 to-phlox/20 flex items-center justify-center">
+                <BoltIcon className="h-12 w-12 text-purple" />
+              </div>
+              <div className="p-6">
+                <h3 className="font-montserrat text-xl font-semibold text-earle-black mb-2">Lighting</h3>
+                <p className="font-raleway text-gray-600">Custom lighting solutions for every space</p>
+              </div>
             </div>
             
-            <div className="bg-white p-6 rounded-lg shadow-sm text-center hover:shadow-md transition-shadow">
-              <HomeIcon className="h-12 w-12 text-purple mx-auto mb-4" />
-              <h3 className="font-montserrat text-xl font-semibold text-earle-black mb-2">Residential</h3>
-              <p className="font-raleway text-gray-600">Safe electrical work for your home</p>
+            <div className="bg-white rounded-lg shadow-sm text-center hover:shadow-md transition-shadow overflow-hidden">
+              <div className="h-32 bg-gradient-to-br from-green/20 to-blue/20 flex items-center justify-center">
+                <HomeIcon className="h-12 w-12 text-green-600" />
+              </div>
+              <div className="p-6">
+                <h3 className="font-montserrat text-xl font-semibold text-earle-black mb-2">Residential</h3>
+                <p className="font-raleway text-gray-600">Safe electrical work for your home</p>
+              </div>
             </div>
             
-            <div className="bg-white p-6 rounded-lg shadow-sm text-center hover:shadow-md transition-shadow">
-              <BuildingOfficeIcon className="h-12 w-12 text-purple mx-auto mb-4" />
-              <h3 className="font-montserrat text-xl font-semibold text-earle-black mb-2">Commercial</h3>
-              <p className="font-raleway text-gray-600">Professional commercial electrical services</p>
+            <div className="bg-white rounded-lg shadow-sm text-center hover:shadow-md transition-shadow overflow-hidden">
+              <div className="h-32 bg-gradient-to-br from-blue/20 to-indigo/20 flex items-center justify-center">
+                <BuildingOfficeIcon className="h-12 w-12 text-blue-600" />
+              </div>
+              <div className="p-6">
+                <h3 className="font-montserrat text-xl font-semibold text-earle-black mb-2">Commercial</h3>
+                <p className="font-raleway text-gray-600">Professional commercial electrical services</p>
+              </div>
             </div>
             
-            <div className="bg-white p-6 rounded-lg shadow-sm text-center hover:shadow-md transition-shadow">
-              <ShieldCheckIcon className="h-12 w-12 text-purple mx-auto mb-4" />
-              <h3 className="font-montserrat text-xl font-semibold text-earle-black mb-2">Safety First</h3>
-              <p className="font-raleway text-gray-600">Education and safety for your family</p>
+            <div className="bg-white rounded-lg shadow-sm text-center hover:shadow-md transition-shadow overflow-hidden">
+              <div className="h-32 bg-gradient-to-br from-red/20 to-orange/20 flex items-center justify-center">
+                <ShieldCheckIcon className="h-12 w-12 text-red-600" />
+              </div>
+              <div className="p-6">
+                <h3 className="font-montserrat text-xl font-semibold text-earle-black mb-2">Safety First</h3>
+                <p className="font-raleway text-gray-600">Education and safety for your family</p>
+              </div>
             </div>
           </div>
         </div>

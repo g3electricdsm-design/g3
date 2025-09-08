@@ -181,11 +181,14 @@ export default function Portfolio() {
                 key={item.id}
                 className={`group relative overflow-hidden rounded-lg shadow-sm hover:shadow-lg transition-all duration-300 cursor-pointer ${getSizeClasses(item.size)}`}
               >
-                {/* Placeholder for image - in production, use Next.js Image component */}
-                <div className="absolute inset-0 bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center">
-                  <div className="text-center text-gray-500">
-                    <div className="text-4xl mb-2">📸</div>
-                    <div className="font-montserrat text-sm">Project Photo</div>
+                {/* Image placeholder with proper aspect ratio */}
+                <div className="absolute inset-0 bg-gradient-to-br from-purple/20 to-phlox/20 flex items-center justify-center">
+                  <div className="text-center text-gray-600">
+                    <div className="w-16 h-16 bg-purple/30 rounded-lg flex items-center justify-center mx-auto mb-3">
+                      <BoltIcon className="h-8 w-8 text-purple" />
+                    </div>
+                    <div className="font-montserrat text-sm font-medium">{item.title}</div>
+                    <div className="font-raleway text-xs text-gray-500 mt-1">{item.category}</div>
                   </div>
                 </div>
                 
