@@ -89,7 +89,7 @@ export default function About() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
-              <h2 className="font-megrim text-4xl text-earle-black mb-6">Our Story</h2>
+              <h2 className="font-montserrat text-4xl text-earle-black mb-6">Our Story</h2>
               <div className="space-y-4 font-raleway text-gray-600">
                 <p>
                   G3 Electric was founded with a simple mission: to provide safe, dependable electrical services that families can trust. 
@@ -144,7 +144,7 @@ export default function About() {
       <section className="py-20 bg-white-smoke">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="font-megrim text-4xl text-earle-black mb-4">Our Values</h2>
+            <h2 className="font-montserrat text-4xl text-earle-black mb-4">Our Values</h2>
             <p className="font-raleway text-lg text-gray-600 max-w-3xl mx-auto">
               These core values guide everything we do and ensure you receive the best possible service.
             </p>
@@ -168,7 +168,7 @@ export default function About() {
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="font-megrim text-4xl text-earle-black mb-4">By the Numbers</h2>
+            <h2 className="font-montserrat text-4xl text-earle-black mb-4">By the Numbers</h2>
             <p className="font-raleway text-lg text-gray-600 max-w-3xl mx-auto">
               Our track record speaks for itself—safety, quality, and customer satisfaction in every project.
             </p>
@@ -189,7 +189,7 @@ export default function About() {
       <section className="py-20 bg-white-smoke">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="font-megrim text-4xl text-earle-black mb-4">Meet Our Team</h2>
+            <h2 className="font-montserrat text-4xl text-earle-black mb-4">Meet Our Team</h2>
             <p className="font-raleway text-lg text-gray-600 max-w-3xl mx-auto">
               Licensed professionals dedicated to your safety and satisfaction.
             </p>
@@ -229,7 +229,7 @@ export default function About() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-gradient-to-r from-purple to-phlox rounded-lg p-8 md:p-12 text-white text-center">
             <ShieldCheckIcon className="h-16 w-16 mx-auto mb-6" />
-            <h2 className="font-megrim text-4xl mb-6">Our Safety Commitment</h2>
+            <h2 className="font-montserrat text-4xl mb-6">Our Safety Commitment</h2>
             <p className="font-raleway text-lg md:text-xl mb-8 max-w-4xl mx-auto">
               We don&apos;t just follow safety protocols—we live them. Every member of our team is trained in the latest safety 
               procedures, and we continuously invest in education and equipment to ensure your family&apos;s protection.
@@ -258,7 +258,7 @@ export default function About() {
       {/* CTA Section */}
       <section className="py-20 bg-earle-black text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="font-megrim text-4xl mb-6">Ready to Work With Us?</h2>
+          <h2 className="font-montserrat text-4xl mb-6">Ready to Work With Us?</h2>
           <p className="font-raleway text-lg mb-8 max-w-2xl mx-auto">
             Experience the G3 Electric difference. Safe, dependable electrical services you can trust for your family and business.
           </p>
@@ -283,7 +283,7 @@ export default function About() {
       <footer className="bg-white-smoke py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <h3 className="font-megrim text-2xl text-earle-black mb-4">G3 Electric</h3>
+            <h3 className="font-montserrat text-2xl text-earle-black mb-4">G3 Electric</h3>
             <p className="font-raleway text-gray-600 mb-4">Safe & Dependable Electrical Services</p>
             <div className="flex justify-center space-x-6">
               <Link href="/services" className="text-gray-600 hover:text-purple font-raleway">Services</Link>

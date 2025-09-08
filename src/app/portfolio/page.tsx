@@ -136,7 +136,7 @@ export default function Portfolio() {
 
           {/* CTA Section */}
           <div className="text-center mt-16">
-            <h2 className="font-megrim text-3xl text-white mb-4">Like What You See?</h2>
+            <h2 className="font-montserrat text-3xl text-white mb-4">Like What You See?</h2>
             <p className="font-raleway text-lg text-white-smoke mb-8 max-w-2xl mx-auto">
               Let&apos;s discuss your next electrical project. We&apos;re committed to delivering the same quality and safety standards you see in our portfolio.
             </p>
@@ -154,7 +154,7 @@ export default function Portfolio() {
       <footer className="bg-earle-black py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <h3 className="font-megrim text-2xl text-white mb-4">G3 Electric</h3>
+            <h3 className="font-montserrat text-2xl text-white mb-4">G3 Electric</h3>
             <p className="font-raleway text-white-smoke mb-4">Safe & Dependable Electrical Services</p>
             <div className="flex justify-center space-x-6">
               <Link href="/services" className="text-white-smoke hover:text-purple font-raleway">Services</Link>

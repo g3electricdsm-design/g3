@@ -18,3 +18,16 @@ body {
   color: var(--foreground);
   font-family: var(--font-raleway), sans-serif;
 }
+
+/* Typography hierarchy */
+h1 {
+  font-family: var(--font-megrim), cursive;
+}
+
+h2, h3, h6 {
+  font-family: var(--font-montserrat), sans-serif;
+}
+
+h4, h5 {
+  font-family: var(--font-megrim), cursive;
+}

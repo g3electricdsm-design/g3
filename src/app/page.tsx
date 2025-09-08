@@ -47,7 +47,7 @@ export default function Home() {
       <section className="py-20 bg-earle-black">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="font-megrim text-4xl text-white mb-4">Our Services</h2>
+            <h2 className="font-montserrat text-4xl text-white mb-4">Our Services</h2>
             <p className="font-raleway text-lg text-white-smoke max-w-2xl mx-auto">
               From residential lighting to commercial builds, we handle all your electrical needs with safety and precision.
             </p>
@@ -100,7 +100,7 @@ export default function Home() {
       {/* CTA Section */}
       <section className="py-20 bg-earle-black text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="font-megrim text-4xl mb-6">Ready to Get Started?</h2>
+          <h2 className="font-montserrat text-4xl mb-6">Ready to Get Started?</h2>
           <p className="font-raleway text-lg mb-8 max-w-2xl mx-auto">
             Contact us today for a free quote. Your safety and satisfaction are our top priorities.
           </p>
@@ -117,7 +117,7 @@ export default function Home() {
       <footer className="bg-earle-black py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <h3 className="font-megrim text-2xl text-white mb-4">G3 Electric</h3>
+            <h3 className="font-montserrat text-2xl text-white mb-4">G3 Electric</h3>
             <p className="font-raleway text-white-smoke mb-4">Safe & Dependable Electrical Services</p>
             <div className="flex justify-center space-x-6">
               <Link href="/services" className="text-white-smoke hover:text-purple font-raleway">Services</Link>

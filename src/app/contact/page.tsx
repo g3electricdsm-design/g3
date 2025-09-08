@@ -71,7 +71,7 @@ export default function Contact() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             {/* Contact Info */}
             <div>
-              <h2 className="font-megrim text-3xl text-white mb-8">Contact Information</h2>
+              <h2 className="font-montserrat text-3xl text-white mb-8">Contact Information</h2>
               
               <div className="space-y-6 mb-8">
                 <div className="flex items-start">
@@ -129,7 +129,7 @@ export default function Contact() {
 
             {/* Quote Request Form */}
             <div>
-              <h2 className="font-megrim text-3xl text-earle-black mb-8">Request a Quote</h2>
+              <h2 className="font-montserrat text-3xl text-earle-black mb-8">Request a Quote</h2>
               
               <form onSubmit={handleSubmit} className="space-y-6">
                 {/* Basic Information */}
@@ -346,7 +346,7 @@ export default function Contact() {
       <footer className="bg-white-smoke py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <h3 className="font-megrim text-2xl text-earle-black mb-4">G3 Electric</h3>
+            <h3 className="font-montserrat text-2xl text-earle-black mb-4">G3 Electric</h3>
             <p className="font-raleway text-gray-600 mb-4">Safe & Dependable Electrical Services</p>
             <div className="flex justify-center space-x-6">
               <Link href="/services" className="text-gray-600 hover:text-purple font-raleway">Services</Link>

@@ -283,7 +283,7 @@ export default function PayBill() {
       <footer className="bg-white-smoke py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <h3 className="font-megrim text-2xl text-earle-black mb-4">G3 Electric</h3>
+            <h3 className="font-montserrat text-2xl text-earle-black mb-4">G3 Electric</h3>
             <p className="font-raleway text-gray-600 mb-4">Safe & Dependable Electrical Services</p>
             <div className="flex justify-center space-x-6">
               <Link href="/services" className="text-gray-600 hover:text-purple font-raleway">Services</Link>

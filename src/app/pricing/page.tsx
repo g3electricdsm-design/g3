@@ -201,7 +201,7 @@ export default function Pricing() {
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="font-megrim text-4xl text-earle-black mb-4">Service Tiers</h2>
+            <h2 className="font-montserrat text-4xl text-earle-black mb-4">Service Tiers</h2>
             <p className="font-raleway text-lg text-gray-600 max-w-3xl mx-auto">
               Choose the level of service that best fits your needs and budget.
             </p>
@@ -243,7 +243,7 @@ export default function Pricing() {
       <section className="py-20 bg-white-smoke">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="font-megrim text-4xl text-earle-black mb-4">Service Pricing</h2>
+            <h2 className="font-montserrat text-4xl text-earle-black mb-4">Service Pricing</h2>
             <p className="font-raleway text-lg text-gray-600 max-w-3xl mx-auto">
               Detailed pricing for our most common services. All prices include materials, labor, and warranty.
             </p>
@@ -326,7 +326,7 @@ export default function Pricing() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             <div>
-              <h2 className="font-megrim text-3xl text-earle-black mb-6">Pricing Information</h2>
+              <h2 className="font-montserrat text-3xl text-earle-black mb-6">Pricing Information</h2>
               <div className="space-y-4 font-raleway text-gray-600">
                 <p>
                   <strong>Free Estimates:</strong> All quotes are provided at no cost with no obligation. 
@@ -387,7 +387,7 @@ export default function Pricing() {
       {/* CTA Section */}
       <section className="py-20 bg-earle-black text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="font-megrim text-4xl mb-6">Ready for Your Free Quote?</h2>
+          <h2 className="font-montserrat text-4xl mb-6">Ready for Your Free Quote?</h2>
           <p className="font-raleway text-lg mb-8 max-w-2xl mx-auto">
             Get a detailed, no-obligation quote for your electrical project. We&apos;ll provide transparent pricing and answer all your questions.
           </p>
@@ -412,7 +412,7 @@ export default function Pricing() {
       <footer className="bg-white-smoke py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <h3 className="font-megrim text-2xl text-earle-black mb-4">G3 Electric</h3>
+            <h3 className="font-montserrat text-2xl text-earle-black mb-4">G3 Electric</h3>
             <p className="font-raleway text-gray-600 mb-4">Safe & Dependable Electrical Services</p>
             <div className="flex justify-center space-x-6">
               <Link href="/services" className="text-gray-600 hover:text-purple font-raleway">Services</Link>
