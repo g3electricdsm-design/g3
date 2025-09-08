@@ -86,8 +86,8 @@ export default function Home() {
             </div>
             
             <div className="bg-white rounded-lg shadow-sm text-center hover:shadow-md transition-shadow overflow-hidden">
-              <div className="h-32 bg-gradient-to-br from-green/20 to-blue/20 flex items-center justify-center">
-                <HomeIcon className="h-12 w-12 text-green-600" />
+              <div className="h-32 bg-gradient-to-br from-hookers-green/20 to-purple/20 flex items-center justify-center">
+                <HomeIcon className="h-12 w-12 text-hookers-green" />
               </div>
               <div className="p-6">
                 <h3 className="font-montserrat text-xl font-semibold text-earle-black mb-2">Residential</h3>
@@ -96,8 +96,8 @@ export default function Home() {
             </div>
             
             <div className="bg-white rounded-lg shadow-sm text-center hover:shadow-md transition-shadow overflow-hidden">
-              <div className="h-32 bg-gradient-to-br from-blue/20 to-indigo/20 flex items-center justify-center">
-                <BuildingOfficeIcon className="h-12 w-12 text-blue-600" />
+              <div className="h-32 bg-gradient-to-br from-earle-black/20 to-hookers-green/20 flex items-center justify-center">
+                <BuildingOfficeIcon className="h-12 w-12 text-earle-black" />
               </div>
               <div className="p-6">
                 <h3 className="font-montserrat text-xl font-semibold text-earle-black mb-2">Commercial</h3>
@@ -106,8 +106,8 @@ export default function Home() {
             </div>
             
             <div className="bg-white rounded-lg shadow-sm text-center hover:shadow-md transition-shadow overflow-hidden">
-              <div className="h-32 bg-gradient-to-br from-red/20 to-orange/20 flex items-center justify-center">
-                <ShieldCheckIcon className="h-12 w-12 text-red-600" />
+              <div className="h-32 bg-gradient-to-br from-phlox/20 to-purple/20 flex items-center justify-center">
+                <ShieldCheckIcon className="h-12 w-12 text-phlox" />
               </div>
               <div className="p-6">
                 <h3 className="font-montserrat text-xl font-semibold text-earle-black mb-2">Safety First</h3>

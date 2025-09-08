@@ -228,7 +228,7 @@ export default function Pricing() {
             {pricingTiers.map((tier, index) => (
               <div key={index} className={`p-8 rounded-lg border-2 ${
                 tier.color === 'purple' 
-                  ? 'border-purple bg-purple-50' 
+                  ? 'border-purple bg-purple/10' 
                   : 'border-gray-300 bg-white'
               }`}>
                 <div className="text-center mb-6">
@@ -283,10 +283,10 @@ export default function Pricing() {
 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                   {/* Residential Pricing */}
-                  <div className="bg-green-50 p-6 rounded-lg">
+                  <div className="bg-hookers-green/10 p-6 rounded-lg border border-hookers-green/20">
                     <div className="flex items-center mb-4">
-                      <HomeIcon className="h-6 w-6 text-green-600 mr-2" />
-                      <h4 className="font-montserrat text-lg font-semibold text-green-800">Residential</h4>
+                      <HomeIcon className="h-6 w-6 text-hookers-green mr-2" />
+                      <h4 className="font-montserrat text-lg font-semibold text-hookers-green">Residential</h4>
                     </div>
                     <div className="space-y-2 mb-4">
                       <div className="flex justify-between">
@@ -302,10 +302,10 @@ export default function Pricing() {
                   </div>
 
                   {/* Commercial Pricing */}
-                  <div className="bg-blue-50 p-6 rounded-lg">
+                  <div className="bg-earle-black/10 p-6 rounded-lg border border-earle-black/20">
                     <div className="flex items-center mb-4">
-                      <BuildingOfficeIcon className="h-6 w-6 text-blue-600 mr-2" />
-                      <h4 className="font-montserrat text-lg font-semibold text-blue-800">Commercial</h4>
+                      <BuildingOfficeIcon className="h-6 w-6 text-earle-black mr-2" />
+                      <h4 className="font-montserrat text-lg font-semibold text-earle-black">Commercial</h4>
                     </div>
                     <div className="space-y-2 mb-4">
                       <div className="flex justify-between">

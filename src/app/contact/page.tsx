@@ -130,7 +130,7 @@ export default function Contact() {
               </div>
 
               {/* Calendly Integration Placeholder */}
-                <div className="bg-white-smoke p-6 rounded-lg border border-gray-200">
+                <div className="bg-white-smoke p-6 rounded-lg border border-hookers-green/20">
                   <h3 className="font-montserrat text-xl font-semibold text-earle-black mb-4">Schedule a Consultation</h3>
                   <p className="font-raleway text-gray-700 mb-4">
                     Prefer to schedule a specific time? Use our online booking system to find a time that works for you.
