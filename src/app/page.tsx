@@ -1,33 +1,12 @@
 import Link from "next/link";
 import { ShieldCheckIcon, BoltIcon, HomeIcon, BuildingOfficeIcon } from "@heroicons/react/24/outline";
+import Navigation from "@/components/Navigation";
 
 export default function Home() {
   return (
     <div className="min-h-screen bg-white">
       {/* Navigation */}
-      <nav className="bg-white shadow-sm border-b border-gray-200" role="navigation" aria-label="Main navigation">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center">
-              <Link href="/" className="font-megrim text-2xl text-purple focus:ring-2 focus:ring-purple focus:ring-offset-2 rounded">
-                <span className="sr-only">G3 Electric</span>
-                G3 Electric
-              </Link>
-            </div>
-            <div className="hidden md:block">
-              <div className="ml-10 flex items-baseline space-x-4" role="menubar">
-                <Link href="/" className="text-earle-black hover:text-purple focus:ring-2 focus:ring-purple focus:ring-offset-2 px-3 py-2 rounded-md text-sm font-medium" role="menuitem">Home</Link>
-                <Link href="/services" className="text-earle-black hover:text-purple focus:ring-2 focus:ring-purple focus:ring-offset-2 px-3 py-2 rounded-md text-sm font-medium" role="menuitem">Services</Link>
-                <Link href="/portfolio" className="text-earle-black hover:text-purple focus:ring-2 focus:ring-purple focus:ring-offset-2 px-3 py-2 rounded-md text-sm font-medium" role="menuitem">Portfolio</Link>
-                <Link href="/pricing" className="text-earle-black hover:text-purple focus:ring-2 focus:ring-purple focus:ring-offset-2 px-3 py-2 rounded-md text-sm font-medium" role="menuitem">Pricing</Link>
-                <Link href="/about" className="text-earle-black hover:text-purple focus:ring-2 focus:ring-purple focus:ring-offset-2 px-3 py-2 rounded-md text-sm font-medium" role="menuitem">About</Link>
-                <Link href="/contact" className="text-earle-black hover:text-purple focus:ring-2 focus:ring-purple focus:ring-offset-2 px-3 py-2 rounded-md text-sm font-medium" role="menuitem">Contact</Link>
-                <Link href="/pay" className="bg-purple text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-phlox focus:ring-2 focus:ring-purple focus:ring-offset-2 transition-colors" role="menuitem">Pay Bill</Link>
-              </div>
-            </div>
-          </div>
-        </div>
-      </nav>
+      <Navigation currentPath="/" />
 
       {/* Hero Section */}
       <section className="relative bg-gradient-to-br from-purple to-phlox text-white py-20 overflow-hidden">

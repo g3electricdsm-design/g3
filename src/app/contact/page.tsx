@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { ArrowLeftIcon, PhoneIcon, EnvelopeIcon, MapPinIcon, ClockIcon } from "@heroicons/react/24/outline";
+import Navigation from "@/components/Navigation";
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -46,25 +47,7 @@ export default function Contact() {
   return (
     <div className="min-h-screen bg-white">
       {/* Navigation */}
-      <nav className="bg-white shadow-sm border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center">
-              <Link href="/" className="font-megrim text-2xl text-purple">G3 Electric</Link>
-            </div>
-            <div className="hidden md:block">
-              <div className="ml-10 flex items-baseline space-x-4">
-                <Link href="/" className="text-earle-black hover:text-purple px-3 py-2 rounded-md text-sm font-medium">Home</Link>
-                <Link href="/services" className="text-earle-black hover:text-purple px-3 py-2 rounded-md text-sm font-medium">Services</Link>
-                <Link href="/portfolio" className="text-earle-black hover:text-purple px-3 py-2 rounded-md text-sm font-medium">Portfolio</Link>
-                <Link href="/pricing" className="text-earle-black hover:text-purple px-3 py-2 rounded-md text-sm font-medium">Pricing</Link>
-                <Link href="/about" className="text-earle-black hover:text-purple px-3 py-2 rounded-md text-sm font-medium">About</Link>
-                <Link href="/contact" className="text-purple px-3 py-2 rounded-md text-sm font-medium">Contact</Link>
-              </div>
-            </div>
-          </div>
-        </div>
-      </nav>
+      <Navigation currentPath="/contact" />
 
       {/* Header */}
       <section className="bg-gradient-to-br from-purple to-phlox text-white py-16">
