@@ -1,83 +1,11 @@
 import Link from "next/link";
 import { ArrowLeftIcon, HomeIcon, BuildingOfficeIcon, BoltIcon, LightBulbIcon } from "@heroicons/react/24/outline";
 import Navigation from "@/components/Navigation";
+import { getAllProjects } from "@/data/projects";
 
 export default function Portfolio() {
-  // Sample portfolio data - in a real app, this would come from a CMS or database
-  const portfolioItems = [
-    {
-      id: 1,
-      title: "Modern Kitchen Lighting",
-      category: "Residential",
-      type: "Lighting",
-      image: "/api/placeholder/600/400",
-      description: "Custom LED under-cabinet lighting installation",
-      size: "large"
-    },
-    {
-      id: 2,
-      title: "Office Building Wiring",
-      category: "Commercial",
-      type: "New Build",
-      image: "/api/placeholder/400/300",
-      description: "Complete electrical infrastructure for new office complex",
-      size: "medium"
-    },
-    {
-      id: 3,
-      title: "Smart Home Integration",
-      category: "Residential",
-      type: "Outlets & Controls",
-      image: "/api/placeholder/400/500",
-      description: "Smart switches and outlet installation throughout home",
-      size: "medium"
-    },
-    {
-      id: 4,
-      title: "Retail Store Lighting",
-      category: "Commercial",
-      type: "Lighting",
-      image: "/api/placeholder/300/200",
-      description: "Energy-efficient LED lighting for retail space",
-      size: "small"
-    },
-    {
-      id: 5,
-      title: "Ceiling Fan Installation",
-      category: "Residential",
-      type: "Fans",
-      image: "/api/placeholder/300/200",
-      description: "Multiple ceiling fan installations with smart controls",
-      size: "small"
-    },
-    {
-      id: 6,
-      title: "Restaurant Electrical",
-      category: "Commercial",
-      type: "New Build",
-      image: "/api/placeholder/600/300",
-      description: "Complete electrical system for new restaurant build",
-      size: "large"
-    },
-    {
-      id: 7,
-      title: "Outdoor Lighting System",
-      category: "Residential",
-      type: "Lighting",
-      image: "/api/placeholder/400/300",
-      description: "Landscape and security lighting installation",
-      size: "medium"
-    },
-    {
-      id: 8,
-      title: "Warehouse Lighting",
-      category: "Commercial",
-      type: "Lighting",
-      image: "/api/placeholder/300/200",
-      description: "High-bay LED lighting for industrial warehouse",
-      size: "small"
-    }
-  ];
+  // Get portfolio data from the centralized data file
+  const portfolioItems = getAllProjects();
 
   const getSizeClasses = (size: string) => {
     switch (size) {
@@ -160,9 +88,10 @@ export default function Portfolio() {
           {/* Bento Box Grid */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[200px]">
             {portfolioItems.map((item) => (
-              <div
+              <Link
                 key={item.id}
-                className={`group relative overflow-hidden rounded-lg shadow-sm hover:shadow-lg transition-all duration-300 cursor-pointer ${getSizeClasses(item.size)}`}
+                href={`/portfolio/${item.id}`}
+                className={`group relative overflow-hidden rounded-lg shadow-sm hover:shadow-lg transition-all duration-300 cursor-pointer block ${getSizeClasses(item.size)}`}
               >
                 {/* Image placeholder with proper aspect ratio */}
                 <div className="absolute inset-0 bg-gradient-to-br from-purple/20 to-phlox/20 flex items-center justify-center">
@@ -201,7 +130,7 @@ export default function Portfolio() {
                   </div>
                   <h3 className="font-montserrat text-lg font-semibold mb-1 text-earle-black">{item.title}</h3>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
 
