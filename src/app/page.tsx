@@ -19,6 +19,7 @@ export default function Home() {
                 <Link href="/pricing" className="text-earle-black hover:text-purple px-3 py-2 rounded-md text-sm font-medium">Pricing</Link>
                 <Link href="/about" className="text-earle-black hover:text-purple px-3 py-2 rounded-md text-sm font-medium">About</Link>
                 <Link href="/contact" className="text-earle-black hover:text-purple px-3 py-2 rounded-md text-sm font-medium">Contact</Link>
+                <Link href="/pay" className="bg-purple text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-phlox transition-colors">Pay Bill</Link>
               </div>
             </div>
           </div>
@@ -120,6 +121,7 @@ export default function Home() {
               <Link href="/pricing" className="text-gray-600 hover:text-purple font-raleway">Pricing</Link>
               <Link href="/about" className="text-gray-600 hover:text-purple font-raleway">About</Link>
               <Link href="/contact" className="text-gray-600 hover:text-purple font-raleway">Contact</Link>
+              <Link href="/pay" className="text-purple hover:text-phlox font-raleway font-semibold">Pay Bill</Link>
             </div>
           </div>
         </div>
