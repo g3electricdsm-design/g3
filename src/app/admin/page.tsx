@@ -9,30 +9,14 @@ import { getAllProjects, Project } from '@/data/projects';
 export default function Admin() {
   const [projects, setProjects] = useState<Project[]>(getAllProjects());
   const [editingProject, setEditingProject] = useState<Project | null>(null);
-  const [showAddForm, setShowAddForm] = useState(false);
-
   const handleEdit = (project: Project) => {
     setEditingProject(project);
-    setShowAddForm(true);
   };
 
   const handleDelete = (id: number) => {
     if (confirm('Are you sure you want to delete this project?')) {
       setProjects(projects.filter(p => p.id !== id));
     }
-  };
-
-  const handleSave = (projectData: Partial<Project>) => {
-    if (editingProject) {
-      // Update existing project
-      setProjects(projects.map(p => p.id === editingProject.id ? { ...p, ...projectData } : p));
-    } else {
-      // Add new project
-      const newId = Math.max(...projects.map(p => p.id)) + 1;
-      setProjects([...projects, { ...projectData, id: newId } as Project]);
-    }
-    setEditingProject(null);
-    setShowAddForm(false);
   };
 
   return (
@@ -64,7 +48,6 @@ export default function Admin() {
             <button
               onClick={() => {
                 setEditingProject(null);
-                setShowAddForm(true);
               }}
               className="bg-purple text-white px-6 py-3 rounded-lg font-montserrat font-semibold hover:bg-phlox transition-colors flex items-center gap-2"
             >
@@ -112,7 +95,7 @@ export default function Admin() {
             <h3 className="font-montserrat text-lg font-semibold text-blue-900 mb-3">Content Management Instructions</h3>
             <div className="font-raleway text-blue-800 space-y-2">
               <p>• <strong>To edit projects:</strong> Click the pencil icon next to any project</p>
-              <p>• <strong>To add projects:</strong> Click the "Add New Project" button above</p>
+              <p>• <strong>To add projects:</strong> Click the &quot;Add New Project&quot; button above</p>
               <p>• <strong>To delete projects:</strong> Click the trash icon (this action cannot be undone)</p>
               <p>• <strong>To update the live site:</strong> All changes are automatically saved and will appear on the website</p>
               <p>• <strong>For advanced editing:</strong> You can directly edit the <code className="bg-blue-100 px-1 rounded">src/data/projects.ts</code> file</p>
