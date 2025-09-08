@@ -15,7 +15,7 @@ export default function About() {
     {
       icon: ShieldCheckIcon,
       title: "Safety First",
-      description: "Your family's safety is our #1 priority. Every project is completed with the highest safety standards and code compliance."
+      description: "Your family&apos;s safety is our #1 priority. Every project is completed with the highest safety standards and code compliance."
     },
     {
       icon: BoltIcon,
@@ -25,7 +25,7 @@ export default function About() {
     {
       icon: HeartIcon,
       title: "Community Focus",
-      description: "We're proud to serve our local community with honest, reliable electrical services that families can trust."
+      description: "We&apos;re proud to serve our local community with honest, reliable electrical services that families can trust."
     },
     {
       icon: CheckBadgeIcon,
@@ -96,7 +96,7 @@ export default function About() {
           </div>
           <h1 className="font-megrim text-5xl md:text-6xl mb-4">About G3 Electric</h1>
           <p className="font-raleway text-lg md:text-xl max-w-3xl">
-            Safe, dependable electrical services you can trust. Your family's safety is our #1 priority.
+            Safe, dependable electrical services you can trust. Your family&apos;s safety is our #1 priority.
           </p>
         </div>
       </section>
@@ -110,7 +110,7 @@ export default function About() {
               <div className="space-y-4 font-raleway text-gray-600">
                 <p>
                   G3 Electric was founded with a simple mission: to provide safe, dependable electrical services that families can trust. 
-                  After 15+ years in the electrical industry, we've seen too many homeowners left with subpar work and safety concerns.
+                  After 15+ years in the electrical industry, we&apos;ve seen too many homeowners left with subpar work and safety concerns.
                 </p>
                 <p>
                   We believe that electrical work isn&apos;t just about wires and circuits—it&apos;s about protecting what matters most: your family, 

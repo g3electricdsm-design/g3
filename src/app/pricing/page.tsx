@@ -322,7 +322,7 @@ export default function Pricing() {
                 </div>
 
                 <div className="mt-6">
-                  <h4 className="font-montserrat text-lg font-semibold text-earle-black mb-3">What's Included:</h4>
+                  <h4 className="font-montserrat text-lg font-semibold text-earle-black mb-3">What&apos;s Included:</h4>
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
                     {service.includes.map((item, itemIndex) => (
                       <div key={itemIndex} className="flex items-center">
@@ -406,7 +406,7 @@ export default function Pricing() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="font-megrim text-4xl mb-6">Ready for Your Free Quote?</h2>
           <p className="font-raleway text-lg mb-8 max-w-2xl mx-auto">
-            Get a detailed, no-obligation quote for your electrical project. We'll provide transparent pricing and answer all your questions.
+            Get a detailed, no-obligation quote for your electrical project. We&apos;ll provide transparent pricing and answer all your questions.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link 
