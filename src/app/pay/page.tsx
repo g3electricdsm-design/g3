@@ -79,7 +79,7 @@ export default function PayBill() {
   }
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-earle-black">
         {/* Navigation */}
         <Navigation currentPath="/pay" />
 

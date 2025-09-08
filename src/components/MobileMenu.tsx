@@ -33,7 +33,7 @@ export default function MobileMenu({ currentPath }: MobileMenuProps) {
       {/* Mobile menu button */}
       <button
         type="button"
-        className="inline-flex items-center justify-center p-2 rounded-md text-earle-black hover:text-purple hover:bg-white-smoke focus:outline-none focus:ring-2 focus:ring-inset focus:ring-purple"
+        className="inline-flex items-center justify-center p-2 rounded-md text-white-smoke hover:text-purple hover:bg-white-smoke focus:outline-none focus:ring-2 focus:ring-inset focus:ring-purple"
         aria-controls="mobile-menu"
         aria-expanded={isOpen}
         onClick={() => setIsOpen(!isOpen)}
@@ -48,7 +48,7 @@ export default function MobileMenu({ currentPath }: MobileMenuProps) {
 
       {/* Mobile menu */}
       <div
-        className={`${isOpen ? 'block' : 'hidden'} absolute top-16 left-0 right-0 z-50 bg-white border-b border-gray-200 shadow-lg`}
+        className={`${isOpen ? 'block' : 'hidden'} absolute top-16 left-0 right-0 z-50 bg-earle-black border-b border-gray-200 shadow-lg`}
         id="mobile-menu"
       >
         <div className="px-2 pt-2 pb-3 space-y-1">
@@ -59,7 +59,7 @@ export default function MobileMenu({ currentPath }: MobileMenuProps) {
               className={`block px-3 py-2 rounded-md text-base font-medium transition-colors ${
                 isCurrentPath(item.href)
                   ? 'text-purple bg-purple/10'
-                  : 'text-earle-black hover:text-purple hover:bg-white-smoke'
+                  : 'text-white-smoke hover:text-purple hover:bg-white-smoke'
               }`}
               onClick={() => setIsOpen(false)}
             >

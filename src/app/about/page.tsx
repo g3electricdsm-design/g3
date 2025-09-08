@@ -64,7 +64,7 @@ export default function About() {
   ];
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-earle-black">
       {/* Navigation */}
       <Navigation currentPath="/about" />
 

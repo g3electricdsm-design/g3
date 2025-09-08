@@ -52,7 +52,7 @@ export default function ProjectDetail({ params }: ProjectDetailProps) {
   };
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-earle-black">
       {/* Navigation */}
       <Navigation currentPath="/portfolio" />
 

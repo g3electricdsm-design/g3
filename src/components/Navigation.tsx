@@ -7,11 +7,11 @@ interface NavigationProps {
 
 export default function Navigation({ currentPath }: NavigationProps) {
   return (
-    <nav className="bg-white shadow-sm border-b border-gray-200" role="navigation" aria-label="Main navigation">
+    <nav className="bg-earle-black shadow-sm border-b border-gray-200" role="navigation" aria-label="Main navigation">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center">
-            <Link href="/" className="font-megrim text-2xl text-purple focus:ring-2 focus:ring-purple focus:ring-offset-2 rounded">
+            <Link href="/" className="font-megrim text-2xl text-white focus:ring-2 focus:ring-purple focus:ring-offset-2 rounded">
               <span className="sr-only">G3 Electric</span>
               G3 Electric
             </Link>
@@ -23,7 +23,7 @@ export default function Navigation({ currentPath }: NavigationProps) {
                 className={`px-3 py-2 rounded-md text-sm font-medium focus:ring-2 focus:ring-purple focus:ring-offset-2 transition-colors ${
                   currentPath === '/' 
                     ? 'text-purple bg-purple/10' 
-                    : 'text-earle-black hover:text-purple'
+                    : 'text-white-smoke hover:text-purple'
                 }`} 
                 role="menuitem"
               >
@@ -34,7 +34,7 @@ export default function Navigation({ currentPath }: NavigationProps) {
                 className={`px-3 py-2 rounded-md text-sm font-medium focus:ring-2 focus:ring-purple focus:ring-offset-2 transition-colors ${
                   currentPath.startsWith('/services') 
                     ? 'text-purple bg-purple/10' 
-                    : 'text-earle-black hover:text-purple'
+                    : 'text-white-smoke hover:text-purple'
                 }`} 
                 role="menuitem"
               >
@@ -45,7 +45,7 @@ export default function Navigation({ currentPath }: NavigationProps) {
                 className={`px-3 py-2 rounded-md text-sm font-medium focus:ring-2 focus:ring-purple focus:ring-offset-2 transition-colors ${
                   currentPath.startsWith('/portfolio') 
                     ? 'text-purple bg-purple/10' 
-                    : 'text-earle-black hover:text-purple'
+                    : 'text-white-smoke hover:text-purple'
                 }`} 
                 role="menuitem"
               >
@@ -56,7 +56,7 @@ export default function Navigation({ currentPath }: NavigationProps) {
                 className={`px-3 py-2 rounded-md text-sm font-medium focus:ring-2 focus:ring-purple focus:ring-offset-2 transition-colors ${
                   currentPath.startsWith('/pricing') 
                     ? 'text-purple bg-purple/10' 
-                    : 'text-earle-black hover:text-purple'
+                    : 'text-white-smoke hover:text-purple'
                 }`} 
                 role="menuitem"
               >
@@ -67,7 +67,7 @@ export default function Navigation({ currentPath }: NavigationProps) {
                 className={`px-3 py-2 rounded-md text-sm font-medium focus:ring-2 focus:ring-purple focus:ring-offset-2 transition-colors ${
                   currentPath.startsWith('/about') 
                     ? 'text-purple bg-purple/10' 
-                    : 'text-earle-black hover:text-purple'
+                    : 'text-white-smoke hover:text-purple'
                 }`} 
                 role="menuitem"
               >
@@ -78,7 +78,7 @@ export default function Navigation({ currentPath }: NavigationProps) {
                 className={`px-3 py-2 rounded-md text-sm font-medium focus:ring-2 focus:ring-purple focus:ring-offset-2 transition-colors ${
                   currentPath.startsWith('/contact') 
                     ? 'text-purple bg-purple/10' 
-                    : 'text-earle-black hover:text-purple'
+                    : 'text-white-smoke hover:text-purple'
                 }`} 
                 role="menuitem"
               >
