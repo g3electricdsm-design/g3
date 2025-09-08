@@ -6,7 +6,7 @@ import {
   HomeIcon, 
   BuildingOfficeIcon,
   LightBulbIcon,
-  FanIcon,
+  CpuChipIcon,
   PowerIcon,
   AcademicCapIcon
 } from "@heroicons/react/24/outline";
@@ -36,7 +36,7 @@ export default function Pricing() {
       ]
     },
     {
-      icon: FanIcon,
+      icon: CpuChipIcon,
       title: "Ceiling Fans",
       description: "Professional ceiling fan installation",
       residential: {

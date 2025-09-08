@@ -12,7 +12,7 @@ export default function Contact() {
     projectType: '',
     description: '',
     budget: '',
-    services: [],
+    services: [] as string[],
     timeline: '',
     workArea: '',
     message: ''

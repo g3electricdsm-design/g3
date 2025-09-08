@@ -2,7 +2,7 @@ import Link from "next/link";
 import { 
   ArrowLeftIcon, 
   LightBulbIcon, 
-  FanIcon, 
+  CpuChipIcon, 
   PowerIcon, 
   HomeIcon, 
   BuildingOfficeIcon, 
@@ -29,7 +29,7 @@ export default function Services() {
       category: "Both"
     },
     {
-      icon: FanIcon,
+      icon: CpuChipIcon,
       title: "Ceiling Fans",
       description: "Professional ceiling fan installation and repair",
       features: [
