@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { ArrowLeftIcon, PlusIcon, PencilIcon, TrashIcon, EyeIcon, CogIcon, ChartBarIcon, PhotoIcon } from '@heroicons/react/24/outline';
+import { ArrowLeftIcon, PlusIcon, PencilIcon, TrashIcon, CogIcon, ChartBarIcon, PhotoIcon } from '@heroicons/react/24/outline';
 import Navigation from '@/components/Navigation';
 import { getAllProjects, Project } from '@/data/projects';
 import { getAllServices, Service } from '@/data/services';
@@ -10,7 +10,7 @@ import ProjectForm from '@/components/ProjectForm';
 
 export default function Admin() {
   const [projects, setProjects] = useState<Project[]>(getAllProjects());
-  const [services, setServices] = useState<Service[]>(getAllServices());
+  const [services] = useState<Service[]>(getAllServices());
   const [editingProject, setEditingProject] = useState<Project | null>(null);
   const [showProjectForm, setShowProjectForm] = useState(false);
   const [activeTab, setActiveTab] = useState<'projects' | 'services' | 'analytics' | 'settings'>('projects');
@@ -92,7 +92,7 @@ export default function Admin() {
                 return (
                   <button
                     key={tab.id}
-                    onClick={() => setActiveTab(tab.id as any)}
+                    onClick={() => setActiveTab(tab.id as 'projects' | 'services' | 'analytics' | 'settings')}
                     className={`flex items-center gap-2 px-4 py-2 rounded-lg font-montserrat font-medium transition-colors ${
                       activeTab === tab.id
                         ? 'bg-purple text-white'
