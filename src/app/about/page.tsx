@@ -113,12 +113,12 @@ export default function About() {
                   After 15+ years in the electrical industry, we've seen too many homeowners left with subpar work and safety concerns.
                 </p>
                 <p>
-                  We believe that electrical work isn't just about wires and circuits—it's about protecting what matters most: your family, 
-                  your home, and your peace of mind. That's why safety is at the heart of everything we do.
+                  We believe that electrical work isn&apos;t just about wires and circuits—it&apos;s about protecting what matters most: your family, 
+                  your home, and your peace of mind. That&apos;s why safety is at the heart of everything we do.
                 </p>
                 <p>
                   From small residential projects to large commercial builds, we approach every job with the same commitment to quality, 
-                  safety, and customer satisfaction. Our licensed electricians are not just skilled technicians—they're safety advocates 
+                  safety, and customer satisfaction. Our licensed electricians are not just skilled technicians—they&apos;re safety advocates 
                   who take pride in protecting your home and family.
                 </p>
               </div>
@@ -244,8 +244,8 @@ export default function About() {
             <ShieldCheckIcon className="h-16 w-16 mx-auto mb-6" />
             <h2 className="font-megrim text-4xl mb-6">Our Safety Commitment</h2>
             <p className="font-raleway text-lg md:text-xl mb-8 max-w-4xl mx-auto">
-              We don't just follow safety protocols—we live them. Every member of our team is trained in the latest safety 
-              procedures, and we continuously invest in education and equipment to ensure your family's protection.
+              We don&apos;t just follow safety protocols—we live them. Every member of our team is trained in the latest safety 
+              procedures, and we continuously invest in education and equipment to ensure your family&apos;s protection.
             </p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
               <div>

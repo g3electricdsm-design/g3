@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Image from "next/image";
 import { ArrowLeftIcon, HomeIcon, BuildingOfficeIcon, BoltIcon, LightBulbIcon } from "@heroicons/react/24/outline";
 
 export default function Portfolio() {
@@ -224,7 +223,7 @@ export default function Portfolio() {
           <div className="text-center mt-16">
             <h2 className="font-megrim text-3xl text-earle-black mb-4">Like What You See?</h2>
             <p className="font-raleway text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
-              Let's discuss your next electrical project. We're committed to delivering the same quality and safety standards you see in our portfolio.
+              Let&apos;s discuss your next electrical project. We&apos;re committed to delivering the same quality and safety standards you see in our portfolio.
             </p>
             <Link 
               href="/contact" 

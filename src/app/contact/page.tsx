@@ -77,7 +77,7 @@ export default function Contact() {
           </div>
           <h1 className="font-megrim text-5xl md:text-6xl mb-4">Get Your Free Quote</h1>
           <p className="font-raleway text-lg md:text-xl max-w-3xl">
-            Ready to start your electrical project? Fill out the form below and we'll get back to you within 24 hours with a detailed quote.
+            Ready to start your electrical project? Fill out the form below and we&apos;ll get back to you within 24 hours with a detailed quote.
           </p>
         </div>
       </section>
@@ -342,7 +342,7 @@ export default function Contact() {
                 </button>
 
                 <p className="font-raleway text-sm text-gray-500 text-center">
-                  * Required fields. We'll respond within 24 hours.
+                  * Required fields. We&apos;ll respond within 24 hours.
                 </p>
               </form>
             </div>

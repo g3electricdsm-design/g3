@@ -35,7 +35,7 @@ export default function Home() {
             Electrical Services You Can Trust
           </h3>
           <p className="font-raleway text-lg md:text-xl mb-10 max-w-3xl mx-auto">
-            Your family's safety is our #1 priority. Professional electrical services for residential and commercial projects with the dependability you deserve.
+            Your family&apos;s safety is our #1 priority. Professional electrical services for residential and commercial projects with the dependability you deserve.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link 

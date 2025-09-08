@@ -371,7 +371,7 @@ export default function Pricing() {
                   <BoltIcon className="h-5 w-5 text-purple mr-3 mt-1 flex-shrink-0" />
                   <div>
                     <h4 className="font-montserrat font-semibold text-earle-black">Licensed Professionals</h4>
-                    <p className="font-raleway text-sm text-gray-600">You're paying for skilled, licensed electricians, not handymen</p>
+                    <p className="font-raleway text-sm text-gray-600">You&apos;re paying for skilled, licensed electricians, not handymen</p>
                   </div>
                 </li>
                 <li className="flex items-start">

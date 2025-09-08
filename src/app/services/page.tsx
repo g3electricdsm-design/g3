@@ -268,7 +268,7 @@ export default function Services() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="font-megrim text-4xl mb-6">Ready to Get Started?</h2>
           <p className="font-raleway text-lg mb-8 max-w-2xl mx-auto">
-            Contact us today for a free consultation and quote. Let's discuss how we can help with your electrical needs.
+            Contact us today for a free consultation and quote. Let&apos;s discuss how we can help with your electrical needs.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link 
