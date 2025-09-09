@@ -92,25 +92,34 @@ export default function Services() {
       <section className="py-20 bg-white-smoke">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="font-megrim text-4xl text-earle-black mb-4">{content.safety.title}</h2>
+            <h2 className="font-megrim text-4xl text-earle-black mb-4">Safety & Quality Guarantee</h2>
             <p className="font-raleway text-lg text-gray-600 max-w-3xl mx-auto">
-              {content.safety.description}
+              Your safety is our #1 priority. Every project is completed with the highest standards of safety and quality.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {content.safety.features.map((feature, index) => {
-              const IconComponent = iconMap[feature.icon as keyof typeof iconMap] || ShieldCheckIcon;
-              return (
-                <div key={index} className="text-center">
-                  <div className="w-16 h-16 bg-purple rounded-full flex items-center justify-center mx-auto mb-6">
-                    <IconComponent className="h-8 w-8 text-white" />
-                  </div>
-                  <h3 className="font-montserrat text-xl font-semibold text-earle-black mb-4">{feature.title}</h3>
-                  <p className="font-raleway text-gray-600">{feature.description}</p>
-                </div>
-              );
-            })}
+            <div className="text-center">
+              <div className="w-16 h-16 bg-purple rounded-full flex items-center justify-center mx-auto mb-6">
+                <ShieldCheckIcon className="h-8 w-8 text-white" />
+              </div>
+              <h3 className="font-montserrat text-xl font-semibold text-earle-black mb-4">Licensed & Insured</h3>
+              <p className="font-raleway text-gray-600">Fully licensed electricians with comprehensive insurance coverage</p>
+            </div>
+            <div className="text-center">
+              <div className="w-16 h-16 bg-purple rounded-full flex items-center justify-center mx-auto mb-6">
+                <BoltIcon className="h-8 w-8 text-white" />
+              </div>
+              <h3 className="font-montserrat text-xl font-semibold text-earle-black mb-4">Code Compliance</h3>
+              <p className="font-raleway text-gray-600">All work meets or exceeds local electrical codes and standards</p>
+            </div>
+            <div className="text-center">
+              <div className="w-16 h-16 bg-purple rounded-full flex items-center justify-center mx-auto mb-6">
+                <WrenchScrewdriverIcon className="h-8 w-8 text-white" />
+              </div>
+              <h3 className="font-montserrat text-xl font-semibold text-earle-black mb-4">Quality Materials</h3>
+              <p className="font-raleway text-gray-600">We use only the highest quality materials and components</p>
+            </div>
           </div>
         </div>
       </section>
@@ -119,20 +128,36 @@ export default function Services() {
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="font-megrim text-4xl text-earle-black mb-4">{content.process.title}</h2>
+            <h2 className="font-megrim text-4xl text-earle-black mb-4">Our Process</h2>
             <p className="font-raleway text-lg text-gray-600 max-w-3xl mx-auto">
-              {content.process.description}
+              From initial consultation to project completion, we ensure a smooth and safe experience.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            {content.process.steps.map((step, index) => (
-              <div key={index} className="text-center">
-                <div className="w-12 h-12 bg-purple text-white rounded-full flex items-center justify-center mx-auto mb-4 font-montserrat font-bold text-xl">{index + 1}</div>
-                <h3 className="font-montserrat text-lg font-semibold text-earle-black mb-2">{step.title}</h3>
-                <p className="font-raleway text-gray-600">{step.description}</p>
-              </div>
-            ))}
+            <div className="text-center">
+              <div className="w-12 h-12 bg-purple text-white rounded-full flex items-center justify-center mx-auto mb-4 font-montserrat font-bold text-xl">1</div>
+              <h3 className="font-montserrat text-lg font-semibold text-earle-black mb-2">Free Consultation</h3>
+              <p className="font-raleway text-gray-600">We assess your needs and provide a detailed quote</p>
+            </div>
+            
+            <div className="text-center">
+              <div className="w-12 h-12 bg-purple text-white rounded-full flex items-center justify-center mx-auto mb-4 font-montserrat font-bold text-xl">2</div>
+              <h3 className="font-montserrat text-lg font-semibold text-earle-black mb-2">Planning & Design</h3>
+              <p className="font-raleway text-gray-600">We create a detailed plan ensuring safety and efficiency</p>
+            </div>
+            
+            <div className="text-center">
+              <div className="w-12 h-12 bg-purple text-white rounded-full flex items-center justify-center mx-auto mb-4 font-montserrat font-bold text-xl">3</div>
+              <h3 className="font-montserrat text-lg font-semibold text-earle-black mb-2">Professional Installation</h3>
+              <p className="font-raleway text-gray-600">Licensed electricians complete your project safely</p>
+            </div>
+            
+            <div className="text-center">
+              <div className="w-12 h-12 bg-purple text-white rounded-full flex items-center justify-center mx-auto mb-4 font-montserrat font-bold text-xl">4</div>
+              <h3 className="font-montserrat text-lg font-semibold text-earle-black mb-2">Quality Assurance</h3>
+              <p className="font-raleway text-gray-600">We test everything and ensure code compliance</p>
+            </div>
           </div>
         </div>
       </section>
