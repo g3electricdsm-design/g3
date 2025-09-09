@@ -55,9 +55,9 @@ export default function PayBill() {
           <div className="max-w-md w-full bg-white rounded-lg shadow-lg p-8 text-center">
             <CheckCircleIcon className="h-16 w-16 text-green-500 mx-auto mb-6" />
             <h1 className="font-megrim text-3xl text-earle-black mb-4">Payment Successful!</h1>
-            <p className="font-raleway text-gray-600 mb-6">
-              Thank you for your payment. Your invoice has been processed and you will receive a confirmation email shortly.
-            </p>
+              <p className="font-raleway text-earle-black mb-6">
+                Thank you for your payment. Your invoice has been processed and you will receive a confirmation email shortly.
+              </p>
             <div className="space-y-4">
               <Link 
                 href="/" 
@@ -106,7 +106,7 @@ export default function PayBill() {
             <div className="text-center mb-8">
               <CreditCardIcon className="h-12 w-12 text-purple mx-auto mb-4" />
               <h2 className="font-montserrat text-2xl font-semibold text-earle-black mb-2">Secure Payment</h2>
-              <p className="font-raleway text-gray-600">Enter your invoice details and payment information</p>
+              <p className="font-raleway text-earle-black">Enter your invoice details and payment information</p>
             </div>
 
             {paymentStatus === 'error' && (
@@ -271,7 +271,7 @@ export default function PayBill() {
                 {paymentStatus === 'processing' ? 'Processing Payment...' : 'Pay Now'}
               </button>
 
-              <p className="font-raleway text-sm text-gray-500 text-center">
+              <p className="font-raleway text-sm text-earle-black text-center">
                 By clicking &quot;Pay Now&quot;, you agree to our terms of service and privacy policy.
               </p>
             </form>
@@ -284,13 +284,13 @@ export default function PayBill() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h3 className="font-montserrat text-2xl text-earle-black mb-4">G3 Electric</h3>
-            <p className="font-raleway text-gray-600 mb-4">Safe & Dependable Electrical Services</p>
+            <p className="font-raleway text-earle-black mb-4">Safe & Dependable Electrical Services</p>
             <div className="flex justify-center space-x-6">
-              <Link href="/services" className="text-gray-600 hover:text-purple font-raleway">Services</Link>
-              <Link href="/portfolio" className="text-gray-600 hover:text-purple font-raleway">Portfolio</Link>
-              <Link href="/pricing" className="text-gray-600 hover:text-purple font-raleway">Pricing</Link>
-              <Link href="/about" className="text-gray-600 hover:text-purple font-raleway">About</Link>
-              <Link href="/contact" className="text-gray-600 hover:text-purple font-raleway">Contact</Link>
+              <Link href="/services" className="text-earle-black hover:text-purple font-raleway">Services</Link>
+              <Link href="/portfolio" className="text-earle-black hover:text-purple font-raleway">Portfolio</Link>
+              <Link href="/pricing" className="text-earle-black hover:text-purple font-raleway">Pricing</Link>
+              <Link href="/about" className="text-earle-black hover:text-purple font-raleway">About</Link>
+              <Link href="/contact" className="text-earle-black hover:text-purple font-raleway">Contact</Link>
             </div>
           </div>
         </div>

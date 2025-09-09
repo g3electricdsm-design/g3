@@ -78,8 +78,8 @@ export default function Contact() {
                   <PhoneIcon className="h-6 w-6 text-purple mr-4 mt-1" />
                   <div>
                     <h3 className="font-montserrat text-lg font-semibold text-earle-black">Phone</h3>
-                    <p className="font-raleway text-gray-600">(555) 123-4567</p>
-                    <p className="font-raleway text-sm text-gray-500">Available 7 days a week</p>
+                    <p className="font-raleway text-earle-black">(555) 123-4567</p>
+                    <p className="font-raleway text-sm text-earle-black">Available 7 days a week</p>
                   </div>
                 </div>
 
@@ -87,8 +87,8 @@ export default function Contact() {
                   <EnvelopeIcon className="h-6 w-6 text-purple mr-4 mt-1" />
                   <div>
                     <h3 className="font-montserrat text-lg font-semibold text-earle-black">Email</h3>
-                    <p className="font-raleway text-gray-600">info@g3electric.com</p>
-                    <p className="font-raleway text-sm text-gray-500">We respond within 24 hours</p>
+                    <p className="font-raleway text-earle-black">info@g3electric.com</p>
+                    <p className="font-raleway text-sm text-earle-black">We respond within 24 hours</p>
                   </div>
                 </div>
 
@@ -96,8 +96,8 @@ export default function Contact() {
                   <MapPinIcon className="h-6 w-6 text-purple mr-4 mt-1" />
                   <div>
                     <h3 className="font-montserrat text-lg font-semibold text-earle-black">Service Area</h3>
-                    <p className="font-raleway text-gray-600">Local and surrounding areas</p>
-                    <p className="font-raleway text-sm text-gray-500">Contact us for specific locations</p>
+                    <p className="font-raleway text-earle-black">Local and surrounding areas</p>
+                    <p className="font-raleway text-sm text-earle-black">Contact us for specific locations</p>
                   </div>
                 </div>
 
@@ -105,9 +105,9 @@ export default function Contact() {
                   <ClockIcon className="h-6 w-6 text-purple mr-4 mt-1" />
                   <div>
                     <h3 className="font-montserrat text-lg font-semibold text-earle-black">Business Hours</h3>
-                    <p className="font-raleway text-gray-600">Monday - Friday: 7:00 AM - 6:00 PM</p>
-                    <p className="font-raleway text-gray-600">Saturday: 8:00 AM - 4:00 PM</p>
-                    <p className="font-raleway text-gray-600">Sunday: Emergency calls only</p>
+                    <p className="font-raleway text-earle-black">Monday - Friday: 7:00 AM - 6:00 PM</p>
+                    <p className="font-raleway text-earle-black">Saturday: 8:00 AM - 4:00 PM</p>
+                    <p className="font-raleway text-earle-black">Sunday: Emergency calls only</p>
                   </div>
                 </div>
               </div>
@@ -115,13 +115,13 @@ export default function Contact() {
               {/* Calendly Integration Placeholder */}
                 <div className="bg-white-smoke p-6 rounded-lg border border-hookers-green/20">
                   <h3 className="font-montserrat text-xl font-semibold text-earle-black mb-4">Schedule a Consultation</h3>
-                  <p className="font-raleway text-gray-700 mb-4">
+                  <p className="font-raleway text-earle-black mb-4">
                     Prefer to schedule a specific time? Use our online booking system to find a time that works for you.
                   </p>
                   <button className="btn-primary focus:ring-2 focus:ring-purple focus:ring-offset-2 w-full sm:w-auto text-sm sm:text-base">
                     Book Online
                   </button>
-                  <p className="font-raleway text-sm text-gray-600 mt-2">
+                  <p className="font-raleway text-sm text-earle-black mt-2">
                     *Calendly integration coming soon
                   </p>
                 </div>
@@ -304,7 +304,7 @@ export default function Contact() {
                           onChange={handleCheckboxChange}
                           className="h-4 w-4 text-purple focus:ring-purple border-gray-300 rounded"
                         />
-                        <span className="ml-2 font-raleway text-sm text-gray-700">{service}</span>
+                        <span className="ml-2 font-raleway text-sm text-earle-black">{service}</span>
                       </label>
                     ))}
                   </div>
@@ -333,7 +333,7 @@ export default function Contact() {
                   Request Free Quote
                 </button>
 
-                <p className="font-raleway text-sm text-gray-500 text-center">
+                <p className="font-raleway text-sm text-earle-black text-center">
                   * Required fields. We&apos;ll respond within 24 hours.
                 </p>
               </form>
@@ -347,12 +347,12 @@ export default function Contact() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h3 className="font-montserrat text-2xl text-earle-black mb-4">G3 Electric</h3>
-            <p className="font-raleway text-gray-600 mb-4">Safe & Dependable Electrical Services</p>
+            <p className="font-raleway text-earle-black mb-4">Safe & Dependable Electrical Services</p>
             <div className="flex justify-center space-x-6">
-              <Link href="/services" className="text-gray-600 hover:text-purple font-raleway">Services</Link>
-              <Link href="/portfolio" className="text-gray-600 hover:text-purple font-raleway">Portfolio</Link>
-              <Link href="/pricing" className="text-gray-600 hover:text-purple font-raleway">Pricing</Link>
-              <Link href="/about" className="text-gray-600 hover:text-purple font-raleway">About</Link>
+              <Link href="/services" className="text-earle-black hover:text-purple font-raleway">Services</Link>
+              <Link href="/portfolio" className="text-earle-black hover:text-purple font-raleway">Portfolio</Link>
+              <Link href="/pricing" className="text-earle-black hover:text-purple font-raleway">Pricing</Link>
+              <Link href="/about" className="text-earle-black hover:text-purple font-raleway">About</Link>
               <Link href="/contact" className="text-purple font-raleway">Contact</Link>
             </div>
           </div>

@@ -84,7 +84,7 @@ export default function Home() {
                 </div>
                 <div className="p-6">
                   <h3 className="font-montserrat text-xl font-semibold text-earle-black mb-2">{service.title}</h3>
-                  <p className="font-raleway text-gray-600">{service.description}</p>
+                  <p className="font-raleway text-earle-black">{service.description}</p>
                 </div>
               </div>
             ))}

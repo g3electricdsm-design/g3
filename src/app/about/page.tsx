@@ -52,7 +52,7 @@ export default function About() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
               <h2 className="font-montserrat text-4xl text-earle-black mb-6">{content.mission.title}</h2>
-              <div className="space-y-4 font-raleway text-gray-600">
+              <div className="space-y-4 font-raleway text-earle-black">
                 <p>{content.mission.description}</p>
               </div>
             </div>
@@ -63,23 +63,23 @@ export default function About() {
                 </div>
                 <h3 className="font-montserrat text-2xl font-semibold text-earle-black mb-4">Why Choose G3 Electric?</h3>
                 <ul className="space-y-3 text-left">
-                  <li className="flex items-center font-raleway text-gray-600">
+                  <li className="flex items-center font-raleway text-earle-black">
                     <CheckBadgeIcon className="h-5 w-5 text-purple mr-3 flex-shrink-0" />
                     Licensed & Insured
                   </li>
-                  <li className="flex items-center font-raleway text-gray-600">
+                  <li className="flex items-center font-raleway text-earle-black">
                     <CheckBadgeIcon className="h-5 w-5 text-purple mr-3 flex-shrink-0" />
                     Safety-First Approach
                   </li>
-                  <li className="flex items-center font-raleway text-gray-600">
+                  <li className="flex items-center font-raleway text-earle-black">
                     <CheckBadgeIcon className="h-5 w-5 text-purple mr-3 flex-shrink-0" />
                     Code Compliance Guaranteed
                   </li>
-                  <li className="flex items-center font-raleway text-gray-600">
+                  <li className="flex items-center font-raleway text-earle-black">
                     <CheckBadgeIcon className="h-5 w-5 text-purple mr-3 flex-shrink-0" />
                     Quality Materials Only
                   </li>
-                  <li className="flex items-center font-raleway text-gray-600">
+                  <li className="flex items-center font-raleway text-earle-black">
                     <CheckBadgeIcon className="h-5 w-5 text-purple mr-3 flex-shrink-0" />
                     Honest, Transparent Pricing
                   </li>
@@ -95,7 +95,7 @@ export default function About() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="font-montserrat text-4xl text-earle-black mb-4">Our Values</h2>
-            <p className="font-raleway text-lg text-gray-600 max-w-3xl mx-auto">
+            <p className="font-raleway text-lg text-earle-black max-w-3xl mx-auto">
               These core values guide everything we do and ensure you receive the best possible service.
             </p>
           </div>
@@ -109,7 +109,7 @@ export default function About() {
                     <IconComponent className="h-8 w-8 text-white" />
                   </div>
                   <h3 className="font-montserrat text-xl font-semibold text-earle-black mb-4">{value.title}</h3>
-                  <p className="font-raleway text-gray-600">{value.description}</p>
+                  <p className="font-raleway text-earle-black">{value.description}</p>
                 </div>
               );
             })}
@@ -122,7 +122,7 @@ export default function About() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="font-montserrat text-4xl text-earle-black mb-4">By the Numbers</h2>
-            <p className="font-raleway text-lg text-gray-600 max-w-3xl mx-auto">
+            <p className="font-raleway text-lg text-earle-black max-w-3xl mx-auto">
               Our track record speaks for itself—safety, quality, and customer satisfaction in every project.
             </p>
           </div>
@@ -153,7 +153,7 @@ export default function About() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="font-montserrat text-4xl text-earle-black mb-4">Meet Our Team</h2>
-            <p className="font-raleway text-lg text-gray-600 max-w-3xl mx-auto">
+            <p className="font-raleway text-lg text-earle-black max-w-3xl mx-auto">
               Licensed professionals dedicated to your safety and satisfaction.
             </p>
           </div>
@@ -169,7 +169,7 @@ export default function About() {
                 <div className="p-6">
                   <h3 className="font-montserrat text-xl font-semibold text-earle-black mb-2">{member.name}</h3>
                   <p className="font-raleway text-purple font-medium mb-2">{member.role}</p>
-                  <p className="font-raleway text-gray-600 text-sm mb-4">{member.description}</p>
+                  <p className="font-raleway text-earle-black text-sm mb-4">{member.description}</p>
                 </div>
               </div>
             ))}
@@ -237,13 +237,13 @@ export default function About() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h3 className="font-montserrat text-2xl text-earle-black mb-4">G3 Electric</h3>
-            <p className="font-raleway text-gray-600 mb-4">Safe & Dependable Electrical Services</p>
+            <p className="font-raleway text-earle-black mb-4">Safe & Dependable Electrical Services</p>
             <div className="flex justify-center space-x-6">
-              <Link href="/services" className="text-gray-600 hover:text-purple font-raleway">Services</Link>
-              <Link href="/portfolio" className="text-gray-600 hover:text-purple font-raleway">Portfolio</Link>
-              <Link href="/pricing" className="text-gray-600 hover:text-purple font-raleway">Pricing</Link>
+              <Link href="/services" className="text-earle-black hover:text-purple font-raleway">Services</Link>
+              <Link href="/portfolio" className="text-earle-black hover:text-purple font-raleway">Portfolio</Link>
+              <Link href="/pricing" className="text-earle-black hover:text-purple font-raleway">Pricing</Link>
               <Link href="/about" className="text-purple font-raleway">About</Link>
-              <Link href="/contact" className="text-gray-600 hover:text-purple font-raleway">Contact</Link>
+              <Link href="/contact" className="text-earle-black hover:text-purple font-raleway">Contact</Link>
             </div>
           </div>
         </div>

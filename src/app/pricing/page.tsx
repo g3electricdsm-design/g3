@@ -202,7 +202,7 @@ export default function Pricing() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="font-montserrat text-4xl text-earle-black mb-4">Service Tiers</h2>
-            <p className="font-raleway text-lg text-gray-600 max-w-3xl mx-auto">
+            <p className="font-raleway text-lg text-earle-black max-w-3xl mx-auto">
               Choose the level of service that best fits your needs and budget.
             </p>
           </div>
@@ -220,7 +220,7 @@ export default function Pricing() {
                   }`}>
                     {tier.name}
                   </h3>
-                  <p className="font-raleway text-gray-600">{tier.description}</p>
+                  <p className="font-raleway text-earle-black">{tier.description}</p>
                 </div>
                 
                 <ul className="space-y-3">
@@ -229,7 +229,7 @@ export default function Pricing() {
                       <CheckIcon className={`h-5 w-5 mr-3 ${
                         tier.color === 'purple' ? 'text-purple' : 'text-gray-500'
                       }`} />
-                      <span className="font-raleway text-gray-700">{feature}</span>
+                      <span className="font-raleway text-earle-black">{feature}</span>
                     </li>
                   ))}
                 </ul>
@@ -244,7 +244,7 @@ export default function Pricing() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="font-montserrat text-4xl text-earle-black mb-4">Service Pricing</h2>
-            <p className="font-raleway text-lg text-gray-600 max-w-3xl mx-auto">
+            <p className="font-raleway text-lg text-earle-black max-w-3xl mx-auto">
               Detailed pricing for our most common services. All prices include materials, labor, and warranty.
             </p>
           </div>
@@ -260,7 +260,7 @@ export default function Pricing() {
                   </div>
                   <div className="ml-4 flex-1">
                     <h3 className="font-montserrat text-2xl font-semibold text-earle-black mb-2">{service.title}</h3>
-                    <p className="font-raleway text-gray-600">{service.description}</p>
+                    <p className="font-raleway text-earle-black">{service.description}</p>
                   </div>
                 </div>
 
@@ -273,15 +273,15 @@ export default function Pricing() {
                     </div>
                     <div className="space-y-2 mb-4">
                       <div className="flex justify-between">
-                        <span className="font-raleway text-gray-600">Basic:</span>
+                        <span className="font-raleway text-earle-black">Basic:</span>
                         <span className="font-montserrat font-semibold text-earle-black">{service.residential.basic}</span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="font-raleway text-gray-600">Premium:</span>
+                        <span className="font-raleway text-earle-black">Premium:</span>
                         <span className="font-montserrat font-semibold text-purple">{service.residential.premium}</span>
                       </div>
                     </div>
-                    <p className="font-raleway text-sm text-gray-500">{service.residential.description}</p>
+                    <p className="font-raleway text-sm text-earle-black">{service.residential.description}</p>
                   </div>
 
                   {/* Commercial Pricing */}
@@ -292,15 +292,15 @@ export default function Pricing() {
                     </div>
                     <div className="space-y-2 mb-4">
                       <div className="flex justify-between">
-                        <span className="font-raleway text-gray-600">Basic:</span>
+                        <span className="font-raleway text-earle-black">Basic:</span>
                         <span className="font-montserrat font-semibold text-earle-black">{service.commercial.basic}</span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="font-raleway text-gray-600">Premium:</span>
+                        <span className="font-raleway text-earle-black">Premium:</span>
                         <span className="font-montserrat font-semibold text-purple">{service.commercial.premium}</span>
                       </div>
                     </div>
-                    <p className="font-raleway text-sm text-gray-500">{service.commercial.description}</p>
+                    <p className="font-raleway text-sm text-earle-black">{service.commercial.description}</p>
                   </div>
                 </div>
 
@@ -310,7 +310,7 @@ export default function Pricing() {
                     {service.includes.map((item, itemIndex) => (
                       <div key={itemIndex} className="flex items-center">
                         <CheckIcon className="h-4 w-4 text-purple mr-2 flex-shrink-0" />
-                        <span className="font-raleway text-sm text-gray-600">{item}</span>
+                        <span className="font-raleway text-sm text-earle-black">{item}</span>
                       </div>
                     ))}
                   </div>
@@ -327,7 +327,7 @@ export default function Pricing() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             <div>
               <h2 className="font-montserrat text-3xl text-earle-black mb-6">Pricing Information</h2>
-              <div className="space-y-4 font-raleway text-gray-600">
+              <div className="space-y-4 font-raleway text-earle-black">
                 <p>
                   <strong>Free Estimates:</strong> All quotes are provided at no cost with no obligation. 
                   We believe in transparent pricing and honest communication.
@@ -354,28 +354,28 @@ export default function Pricing() {
                   <BoltIcon className="h-5 w-5 text-purple mr-3 mt-1 flex-shrink-0" />
                   <div>
                     <h4 className="font-montserrat font-semibold text-earle-black">Licensed Professionals</h4>
-                    <p className="font-raleway text-sm text-gray-600">You&apos;re paying for skilled, licensed electricians, not handymen</p>
+                    <p className="font-raleway text-sm text-earle-black">You&apos;re paying for skilled, licensed electricians, not handymen</p>
                   </div>
                 </li>
                 <li className="flex items-start">
                   <BoltIcon className="h-5 w-5 text-purple mr-3 mt-1 flex-shrink-0" />
                   <div>
                     <h4 className="font-montserrat font-semibold text-earle-black">Quality Materials</h4>
-                    <p className="font-raleway text-sm text-gray-600">We use only the highest quality materials and components</p>
+                    <p className="font-raleway text-sm text-earle-black">We use only the highest quality materials and components</p>
                   </div>
                 </li>
                 <li className="flex items-start">
                   <BoltIcon className="h-5 w-5 text-purple mr-3 mt-1 flex-shrink-0" />
                   <div>
                     <h4 className="font-montserrat font-semibold text-earle-black">Safety First</h4>
-                    <p className="font-raleway text-sm text-gray-600">Every project includes safety inspections and code compliance</p>
+                    <p className="font-raleway text-sm text-earle-black">Every project includes safety inspections and code compliance</p>
                   </div>
                 </li>
                 <li className="flex items-start">
                   <BoltIcon className="h-5 w-5 text-purple mr-3 mt-1 flex-shrink-0" />
                   <div>
                     <h4 className="font-montserrat font-semibold text-earle-black">Peace of Mind</h4>
-                    <p className="font-raleway text-sm text-gray-600">Comprehensive warranty and ongoing support</p>
+                    <p className="font-raleway text-sm text-earle-black">Comprehensive warranty and ongoing support</p>
                   </div>
                 </li>
               </ul>
@@ -413,13 +413,13 @@ export default function Pricing() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h3 className="font-montserrat text-2xl text-earle-black mb-4">G3 Electric</h3>
-            <p className="font-raleway text-gray-600 mb-4">Safe & Dependable Electrical Services</p>
+            <p className="font-raleway text-earle-black mb-4">Safe & Dependable Electrical Services</p>
             <div className="flex justify-center space-x-6">
-              <Link href="/services" className="text-gray-600 hover:text-purple font-raleway">Services</Link>
-              <Link href="/portfolio" className="text-gray-600 hover:text-purple font-raleway">Portfolio</Link>
+              <Link href="/services" className="text-earle-black hover:text-purple font-raleway">Services</Link>
+              <Link href="/portfolio" className="text-earle-black hover:text-purple font-raleway">Portfolio</Link>
               <Link href="/pricing" className="text-purple font-raleway">Pricing</Link>
-              <Link href="/about" className="text-gray-600 hover:text-purple font-raleway">About</Link>
-              <Link href="/contact" className="text-gray-600 hover:text-purple font-raleway">Contact</Link>
+              <Link href="/about" className="text-earle-black hover:text-purple font-raleway">About</Link>
+              <Link href="/contact" className="text-earle-black hover:text-purple font-raleway">Contact</Link>
             </div>
           </div>
         </div>

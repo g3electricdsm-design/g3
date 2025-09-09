@@ -19,7 +19,7 @@ export default function ProjectDetail({ params }: ProjectDetailProps) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
           <div className="text-center">
             <h1 className="font-megrim text-4xl text-earle-black mb-4">Project Not Found</h1>
-            <p className="font-raleway text-lg text-gray-600 mb-8">The project you&apos;re looking for doesn&apos;t exist.</p>
+            <p className="font-raleway text-lg text-earle-black mb-8">The project you&apos;re looking for doesn&apos;t exist.</p>
             <Link href="/portfolio" className="btn-primary">
               Back to Portfolio
             </Link>
@@ -68,7 +68,7 @@ export default function ProjectDetail({ params }: ProjectDetailProps) {
           <div className="flex items-center gap-3 mb-4">
             <span className="text-purple-300">{getCategoryIcon(project.category)}</span>
             <span className="font-montserrat text-lg">{project.category}</span>
-            <span className="text-gray-300">•</span>
+            <span className="text-white">•</span>
             <span className="text-purple-300">{getTypeIcon(project.type)}</span>
             <span className="font-montserrat text-lg">{project.type}</span>
           </div>
@@ -86,12 +86,12 @@ export default function ProjectDetail({ params }: ProjectDetailProps) {
               {/* Project Image */}
               <div className="mb-8">
                 <div className="aspect-video bg-gradient-to-br from-purple/20 to-phlox/20 rounded-lg flex items-center justify-center">
-                  <div className="text-center text-gray-600">
+                  <div className="text-center text-earle-black">
                     <div className="w-20 h-20 bg-purple/30 rounded-lg flex items-center justify-center mx-auto mb-4">
                       <BoltIcon className="h-10 w-10 text-purple" />
                     </div>
                     <div className="font-montserrat text-lg font-medium">{project.title}</div>
-                    <div className="font-raleway text-sm text-gray-500 mt-2">{project.category} • {project.type}</div>
+                    <div className="font-raleway text-sm text-earle-black mt-2">{project.category} • {project.type}</div>
                   </div>
                 </div>
               </div>
@@ -99,7 +99,7 @@ export default function ProjectDetail({ params }: ProjectDetailProps) {
               {/* Project Description */}
               <div className="mb-8">
                 <h2 className="font-montserrat text-2xl text-earle-black mb-4">Project Overview</h2>
-                <p className="font-raleway text-lg text-gray-700 leading-relaxed">{project.fullDescription}</p>
+                <p className="font-raleway text-lg text-earle-black leading-relaxed">{project.fullDescription}</p>
               </div>
 
               {/* Services Provided */}
@@ -109,7 +109,7 @@ export default function ProjectDetail({ params }: ProjectDetailProps) {
                   {project.services.map((service, index) => (
                     <div key={index} className="flex items-center gap-3 p-3 bg-white-smoke rounded-lg">
                       <div className="w-2 h-2 bg-purple rounded-full"></div>
-                      <span className="font-raleway text-gray-700">{service}</span>
+                      <span className="font-raleway text-earle-black">{service}</span>
                     </div>
                   ))}
                 </div>
@@ -119,11 +119,11 @@ export default function ProjectDetail({ params }: ProjectDetailProps) {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div>
                   <h3 className="font-montserrat text-xl text-earle-black mb-3">Challenges</h3>
-                  <p className="font-raleway text-gray-700">{project.challenges}</p>
+                  <p className="font-raleway text-earle-black">{project.challenges}</p>
                 </div>
                 <div>
                   <h3 className="font-montserrat text-xl text-earle-black mb-3">Results</h3>
-                  <p className="font-raleway text-gray-700">{project.results}</p>
+                  <p className="font-raleway text-earle-black">{project.results}</p>
                 </div>
               </div>
             </div>
@@ -194,13 +194,13 @@ export default function ProjectDetail({ params }: ProjectDetailProps) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h3 className="font-montserrat text-2xl text-earle-black mb-4">G3 Electric</h3>
-            <p className="font-raleway text-gray-600 mb-4">Safe & Dependable Electrical Services</p>
+            <p className="font-raleway text-earle-black mb-4">Safe & Dependable Electrical Services</p>
             <div className="flex justify-center space-x-6">
-              <Link href="/services" className="text-gray-600 hover:text-purple font-raleway">Services</Link>
+              <Link href="/services" className="text-earle-black hover:text-purple font-raleway">Services</Link>
               <Link href="/portfolio" className="text-purple font-raleway">Portfolio</Link>
-              <Link href="/pricing" className="text-gray-600 hover:text-purple font-raleway">Pricing</Link>
-              <Link href="/about" className="text-gray-600 hover:text-purple font-raleway">About</Link>
-              <Link href="/contact" className="text-gray-600 hover:text-purple font-raleway">Contact</Link>
+              <Link href="/pricing" className="text-earle-black hover:text-purple font-raleway">Pricing</Link>
+              <Link href="/about" className="text-earle-black hover:text-purple font-raleway">About</Link>
+              <Link href="/contact" className="text-earle-black hover:text-purple font-raleway">Contact</Link>
             </div>
           </div>
         </div>

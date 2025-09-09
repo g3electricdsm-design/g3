@@ -95,12 +95,12 @@ export default function Portfolio() {
               >
                 {/* Image placeholder with proper aspect ratio */}
                 <div className="absolute inset-0 bg-gradient-to-br from-purple/20 to-phlox/20 flex items-center justify-center">
-                  <div className="text-center text-gray-600">
+                  <div className="text-center text-earle-black">
                     <div className="w-16 h-16 bg-purple/30 rounded-lg flex items-center justify-center mx-auto mb-3">
                       <BoltIcon className="h-8 w-8 text-purple" />
                     </div>
                     <div className="font-montserrat text-sm font-medium">{item.title}</div>
-                    <div className="font-raleway text-xs text-gray-500 mt-1">{item.category}</div>
+                    <div className="font-raleway text-xs text-earle-black mt-1">{item.category}</div>
                   </div>
                 </div>
                 
@@ -110,12 +110,12 @@ export default function Portfolio() {
                     <div className="flex items-center gap-2 mb-2">
                       <span className="text-purple-300">{getCategoryIcon(item.category)}</span>
                       <span className="font-montserrat text-sm font-medium">{item.category}</span>
-                      <span className="text-gray-300">•</span>
+                      <span className="text-white">•</span>
                       <span className="text-purple-300">{getTypeIcon(item.type)}</span>
                       <span className="font-montserrat text-sm font-medium">{item.type}</span>
                     </div>
                     <h3 className="font-montserrat text-lg font-semibold mb-1">{item.title}</h3>
-                    <p className="font-raleway text-sm text-gray-200">{item.description}</p>
+                    <p className="font-raleway text-sm text-white">{item.description}</p>
                   </div>
                 </div>
 
@@ -124,7 +124,7 @@ export default function Portfolio() {
                   <div className="flex items-center gap-2 mb-2">
                     <span className="text-purple">{getCategoryIcon(item.category)}</span>
                     <span className="font-montserrat text-sm font-medium text-earle-black">{item.category}</span>
-                    <span className="text-gray-600">•</span>
+                    <span className="text-earle-black">•</span>
                     <span className="text-purple">{getTypeIcon(item.type)}</span>
                     <span className="font-montserrat text-sm font-medium text-earle-black">{item.type}</span>
                   </div>
