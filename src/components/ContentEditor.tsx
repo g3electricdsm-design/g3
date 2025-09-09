@@ -5,7 +5,7 @@ import { XMarkIcon, PlusIcon, TrashIcon } from '@heroicons/react/24/outline';
 
 interface ContentEditorProps {
   content: Record<string, unknown> | null;
-  onSave: (content: Record<string, unknown>) => void;
+  onSave: (updatedContent: { page: string; content: Record<string, unknown> }) => void;
   onCancel: () => void;
   isOpen: boolean;
   title: string;
@@ -17,7 +17,7 @@ export default function ContentEditor({ content, onSave, onCancel, isOpen, title
   if (!isOpen) return null;
 
   const handleSave = () => {
-    onSave(editedContent);
+    onSave({ page: title.toLowerCase(), content: editedContent });
   };
 
   const handleCancel = () => {
