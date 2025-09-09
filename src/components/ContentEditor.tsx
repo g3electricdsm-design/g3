@@ -131,7 +131,7 @@ export default function ContentEditor({ content, onSave, onCancel, isOpen, title
         </div>
         
         <div className="space-y-4">
-          {items.map((item: Record<string, string | string[] | boolean>, index: number) => (
+          {items.map((item: unknown, index: number) => (
             <div key={index} className="bg-gray-50 p-4 rounded-lg border">
               <div className="flex justify-between items-start mb-3">
                 <h4 className="font-montserrat font-medium text-earle-black">
@@ -145,20 +145,20 @@ export default function ContentEditor({ content, onSave, onCancel, isOpen, title
                 </button>
               </div>
               
-              {Object.keys(item).map((key) => (
+              {Object.keys(item as Record<string, unknown>).map((key) => (
                 <div key={key} className="mb-3">
                   <label className="block font-raleway text-sm font-medium text-gray-700 mb-1">
                     {key.charAt(0).toUpperCase() + key.slice(1)}
                   </label>
                   {key === 'description' || key === 'features' ? (
                     <textarea
-                      value={Array.isArray(item[key]) ? item[key].join('\n') : item[key] || ''}
+                      value={Array.isArray((item as Record<string, unknown>)[key]) ? ((item as Record<string, unknown>)[key] as string[]).join('\n') : ((item as Record<string, unknown>)[key] as string) || ''}
                       onChange={(e) => {
                         const newItems = [...items];
                         if (key === 'features') {
-                          newItems[index][key] = e.target.value.split('\n').filter(f => f.trim());
+                          (newItems[index] as Record<string, unknown>)[key] = e.target.value.split('\n').filter(f => f.trim());
                         } else {
-                          newItems[index][key] = e.target.value;
+                          (newItems[index] as Record<string, unknown>)[key] = e.target.value;
                         }
                         updateField(path, newItems);
                       }}
@@ -168,10 +168,10 @@ export default function ContentEditor({ content, onSave, onCancel, isOpen, title
                   ) : (
                     <input
                       type="text"
-                      value={item[key] || ''}
+                      value={((item as Record<string, unknown>)[key] as string) || ''}
                       onChange={(e) => {
                         const newItems = [...items];
-                        newItems[index][key] = e.target.value;
+                        (newItems[index] as Record<string, unknown>)[key] = e.target.value;
                         updateField(path, newItems);
                       }}
                       className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple focus:border-transparent text-sm"
