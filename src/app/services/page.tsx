@@ -158,13 +158,13 @@ export default function Services() {
               href="/contact" 
               className="btn-primary w-full sm:w-auto text-sm sm:text-base"
             >
-              {content.cta.primaryButton}
+              {content.cta.buttonText}
             </Link>
             <Link 
               href="/portfolio" 
               className="btn-secondary border-white text-white hover:bg-white hover:text-purple w-full sm:w-auto text-sm sm:text-base"
             >
-              {content.cta.secondaryButton}
+              View Our Work
             </Link>
           </div>
         </div>

@@ -53,13 +53,13 @@ export default function Home() {
                 href="/contact" 
                 className="btn-primary text-sm sm:text-lg shadow-2xl w-full sm:w-auto"
               >
-                {content.hero.primaryButton}
+                {content.hero.ctaPrimary}
               </Link>
               <Link 
                 href="/portfolio" 
                 className="btn-secondary text-sm sm:text-lg shadow-2xl border-white text-white hover:bg-white hover:text-purple w-full sm:w-auto"
               >
-                {content.hero.secondaryButton}
+                {content.hero.ctaSecondary}
               </Link>
             </div>
           </div>
