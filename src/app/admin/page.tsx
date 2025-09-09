@@ -83,13 +83,13 @@ export default function Admin() {
   };
 
   const handleEditContent = (page: string) => {
-    setEditingContent({ page, content: content[page] });
+    setEditingContent({ page, content: content[page as keyof typeof content] });
     setShowContentEditor(true);
   };
 
   const handleSaveContent = (updatedContent: { page: string; content: Record<string, unknown> }) => {
     const newContent = { ...content };
-    newContent[updatedContent.page] = updatedContent.content;
+    (newContent as any)[updatedContent.page] = updatedContent.content;
     setContent(newContent);
     updateContent(updatedContent.page, updatedContent.content);
     setShowContentEditor(false);
