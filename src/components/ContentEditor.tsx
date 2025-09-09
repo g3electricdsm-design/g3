@@ -160,7 +160,7 @@ export default function ContentEditor({ content, onSave, onCancel, isOpen, title
                         } else {
                           (newItems[index] as Record<string, unknown>)[key] = e.target.value;
                         }
-                        updateField(path, newItems);
+                        updateField(path, newItems as unknown as string | number | boolean);
                       }}
                       className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple focus:border-transparent text-sm"
                       rows={3}
