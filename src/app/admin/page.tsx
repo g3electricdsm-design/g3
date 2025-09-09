@@ -2,23 +2,28 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { ArrowLeftIcon, PlusIcon, PencilIcon, TrashIcon, CogIcon, ChartBarIcon, PhotoIcon, EnvelopeIcon, EyeIcon } from '@heroicons/react/24/outline';
+import { ArrowLeftIcon, PlusIcon, PencilIcon, TrashIcon, CogIcon, ChartBarIcon, PhotoIcon, EnvelopeIcon, EyeIcon, HomeIcon, UserIcon } from '@heroicons/react/24/outline';
 import Navigation from '@/components/Navigation';
 import { getAllProjects, Project } from '@/data/projects';
 import { getAllServices, Service } from '@/data/services';
 import { getAllFormEntries, FormEntry } from '@/data/formEntries';
+import { getContent, updateContent } from '@/data/content';
 import ProjectForm from '@/components/ProjectForm';
 import FormEntryModal from '@/components/FormEntryModal';
+import ContentEditor from '@/components/ContentEditor';
 
 export default function Admin() {
   const [projects, setProjects] = useState<Project[]>(getAllProjects());
   const [services] = useState<Service[]>(getAllServices());
   const [formEntries, setFormEntries] = useState<FormEntry[]>(getAllFormEntries());
+  const [content, setContent] = useState(getContent());
   const [editingProject, setEditingProject] = useState<Project | null>(null);
   const [selectedFormEntry, setSelectedFormEntry] = useState<FormEntry | null>(null);
+  const [editingContent, setEditingContent] = useState<any>(null);
   const [showProjectForm, setShowProjectForm] = useState(false);
   const [showFormEntryModal, setShowFormEntryModal] = useState(false);
-  const [activeTab, setActiveTab] = useState<'projects' | 'services' | 'formEntries' | 'analytics' | 'settings'>('projects');
+  const [showContentEditor, setShowContentEditor] = useState(false);
+  const [activeTab, setActiveTab] = useState<'projects' | 'services' | 'formEntries' | 'content' | 'analytics' | 'settings'>('projects');
 
   const handleEdit = (project: Project) => {
     setEditingProject(project);
@@ -77,6 +82,25 @@ export default function Admin() {
     }
   };
 
+  const handleEditContent = (page: string) => {
+    setEditingContent({ page, content: content[page] });
+    setShowContentEditor(true);
+  };
+
+  const handleSaveContent = (updatedContent: any) => {
+    const newContent = { ...content };
+    newContent[updatedContent.page] = updatedContent.content;
+    setContent(newContent);
+    updateContent(updatedContent.page, updatedContent.content);
+    setShowContentEditor(false);
+    setEditingContent(null);
+  };
+
+  const handleCancelContent = () => {
+    setShowContentEditor(false);
+    setEditingContent(null);
+  };
+
   return (
     <div className="min-h-screen bg-earle-black">
       {/* Navigation */}
@@ -114,6 +138,7 @@ export default function Admin() {
                 { id: 'projects', name: 'Projects', icon: PhotoIcon },
                 { id: 'services', name: 'Services', icon: CogIcon },
                 { id: 'formEntries', name: 'Form Entries', icon: EnvelopeIcon },
+                { id: 'content', name: 'Content', icon: PencilIcon },
                 { id: 'analytics', name: 'Analytics', icon: ChartBarIcon },
                 { id: 'settings', name: 'Settings', icon: CogIcon }
               ].map((tab) => {
@@ -121,7 +146,7 @@ export default function Admin() {
                 return (
                   <button
                     key={tab.id}
-                    onClick={() => setActiveTab(tab.id as 'projects' | 'services' | 'formEntries' | 'analytics' | 'settings')}
+                    onClick={() => setActiveTab(tab.id as 'projects' | 'services' | 'formEntries' | 'content' | 'analytics' | 'settings')}
                     className={`flex items-center gap-2 px-4 py-2 rounded-lg font-montserrat font-medium transition-colors ${
                       activeTab === tab.id
                         ? 'bg-purple text-white'
@@ -308,6 +333,163 @@ export default function Admin() {
             </div>
           )}
 
+          {/* Content Management Tab */}
+          {activeTab === 'content' && (
+            <div className="space-y-6">
+              <div className="flex justify-between items-center">
+                <h3 className="font-montserrat text-2xl text-white">Content Management</h3>
+                <p className="text-white-smoke">Manage all website content from one place</p>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {/* Homepage Content */}
+                <div className="bg-white-smoke rounded-lg p-6 shadow-sm">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-12 h-12 bg-purple/20 rounded-lg flex items-center justify-center">
+                      <HomeIcon className="h-6 w-6 text-purple" />
+                    </div>
+                    <div>
+                      <h4 className="font-montserrat text-lg font-semibold text-earle-black">Homepage</h4>
+                      <p className="font-raleway text-sm text-gray-600">Hero, services, CTA sections</p>
+                    </div>
+                  </div>
+                  <p className="font-raleway text-sm text-gray-600 mb-4">
+                    Manage hero content, service previews, and call-to-action sections.
+                  </p>
+                  <button
+                    onClick={() => handleEditContent('homepage')}
+                    className="w-full bg-purple text-white px-4 py-2 rounded-lg font-montserrat font-medium hover:bg-phlox transition-colors"
+                  >
+                    Edit Homepage
+                  </button>
+                </div>
+
+                {/* Services Content */}
+                <div className="bg-white-smoke rounded-lg p-6 shadow-sm">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-12 h-12 bg-hookers-green/20 rounded-lg flex items-center justify-center">
+                      <CogIcon className="h-6 w-6 text-hookers-green" />
+                    </div>
+                    <div>
+                      <h4 className="font-montserrat text-lg font-semibold text-earle-black">Services</h4>
+                      <p className="font-raleway text-sm text-gray-600">Service descriptions & features</p>
+                    </div>
+                  </div>
+                  <p className="font-raleway text-sm text-gray-600 mb-4">
+                    Update service descriptions, features, and detailed information.
+                  </p>
+                  <button
+                    onClick={() => handleEditContent('services')}
+                    className="w-full bg-hookers-green text-white px-4 py-2 rounded-lg font-montserrat font-medium hover:bg-hookers-green/80 transition-colors"
+                  >
+                    Edit Services
+                  </button>
+                </div>
+
+                {/* Pricing Content */}
+                <div className="bg-white-smoke rounded-lg p-6 shadow-sm">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-12 h-12 bg-phlox/20 rounded-lg flex items-center justify-center">
+                      <ChartBarIcon className="h-6 w-6 text-phlox" />
+                    </div>
+                    <div>
+                      <h4 className="font-montserrat text-lg font-semibold text-earle-black">Pricing</h4>
+                      <p className="font-raleway text-sm text-gray-600">Pricing tiers & service costs</p>
+                    </div>
+                  </div>
+                  <p className="font-raleway text-sm text-gray-600 mb-4">
+                    Manage pricing tiers, service pricing, and cost information.
+                  </p>
+                  <button
+                    onClick={() => handleEditContent('pricing')}
+                    className="w-full bg-phlox text-white px-4 py-2 rounded-lg font-montserrat font-medium hover:bg-phlox/80 transition-colors"
+                  >
+                    Edit Pricing
+                  </button>
+                </div>
+
+                {/* About Content */}
+                <div className="bg-white-smoke rounded-lg p-6 shadow-sm">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-12 h-12 bg-purple/20 rounded-lg flex items-center justify-center">
+                      <UserIcon className="h-6 w-6 text-purple" />
+                    </div>
+                    <div>
+                      <h4 className="font-montserrat text-lg font-semibold text-earle-black">About Us</h4>
+                      <p className="font-raleway text-sm text-gray-600">Mission, values, team info</p>
+                    </div>
+                  </div>
+                  <p className="font-raleway text-sm text-gray-600 mb-4">
+                    Update company mission, values, team information, and story.
+                  </p>
+                  <button
+                    onClick={() => handleEditContent('about')}
+                    className="w-full bg-purple text-white px-4 py-2 rounded-lg font-montserrat font-medium hover:bg-phlox transition-colors"
+                  >
+                    Edit About
+                  </button>
+                </div>
+
+                {/* Contact Content */}
+                <div className="bg-white-smoke rounded-lg p-6 shadow-sm">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-12 h-12 bg-hookers-green/20 rounded-lg flex items-center justify-center">
+                      <EnvelopeIcon className="h-6 w-6 text-hookers-green" />
+                    </div>
+                    <div>
+                      <h4 className="font-montserrat text-lg font-semibold text-earle-black">Contact Form</h4>
+                      <p className="font-raleway text-sm text-gray-600">Form fields & contact info</p>
+                    </div>
+                  </div>
+                  <p className="font-raleway text-sm text-gray-600 mb-4">
+                    Customize contact form fields, labels, and contact information.
+                  </p>
+                  <button
+                    onClick={() => handleEditContent('contact')}
+                    className="w-full bg-hookers-green text-white px-4 py-2 rounded-lg font-montserrat font-medium hover:bg-hookers-green/80 transition-colors"
+                  >
+                    Edit Contact
+                  </button>
+                </div>
+
+                {/* Content Overview */}
+                <div className="bg-white-smoke rounded-lg p-6 shadow-sm">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-12 h-12 bg-earle-black/20 rounded-lg flex items-center justify-center">
+                      <EyeIcon className="h-6 w-6 text-earle-black" />
+                    </div>
+                    <div>
+                      <h4 className="font-montserrat text-lg font-semibold text-earle-black">Content Overview</h4>
+                      <p className="font-raleway text-sm text-gray-600">All content status</p>
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <div className="flex justify-between text-sm">
+                      <span className="font-raleway text-gray-600">Homepage</span>
+                      <span className="font-montserrat text-green-600">✓ Updated</span>
+                    </div>
+                    <div className="flex justify-between text-sm">
+                      <span className="font-raleway text-gray-600">Services</span>
+                      <span className="font-montserrat text-green-600">✓ Updated</span>
+                    </div>
+                    <div className="flex justify-between text-sm">
+                      <span className="font-raleway text-gray-600">Pricing</span>
+                      <span className="font-montserrat text-green-600">✓ Updated</span>
+                    </div>
+                    <div className="flex justify-between text-sm">
+                      <span className="font-raleway text-gray-600">About</span>
+                      <span className="font-montserrat text-green-600">✓ Updated</span>
+                    </div>
+                    <div className="flex justify-between text-sm">
+                      <span className="font-raleway text-gray-600">Contact</span>
+                      <span className="font-montserrat text-green-600">✓ Updated</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
           {/* Analytics Tab */}
           {activeTab === 'analytics' && (
             <div className="space-y-6">
@@ -369,6 +551,15 @@ export default function Admin() {
             onUpdateStatus={handleUpdateFormEntryStatus}
             onAddNote={handleAddFormEntryNote}
             isOpen={showFormEntryModal}
+          />
+
+          {/* Content Editor Modal */}
+          <ContentEditor
+            content={editingContent?.content}
+            onSave={handleSaveContent}
+            onCancel={handleCancelContent}
+            isOpen={showContentEditor}
+            title={editingContent?.page ? editingContent.page.charAt(0).toUpperCase() + editingContent.page.slice(1) : ''}
           />
         </div>
       </section>
