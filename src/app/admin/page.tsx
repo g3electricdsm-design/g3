@@ -555,7 +555,7 @@ export default function Admin() {
 
           {/* Content Editor Modal */}
           <ContentEditor
-            content={editingContent?.content}
+            content={editingContent?.content || null}
             onSave={handleSaveContent}
             onCancel={handleCancelContent}
             isOpen={showContentEditor}
