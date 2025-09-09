@@ -43,9 +43,9 @@ export default function Services() {
               Back to Home
             </Link>
           </div>
-          <h1 className="font-megrim text-5xl md:text-6xl mb-4">{content.title}</h1>
+          <h1 className="font-megrim text-5xl md:text-6xl mb-4">{content.hero.title}</h1>
           <p className="font-raleway text-lg md:text-xl max-w-3xl">
-            {content.description}
+            {content.hero.description}
           </p>
         </div>
       </section>
