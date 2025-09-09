@@ -17,7 +17,9 @@ export default function ContentEditor({ content, onSave, onCancel, isOpen, title
   if (!isOpen) return null;
 
   const handleSave = () => {
-    onSave({ page: title.toLowerCase(), content: editedContent });
+    if (editedContent) {
+      onSave({ page: title.toLowerCase(), content: editedContent });
+    }
   };
 
   const handleCancel = () => {
