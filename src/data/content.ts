@@ -514,7 +514,7 @@ export function getContent() {
   };
 }
 
-export function updateContent(page: string, content: Record<string, any>) {
+export function updateContent(page: string, content: Record<string, unknown>) {
   // In a real app, this would save to a database
   console.log(`Updating ${page} content:`, content);
   return true;

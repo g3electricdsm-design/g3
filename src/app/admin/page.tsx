@@ -19,7 +19,7 @@ export default function Admin() {
   const [content, setContent] = useState(getContent());
   const [editingProject, setEditingProject] = useState<Project | null>(null);
   const [selectedFormEntry, setSelectedFormEntry] = useState<FormEntry | null>(null);
-  const [editingContent, setEditingContent] = useState<{ page: string; content: Record<string, any> } | null>(null);
+  const [editingContent, setEditingContent] = useState<{ page: string; content: Record<string, unknown> } | null>(null);
   const [showProjectForm, setShowProjectForm] = useState(false);
   const [showFormEntryModal, setShowFormEntryModal] = useState(false);
   const [showContentEditor, setShowContentEditor] = useState(false);
@@ -87,7 +87,7 @@ export default function Admin() {
     setShowContentEditor(true);
   };
 
-  const handleSaveContent = (updatedContent: { page: string; content: Record<string, any> }) => {
+  const handleSaveContent = (updatedContent: { page: string; content: Record<string, unknown> }) => {
     const newContent = { ...content };
     newContent[updatedContent.page] = updatedContent.content;
     setContent(newContent);

@@ -4,8 +4,8 @@ import { useState } from 'react';
 import { XMarkIcon, PlusIcon, TrashIcon } from '@heroicons/react/24/outline';
 
 interface ContentEditorProps {
-  content: Record<string, any> | null;
-  onSave: (content: Record<string, any>) => void;
+  content: Record<string, unknown> | null;
+  onSave: (content: Record<string, unknown>) => void;
   onCancel: () => void;
   isOpen: boolean;
   title: string;
