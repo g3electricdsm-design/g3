@@ -9,36 +9,57 @@ export default function Home() {
       <Navigation currentPath="/" />
 
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-purple to-phlox text-white py-20 overflow-hidden">
-        {/* Background Image Placeholder */}
-        <div className="absolute inset-0 bg-gradient-to-br from-purple/90 to-phlox/90">
-          <div className="absolute inset-0 bg-black/20"></div>
+      <section className="relative h-screen w-full overflow-hidden">
+        {/* Huge Background Image Placeholder */}
+        <div className="absolute inset-0 w-full h-full">
+          {/* Placeholder for lighting project hero image */}
+          <div className="w-full h-full bg-gradient-to-br from-earle-black via-purple/30 to-phlox/30 flex items-center justify-center">
+            {/* Image placeholder with lighting project visual */}
+            <div className="absolute inset-0 bg-gradient-to-br from-purple/20 to-phlox/20">
+              <div className="absolute inset-0 bg-black/40"></div>
+              {/* Simulated lighting elements */}
+              <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-white/20 rounded-full blur-xl"></div>
+              <div className="absolute top-1/3 right-1/3 w-24 h-24 bg-phlox/30 rounded-full blur-lg"></div>
+              <div className="absolute bottom-1/3 left-1/3 w-20 h-20 bg-purple/40 rounded-full blur-md"></div>
+              <div className="absolute bottom-1/4 right-1/4 w-28 h-28 bg-white/10 rounded-full blur-xl"></div>
+            </div>
+            {/* Placeholder text for image */}
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="text-center text-white/60">
+                <div className="text-6xl mb-4">💡</div>
+                <p className="font-montserrat text-xl">Lighting Project Hero Image</p>
+                <p className="font-raleway text-sm mt-2">Professional electrical work showcase</p>
+              </div>
+            </div>
+          </div>
         </div>
         
-        {/* Hero Content */}
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="font-megrim text-5xl md:text-6xl mb-6">
-            Safe & Dependable
-          </h1>
-          <h2 className="font-montserrat text-2xl md:text-3xl mb-8 font-light">
-            Electrical Services You Can Trust
-          </h2>
-          <p className="font-raleway text-lg md:text-xl mb-10 max-w-3xl mx-auto">
-            Your family&apos;s safety is our #1 priority. Professional electrical services for residential and commercial projects with the dependability you deserve.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link 
-              href="/contact" 
-              className="bg-white text-purple px-8 py-3 rounded-lg font-montserrat font-semibold hover:bg-white-smoke transition-colors"
-            >
-              Get Free Quote
-            </Link>
-            <Link 
-              href="/portfolio" 
-              className="border-2 border-white text-white px-8 py-3 rounded-lg font-montserrat font-semibold hover:bg-white hover:text-purple transition-colors"
-            >
-              View Our Work
-            </Link>
+        {/* Hero Content Overlay */}
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 className="font-megrim text-6xl md:text-8xl lg:text-9xl mb-6 text-white drop-shadow-2xl">
+              Safe & Dependable
+            </h1>
+            <h2 className="font-montserrat text-3xl md:text-4xl lg:text-5xl mb-8 font-light text-white drop-shadow-xl">
+              Electrical Services You Can Trust
+            </h2>
+            <p className="font-raleway text-xl md:text-2xl mb-12 max-w-4xl mx-auto text-white drop-shadow-lg">
+              Your family&apos;s safety is our #1 priority. Professional electrical services for residential and commercial projects with the dependability you deserve.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-6 justify-center">
+              <Link 
+                href="/contact" 
+                className="bg-white text-purple px-10 py-4 rounded-lg font-montserrat font-semibold hover:bg-white-smoke transition-colors text-lg shadow-2xl"
+              >
+                Get Free Quote
+              </Link>
+              <Link 
+                href="/portfolio" 
+                className="border-2 border-white text-white px-10 py-4 rounded-lg font-montserrat font-semibold hover:bg-white hover:text-purple transition-colors text-lg shadow-2xl"
+              >
+                View Our Work
+              </Link>
+            </div>
           </div>
         </div>
       </section>
