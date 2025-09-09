@@ -2,18 +2,23 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { ArrowLeftIcon, PlusIcon, PencilIcon, TrashIcon, CogIcon, ChartBarIcon, PhotoIcon } from '@heroicons/react/24/outline';
+import { ArrowLeftIcon, PlusIcon, PencilIcon, TrashIcon, CogIcon, ChartBarIcon, PhotoIcon, EnvelopeIcon, EyeIcon } from '@heroicons/react/24/outline';
 import Navigation from '@/components/Navigation';
 import { getAllProjects, Project } from '@/data/projects';
 import { getAllServices, Service } from '@/data/services';
+import { getAllFormEntries, FormEntry } from '@/data/formEntries';
 import ProjectForm from '@/components/ProjectForm';
+import FormEntryModal from '@/components/FormEntryModal';
 
 export default function Admin() {
   const [projects, setProjects] = useState<Project[]>(getAllProjects());
   const [services] = useState<Service[]>(getAllServices());
+  const [formEntries, setFormEntries] = useState<FormEntry[]>(getAllFormEntries());
   const [editingProject, setEditingProject] = useState<Project | null>(null);
+  const [selectedFormEntry, setSelectedFormEntry] = useState<FormEntry | null>(null);
   const [showProjectForm, setShowProjectForm] = useState(false);
-  const [activeTab, setActiveTab] = useState<'projects' | 'services' | 'analytics' | 'settings'>('projects');
+  const [showFormEntryModal, setShowFormEntryModal] = useState(false);
+  const [activeTab, setActiveTab] = useState<'projects' | 'services' | 'formEntries' | 'analytics' | 'settings'>('projects');
 
   const handleEdit = (project: Project) => {
     setEditingProject(project);
@@ -47,6 +52,29 @@ export default function Admin() {
   const handleAddProject = () => {
     setEditingProject(null);
     setShowProjectForm(true);
+  };
+
+  const handleViewFormEntry = (entry: FormEntry) => {
+    setSelectedFormEntry(entry);
+    setShowFormEntryModal(true);
+  };
+
+  const handleUpdateFormEntryStatus = (id: number, status: string) => {
+    setFormEntries(prev => prev.map(entry => 
+      entry.id === id ? { ...entry, status: status as any } : entry
+    ));
+  };
+
+  const handleAddFormEntryNote = (id: number, note: string) => {
+    setFormEntries(prev => prev.map(entry => 
+      entry.id === id ? { ...entry, adminNotes: note } : entry
+    ));
+  };
+
+  const handleDeleteFormEntry = (id: number) => {
+    if (confirm('Are you sure you want to delete this form entry?')) {
+      setFormEntries(prev => prev.filter(entry => entry.id !== id));
+    }
   };
 
   return (
@@ -85,6 +113,7 @@ export default function Admin() {
               {[
                 { id: 'projects', name: 'Projects', icon: PhotoIcon },
                 { id: 'services', name: 'Services', icon: CogIcon },
+                { id: 'formEntries', name: 'Form Entries', icon: EnvelopeIcon },
                 { id: 'analytics', name: 'Analytics', icon: ChartBarIcon },
                 { id: 'settings', name: 'Settings', icon: CogIcon }
               ].map((tab) => {
@@ -92,7 +121,7 @@ export default function Admin() {
                 return (
                   <button
                     key={tab.id}
-                    onClick={() => setActiveTab(tab.id as 'projects' | 'services' | 'analytics' | 'settings')}
+                    onClick={() => setActiveTab(tab.id as 'projects' | 'services' | 'formEntries' | 'analytics' | 'settings')}
                     className={`flex items-center gap-2 px-4 py-2 rounded-lg font-montserrat font-medium transition-colors ${
                       activeTab === tab.id
                         ? 'bg-purple text-white'
@@ -204,11 +233,86 @@ export default function Admin() {
             </div>
           )}
 
+          {/* Form Entries Tab */}
+          {activeTab === 'formEntries' && (
+            <div className="space-y-6">
+              <div className="flex justify-between items-center">
+                <h3 className="font-montserrat text-2xl text-white">Form Entries</h3>
+                <div className="flex items-center gap-4">
+                  <span className="text-white-smoke">
+                    {formEntries.filter(e => e.status === 'new').length} new entries
+                  </span>
+                  <button className="bg-purple text-white px-6 py-3 rounded-lg font-montserrat font-semibold hover:bg-phlox transition-colors flex items-center gap-2">
+                    <EnvelopeIcon className="h-5 w-5" />
+                    Export Entries
+                  </button>
+                </div>
+              </div>
+
+              <div className="bg-white-smoke rounded-lg p-6">
+                <div className="space-y-4">
+                  {formEntries.map((entry) => (
+                    <div key={entry.id} className="bg-white rounded-lg p-4 shadow-sm border border-gray-200">
+                      <div className="flex items-start justify-between">
+                        <div className="flex-1">
+                          <div className="flex items-center gap-3 mb-2">
+                            <h4 className="font-montserrat text-lg font-semibold text-earle-black">
+                              {entry.customerInfo.name}
+                            </h4>
+                            <span className={`px-2 py-1 rounded-full text-xs font-medium ${
+                              entry.status === 'new' ? 'bg-blue-100 text-blue-800' :
+                              entry.status === 'read' ? 'bg-yellow-100 text-yellow-800' :
+                              entry.status === 'contacted' ? 'bg-purple-100 text-purple-800' :
+                              entry.status === 'completed' ? 'bg-green-100 text-green-800' :
+                              'bg-red-100 text-red-800'
+                            }`}>
+                              {entry.status.charAt(0).toUpperCase() + entry.status.slice(1)}
+                            </span>
+                            <span className="text-xs text-gray-500">
+                              {new Date(entry.timestamp).toLocaleDateString()}
+                            </span>
+                          </div>
+                          <p className="font-raleway text-sm text-gray-600 mb-2">
+                            {entry.customerInfo.email} • {entry.customerInfo.phone}
+                          </p>
+                          <p className="font-raleway text-sm text-gray-500 mb-2">
+                            <strong>Project:</strong> {entry.projectInfo.projectType} • {entry.projectInfo.description?.substring(0, 100)}...
+                          </p>
+                          {entry.projectInfo.budget && (
+                            <p className="font-raleway text-sm text-gray-500">
+                              <strong>Budget:</strong> {entry.projectInfo.budget}
+                            </p>
+                          )}
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <button
+                            onClick={() => handleViewFormEntry(entry)}
+                            className="p-2 text-purple hover:bg-purple/10 rounded-lg transition-colors"
+                            title="View details"
+                          >
+                            <EyeIcon className="h-4 w-4" />
+                          </button>
+                          <button
+                            onClick={() => handleDeleteFormEntry(entry.id)}
+                            className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                            title="Delete entry"
+                          >
+                            <TrashIcon className="h-4 w-4" />
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
+
           {/* Analytics Tab */}
           {activeTab === 'analytics' && (
             <div className="space-y-6">
               <h3 className="font-montserrat text-2xl text-white">Analytics Dashboard</h3>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 <div className="bg-white-smoke rounded-lg p-6">
                   <h4 className="font-montserrat text-lg font-semibold text-earle-black mb-2">Total Projects</h4>
                   <p className="font-megrim text-3xl text-purple">{projects.length}</p>
@@ -218,8 +322,12 @@ export default function Admin() {
                   <p className="font-megrim text-3xl text-purple">{services.length}</p>
                 </div>
                 <div className="bg-white-smoke rounded-lg p-6">
-                  <h4 className="font-montserrat text-lg font-semibold text-earle-black mb-2">Popular Services</h4>
-                  <p className="font-megrim text-3xl text-purple">{services.filter(s => s.popular).length}</p>
+                  <h4 className="font-montserrat text-lg font-semibold text-earle-black mb-2">Form Entries</h4>
+                  <p className="font-megrim text-3xl text-purple">{formEntries.length}</p>
+                </div>
+                <div className="bg-white-smoke rounded-lg p-6">
+                  <h4 className="font-montserrat text-lg font-semibold text-earle-black mb-2">New Entries</h4>
+                  <p className="font-megrim text-3xl text-purple">{formEntries.filter(e => e.status === 'new').length}</p>
                 </div>
               </div>
             </div>
@@ -252,6 +360,15 @@ export default function Admin() {
             onSave={handleSaveProject}
             onCancel={handleCancelProject}
             isOpen={showProjectForm}
+          />
+
+          {/* Form Entry Modal */}
+          <FormEntryModal
+            entry={selectedFormEntry}
+            onClose={() => setShowFormEntryModal(false)}
+            onUpdateStatus={handleUpdateFormEntryStatus}
+            onAddNote={handleAddFormEntryNote}
+            isOpen={showFormEntryModal}
           />
         </div>
       </section>
