@@ -19,7 +19,7 @@ export default function Admin() {
   const [content, setContent] = useState(getContent());
   const [editingProject, setEditingProject] = useState<Project | null>(null);
   const [selectedFormEntry, setSelectedFormEntry] = useState<FormEntry | null>(null);
-  const [editingContent, setEditingContent] = useState<any>(null);
+  const [editingContent, setEditingContent] = useState<{ page: string; content: any } | null>(null);
   const [showProjectForm, setShowProjectForm] = useState(false);
   const [showFormEntryModal, setShowFormEntryModal] = useState(false);
   const [showContentEditor, setShowContentEditor] = useState(false);
@@ -87,7 +87,7 @@ export default function Admin() {
     setShowContentEditor(true);
   };
 
-  const handleSaveContent = (updatedContent: any) => {
+  const handleSaveContent = (updatedContent: { page: string; content: any }) => {
     const newContent = { ...content };
     newContent[updatedContent.page] = updatedContent.content;
     setContent(newContent);
@@ -168,7 +168,7 @@ export default function Admin() {
                 <h3 className="font-montserrat text-2xl text-white">Portfolio Projects</h3>
                 <button
                   onClick={handleAddProject}
-                  className="bg-purple text-white px-6 py-3 rounded-lg font-montserrat font-semibold hover:bg-phlox transition-colors flex items-center gap-2"
+                  className="btn-primary flex items-center gap-2"
                 >
                   <PlusIcon className="h-5 w-5" />
                   Add New Project
@@ -267,7 +267,7 @@ export default function Admin() {
                   <span className="text-white-smoke">
                     {formEntries.filter(e => e.status === 'new').length} new entries
                   </span>
-                  <button className="bg-purple text-white px-6 py-3 rounded-lg font-montserrat font-semibold hover:bg-phlox transition-colors flex items-center gap-2">
+                  <button className="btn-primary flex items-center gap-2">
                     <EnvelopeIcon className="h-5 w-5" />
                     Export Entries
                   </button>
@@ -358,7 +358,7 @@ export default function Admin() {
                   </p>
                   <button
                     onClick={() => handleEditContent('homepage')}
-                    className="w-full bg-purple text-white px-4 py-2 rounded-lg font-montserrat font-medium hover:bg-phlox transition-colors"
+                    className="w-full btn-primary"
                   >
                     Edit Homepage
                   </button>
@@ -424,7 +424,7 @@ export default function Admin() {
                   </p>
                   <button
                     onClick={() => handleEditContent('about')}
-                    className="w-full bg-purple text-white px-4 py-2 rounded-lg font-montserrat font-medium hover:bg-phlox transition-colors"
+                    className="w-full btn-primary"
                   >
                     Edit About
                   </button>
@@ -522,10 +522,10 @@ export default function Admin() {
               <div className="bg-white-smoke rounded-lg p-6">
                 <h4 className="font-montserrat text-lg font-semibold text-earle-black mb-4">Data Management</h4>
                 <div className="space-y-4">
-                  <button className="w-full bg-purple text-white px-6 py-3 rounded-lg font-montserrat font-semibold hover:bg-phlox transition-colors">
+                  <button className="w-full btn-primary">
                     Export All Data
                   </button>
-                  <button className="w-full bg-white-smoke text-earle-black px-6 py-3 rounded-lg font-montserrat font-semibold hover:bg-gray-200 transition-colors border border-gray-300">
+                  <button className="w-full btn-secondary">
                     Import Data
                   </button>
                   <button className="w-full bg-red-600 text-white px-6 py-3 rounded-lg font-montserrat font-semibold hover:bg-red-700 transition-colors">

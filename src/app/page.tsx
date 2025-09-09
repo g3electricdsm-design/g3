@@ -49,13 +49,13 @@ export default function Home() {
             <div className="flex flex-col sm:flex-row gap-6 justify-center">
               <Link 
                 href="/contact" 
-                className="bg-white text-purple px-10 py-4 rounded-lg font-montserrat font-semibold hover:bg-white-smoke transition-colors text-lg shadow-2xl"
+                className="btn-primary text-lg shadow-2xl"
               >
                 Get Free Quote
               </Link>
               <Link 
                 href="/portfolio" 
-                className="border-2 border-white text-white px-10 py-4 rounded-lg font-montserrat font-semibold hover:bg-white hover:text-purple transition-colors text-lg shadow-2xl"
+                className="btn-secondary text-lg shadow-2xl border-white text-white hover:bg-white hover:text-purple"
               >
                 View Our Work
               </Link>
@@ -127,7 +127,7 @@ export default function Home() {
           </p>
           <Link 
             href="/contact" 
-            className="bg-purple text-white px-8 py-3 rounded-lg font-montserrat font-semibold hover:bg-phlox transition-colors inline-block"
+            className="btn-primary inline-block"
           >
             Request Quote
           </Link>
