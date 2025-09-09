@@ -72,7 +72,7 @@ export default function ContentEditor({ content, onSave, onCancel, isOpen, title
     setEditedContent(newContent);
   };
 
-  const renderField = (label: string, path: string, type: string = 'text', options?: string[]): React.JSX.Element => {
+  const renderField = (label: string, path: string, type: string = 'text', options?: string[]) => {
     const value = (path.split('.').reduce((obj: unknown, key) => (obj as Record<string, unknown>)?.[key], editedContent) as string) || '';
 
     return (
@@ -112,7 +112,7 @@ export default function ContentEditor({ content, onSave, onCancel, isOpen, title
     );
   };
 
-  const renderArrayField = (label: string, path: string, itemTemplate: Record<string, string | string[] | boolean>): React.JSX.Element => {
+  const renderArrayField = (label: string, path: string, itemTemplate: Record<string, string | string[] | boolean>) => {
     const items = (path.split('.').reduce((obj: unknown, key) => (obj as Record<string, unknown>)?.[key], editedContent) as unknown[]) || [];
 
     return (
