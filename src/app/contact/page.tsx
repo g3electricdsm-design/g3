@@ -118,7 +118,7 @@ export default function Contact() {
                   <p className="font-raleway text-gray-700 mb-4">
                     Prefer to schedule a specific time? Use our online booking system to find a time that works for you.
                   </p>
-                  <button className="btn-primary focus:ring-2 focus:ring-purple focus:ring-offset-2">
+                  <button className="btn-primary focus:ring-2 focus:ring-purple focus:ring-offset-2 w-full sm:w-auto text-sm sm:text-base">
                     Book Online
                   </button>
                   <p className="font-raleway text-sm text-gray-600 mt-2">
@@ -328,7 +328,7 @@ export default function Contact() {
 
                 <button
                   type="submit"
-                  className="w-full bg-purple text-white py-4 px-6 rounded-lg font-montserrat font-semibold text-lg hover:bg-phlox focus:ring-2 focus:ring-purple focus:ring-offset-2 transition-colors"
+                  className="btn-primary w-full text-sm sm:text-base focus:ring-2 focus:ring-purple focus:ring-offset-2"
                 >
                   Request Free Quote
                 </button>

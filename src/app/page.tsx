@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ShieldCheckIcon, BoltIcon, HomeIcon, BuildingOfficeIcon } from "@heroicons/react/24/outline";
+import { BoltIcon } from "@heroicons/react/24/outline";
 import Navigation from "@/components/Navigation";
 import { getContent } from "@/data/content";
 
@@ -48,16 +48,16 @@ export default function Home() {
             <p className="font-raleway text-xl md:text-2xl mb-12 max-w-4xl mx-auto text-white drop-shadow-lg">
               {content.hero.description}
             </p>
-            <div className="flex flex-col sm:flex-row gap-6 justify-center">
+            <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-center">
               <Link 
                 href="/contact" 
-                className="btn-primary text-lg shadow-2xl"
+                className="btn-primary text-sm sm:text-lg shadow-2xl w-full sm:w-auto"
               >
                 {content.hero.primaryButton}
               </Link>
               <Link 
                 href="/portfolio" 
-                className="btn-secondary text-lg shadow-2xl border-white text-white hover:bg-white hover:text-purple"
+                className="btn-secondary text-sm sm:text-lg shadow-2xl border-white text-white hover:bg-white hover:text-purple w-full sm:w-auto"
               >
                 {content.hero.secondaryButton}
               </Link>
@@ -101,7 +101,7 @@ export default function Home() {
           </p>
           <Link 
             href="/contact" 
-            className="btn-primary inline-block"
+            className="btn-primary inline-block text-sm sm:text-base"
           >
             {content.cta.buttonText}
           </Link>

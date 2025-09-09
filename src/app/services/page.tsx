@@ -153,16 +153,16 @@ export default function Services() {
           <p className="font-raleway text-lg mb-8 max-w-2xl mx-auto">
             {content.cta.description}
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Link 
               href="/contact" 
-              className="btn-primary"
+              className="btn-primary w-full sm:w-auto text-sm sm:text-base"
             >
               {content.cta.primaryButton}
             </Link>
             <Link 
               href="/portfolio" 
-              className="btn-secondary border-white text-white hover:bg-white hover:text-purple"
+              className="btn-secondary border-white text-white hover:bg-white hover:text-purple w-full sm:w-auto text-sm sm:text-base"
             >
               {content.cta.secondaryButton}
             </Link>
