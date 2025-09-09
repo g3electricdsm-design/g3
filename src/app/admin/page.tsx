@@ -89,7 +89,7 @@ export default function Admin() {
 
   const handleSaveContent = (updatedContent: { page: string; content: Record<string, unknown> }) => {
     const newContent = { ...content };
-    (newContent as any)[updatedContent.page] = updatedContent.content;
+    (newContent as Record<string, unknown>)[updatedContent.page] = updatedContent.content;
     setContent(newContent);
     updateContent(updatedContent.page, updatedContent.content);
     setShowContentEditor(false);
