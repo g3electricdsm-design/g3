@@ -30,11 +30,11 @@ export default function ContentEditor({ content, onSave, onCancel, isOpen, title
   const updateField = (path: string, value: string | number | boolean) => {
     const keys = path.split('.');
     const newContent = { ...editedContent };
-    let current = newContent;
+    let current = newContent as Record<string, unknown>;
     
     for (let i = 0; i < keys.length - 1; i++) {
       if (!current[keys[i]]) current[keys[i]] = {};
-      current = current[keys[i]];
+      current = current[keys[i]] as Record<string, unknown>;
     }
     
     current[keys[keys.length - 1]] = value;
