@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { XMarkIcon, PhoneIcon, EnvelopeIcon, CalendarIcon, ClockIcon, UserIcon, BuildingOfficeIcon } from '@heroicons/react/24/outline';
+import { XMarkIcon, PhoneIcon, EnvelopeIcon, ClockIcon, UserIcon } from '@heroicons/react/24/outline';
 import { FormEntry } from '@/data/formEntries';
 
 interface FormEntryModalProps {

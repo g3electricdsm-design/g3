@@ -61,7 +61,7 @@ export default function Admin() {
 
   const handleUpdateFormEntryStatus = (id: number, status: string) => {
     setFormEntries(prev => prev.map(entry => 
-      entry.id === id ? { ...entry, status: status as any } : entry
+      entry.id === id ? { ...entry, status: status as 'new' | 'read' | 'contacted' | 'completed' | 'cancelled' } : entry
     ));
   };
 
