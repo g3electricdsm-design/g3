@@ -67,15 +67,6 @@ export default function Services() {
                     <div className="ml-4 flex-1">
                       <h3 className="font-montserrat text-2xl font-semibold text-earle-black mb-2">{service.title}</h3>
                       <p className="font-raleway text-gray-600 mb-3">{service.description}</p>
-                      <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-montserrat font-medium ${
-                        service.category === 'Residential' 
-                          ? 'bg-green-100 text-green-800' 
-                          : service.category === 'Commercial'
-                          ? 'bg-blue-100 text-blue-800'
-                          : 'bg-purple-100 text-purple-800'
-                      }`}>
-                        {service.category}
-                      </span>
                     </div>
                   </div>
                   
