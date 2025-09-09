@@ -72,7 +72,7 @@ export default function ContentEditor({ content, onSave, onCancel, isOpen, title
     setEditedContent(newContent);
   };
 
-  const renderField = (label: string, path: string, type: string = 'text', options?: string[]): JSX.Element => {
+  const renderField = (label: string, path: string, type: string = 'text', options?: string[]): React.JSX.Element => {
     const value = (path.split('.').reduce((obj: unknown, key) => (obj as Record<string, unknown>)?.[key], editedContent) as string) || '';
 
     return (
