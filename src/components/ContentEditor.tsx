@@ -44,18 +44,18 @@ export default function ContentEditor({ content, onSave, onCancel, isOpen, title
   const addArrayItem = (path: string, newItem: Record<string, string | string[] | boolean>) => {
     const keys = path.split('.');
     const newContent = { ...editedContent };
-    let current = newContent;
+    let current = newContent as Record<string, unknown>;
     
     for (let i = 0; i < keys.length - 1; i++) {
       if (!current[keys[i]]) current[keys[i]] = {};
-      current = current[keys[i]];
+      current = current[keys[i]] as Record<string, unknown>;
     }
     
     if (!Array.isArray(current[keys[keys.length - 1]])) {
       current[keys[keys.length - 1]] = [];
     }
     
-    current[keys[keys.length - 1]].push(newItem);
+    (current[keys[keys.length - 1]] as unknown[]).push(newItem);
     setEditedContent(newContent);
   };
 
