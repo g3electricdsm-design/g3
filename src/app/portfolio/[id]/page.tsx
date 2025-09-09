@@ -20,7 +20,7 @@ export default function ProjectDetail({ params }: ProjectDetailProps) {
           <div className="text-center">
             <h1 className="font-megrim text-4xl text-earle-black mb-4">Project Not Found</h1>
             <p className="font-raleway text-lg text-gray-600 mb-8">The project you&apos;re looking for doesn&apos;t exist.</p>
-            <Link href="/portfolio" className="bg-purple text-white px-6 py-3 rounded-lg font-montserrat font-semibold hover:bg-phlox transition-colors">
+            <Link href="/portfolio" className="btn-primary">
               Back to Portfolio
             </Link>
           </div>
@@ -133,36 +133,44 @@ export default function ProjectDetail({ params }: ProjectDetailProps) {
               <div className="bg-white-smoke rounded-lg p-6 sticky top-8">
                 <h3 className="font-montserrat text-xl text-earle-black mb-6">Project Details</h3>
                 
-                <div className="space-y-4">
-                  <div className="flex items-center gap-3">
-                    <UserIcon className="h-5 w-5 text-purple" />
-                    <div>
-                      <div className="font-raleway text-sm text-gray-600">Client</div>
-                      <div className="font-montserrat text-earle-black">{project.client}</div>
+                <div className="space-y-6">
+                  <div className="flex items-start gap-4">
+                    <div className="flex-shrink-0 w-10 h-10 bg-purple/10 rounded-lg flex items-center justify-center">
+                      <UserIcon className="h-5 w-5 text-purple" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="font-raleway text-sm font-medium text-earle-black mb-1">Client</div>
+                      <div className="font-montserrat text-earle-black text-lg">{project.client}</div>
                     </div>
                   </div>
                   
-                  <div className="flex items-center gap-3">
-                    <CalendarIcon className="h-5 w-5 text-purple" />
-                    <div>
-                      <div className="font-raleway text-sm text-gray-600">Completed</div>
-                      <div className="font-montserrat text-earle-black">{project.completed}</div>
+                  <div className="flex items-start gap-4">
+                    <div className="flex-shrink-0 w-10 h-10 bg-purple/10 rounded-lg flex items-center justify-center">
+                      <CalendarIcon className="h-5 w-5 text-purple" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="font-raleway text-sm font-medium text-earle-black mb-1">Completed</div>
+                      <div className="font-montserrat text-earle-black text-lg">{project.completed}</div>
                     </div>
                   </div>
                   
-                  <div className="flex items-center gap-3">
-                    <ClockIcon className="h-5 w-5 text-purple" />
-                    <div>
-                      <div className="font-raleway text-sm text-gray-600">Duration</div>
-                      <div className="font-montserrat text-earle-black">{project.duration}</div>
+                  <div className="flex items-start gap-4">
+                    <div className="flex-shrink-0 w-10 h-10 bg-purple/10 rounded-lg flex items-center justify-center">
+                      <ClockIcon className="h-5 w-5 text-purple" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="font-raleway text-sm font-medium text-earle-black mb-1">Duration</div>
+                      <div className="font-montserrat text-earle-black text-lg">{project.duration}</div>
                     </div>
                   </div>
                   
-                  <div className="flex items-center gap-3">
-                    <BoltIcon className="h-5 w-5 text-purple" />
-                    <div>
-                      <div className="font-raleway text-sm text-gray-600">Location</div>
-                      <div className="font-montserrat text-earle-black">{project.location}</div>
+                  <div className="flex items-start gap-4">
+                    <div className="flex-shrink-0 w-10 h-10 bg-purple/10 rounded-lg flex items-center justify-center">
+                      <BoltIcon className="h-5 w-5 text-purple" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="font-raleway text-sm font-medium text-earle-black mb-1">Location</div>
+                      <div className="font-montserrat text-earle-black text-lg">{project.location}</div>
                     </div>
                   </div>
                 </div>
@@ -170,7 +178,7 @@ export default function ProjectDetail({ params }: ProjectDetailProps) {
                 <div className="mt-8 pt-6 border-t border-gray-300">
                   <Link 
                     href="/contact" 
-                    className="w-full bg-purple text-white px-6 py-3 rounded-lg font-montserrat font-semibold hover:bg-phlox transition-colors text-center block"
+                    className="w-full btn-primary text-center block"
                   >
                     Start Your Project
                   </Link>

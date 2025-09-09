@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { XMarkIcon, PlusIcon, TrashIcon } from '@heroicons/react/24/outline';
 
 interface ContentEditorProps {
-  content: Record<string, any>;
+  content: Record<string, any> | null;
   onSave: (content: Record<string, any>) => void;
   onCancel: () => void;
   isOpen: boolean;
@@ -39,7 +39,7 @@ export default function ContentEditor({ content, onSave, onCancel, isOpen, title
     setEditedContent(newContent);
   };
 
-  const addArrayItem = (path: string, newItem: Record<string, any>) => {
+  const addArrayItem = (path: string, newItem: Record<string, string | string[] | boolean>) => {
     const keys = path.split('.');
     const newContent = { ...editedContent };
     let current = newContent;
@@ -110,7 +110,7 @@ export default function ContentEditor({ content, onSave, onCancel, isOpen, title
     );
   };
 
-  const renderArrayField = (label: string, path: string, itemTemplate: Record<string, any>) => {
+  const renderArrayField = (label: string, path: string, itemTemplate: Record<string, string | string[] | boolean>) => {
     const items = path.split('.').reduce((obj, key) => obj?.[key], editedContent) || [];
 
     return (
@@ -129,7 +129,7 @@ export default function ContentEditor({ content, onSave, onCancel, isOpen, title
         </div>
         
         <div className="space-y-4">
-          {items.map((item: Record<string, any>, index: number) => (
+          {items.map((item: Record<string, string | string[] | boolean>, index: number) => (
             <div key={index} className="bg-gray-50 p-4 rounded-lg border">
               <div className="flex justify-between items-start mb-3">
                 <h4 className="font-montserrat font-medium text-earle-black">
