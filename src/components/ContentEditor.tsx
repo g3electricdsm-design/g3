@@ -73,7 +73,7 @@ export default function ContentEditor({ content, onSave, onCancel, isOpen, title
   };
 
   const renderField = (label: string, path: string, type: string = 'text', options?: string[]) => {
-    const value = path.split('.').reduce((obj, key) => obj?.[key], editedContent) || '';
+    const value = path.split('.').reduce((obj: any, key) => obj?.[key], editedContent) || '';
 
     return (
       <div className="mb-4">
