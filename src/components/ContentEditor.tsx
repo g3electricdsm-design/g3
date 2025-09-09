@@ -113,7 +113,7 @@ export default function ContentEditor({ content, onSave, onCancel, isOpen, title
   };
 
   const renderArrayField = (label: string, path: string, itemTemplate: Record<string, string | string[] | boolean>) => {
-    const items = path.split('.').reduce((obj, key) => obj?.[key], editedContent) || [];
+    const items = (path.split('.').reduce((obj: unknown, key) => (obj as Record<string, unknown>)?.[key], editedContent) as unknown[]) || [];
 
     return (
       <div className="mb-6">
