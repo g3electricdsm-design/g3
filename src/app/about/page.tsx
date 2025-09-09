@@ -10,58 +10,20 @@ import {
   UserGroupIcon
 } from "@heroicons/react/24/outline";
 import Navigation from "@/components/Navigation";
+import { getContent } from "@/data/content";
 
 export default function About() {
-  const values = [
-    {
-      icon: ShieldCheckIcon,
-      title: "Safety First",
-      description: "Your family&apos;s safety is our #1 priority. Every project is completed with the highest safety standards and code compliance."
-    },
-    {
-      icon: BoltIcon,
-      title: "Dependability",
-      description: "We show up on time, complete projects as promised, and stand behind our work with comprehensive warranties."
-    },
-    {
-      icon: HeartIcon,
-      title: "Community Focus",
-      description: "We&apos;re proud to serve our local community with honest, reliable electrical services that families can trust."
-    },
-    {
-      icon: CheckBadgeIcon,
-      title: "Quality Work",
-      description: "We use only the highest quality materials and employ skilled, licensed electricians for every project."
-    }
-  ];
-
-  const stats = [
-    { number: "15+", label: "Years Experience" },
-    { number: "500+", label: "Projects Completed" },
-    { number: "100%", label: "Safety Record" },
-    { number: "24/7", label: "Emergency Service" }
-  ];
-
-  const team = [
-    {
-      name: "John Smith",
-      role: "Master Electrician & Owner",
-      experience: "15+ years",
-      specialties: ["Residential", "Commercial", "Safety Training"]
-    },
-    {
-      name: "Sarah Johnson",
-      role: "Senior Electrician",
-      experience: "12+ years",
-      specialties: ["Smart Home", "Lighting Design", "Code Compliance"]
-    },
-    {
-      name: "Mike Davis",
-      role: "Electrician",
-      experience: "8+ years",
-      specialties: ["Commercial", "Industrial", "Emergency Repairs"]
-    }
-  ];
+  const content = getContent().about;
+  
+  const iconMap = {
+    ShieldCheckIcon,
+    BoltIcon,
+    HeartIcon,
+    StarIcon,
+    CheckBadgeIcon,
+    ClockIcon,
+    UserGroupIcon
+  };
 
   return (
     <div className="min-h-screen bg-earle-black">
@@ -77,9 +39,9 @@ export default function About() {
               Back to Home
             </Link>
           </div>
-          <h1 className="font-megrim text-5xl md:text-6xl mb-4">About G3 Electric</h1>
+          <h1 className="font-megrim text-5xl md:text-6xl mb-4">{content.title}</h1>
           <p className="font-raleway text-lg md:text-xl max-w-3xl">
-            Safe, dependable electrical services you can trust. Your family&apos;s safety is our #1 priority.
+            {content.description}
           </p>
         </div>
       </section>
@@ -89,21 +51,11 @@ export default function About() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
-              <h2 className="font-montserrat text-4xl text-earle-black mb-6">Our Story</h2>
+              <h2 className="font-montserrat text-4xl text-earle-black mb-6">{content.story.title}</h2>
               <div className="space-y-4 font-raleway text-gray-600">
-                <p>
-                  G3 Electric was founded with a simple mission: to provide safe, dependable electrical services that families can trust. 
-                  After 15+ years in the electrical industry, we&apos;ve seen too many homeowners left with subpar work and safety concerns.
-                </p>
-                <p>
-                  We believe that electrical work isn&apos;t just about wires and circuits—it&apos;s about protecting what matters most: your family, 
-                  your home, and your peace of mind. That&apos;s why safety is at the heart of everything we do.
-                </p>
-                <p>
-                  From small residential projects to large commercial builds, we approach every job with the same commitment to quality, 
-                  safety, and customer satisfaction. Our licensed electricians are not just skilled technicians—they&apos;re safety advocates 
-                  who take pride in protecting your home and family.
-                </p>
+                {content.story.paragraphs.map((paragraph, index) => (
+                  <p key={index}>{paragraph}</p>
+                ))}
               </div>
             </div>
             <div className="bg-white-smoke p-8 rounded-lg">
@@ -111,28 +63,14 @@ export default function About() {
                 <div className="w-24 h-24 bg-purple rounded-full flex items-center justify-center mx-auto mb-6">
                   <BoltIcon className="h-12 w-12 text-white" />
                 </div>
-                <h3 className="font-montserrat text-2xl font-semibold text-earle-black mb-4">Why Choose G3 Electric?</h3>
+                <h3 className="font-montserrat text-2xl font-semibold text-earle-black mb-4">{content.whyChoose.title}</h3>
                 <ul className="space-y-3 text-left">
-                  <li className="flex items-center font-raleway text-gray-600">
-                    <CheckBadgeIcon className="h-5 w-5 text-purple mr-3 flex-shrink-0" />
-                    Licensed & Insured
-                  </li>
-                  <li className="flex items-center font-raleway text-gray-600">
-                    <CheckBadgeIcon className="h-5 w-5 text-purple mr-3 flex-shrink-0" />
-                    Safety-First Approach
-                  </li>
-                  <li className="flex items-center font-raleway text-gray-600">
-                    <CheckBadgeIcon className="h-5 w-5 text-purple mr-3 flex-shrink-0" />
-                    Code Compliance Guaranteed
-                  </li>
-                  <li className="flex items-center font-raleway text-gray-600">
-                    <CheckBadgeIcon className="h-5 w-5 text-purple mr-3 flex-shrink-0" />
-                    Quality Materials Only
-                  </li>
-                  <li className="flex items-center font-raleway text-gray-600">
-                    <CheckBadgeIcon className="h-5 w-5 text-purple mr-3 flex-shrink-0" />
-                    Honest, Transparent Pricing
-                  </li>
+                  {content.whyChoose.features.map((feature, index) => (
+                    <li key={index} className="flex items-center font-raleway text-gray-600">
+                      <CheckBadgeIcon className="h-5 w-5 text-purple mr-3 flex-shrink-0" />
+                      {feature}
+                    </li>
+                  ))}
                 </ul>
               </div>
             </div>
@@ -144,22 +82,25 @@ export default function About() {
       <section className="py-20 bg-white-smoke">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="font-montserrat text-4xl text-earle-black mb-4">Our Values</h2>
+            <h2 className="font-montserrat text-4xl text-earle-black mb-4">{content.values.title}</h2>
             <p className="font-raleway text-lg text-gray-600 max-w-3xl mx-auto">
-              These core values guide everything we do and ensure you receive the best possible service.
+              {content.values.description}
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {values.map((value, index) => (
-              <div key={index} className="text-center">
-                <div className="w-16 h-16 bg-purple rounded-full flex items-center justify-center mx-auto mb-6">
-                  <value.icon className="h-8 w-8 text-white" />
+            {content.values.items.map((value, index) => {
+              const IconComponent = iconMap[value.icon as keyof typeof iconMap] || ShieldCheckIcon;
+              return (
+                <div key={index} className="text-center">
+                  <div className="w-16 h-16 bg-purple rounded-full flex items-center justify-center mx-auto mb-6">
+                    <IconComponent className="h-8 w-8 text-white" />
+                  </div>
+                  <h3 className="font-montserrat text-xl font-semibold text-earle-black mb-4">{value.title}</h3>
+                  <p className="font-raleway text-gray-600">{value.description}</p>
                 </div>
-                <h3 className="font-montserrat text-xl font-semibold text-earle-black mb-4">{value.title}</h3>
-                <p className="font-raleway text-gray-600">{value.description}</p>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
@@ -168,14 +109,14 @@ export default function About() {
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="font-montserrat text-4xl text-earle-black mb-4">By the Numbers</h2>
+            <h2 className="font-montserrat text-4xl text-earle-black mb-4">{content.stats.title}</h2>
             <p className="font-raleway text-lg text-gray-600 max-w-3xl mx-auto">
-              Our track record speaks for itself—safety, quality, and customer satisfaction in every project.
+              {content.stats.description}
             </p>
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {stats.map((stat, index) => (
+            {content.stats.items.map((stat, index) => (
               <div key={index} className="text-center">
                 <div className="font-megrim text-4xl md:text-5xl text-purple mb-2">{stat.number}</div>
                 <div className="font-montserrat text-lg font-semibold text-earle-black">{stat.label}</div>
@@ -189,14 +130,14 @@ export default function About() {
       <section className="py-20 bg-white-smoke">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="font-montserrat text-4xl text-earle-black mb-4">Meet Our Team</h2>
+            <h2 className="font-montserrat text-4xl text-earle-black mb-4">{content.team.title}</h2>
             <p className="font-raleway text-lg text-gray-600 max-w-3xl mx-auto">
-              Licensed professionals dedicated to your safety and satisfaction.
+              {content.team.description}
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {team.map((member, index) => (
+            {content.team.members.map((member, index) => (
               <div key={index} className="bg-white rounded-lg shadow-sm text-center overflow-hidden">
                 <div className="h-48 bg-gradient-to-br from-purple/20 to-phlox/20 flex items-center justify-center">
                   <div className="w-24 h-24 bg-purple/30 rounded-full flex items-center justify-center">
@@ -229,27 +170,21 @@ export default function About() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-gradient-to-r from-purple to-phlox rounded-lg p-8 md:p-12 text-white text-center">
             <ShieldCheckIcon className="h-16 w-16 mx-auto mb-6" />
-            <h2 className="font-montserrat text-4xl mb-6">Our Safety Commitment</h2>
+            <h2 className="font-montserrat text-4xl mb-6">{content.safetyCommitment.title}</h2>
             <p className="font-raleway text-lg md:text-xl mb-8 max-w-4xl mx-auto">
-              We don&apos;t just follow safety protocols—we live them. Every member of our team is trained in the latest safety 
-              procedures, and we continuously invest in education and equipment to ensure your family&apos;s protection.
+              {content.safetyCommitment.description}
             </p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
-              <div>
-                <ClockIcon className="h-8 w-8 mx-auto mb-4" />
-                <h3 className="font-montserrat text-lg font-semibold mb-2">Continuous Training</h3>
-                <p className="font-raleway text-sm">Regular safety updates and certification renewals</p>
-              </div>
-              <div>
-                <CheckBadgeIcon className="h-8 w-8 mx-auto mb-4" />
-                <h3 className="font-montserrat text-lg font-semibold mb-2">Code Compliance</h3>
-                <p className="font-raleway text-sm">All work meets or exceeds local electrical codes</p>
-              </div>
-              <div>
-                <StarIcon className="h-8 w-8 mx-auto mb-4" />
-                <h3 className="font-montserrat text-lg font-semibold mb-2">Quality Assurance</h3>
-                <p className="font-raleway text-sm">Thorough testing and inspection of all work</p>
-              </div>
+              {content.safetyCommitment.features.map((feature, index) => {
+                const IconComponent = iconMap[feature.icon as keyof typeof iconMap] || ClockIcon;
+                return (
+                  <div key={index}>
+                    <IconComponent className="h-8 w-8 mx-auto mb-4" />
+                    <h3 className="font-montserrat text-lg font-semibold mb-2">{feature.title}</h3>
+                    <p className="font-raleway text-sm">{feature.description}</p>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>
@@ -258,22 +193,22 @@ export default function About() {
       {/* CTA Section */}
       <section className="py-20 bg-earle-black text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="font-montserrat text-4xl mb-6">Ready to Work With Us?</h2>
+          <h2 className="font-montserrat text-4xl mb-6">{content.cta.title}</h2>
           <p className="font-raleway text-lg mb-8 max-w-2xl mx-auto">
-            Experience the G3 Electric difference. Safe, dependable electrical services you can trust for your family and business.
+            {content.cta.description}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link 
               href="/contact" 
-              className="bg-purple text-white px-8 py-3 rounded-lg font-montserrat font-semibold hover:bg-phlox transition-colors"
+              className="btn-primary"
             >
-              Get Free Quote
+              {content.cta.primaryButton}
             </Link>
             <Link 
               href="/portfolio" 
-              className="border-2 border-white text-white px-8 py-3 rounded-lg font-montserrat font-semibold hover:bg-white hover:text-purple transition-colors"
+              className="btn-secondary border-white text-white hover:bg-white hover:text-purple"
             >
-              View Our Work
+              {content.cta.secondaryButton}
             </Link>
           </div>
         </div>

@@ -1,8 +1,10 @@
 import Link from "next/link";
 import { ShieldCheckIcon, BoltIcon, HomeIcon, BuildingOfficeIcon } from "@heroicons/react/24/outline";
 import Navigation from "@/components/Navigation";
+import { getContent } from "@/data/content";
 
 export default function Home() {
+  const content = getContent().homepage;
   return (
     <div className="min-h-screen bg-earle-black">
       {/* Navigation */}
@@ -38,26 +40,26 @@ export default function Home() {
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h1 className="font-megrim text-6xl md:text-8xl lg:text-9xl mb-6 text-white drop-shadow-2xl">
-              Safe & Dependable
+              {content.hero.title}
             </h1>
             <h2 className="font-montserrat text-3xl md:text-4xl lg:text-5xl mb-8 font-light text-white drop-shadow-xl">
-              Electrical Services You Can Trust
+              {content.hero.subtitle}
             </h2>
             <p className="font-raleway text-xl md:text-2xl mb-12 max-w-4xl mx-auto text-white drop-shadow-lg">
-              Your family&apos;s safety is our #1 priority. Professional electrical services for residential and commercial projects with the dependability you deserve.
+              {content.hero.description}
             </p>
             <div className="flex flex-col sm:flex-row gap-6 justify-center">
               <Link 
                 href="/contact" 
                 className="btn-primary text-lg shadow-2xl"
               >
-                Get Free Quote
+                {content.hero.primaryButton}
               </Link>
               <Link 
                 href="/portfolio" 
                 className="btn-secondary text-lg shadow-2xl border-white text-white hover:bg-white hover:text-purple"
               >
-                View Our Work
+                {content.hero.secondaryButton}
               </Link>
             </div>
           </div>
@@ -68,52 +70,24 @@ export default function Home() {
       <section className="py-20 bg-earle-black">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="font-montserrat text-4xl text-white mb-4">Our Services</h2>
+            <h2 className="font-montserrat text-4xl text-white mb-4">{content.services.title}</h2>
             <p className="font-raleway text-lg text-white-smoke max-w-2xl mx-auto">
-              From residential lighting to commercial builds, we handle all your electrical needs with safety and precision.
+              {content.services.description}
             </p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div className="bg-white-smoke rounded-lg shadow-sm text-center hover:shadow-md transition-shadow overflow-hidden">
-              <div className="h-32 bg-gradient-to-br from-purple/20 to-phlox/20 flex items-center justify-center">
-                <BoltIcon className="h-12 w-12 text-purple" />
+            {content.services.items.map((service, index) => (
+              <div key={index} className="bg-white-smoke rounded-lg shadow-sm text-center hover:shadow-md transition-shadow overflow-hidden">
+                <div className="h-32 bg-gradient-to-br from-purple/20 to-phlox/20 flex items-center justify-center">
+                  <BoltIcon className="h-12 w-12 text-purple" />
+                </div>
+                <div className="p-6">
+                  <h3 className="font-montserrat text-xl font-semibold text-earle-black mb-2">{service.title}</h3>
+                  <p className="font-raleway text-gray-600">{service.description}</p>
+                </div>
               </div>
-              <div className="p-6">
-                <h3 className="font-montserrat text-xl font-semibold text-earle-black mb-2">Lighting</h3>
-                <p className="font-raleway text-gray-600">Custom lighting solutions for every space</p>
-              </div>
-            </div>
-            
-            <div className="bg-white-smoke rounded-lg shadow-sm text-center hover:shadow-md transition-shadow overflow-hidden">
-              <div className="h-32 bg-gradient-to-br from-hookers-green/20 to-purple/20 flex items-center justify-center">
-                <HomeIcon className="h-12 w-12 text-hookers-green" />
-              </div>
-              <div className="p-6">
-                <h3 className="font-montserrat text-xl font-semibold text-earle-black mb-2">Residential</h3>
-                <p className="font-raleway text-gray-600">Safe electrical work for your home</p>
-              </div>
-            </div>
-            
-            <div className="bg-white-smoke rounded-lg shadow-sm text-center hover:shadow-md transition-shadow overflow-hidden">
-              <div className="h-32 bg-gradient-to-br from-earle-black/20 to-hookers-green/20 flex items-center justify-center">
-                <BuildingOfficeIcon className="h-12 w-12 text-earle-black" />
-              </div>
-              <div className="p-6">
-                <h3 className="font-montserrat text-xl font-semibold text-earle-black mb-2">Commercial</h3>
-                <p className="font-raleway text-gray-600">Professional commercial electrical services</p>
-              </div>
-            </div>
-            
-            <div className="bg-white-smoke rounded-lg shadow-sm text-center hover:shadow-md transition-shadow overflow-hidden">
-              <div className="h-32 bg-gradient-to-br from-phlox/20 to-purple/20 flex items-center justify-center">
-                <ShieldCheckIcon className="h-12 w-12 text-phlox" />
-              </div>
-              <div className="p-6">
-                <h3 className="font-montserrat text-xl font-semibold text-earle-black mb-2">Safety First</h3>
-                <p className="font-raleway text-gray-600">Education and safety for your family</p>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </section>
@@ -121,15 +95,15 @@ export default function Home() {
       {/* CTA Section */}
       <section className="py-20 bg-earle-black text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="font-montserrat text-4xl mb-6">Ready to Get Started?</h2>
+          <h2 className="font-montserrat text-4xl mb-6">{content.cta.title}</h2>
           <p className="font-raleway text-lg mb-8 max-w-2xl mx-auto">
-            Contact us today for a free quote. Your safety and satisfaction are our top priorities.
+            {content.cta.description}
           </p>
           <Link 
             href="/contact" 
             className="btn-primary inline-block"
           >
-            Request Quote
+            {content.cta.buttonText}
           </Link>
         </div>
       </section>
