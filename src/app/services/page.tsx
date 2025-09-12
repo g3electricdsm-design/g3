@@ -57,7 +57,7 @@ export default function Services() {
             {content.services.map((service, index) => {
               const IconComponent = iconMap[service.icon as keyof typeof iconMap] || LightBulbIcon;
               return (
-                <div key={index} className="bg-white border border-gray-200 rounded-lg p-8 hover:shadow-lg transition-shadow">
+                <div key={index} className="bg-white border border-gray-200 rounded-lg p-8 hover:shadow-lg transition-shadow shadow-md">
                   <div className="flex items-start mb-6">
                     <div className="flex-shrink-0">
                       <div className="w-12 h-12 bg-purple rounded-lg flex items-center justify-center">
