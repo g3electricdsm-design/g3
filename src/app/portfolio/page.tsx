@@ -27,7 +27,12 @@ export default function Portfolio() {
     };
   }, []);
 
-  const getSizeClasses = (size: string) => {
+  const getSizeClasses = (size: string, index: number) => {
+    // First project spans 3 columns wide
+    if (index === 0) {
+      return 'md:col-span-3 md:row-span-2';
+    }
+    
     switch (size) {
       case 'large':
         return 'md:col-span-2 md:row-span-2';
@@ -101,11 +106,11 @@ export default function Portfolio() {
 
           {/* Bento Box Grid */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[200px]">
-            {portfolioItems.map((item) => (
+            {portfolioItems.map((item, index) => (
               <Link
                 key={item.id}
                 href={`/portfolio/${item.id}`}
-                className={`group relative overflow-hidden rounded-lg shadow-sm hover:shadow-lg transition-all duration-300 cursor-pointer block ${getSizeClasses(item.size)}`}
+                className={`group relative overflow-hidden rounded-lg shadow-sm hover:shadow-lg transition-all duration-300 cursor-pointer block ${getSizeClasses(item.size, index)}`}
               >
                 {/* Project Image */}
                 <div className="absolute inset-0">
