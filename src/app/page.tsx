@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { BoltIcon, StarIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
 import Navigation from "@/components/Navigation";
+import PixelZapAnimation from "@/components/PixelZapAnimation";
 import { getContent } from "@/data/content";
 import { getAllTestimonials } from "@/data/testimonials";
 import { useState, useEffect } from "react";
@@ -52,6 +53,9 @@ export default function Home() {
   };
   return (
     <div className="min-h-screen bg-earle-black">
+      {/* Pixel Zap Animation */}
+      <PixelZapAnimation />
+      
       {/* Navigation */}
       <Navigation currentPath="/" />
 
