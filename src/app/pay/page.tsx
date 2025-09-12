@@ -266,7 +266,7 @@ export default function PayBill() {
               <button
                 type="submit"
                 disabled={paymentStatus === 'processing'}
-                className="w-full bg-purple text-white py-4 px-6 rounded-lg font-montserrat font-semibold text-lg hover:bg-phlox transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                className="btn-primary w-full text-lg py-4 px-6 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {paymentStatus === 'processing' ? 'Processing Payment...' : 'Pay Now'}
               </button>
