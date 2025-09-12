@@ -187,7 +187,7 @@ export default function Services() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-hookers-green py-12">
+      <footer className="py-12" style={{backgroundColor: '#70877F'}}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h3 className="font-megrim text-2xl text-white mb-4">G3 Electric</h3>
