@@ -65,17 +65,17 @@ export default function Services() {
                       </div>
                     </div>
                     <div className="ml-4 flex-1">
-                      <h3 className="font-montserrat text-2xl font-semibold text-earle-black mb-2">{service.title}</h3>
-                      <p className="font-raleway text-earle-black mb-3">{service.description}</p>
+                      <h3 className="font-montserrat text-2xl font-semibold text-earle-black mb-2" style={{color: '#242729'}}>{service.title}</h3>
+                      <p className="font-raleway text-earle-black mb-3" style={{color: '#242729'}}>{service.description}</p>
                     </div>
                   </div>
                   
                   <div>
-                    <h4 className="font-montserrat text-lg font-semibold text-earle-black mb-4">What We Include:</h4>
+                    <h4 className="font-montserrat text-lg font-semibold text-earle-black mb-4" style={{color: '#242729'}}>What We Include:</h4>
                     <ul className="space-y-2">
                       {service.features.map((feature, featureIndex) => (
-                        <li key={featureIndex} className="flex items-center font-raleway text-earle-black">
-                          <div className="w-2 h-2 bg-purple rounded-full mr-3 flex-shrink-0"></div>
+                        <li key={featureIndex} className="flex items-center font-raleway text-earle-black" style={{color: '#242729'}}>
+                          <div className="w-2 h-2 bg-purple rounded-full mr-3 flex-shrink-0" style={{backgroundColor: '#6D0091'}}></div>
                           {feature}
                         </li>
                       ))}
