@@ -77,12 +77,16 @@ export default function EditProjectPage() {
 
   const handleImageChange = (imageFile: File | null) => {
     if (imageFile) {
-      // Create a permanent image URL and update the form data
-      const imageUrl = URL.createObjectURL(imageFile);
-      setFormData(prev => ({
-        ...prev,
-        image: imageUrl
-      }));
+      // Convert file to base64 data URL for persistence
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const dataUrl = e.target?.result as string;
+        setFormData(prev => ({
+          ...prev,
+          image: dataUrl
+        }));
+      };
+      reader.readAsDataURL(imageFile);
     }
   };
 
@@ -97,9 +101,11 @@ export default function EditProjectPage() {
         // Create new project
         const newId = Date.now(); // Simple ID generation
         const newProject = { ...formData, id: newId };
+        console.log('Creating new project with image:', newProject.image);
         addProject(newProject);
       } else {
         // Update existing project
+        console.log('Updating project with image:', formData.image);
         updateProject(formData);
       }
 

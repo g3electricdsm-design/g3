@@ -1,19 +1,31 @@
+'use client';
+
 import Link from "next/link";
 import Image from "next/image";
-import { Metadata } from "next";
 import { HomeIcon, BuildingOfficeIcon, BoltIcon, LightBulbIcon } from "@heroicons/react/24/outline";
 import Navigation from "@/components/Navigation";
 import { getAllProjects } from "@/data/projects";
-
-export const metadata: Metadata = {
-  title: "Electrical Projects Portfolio | G3 Electric Des Moines",
-  description: "View our electrical project portfolio in Des Moines, IA. Residential and commercial electrical work including lighting installation, panel upgrades, smart home wiring, and emergency repairs.",
-  keywords: "electrical projects Des Moines, electrician portfolio Iowa, lighting installation projects, electrical panel upgrade, smart home installation, commercial electrical projects",
-};
+import { useState, useEffect } from "react";
 
 export default function Portfolio() {
-  // Get portfolio data from the centralized data file
-  const portfolioItems = getAllProjects();
+  const [portfolioItems, setPortfolioItems] = useState(getAllProjects());
+
+  // Refresh portfolio data when component mounts or when data might have changed
+  useEffect(() => {
+    const refreshData = () => {
+      setPortfolioItems(getAllProjects());
+    };
+
+    // Refresh on mount
+    refreshData();
+
+    // Refresh when window regains focus (user returns from admin)
+    window.addEventListener('focus', refreshData);
+
+    return () => {
+      window.removeEventListener('focus', refreshData);
+    };
+  }, []);
 
   const getSizeClasses = (size: string) => {
     switch (size) {
