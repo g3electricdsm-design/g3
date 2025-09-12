@@ -1,11 +1,13 @@
 import Link from "next/link";
 import Image from "next/image";
-import { BoltIcon } from "@heroicons/react/24/outline";
+import { BoltIcon, StarIcon } from "@heroicons/react/24/outline";
 import Navigation from "@/components/Navigation";
 import { getContent } from "@/data/content";
+import { getFeaturedTestimonials } from "@/data/testimonials";
 
 export default function Home() {
   const content = getContent().homepage;
+  const featuredTestimonials = getFeaturedTestimonials(3);
   return (
     <div className="min-h-screen bg-earle-black">
       {/* Navigation */}
@@ -79,6 +81,50 @@ export default function Home() {
                 </div>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials Section */}
+      <section className="py-20 bg-white-smoke">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="font-montserrat text-4xl text-earle-black mb-4">What Our Customers Say</h2>
+            <p className="font-raleway text-lg text-earle-black max-w-2xl mx-auto">
+              Don't just take our word for it. Here's what our satisfied customers have to say about our electrical services.
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {featuredTestimonials.map((testimonial) => (
+              <div key={testimonial.id} className="bg-white rounded-lg shadow-sm p-8 hover:shadow-md transition-shadow">
+                <div className="flex items-center mb-4">
+                  {[...Array(testimonial.rating)].map((_, i) => (
+                    <StarIcon key={i} className="h-5 w-5 text-yellow-400 fill-current" />
+                  ))}
+                </div>
+                <blockquote className="font-raleway text-earle-black mb-6 italic">
+                  "{testimonial.text}"
+                </blockquote>
+                <div className="border-t border-gray-200 pt-4">
+                  <div className="font-montserrat font-semibold text-earle-black">{testimonial.name}</div>
+                  <div className="font-raleway text-sm text-earle-black opacity-75">{testimonial.location}</div>
+                  <div className="font-raleway text-sm text-purple font-medium">{testimonial.project}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+          
+          <div className="text-center mt-12">
+            <Link 
+              href="/portfolio" 
+              className="inline-flex items-center text-purple hover:text-phlox font-montserrat font-semibold transition-colors"
+            >
+              View More Projects
+              <svg className="ml-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </Link>
           </div>
         </div>
       </section>
