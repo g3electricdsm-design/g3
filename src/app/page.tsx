@@ -100,7 +100,7 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-earle-black py-12">
+      <footer className="bg-hookers-green py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h3 className="font-montserrat text-2xl text-white mb-4">G3 Electric</h3>
