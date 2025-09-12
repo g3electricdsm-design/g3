@@ -54,8 +54,8 @@ export default function PayBill() {
         <div className="min-h-screen flex items-center justify-center bg-white-smoke">
           <div className="max-w-md w-full bg-white rounded-lg shadow-lg p-8 text-center">
             <CheckCircleIcon className="h-16 w-16 text-green-500 mx-auto mb-6" />
-            <h1 className="font-megrim text-3xl text-earle-black mb-4">Payment Successful!</h1>
-              <p className="font-raleway text-earle-black mb-6">
+            <h1 className="font-megrim text-3xl text-earle-black mb-4" style={{color: '#242729'}}>Payment Successful!</h1>
+              <p className="font-raleway text-earle-black mb-6" style={{color: '#242729'}}>
                 Thank you for your payment. Your invoice has been processed and you will receive a confirmation email shortly.
               </p>
             <div className="space-y-4">
@@ -105,8 +105,8 @@ export default function PayBill() {
           <div className="bg-white rounded-lg shadow-lg p-8">
             <div className="text-center mb-8">
               <CreditCardIcon className="h-12 w-12 text-purple mx-auto mb-4" />
-              <h2 className="font-montserrat text-2xl font-semibold text-earle-black mb-2">Secure Payment</h2>
-              <p className="font-raleway text-earle-black">Enter your invoice details and payment information</p>
+              <h2 className="font-montserrat text-2xl font-semibold text-earle-black mb-2" style={{color: '#242729'}}>Secure Payment</h2>
+              <p className="font-raleway text-earle-black" style={{color: '#242729'}}>Enter your invoice details and payment information</p>
             </div>
 
             {paymentStatus === 'error' && (
@@ -119,10 +119,10 @@ export default function PayBill() {
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Invoice Information */}
               <div className="bg-gray-50 p-4 rounded-lg">
-                <h3 className="font-montserrat text-lg font-semibold text-earle-black mb-4">Invoice Information</h3>
+                <h3 className="font-montserrat text-lg font-semibold text-earle-black mb-4" style={{color: '#242729'}}>Invoice Information</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <label htmlFor="invoiceNumber" className="block font-montserrat text-sm font-medium text-earle-black mb-2">
+                    <label htmlFor="invoiceNumber" className="block font-montserrat text-sm font-medium text-earle-black mb-2" style={{color: '#242729'}}>
                       Invoice Number *
                     </label>
                     <input
@@ -138,7 +138,7 @@ export default function PayBill() {
                     />
                   </div>
                   <div>
-                    <label htmlFor="amount" className="block font-montserrat text-sm font-medium text-earle-black mb-2">
+                    <label htmlFor="amount" className="block font-montserrat text-sm font-medium text-earle-black mb-2" style={{color: '#242729'}}>
                       Amount *
                     </label>
                     <input
@@ -155,7 +155,7 @@ export default function PayBill() {
                   </div>
                 </div>
                 <div className="mt-4">
-                  <label htmlFor="email" className="block font-montserrat text-sm font-medium text-earle-black mb-2">
+                  <label htmlFor="email" className="block font-montserrat text-sm font-medium text-earle-black mb-2" style={{color: '#242729'}}>
                     Email Address *
                   </label>
                     <input
@@ -174,10 +174,10 @@ export default function PayBill() {
 
               {/* Payment Information */}
               <div>
-                <h3 className="font-montserrat text-lg font-semibold text-earle-black mb-4">Payment Information</h3>
+                <h3 className="font-montserrat text-lg font-semibold text-earle-black mb-4" style={{color: '#242729'}}>Payment Information</h3>
                 <div className="space-y-4">
                   <div>
-                    <label htmlFor="cardNumber" className="block font-montserrat text-sm font-medium text-earle-black mb-2">
+                    <label htmlFor="cardNumber" className="block font-montserrat text-sm font-medium text-earle-black mb-2" style={{color: '#242729'}}>
                       Card Number *
                     </label>
                     <input
@@ -196,7 +196,7 @@ export default function PayBill() {
                   
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                      <label htmlFor="expiryDate" className="block font-montserrat text-sm font-medium text-earle-black mb-2">
+                      <label htmlFor="expiryDate" className="block font-montserrat text-sm font-medium text-earle-black mb-2" style={{color: '#242729'}}>
                         Expiry Date *
                       </label>
                     <input
@@ -213,7 +213,7 @@ export default function PayBill() {
                     />
                     </div>
                     <div>
-                      <label htmlFor="cvv" className="block font-montserrat text-sm font-medium text-earle-black mb-2">
+                      <label htmlFor="cvv" className="block font-montserrat text-sm font-medium text-earle-black mb-2" style={{color: '#242729'}}>
                         CVV *
                       </label>
                     <input
@@ -232,7 +232,7 @@ export default function PayBill() {
                   </div>
                   
                   <div>
-                    <label htmlFor="cardholderName" className="block font-montserrat text-sm font-medium text-earle-black mb-2">
+                    <label htmlFor="cardholderName" className="block font-montserrat text-sm font-medium text-earle-black mb-2" style={{color: '#242729'}}>
                       Cardholder Name *
                     </label>
                     <input
@@ -271,7 +271,7 @@ export default function PayBill() {
                 {paymentStatus === 'processing' ? 'Processing Payment...' : 'Pay Now'}
               </button>
 
-              <p className="font-raleway text-sm text-earle-black text-center">
+              <p className="font-raleway text-sm text-earle-black text-center" style={{color: '#242729'}}>
                 By clicking &quot;Pay Now&quot;, you agree to our terms of service and privacy policy.
               </p>
             </form>

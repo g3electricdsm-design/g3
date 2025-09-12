@@ -326,8 +326,8 @@ export default function Pricing() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             <div>
-              <h2 className="font-montserrat text-3xl text-earle-black mb-6">Pricing Information</h2>
-              <div className="space-y-4 font-raleway text-earle-black">
+              <h2 className="font-montserrat text-3xl text-earle-black mb-6" style={{color: '#242729'}}>Pricing Information</h2>
+              <div className="space-y-4 font-raleway text-earle-black" style={{color: '#242729'}}>
                 <p>
                   <strong>Free Estimates:</strong> All quotes are provided at no cost with no obligation. 
                   We believe in transparent pricing and honest communication.
@@ -348,34 +348,34 @@ export default function Pricing() {
             </div>
 
             <div className="bg-purple-50 p-8 rounded-lg">
-              <h3 className="font-montserrat text-2xl font-semibold text-earle-black mb-6">Why Our Pricing is Fair</h3>
+              <h3 className="font-montserrat text-2xl font-semibold text-earle-black mb-6" style={{color: '#242729'}}>Why Our Pricing is Fair</h3>
               <ul className="space-y-4">
                 <li className="flex items-start">
                   <BoltIcon className="h-5 w-5 text-purple mr-3 mt-1 flex-shrink-0" />
                   <div>
-                    <h4 className="font-montserrat font-semibold text-earle-black">Licensed Professionals</h4>
-                    <p className="font-raleway text-sm text-earle-black">You&apos;re paying for skilled, licensed electricians, not handymen</p>
+                    <h4 className="font-montserrat font-semibold text-earle-black" style={{color: '#242729'}}>Licensed Professionals</h4>
+                    <p className="font-raleway text-sm text-earle-black" style={{color: '#242729'}}>You&apos;re paying for skilled, licensed electricians, not handymen</p>
                   </div>
                 </li>
                 <li className="flex items-start">
                   <BoltIcon className="h-5 w-5 text-purple mr-3 mt-1 flex-shrink-0" />
                   <div>
-                    <h4 className="font-montserrat font-semibold text-earle-black">Quality Materials</h4>
-                    <p className="font-raleway text-sm text-earle-black">We use only the highest quality materials and components</p>
+                    <h4 className="font-montserrat font-semibold text-earle-black" style={{color: '#242729'}}>Quality Materials</h4>
+                    <p className="font-raleway text-sm text-earle-black" style={{color: '#242729'}}>We use only the highest quality materials and components</p>
                   </div>
                 </li>
                 <li className="flex items-start">
                   <BoltIcon className="h-5 w-5 text-purple mr-3 mt-1 flex-shrink-0" />
                   <div>
-                    <h4 className="font-montserrat font-semibold text-earle-black">Safety First</h4>
-                    <p className="font-raleway text-sm text-earle-black">Every project includes safety inspections and code compliance</p>
+                    <h4 className="font-montserrat font-semibold text-earle-black" style={{color: '#242729'}}>Safety First</h4>
+                    <p className="font-raleway text-sm text-earle-black" style={{color: '#242729'}}>Every project includes safety inspections and code compliance</p>
                   </div>
                 </li>
                 <li className="flex items-start">
                   <BoltIcon className="h-5 w-5 text-purple mr-3 mt-1 flex-shrink-0" />
                   <div>
-                    <h4 className="font-montserrat font-semibold text-earle-black">Peace of Mind</h4>
-                    <p className="font-raleway text-sm text-earle-black">Comprehensive warranty and ongoing support</p>
+                    <h4 className="font-montserrat font-semibold text-earle-black" style={{color: '#242729'}}>Peace of Mind</h4>
+                    <p className="font-raleway text-sm text-earle-black" style={{color: '#242729'}}>Comprehensive warranty and ongoing support</p>
                   </div>
                 </li>
               </ul>
