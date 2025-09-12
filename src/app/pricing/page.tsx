@@ -201,8 +201,8 @@ export default function Pricing() {
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="font-montserrat text-4xl text-earle-black mb-4">Service Tiers</h2>
-            <p className="font-raleway text-lg text-earle-black max-w-3xl mx-auto">
+            <h2 className="font-montserrat text-4xl text-white mb-4">Service Tiers</h2>
+            <p className="font-raleway text-lg text-white-smoke max-w-3xl mx-auto">
               Choose the level of service that best fits your needs and budget.
             </p>
           </div>

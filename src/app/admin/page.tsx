@@ -182,7 +182,7 @@ export default function Admin() {
                       <div className="flex items-start justify-between mb-3">
                         <div className="flex-1">
                           <h4 className="font-montserrat text-lg font-semibold text-earle-black">{project.title}</h4>
-                          <p className="font-raleway text-sm text-gray-600">{project.category} • {project.type}</p>
+                          <p className="font-raleway text-sm text-earle-black">{project.category} • {project.type}</p>
                         </div>
                         <div className="flex items-center gap-1">
                           <button
@@ -201,8 +201,8 @@ export default function Admin() {
                           </button>
                         </div>
                       </div>
-                      <p className="font-raleway text-sm text-gray-500 mb-3 line-clamp-2">{project.description}</p>
-                      <div className="flex items-center justify-between text-xs text-gray-400">
+                      <p className="font-raleway text-sm text-earle-black mb-3 line-clamp-2">{project.description}</p>
+                      <div className="flex items-center justify-between text-xs text-earle-black">
                         <span>{project.client}</span>
                         <span>{project.completed}</span>
                       </div>
@@ -231,7 +231,7 @@ export default function Admin() {
                       <div className="flex items-start justify-between mb-3">
                         <div className="flex-1">
                           <h4 className="font-montserrat text-lg font-semibold text-earle-black">{service.name}</h4>
-                          <p className="font-raleway text-sm text-gray-600">{service.category}</p>
+                          <p className="font-raleway text-sm text-earle-black">{service.category}</p>
                         </div>
                         <div className="flex items-center gap-1">
                           <button className="p-2 text-purple hover:bg-purple/10 rounded-lg transition-colors">
@@ -242,9 +242,9 @@ export default function Admin() {
                           </button>
                         </div>
                       </div>
-                      <p className="font-raleway text-sm text-gray-500 mb-3">{service.description}</p>
+                      <p className="font-raleway text-sm text-earle-black mb-3">{service.description}</p>
                       <div className="flex items-center justify-between text-xs">
-                        <span className="text-gray-400">{service.pricing.description}</span>
+                        <span className="text-earle-black">{service.pricing.description}</span>
                         {service.popular && (
                           <span className="bg-purple/10 text-purple px-2 py-1 rounded-full text-xs font-medium">
                             Popular
@@ -293,18 +293,18 @@ export default function Admin() {
                             }`}>
                               {entry.status.charAt(0).toUpperCase() + entry.status.slice(1)}
                             </span>
-                            <span className="text-xs text-gray-500">
+                            <span className="text-xs text-earle-black">
                               {new Date(entry.timestamp).toLocaleDateString()}
                             </span>
                           </div>
-                          <p className="font-raleway text-sm text-gray-600 mb-2">
+                          <p className="font-raleway text-sm text-earle-black mb-2">
                             {entry.customerInfo.email} • {entry.customerInfo.phone}
                           </p>
-                          <p className="font-raleway text-sm text-gray-500 mb-2">
+                          <p className="font-raleway text-sm text-earle-black mb-2">
                             <strong>Project:</strong> {entry.projectInfo.projectType} • {entry.projectInfo.description?.substring(0, 100)}...
                           </p>
                           {entry.projectInfo.budget && (
-                            <p className="font-raleway text-sm text-gray-500">
+                            <p className="font-raleway text-sm text-earle-black">
                               <strong>Budget:</strong> {entry.projectInfo.budget}
                             </p>
                           )}
@@ -350,10 +350,10 @@ export default function Admin() {
                     </div>
                     <div>
                       <h4 className="font-montserrat text-lg font-semibold text-earle-black">Homepage</h4>
-                      <p className="font-raleway text-sm text-gray-600">Hero, services, CTA sections</p>
+                      <p className="font-raleway text-sm text-earle-black">Hero, services, CTA sections</p>
                     </div>
                   </div>
-                  <p className="font-raleway text-sm text-gray-600 mb-4">
+                  <p className="font-raleway text-sm text-earle-black mb-4">
                     Manage hero content, service previews, and call-to-action sections.
                   </p>
                   <button
@@ -372,10 +372,10 @@ export default function Admin() {
                     </div>
                     <div>
                       <h4 className="font-montserrat text-lg font-semibold text-earle-black">Services</h4>
-                      <p className="font-raleway text-sm text-gray-600">Service descriptions & features</p>
+                      <p className="font-raleway text-sm text-earle-black">Service descriptions & features</p>
                     </div>
                   </div>
-                  <p className="font-raleway text-sm text-gray-600 mb-4">
+                  <p className="font-raleway text-sm text-earle-black mb-4">
                     Update service descriptions, features, and detailed information.
                   </p>
                   <button
@@ -394,10 +394,10 @@ export default function Admin() {
                     </div>
                     <div>
                       <h4 className="font-montserrat text-lg font-semibold text-earle-black">Pricing</h4>
-                      <p className="font-raleway text-sm text-gray-600">Pricing tiers & service costs</p>
+                      <p className="font-raleway text-sm text-earle-black">Pricing tiers & service costs</p>
                     </div>
                   </div>
-                  <p className="font-raleway text-sm text-gray-600 mb-4">
+                  <p className="font-raleway text-sm text-earle-black mb-4">
                     Manage pricing tiers, service pricing, and cost information.
                   </p>
                   <button
@@ -416,10 +416,10 @@ export default function Admin() {
                     </div>
                     <div>
                       <h4 className="font-montserrat text-lg font-semibold text-earle-black">About Us</h4>
-                      <p className="font-raleway text-sm text-gray-600">Mission, values, team info</p>
+                      <p className="font-raleway text-sm text-earle-black">Mission, values, team info</p>
                     </div>
                   </div>
-                  <p className="font-raleway text-sm text-gray-600 mb-4">
+                  <p className="font-raleway text-sm text-earle-black mb-4">
                     Update company mission, values, team information, and story.
                   </p>
                   <button
@@ -438,10 +438,10 @@ export default function Admin() {
                     </div>
                     <div>
                       <h4 className="font-montserrat text-lg font-semibold text-earle-black">Contact Form</h4>
-                      <p className="font-raleway text-sm text-gray-600">Form fields & contact info</p>
+                      <p className="font-raleway text-sm text-earle-black">Form fields & contact info</p>
                     </div>
                   </div>
-                  <p className="font-raleway text-sm text-gray-600 mb-4">
+                  <p className="font-raleway text-sm text-earle-black mb-4">
                     Customize contact form fields, labels, and contact information.
                   </p>
                   <button
@@ -460,28 +460,28 @@ export default function Admin() {
                     </div>
                     <div>
                       <h4 className="font-montserrat text-lg font-semibold text-earle-black">Content Overview</h4>
-                      <p className="font-raleway text-sm text-gray-600">All content status</p>
+                      <p className="font-raleway text-sm text-earle-black">All content status</p>
                     </div>
                   </div>
                   <div className="space-y-2">
                     <div className="flex justify-between text-sm">
-                      <span className="font-raleway text-gray-600">Homepage</span>
+                      <span className="font-raleway text-earle-black">Homepage</span>
                       <span className="font-montserrat text-green-600">✓ Updated</span>
                     </div>
                     <div className="flex justify-between text-sm">
-                      <span className="font-raleway text-gray-600">Services</span>
+                      <span className="font-raleway text-earle-black">Services</span>
                       <span className="font-montserrat text-green-600">✓ Updated</span>
                     </div>
                     <div className="flex justify-between text-sm">
-                      <span className="font-raleway text-gray-600">Pricing</span>
+                      <span className="font-raleway text-earle-black">Pricing</span>
                       <span className="font-montserrat text-green-600">✓ Updated</span>
                     </div>
                     <div className="flex justify-between text-sm">
-                      <span className="font-raleway text-gray-600">About</span>
+                      <span className="font-raleway text-earle-black">About</span>
                       <span className="font-montserrat text-green-600">✓ Updated</span>
                     </div>
                     <div className="flex justify-between text-sm">
-                      <span className="font-raleway text-gray-600">Contact</span>
+                      <span className="font-raleway text-earle-black">Contact</span>
                       <span className="font-montserrat text-green-600">✓ Updated</span>
                     </div>
                   </div>
@@ -569,13 +569,13 @@ export default function Admin() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h3 className="font-montserrat text-2xl text-earle-black mb-4">G3 Electric</h3>
-            <p className="font-raleway text-gray-600 mb-4">Safe & Dependable Electrical Services</p>
+            <p className="font-raleway text-earle-black mb-4">Safe & Dependable Electrical Services</p>
             <div className="flex justify-center space-x-6">
-              <Link href="/services" className="text-gray-600 hover:text-purple font-raleway">Services</Link>
+              <Link href="/services" className="text-earle-black hover:text-purple font-raleway">Services</Link>
               <Link href="/portfolio" className="text-purple font-raleway">Portfolio</Link>
-              <Link href="/pricing" className="text-gray-600 hover:text-purple font-raleway">Pricing</Link>
-              <Link href="/about" className="text-gray-600 hover:text-purple font-raleway">About</Link>
-              <Link href="/contact" className="text-gray-600 hover:text-purple font-raleway">Contact</Link>
+              <Link href="/pricing" className="text-earle-black hover:text-purple font-raleway">Pricing</Link>
+              <Link href="/about" className="text-earle-black hover:text-purple font-raleway">About</Link>
+              <Link href="/contact" className="text-earle-black hover:text-purple font-raleway">Contact</Link>
             </div>
           </div>
         </div>

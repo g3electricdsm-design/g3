@@ -11,7 +11,7 @@ export default function Navigation({ currentPath }: NavigationProps) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center">
-            <Link href="/" className="font-megrim text-2xl text-white focus:ring-2 focus:ring-purple focus:ring-offset-2 rounded">
+            <Link href="/" className="font-megrim text-2xl text-white focus:ring-2 focus:ring-purple focus:ring-offset-2 rounded transition-all duration-300 ease-in-out transform hover:scale-105 hover:text-phlox hover:drop-shadow-lg">
               <span className="sr-only">G3 Electric</span>
               G3 Electric
             </Link>
@@ -20,10 +20,10 @@ export default function Navigation({ currentPath }: NavigationProps) {
             <div className="ml-10 flex items-baseline space-x-4" role="menubar">
               <Link 
                 href="/" 
-                className={`px-3 py-2 rounded-md text-sm font-medium focus:ring-2 focus:ring-purple focus:ring-offset-2 transition-colors ${
+                className={`px-3 py-2 rounded-md text-sm font-medium focus:ring-2 focus:ring-purple focus:ring-offset-2 transition-all duration-300 ease-in-out transform hover:scale-105 ${
                   currentPath === '/' 
-                    ? 'text-purple bg-purple/10' 
-                    : 'text-white-smoke hover:text-purple'
+                    ? 'text-white bg-gradient-to-r from-purple to-phlox shadow-lg shadow-purple/25' 
+                    : 'text-white-smoke hover:text-white hover:bg-purple/20 hover:shadow-md hover:shadow-purple/10'
                 }`} 
                 role="menuitem"
               >
@@ -31,10 +31,10 @@ export default function Navigation({ currentPath }: NavigationProps) {
               </Link>
               <Link 
                 href="/services" 
-                className={`px-3 py-2 rounded-md text-sm font-medium focus:ring-2 focus:ring-purple focus:ring-offset-2 transition-colors ${
+                className={`px-3 py-2 rounded-md text-sm font-medium focus:ring-2 focus:ring-purple focus:ring-offset-2 transition-all duration-300 ease-in-out transform hover:scale-105 ${
                   currentPath.startsWith('/services') 
-                    ? 'text-purple bg-purple/10' 
-                    : 'text-white-smoke hover:text-purple'
+                    ? 'text-white bg-gradient-to-r from-purple to-phlox shadow-lg shadow-purple/25' 
+                    : 'text-white-smoke hover:text-white hover:bg-purple/20 hover:shadow-md hover:shadow-purple/10'
                 }`} 
                 role="menuitem"
               >
@@ -42,10 +42,10 @@ export default function Navigation({ currentPath }: NavigationProps) {
               </Link>
               <Link 
                 href="/portfolio" 
-                className={`px-3 py-2 rounded-md text-sm font-medium focus:ring-2 focus:ring-purple focus:ring-offset-2 transition-colors ${
+                className={`px-3 py-2 rounded-md text-sm font-medium focus:ring-2 focus:ring-purple focus:ring-offset-2 transition-all duration-300 ease-in-out transform hover:scale-105 ${
                   currentPath.startsWith('/portfolio') 
-                    ? 'text-purple bg-purple/10' 
-                    : 'text-white-smoke hover:text-purple'
+                    ? 'text-white bg-gradient-to-r from-purple to-phlox shadow-lg shadow-purple/25' 
+                    : 'text-white-smoke hover:text-white hover:bg-purple/20 hover:shadow-md hover:shadow-purple/10'
                 }`} 
                 role="menuitem"
               >
@@ -53,10 +53,10 @@ export default function Navigation({ currentPath }: NavigationProps) {
               </Link>
               <Link 
                 href="/pricing" 
-                className={`px-3 py-2 rounded-md text-sm font-medium focus:ring-2 focus:ring-purple focus:ring-offset-2 transition-colors ${
+                className={`px-3 py-2 rounded-md text-sm font-medium focus:ring-2 focus:ring-purple focus:ring-offset-2 transition-all duration-300 ease-in-out transform hover:scale-105 ${
                   currentPath.startsWith('/pricing') 
-                    ? 'text-purple bg-purple/10' 
-                    : 'text-white-smoke hover:text-purple'
+                    ? 'text-white bg-gradient-to-r from-purple to-phlox shadow-lg shadow-purple/25' 
+                    : 'text-white-smoke hover:text-white hover:bg-purple/20 hover:shadow-md hover:shadow-purple/10'
                 }`} 
                 role="menuitem"
               >
@@ -64,10 +64,10 @@ export default function Navigation({ currentPath }: NavigationProps) {
               </Link>
               <Link 
                 href="/about" 
-                className={`px-3 py-2 rounded-md text-sm font-medium focus:ring-2 focus:ring-purple focus:ring-offset-2 transition-colors ${
+                className={`px-3 py-2 rounded-md text-sm font-medium focus:ring-2 focus:ring-purple focus:ring-offset-2 transition-all duration-300 ease-in-out transform hover:scale-105 ${
                   currentPath.startsWith('/about') 
-                    ? 'text-purple bg-purple/10' 
-                    : 'text-white-smoke hover:text-purple'
+                    ? 'text-white bg-gradient-to-r from-purple to-phlox shadow-lg shadow-purple/25' 
+                    : 'text-white-smoke hover:text-white hover:bg-purple/20 hover:shadow-md hover:shadow-purple/10'
                 }`} 
                 role="menuitem"
               >
@@ -75,10 +75,10 @@ export default function Navigation({ currentPath }: NavigationProps) {
               </Link>
               <Link 
                 href="/contact" 
-                className={`px-3 py-2 rounded-md text-sm font-medium focus:ring-2 focus:ring-purple focus:ring-offset-2 transition-colors ${
+                className={`px-3 py-2 rounded-md text-sm font-medium focus:ring-2 focus:ring-purple focus:ring-offset-2 transition-all duration-300 ease-in-out transform hover:scale-105 ${
                   currentPath.startsWith('/contact') 
-                    ? 'text-purple bg-purple/10' 
-                    : 'text-white-smoke hover:text-purple'
+                    ? 'text-white bg-gradient-to-r from-purple to-phlox shadow-lg shadow-purple/25' 
+                    : 'text-white-smoke hover:text-white hover:bg-purple/20 hover:shadow-md hover:shadow-purple/10'
                 }`} 
                 role="menuitem"
               >
@@ -86,7 +86,7 @@ export default function Navigation({ currentPath }: NavigationProps) {
               </Link>
               <Link 
                 href="/pay" 
-                className="bg-purple text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-phlox focus:ring-2 focus:ring-purple focus:ring-offset-2 transition-colors" 
+                className="bg-gradient-to-r from-purple to-phlox text-white px-4 py-2 rounded-md text-sm font-medium hover:from-phlox hover:to-purple hover:scale-105 hover:shadow-lg hover:shadow-purple/25 focus:ring-2 focus:ring-purple focus:ring-offset-2 transition-all duration-300 ease-in-out transform" 
                 role="menuitem"
               >
                 Pay Bill

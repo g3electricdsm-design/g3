@@ -51,8 +51,8 @@ export default function About() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
-              <h2 className="font-montserrat text-4xl text-earle-black mb-6">{content.mission.title}</h2>
-              <div className="space-y-4 font-raleway text-earle-black">
+              <h2 className="font-montserrat text-4xl text-white mb-6">{content.mission.title}</h2>
+              <div className="space-y-4 font-raleway text-white-smoke">
                 <p>{content.mission.description}</p>
               </div>
             </div>

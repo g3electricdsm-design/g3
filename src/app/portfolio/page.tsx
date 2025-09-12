@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { ArrowLeftIcon, HomeIcon, BuildingOfficeIcon, BoltIcon, LightBulbIcon } from "@heroicons/react/24/outline";
+import Image from "next/image";
+import { HomeIcon, BuildingOfficeIcon, BoltIcon, LightBulbIcon } from "@heroicons/react/24/outline";
 import Navigation from "@/components/Navigation";
 import { getAllProjects } from "@/data/projects";
 
@@ -50,12 +51,6 @@ export default function Portfolio() {
       {/* Header */}
       <section className="bg-gradient-to-br from-purple to-phlox text-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center mb-6">
-            <Link href="/" className="flex items-center text-white hover:text-white-smoke transition-colors">
-              <ArrowLeftIcon className="h-5 w-5 mr-2" />
-              Back to Home
-            </Link>
-          </div>
           <h1 className="font-megrim text-5xl md:text-6xl mb-4">Our Portfolio</h1>
           <p className="font-raleway text-lg md:text-xl max-w-3xl">
             See our recent work showcasing safe, dependable electrical solutions for both residential and commercial projects.
@@ -93,15 +88,15 @@ export default function Portfolio() {
                 href={`/portfolio/${item.id}`}
                 className={`group relative overflow-hidden rounded-lg shadow-sm hover:shadow-lg transition-all duration-300 cursor-pointer block ${getSizeClasses(item.size)}`}
               >
-                {/* Image placeholder with proper aspect ratio */}
-                <div className="absolute inset-0 bg-gradient-to-br from-purple/20 to-phlox/20 flex items-center justify-center">
-                  <div className="text-center text-earle-black">
-                    <div className="w-16 h-16 bg-purple/30 rounded-lg flex items-center justify-center mx-auto mb-3">
-                      <BoltIcon className="h-8 w-8 text-purple" />
-                    </div>
-                    <div className="font-montserrat text-sm font-medium">{item.title}</div>
-                    <div className="font-raleway text-xs text-earle-black mt-1">{item.category}</div>
-                  </div>
+                {/* Project Image */}
+                <div className="absolute inset-0">
+                  <Image
+                    src={item.image}
+                    alt={item.title}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  />
                 </div>
                 
                 {/* Overlay */}
@@ -120,15 +115,15 @@ export default function Portfolio() {
                 </div>
 
                 {/* Always visible content for smaller items */}
-                <div className="absolute bottom-4 left-4 right-4 text-earle-black md:hidden">
+                <div className="absolute bottom-4 left-4 right-4 text-white md:hidden">
                   <div className="flex items-center gap-2 mb-2">
-                    <span className="text-purple">{getCategoryIcon(item.category)}</span>
-                    <span className="font-montserrat text-sm font-medium text-earle-black">{item.category}</span>
-                    <span className="text-earle-black">•</span>
-                    <span className="text-purple">{getTypeIcon(item.type)}</span>
-                    <span className="font-montserrat text-sm font-medium text-earle-black">{item.type}</span>
+                    <span className="text-purple-300">{getCategoryIcon(item.category)}</span>
+                    <span className="font-montserrat text-sm font-medium text-white">{item.category}</span>
+                    <span className="text-white">•</span>
+                    <span className="text-purple-300">{getTypeIcon(item.type)}</span>
+                    <span className="font-montserrat text-sm font-medium text-white">{item.type}</span>
                   </div>
-                  <h3 className="font-montserrat text-lg font-semibold mb-1 text-earle-black">{item.title}</h3>
+                  <h3 className="font-montserrat text-lg font-semibold mb-1 text-white">{item.title}</h3>
                 </div>
               </Link>
             ))}

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { BoltIcon } from "@heroicons/react/24/outline";
 import Navigation from "@/components/Navigation";
 import { getContent } from "@/data/content";
@@ -12,28 +13,18 @@ export default function Home() {
 
       {/* Hero Section */}
       <section className="relative h-screen w-full overflow-hidden">
-        {/* Huge Background Image Placeholder */}
+        {/* Hero Background Image */}
         <div className="absolute inset-0 w-full h-full">
-          {/* Placeholder for lighting project hero image */}
-          <div className="w-full h-full bg-gradient-to-br from-earle-black via-purple/30 to-phlox/30 flex items-center justify-center">
-            {/* Image placeholder with lighting project visual */}
-            <div className="absolute inset-0 bg-gradient-to-br from-purple/20 to-phlox/20">
-              <div className="absolute inset-0 bg-black/40"></div>
-              {/* Simulated lighting elements */}
-              <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-white/20 rounded-full blur-xl"></div>
-              <div className="absolute top-1/3 right-1/3 w-24 h-24 bg-phlox/30 rounded-full blur-lg"></div>
-              <div className="absolute bottom-1/3 left-1/3 w-20 h-20 bg-purple/40 rounded-full blur-md"></div>
-              <div className="absolute bottom-1/4 right-1/4 w-28 h-28 bg-white/10 rounded-full blur-xl"></div>
-            </div>
-            {/* Placeholder text for image */}
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="text-center text-white/60">
-                <div className="text-6xl mb-4">💡</div>
-                <p className="font-montserrat text-xl">Lighting Project Hero Image</p>
-                <p className="font-raleway text-sm mt-2">Professional electrical work showcase</p>
-              </div>
-            </div>
-          </div>
+          <Image
+            src="/images/hero-electrical-project.jpg"
+            alt="Professional electrical work - G3 Electric"
+            fill
+            className="object-cover"
+            priority
+            sizes="100vw"
+          />
+          {/* Dark overlay for text readability */}
+          <div className="absolute inset-0 bg-black/50"></div>
         </div>
         
         {/* Hero Content Overlay */}
@@ -95,8 +86,8 @@ export default function Home() {
       {/* CTA Section */}
       <section className="py-20 bg-earle-black text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="font-montserrat text-4xl mb-6">{content.cta.title}</h2>
-          <p className="font-raleway text-lg mb-8 max-w-2xl mx-auto">
+          <h2 className="font-montserrat text-4xl mb-6 text-white">{content.cta.title}</h2>
+          <p className="font-raleway text-lg mb-8 max-w-2xl mx-auto text-white-smoke">
             {content.cta.description}
           </p>
           <Link 
