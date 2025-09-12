@@ -12,7 +12,6 @@ export default function MobileMenu({ currentPath }: MobileMenuProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   const navigation = [
-    { name: 'Home', href: '/' },
     { name: 'Services', href: '/services' },
     { name: 'Portfolio', href: '/portfolio' },
     { name: 'Pricing', href: '/pricing' },
@@ -22,9 +21,6 @@ export default function MobileMenu({ currentPath }: MobileMenuProps) {
   ];
 
   const isCurrentPath = (path: string) => {
-    if (path === '/') {
-      return currentPath === '/';
-    }
     return currentPath.startsWith(path);
   };
 
