@@ -72,8 +72,14 @@ export default function Services() {
                       </div>
                     </div>
                     <div className="ml-4 flex-1">
-                      <h3 className="font-montserrat text-2xl font-semibold text-earle-black mb-2" style={{color: '#242729'}}>{service.title}</h3>
-                      <p className="font-raleway text-earle-black mb-3" style={{color: '#242729'}}>{service.description}</p>
+                      <div className="flex items-start gap-3 mb-2">
+                        <BoltIcon className="h-6 w-6 text-purple flex-shrink-0 mt-1" />
+                        <h3 className="font-montserrat text-2xl font-semibold text-earle-black" style={{color: '#242729'}}>{service.title}</h3>
+                      </div>
+                      <div className="flex items-start gap-3">
+                        <BoltIcon className="h-5 w-5 text-purple flex-shrink-0 mt-1" />
+                        <p className="font-raleway text-earle-black mb-3" style={{color: '#242729'}}>{service.description}</p>
+                      </div>
                     </div>
                   </div>
                   
