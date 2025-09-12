@@ -35,6 +35,11 @@ export default function PixelZapAnimation() {
   const containerRef = useRef<HTMLDivElement>(null);
   const pixelIdRef = useRef(0);
 
+  // Debug: Log when component mounts
+  useEffect(() => {
+    console.log('PixelZapAnimation mounted');
+  }, []);
+
   const createPixel = useCallback((x: number, y: number) => {
     const size = Math.random() * 4 + 2; // 2-6px
     const angle = Math.random() * Math.PI * 2;
@@ -65,6 +70,7 @@ export default function PixelZapAnimation() {
     setMousePosition({ x, y });
     
     if (isHovering) {
+      console.log('Creating pixels at:', x, y);
       // Create multiple pixels in a burst pattern
       const pixelCount = Math.random() * 3 + 2; // 2-5 pixels
       const newPixels: Pixel[] = [];
@@ -80,10 +86,12 @@ export default function PixelZapAnimation() {
   }, [isHovering, createPixel]);
 
   const handleMouseEnter = () => {
+    console.log('Mouse entered - starting hover');
     setIsHovering(true);
   };
 
   const handleMouseLeave = () => {
+    console.log('Mouse left - stopping hover');
     setIsHovering(false);
   };
 
@@ -136,6 +144,13 @@ export default function PixelZapAnimation() {
           : 'transparent'
       }}
     >
+      {/* Debug: Show a test element */}
+      <div 
+        className="fixed top-4 right-4 bg-red-500 text-white p-2 rounded text-xs pointer-events-auto"
+        style={{ zIndex: 9999 }}
+      >
+        Pixels: {pixels.length} | Hover: {isHovering ? 'Yes' : 'No'}
+      </div>
       <AnimatePresence>
         {pixels.map(pixel => (
           <motion.div
