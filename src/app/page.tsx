@@ -1,13 +1,23 @@
+'use client';
+
 import Link from "next/link";
 import Image from "next/image";
-import { BoltIcon, StarIcon } from "@heroicons/react/24/outline";
+import { BoltIcon, StarIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
 import Navigation from "@/components/Navigation";
 import { getContent } from "@/data/content";
-import { getFeaturedTestimonials } from "@/data/testimonials";
+import { getAllTestimonials } from "@/data/testimonials";
+import { useState } from "react";
 
 export default function Home() {
   const content = getContent().homepage;
-  const featuredTestimonials = getFeaturedTestimonials(3);
+  const allTestimonials = getAllTestimonials();
+  const [currentTestimonialIndex, setCurrentTestimonialIndex] = useState(0);
+  
+  const currentTestimonial = allTestimonials[currentTestimonialIndex];
+  
+  const nextTestimonial = () => {
+    setCurrentTestimonialIndex((prev) => (prev + 1) % allTestimonials.length);
+  };
   return (
     <div className="min-h-screen bg-earle-black">
       {/* Navigation */}
@@ -95,36 +105,54 @@ export default function Home() {
             </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {featuredTestimonials.map((testimonial) => (
-              <div key={testimonial.id} className="bg-white rounded-lg shadow-sm p-8 hover:shadow-md transition-shadow">
-                <div className="flex items-center mb-4">
-                  {[...Array(testimonial.rating)].map((_, i) => (
-                    <StarIcon key={i} className="h-5 w-5 text-yellow-400 fill-current" />
+          <div className="max-w-4xl mx-auto">
+            <div className="bg-white rounded-lg shadow-sm p-8 md:p-12 relative">
+              <div className="flex items-center mb-6">
+                {[...Array(currentTestimonial.rating)].map((_, i) => (
+                  <StarIcon key={i} className="h-5 w-5 text-yellow-400 fill-current" />
+                ))}
+              </div>
+              
+              <blockquote className="font-raleway text-earle-black text-lg md:text-xl mb-8 italic leading-relaxed">
+                "{currentTestimonial.text}"
+              </blockquote>
+              
+              <div className="flex items-center justify-between">
+                <div className="flex items-center">
+                  <div className="w-16 h-16 bg-gradient-to-br from-purple to-phlox rounded-full flex items-center justify-center text-white font-montserrat font-bold text-xl mr-4">
+                    {currentTestimonial.name.split(' ').map(n => n[0]).join('')}
+                  </div>
+                  <div>
+                    <div className="font-montserrat font-semibold text-earle-black text-lg">{currentTestimonial.name}</div>
+                    <div className="font-raleway text-earle-black opacity-75">{currentTestimonial.location}</div>
+                    <div className="font-raleway text-purple font-medium">{currentTestimonial.project}</div>
+                  </div>
+                </div>
+                
+                <button
+                  onClick={nextTestimonial}
+                  className="bg-purple text-white p-3 rounded-full hover:bg-phlox transition-colors shadow-md hover:shadow-lg"
+                  aria-label="Next testimonial"
+                >
+                  <ChevronRightIcon className="h-6 w-6" />
+                </button>
+              </div>
+              
+              <div className="flex justify-center mt-6">
+                <div className="flex space-x-2">
+                  {allTestimonials.map((_, index) => (
+                    <button
+                      key={index}
+                      onClick={() => setCurrentTestimonialIndex(index)}
+                      className={`w-2 h-2 rounded-full transition-colors ${
+                        index === currentTestimonialIndex ? 'bg-purple' : 'bg-gray-300'
+                      }`}
+                      aria-label={`Go to testimonial ${index + 1}`}
+                    />
                   ))}
                 </div>
-                <blockquote className="font-raleway text-earle-black mb-6 italic">
-                  "{testimonial.text}"
-                </blockquote>
-                <div className="border-t border-gray-200 pt-4">
-                  <div className="font-montserrat font-semibold text-earle-black">{testimonial.name}</div>
-                  <div className="font-raleway text-sm text-earle-black opacity-75">{testimonial.location}</div>
-                  <div className="font-raleway text-sm text-purple font-medium">{testimonial.project}</div>
-                </div>
               </div>
-            ))}
-          </div>
-          
-          <div className="text-center mt-12">
-            <Link 
-              href="/portfolio" 
-              className="inline-flex items-center text-purple hover:text-phlox font-montserrat font-semibold transition-colors"
-            >
-              View More Projects
-              <svg className="ml-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
-            </Link>
+            </div>
           </div>
         </div>
       </section>
