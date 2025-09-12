@@ -227,7 +227,7 @@ export default function Pricing() {
                   {tier.features.map((feature, featureIndex) => (
                     <li key={featureIndex} className="flex items-center">
                       <CheckIcon className={`h-5 w-5 mr-3 ${
-                        tier.color === 'purple' ? 'text-purple' : 'text-gray-500'
+                        tier.color === 'purple' ? 'text-purple' : 'text-earle-black'
                       }`} />
                       <span className="font-raleway text-earle-black">{feature}</span>
                     </li>
