@@ -23,11 +23,12 @@ export default function SimplePixelZap() {
   const [isHovering, setIsHovering] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const pixelIdRef = useRef(0);
+  const lastZapTime = useRef(0);
 
   const createPixel = (x: number, y: number) => {
-    const size = Math.random() * 4 + 2;
+    const size = Math.random() * 3 + 1; // Smaller particles
     const angle = Math.random() * Math.PI * 2;
-    const speed = Math.random() * 3 + 1;
+    const speed = Math.random() * 8 + 4; // Faster movement
     
     return {
       id: pixelIdRef.current++,
@@ -36,7 +37,7 @@ export default function SimplePixelZap() {
       size,
       color: colors[Math.floor(Math.random() * colors.length)],
       life: 0,
-      maxLife: Math.random() * 60 + 30,
+      maxLife: Math.random() * 15 + 5, // Much shorter life (5-20 frames)
       velocity: {
         x: Math.cos(angle) * speed,
         y: Math.sin(angle) * speed,
@@ -47,26 +48,31 @@ export default function SimplePixelZap() {
   const handleMouseMove = (e: React.MouseEvent) => {
     if (!isHovering) return;
     
+    const now = Date.now();
+    // Throttle zaps to every 50ms for burst effect
+    if (now - lastZapTime.current < 50) return;
+    lastZapTime.current = now;
+    
     const rect = containerRef.current?.getBoundingClientRect();
     if (!rect) return;
     
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
     
-    // Create pixels
-    const pixelCount = Math.random() * 3 + 2;
+    // Create zap burst - more particles, tighter spread
+    const pixelCount = Math.random() * 8 + 4; // 4-12 particles per burst
     const newPixels: Pixel[] = [];
     
     for (let i = 0; i < pixelCount; i++) {
-      const offsetX = (Math.random() - 0.5) * 20;
-      const offsetY = (Math.random() - 0.5) * 20;
+      const offsetX = (Math.random() - 0.5) * 12; // Tighter spread
+      const offsetY = (Math.random() - 0.5) * 12;
       newPixels.push(createPixel(x + offsetX, y + offsetY));
     }
     
     setPixels(prev => [...prev, ...newPixels]);
   };
 
-  // Animation loop
+  // Animation loop - faster for zaps
   useEffect(() => {
     const animate = () => {
       setPixels(prevPixels => 
@@ -77,15 +83,15 @@ export default function SimplePixelZap() {
             y: pixel.y + pixel.velocity.y,
             life: pixel.life + 1,
             velocity: {
-              x: pixel.velocity.x * 0.98,
-              y: pixel.velocity.y * 0.98 + 0.1,
+              x: pixel.velocity.x * 0.85, // More friction for quick stop
+              y: pixel.velocity.y * 0.85 + 0.2, // Slight gravity
             },
           }))
           .filter(pixel => pixel.life < pixel.maxLife)
       );
     };
 
-    const interval = setInterval(animate, 16);
+    const interval = setInterval(animate, 8); // Faster animation (120fps)
     return () => clearInterval(interval);
   }, []);
 
@@ -108,20 +114,22 @@ export default function SimplePixelZap() {
         Pixels: {pixels.length} | Hover: {isHovering ? 'Yes' : 'No'}
       </div>
       
-      {/* Pixels */}
+      {/* Zap Particles */}
       {pixels.map(pixel => (
         <div
           key={pixel.id}
-          className="absolute rounded-sm"
+          className="absolute"
           style={{
             left: pixel.x - pixel.size / 2,
             top: pixel.y - pixel.size / 2,
             width: pixel.size,
             height: pixel.size,
             backgroundColor: pixel.color,
-            boxShadow: `0 0 ${pixel.size * 2}px ${pixel.color}`,
-            opacity: 1 - (pixel.life / pixel.maxLife),
-            transform: `scale(${1 - (pixel.life / pixel.maxLife) * 0.5})`,
+            borderRadius: '50%',
+            boxShadow: `0 0 ${pixel.size * 4}px ${pixel.color}, 0 0 ${pixel.size * 8}px ${pixel.color}40`,
+            opacity: Math.max(0, 1 - (pixel.life / pixel.maxLife) * 2), // Quick fade
+            transform: `scale(${1 + Math.sin(pixel.life * 0.5) * 0.3})`, // Pulsing effect
+            filter: 'brightness(1.5) contrast(1.2)',
           }}
         />
       ))}
