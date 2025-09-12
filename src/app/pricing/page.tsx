@@ -243,7 +243,7 @@ export default function Pricing() {
       <section className="py-20 bg-white-smoke">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="font-montserrat text-4xl text-earle-black mb-4">Service Pricing</h2>
+            <h2 className="font-montserrat text-4xl text-earle-black mb-4 font-bold">Service Pricing</h2>
             <p className="font-raleway text-lg text-earle-black max-w-3xl mx-auto">
               Detailed pricing for our most common services. All prices include materials, labor, and warranty.
             </p>
@@ -259,8 +259,8 @@ export default function Pricing() {
                     </div>
                   </div>
                   <div className="ml-4 flex-1">
-                    <h3 className="font-montserrat text-2xl font-semibold text-earle-black mb-2">{service.title}</h3>
-                    <p className="font-raleway text-earle-black">{service.description}</p>
+                    <h3 className="font-montserrat text-2xl font-semibold text-earle-black mb-2" style={{color: '#242729'}}>{service.title}</h3>
+                    <p className="font-raleway text-earle-black" style={{color: '#242729'}}>{service.description}</p>
                   </div>
                 </div>
 
@@ -273,15 +273,15 @@ export default function Pricing() {
                     </div>
                     <div className="space-y-2 mb-4">
                       <div className="flex justify-between">
-                        <span className="font-raleway text-earle-black">Basic:</span>
-                        <span className="font-montserrat font-semibold text-earle-black">{service.residential.basic}</span>
+                        <span className="font-raleway text-earle-black" style={{color: '#242729'}}>Basic:</span>
+                        <span className="font-montserrat font-semibold text-earle-black" style={{color: '#242729'}}>{service.residential.basic}</span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="font-raleway text-earle-black">Premium:</span>
-                        <span className="font-montserrat font-semibold text-purple">{service.residential.premium}</span>
+                        <span className="font-raleway text-earle-black" style={{color: '#242729'}}>Premium:</span>
+                        <span className="font-montserrat font-semibold text-purple" style={{color: '#6D0091'}}>{service.residential.premium}</span>
                       </div>
                     </div>
-                    <p className="font-raleway text-sm text-earle-black">{service.residential.description}</p>
+                    <p className="font-raleway text-sm text-earle-black" style={{color: '#242729'}}>{service.residential.description}</p>
                   </div>
 
                   {/* Commercial Pricing */}
@@ -292,25 +292,25 @@ export default function Pricing() {
                     </div>
                     <div className="space-y-2 mb-4">
                       <div className="flex justify-between">
-                        <span className="font-raleway text-earle-black">Basic:</span>
-                        <span className="font-montserrat font-semibold text-earle-black">{service.commercial.basic}</span>
+                        <span className="font-raleway text-earle-black" style={{color: '#242729'}}>Basic:</span>
+                        <span className="font-montserrat font-semibold text-earle-black" style={{color: '#242729'}}>{service.commercial.basic}</span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="font-raleway text-earle-black">Premium:</span>
-                        <span className="font-montserrat font-semibold text-purple">{service.commercial.premium}</span>
+                        <span className="font-raleway text-earle-black" style={{color: '#242729'}}>Premium:</span>
+                        <span className="font-montserrat font-semibold text-purple" style={{color: '#6D0091'}}>{service.commercial.premium}</span>
                       </div>
                     </div>
-                    <p className="font-raleway text-sm text-earle-black">{service.commercial.description}</p>
+                    <p className="font-raleway text-sm text-earle-black" style={{color: '#242729'}}>{service.commercial.description}</p>
                   </div>
                 </div>
 
                 <div className="mt-6">
-                  <h4 className="font-montserrat text-lg font-semibold text-earle-black mb-3">What&apos;s Included:</h4>
+                  <h4 className="font-montserrat text-lg font-semibold text-earle-black mb-3" style={{color: '#242729'}}>What&apos;s Included:</h4>
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
                     {service.includes.map((item, itemIndex) => (
                       <div key={itemIndex} className="flex items-center">
-                        <CheckIcon className="h-4 w-4 text-purple mr-2 flex-shrink-0" />
-                        <span className="font-raleway text-sm text-earle-black">{item}</span>
+                        <CheckIcon className="h-4 w-4 text-purple mr-2 flex-shrink-0" style={{color: '#6D0091'}} />
+                        <span className="font-raleway text-sm text-earle-black" style={{color: '#242729'}}>{item}</span>
                       </div>
                     ))}
                   </div>
