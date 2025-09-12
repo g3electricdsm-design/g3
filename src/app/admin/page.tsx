@@ -4,11 +4,10 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { ArrowLeftIcon, PlusIcon, PencilIcon, TrashIcon, CogIcon, ChartBarIcon, PhotoIcon, EnvelopeIcon, EyeIcon, HomeIcon, UserIcon } from '@heroicons/react/24/outline';
 import Navigation from '@/components/Navigation';
-import { getAllProjects, Project, updateProject, addProject, deleteProject } from '@/data/projects';
+import { getAllProjects, Project, deleteProject } from '@/data/projects';
 import { getAllServices, Service } from '@/data/services';
 import { getAllFormEntries, FormEntry } from '@/data/formEntries';
 import { getContent, updateContent } from '@/data/content';
-import ProjectForm from '@/components/ProjectForm';
 import FormEntryModal from '@/components/FormEntryModal';
 import ContentEditor from '@/components/ContentEditor';
 
@@ -17,51 +16,17 @@ export default function Admin() {
   const [services] = useState<Service[]>(getAllServices());
   const [formEntries, setFormEntries] = useState<FormEntry[]>(getAllFormEntries());
   const [content, setContent] = useState(getContent());
-  const [editingProject, setEditingProject] = useState<Project | null>(null);
   const [selectedFormEntry, setSelectedFormEntry] = useState<FormEntry | null>(null);
   const [editingContent, setEditingContent] = useState<{ page: string; content: Record<string, unknown> } | null>(null);
-  const [showProjectForm, setShowProjectForm] = useState(false);
   const [showFormEntryModal, setShowFormEntryModal] = useState(false);
   const [showContentEditor, setShowContentEditor] = useState(false);
   const [activeTab, setActiveTab] = useState<'projects' | 'services' | 'formEntries' | 'content' | 'analytics' | 'settings'>('projects');
-
-  const handleEdit = (project: Project) => {
-    setEditingProject(project);
-    setShowProjectForm(true);
-  };
 
   const handleDelete = (id: number) => {
     if (confirm('Are you sure you want to delete this project?')) {
       deleteProject(id);
       setProjects(projects.filter(p => p.id !== id));
     }
-  };
-
-  const handleSaveProject = (projectData: Project) => {
-    if (editingProject) {
-      // Update existing project
-      const updatedProject = { ...projectData, id: editingProject.id };
-      updateProject(updatedProject);
-      setProjects(projects.map(p => p.id === editingProject.id ? updatedProject : p));
-    } else {
-      // Add new project
-      const newId = Math.max(...projects.map(p => p.id), 0) + 1;
-      const newProject = { ...projectData, id: newId };
-      addProject(newProject);
-      setProjects([...projects, newProject]);
-    }
-    setEditingProject(null);
-    setShowProjectForm(false);
-  };
-
-  const handleCancelProject = () => {
-    setEditingProject(null);
-    setShowProjectForm(false);
-  };
-
-  const handleAddProject = () => {
-    setEditingProject(null);
-    setShowProjectForm(true);
   };
 
   const handleViewFormEntry = (entry: FormEntry) => {
@@ -171,13 +136,13 @@ export default function Admin() {
             <div className="space-y-6">
               <div className="flex justify-between items-center">
                 <h3 className="font-montserrat text-2xl text-white">Portfolio Projects</h3>
-                <button
-                  onClick={handleAddProject}
+                <Link
+                  href="/admin/projects/new/edit"
                   className="btn-primary flex items-center gap-2"
                 >
                   <PlusIcon className="h-5 w-5" />
                   Add New Project
-                </button>
+                </Link>
               </div>
 
               <div className="bg-white-smoke rounded-lg p-6">
@@ -190,13 +155,13 @@ export default function Admin() {
                           <p className="font-raleway text-sm" style={{color: '#242729'}}>{project.category} • {project.type}</p>
                         </div>
                         <div className="flex items-center gap-1">
-                          <button
-                            onClick={() => handleEdit(project)}
+                          <Link
+                            href={`/admin/projects/${project.id}/edit`}
                             className="p-2 hover:bg-purple/10 rounded-lg transition-colors"
                             title="Edit project"
                           >
                             <PencilIcon className="h-4 w-4" style={{color: '#242729'}} />
-                          </button>
+                          </Link>
                           <button
                             onClick={() => handleDelete(project.id)}
                             className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
@@ -542,13 +507,6 @@ export default function Admin() {
             </div>
           )}
 
-          {/* Project Form Modal */}
-          <ProjectForm
-            project={editingProject}
-            onSave={handleSaveProject}
-            onCancel={handleCancelProject}
-            isOpen={showProjectForm}
-          />
 
           {/* Form Entry Modal */}
           <FormEntryModal

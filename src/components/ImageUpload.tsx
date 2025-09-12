@@ -1,7 +1,7 @@
 'use client';
 
-import { useState, useRef } from 'react';
-import { PhotoIcon } from '@heroicons/react/24/outline';
+import { useState, useRef, useEffect } from 'react';
+import { PhotoIcon, CloudArrowUpIcon } from '@heroicons/react/24/outline';
 import Image from 'next/image';
 
 interface ImageUploadProps {
@@ -13,18 +13,56 @@ interface ImageUploadProps {
 export default function ImageUpload({ currentImage, onImageChange, projectTitle }: ImageUploadProps) {
   const [preview, setPreview] = useState<string | null>(currentImage || null);
   const [isDragOver, setIsDragOver] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState(0);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  // Update preview when currentImage changes
+  useEffect(() => {
+    setPreview(currentImage || null);
+  }, [currentImage]);
+
   const handleFileSelect = (file: File) => {
-    if (file && file.type.startsWith('image/')) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const result = e.target?.result as string;
-        setPreview(result);
-        onImageChange(file);
-      };
-      reader.readAsDataURL(file);
+    // Validate file type
+    if (!file.type.startsWith('image/')) {
+      alert('Please select a valid image file (PNG, JPG, GIF, etc.)');
+      return;
     }
+
+    // Validate file size (10MB limit)
+    const maxSize = 10 * 1024 * 1024; // 10MB
+    if (file.size > maxSize) {
+      alert('File size must be less than 10MB');
+      return;
+    }
+
+    setIsUploading(true);
+    setUploadProgress(0);
+
+    const reader = new FileReader();
+    
+    reader.onprogress = (e) => {
+      if (e.lengthComputable) {
+        const progress = (e.loaded / e.total) * 100;
+        setUploadProgress(progress);
+      }
+    };
+
+    reader.onload = (e) => {
+      const result = e.target?.result as string;
+      setPreview(result);
+      onImageChange(file);
+      setIsUploading(false);
+      setUploadProgress(0);
+    };
+
+    reader.onerror = () => {
+      alert('Error reading file. Please try again.');
+      setIsUploading(false);
+      setUploadProgress(0);
+    };
+
+    reader.readAsDataURL(file);
   };
 
   const handleDrop = (e: React.DragEvent) => {
@@ -95,28 +133,52 @@ export default function ImageUpload({ currentImage, onImageChange, projectTitle 
         </div>
       ) : (
         <div
-          className={`aspect-video border-2 border-dashed rounded-lg flex flex-col items-center justify-center cursor-pointer transition-colors ${
+          className={`aspect-video border-2 border-dashed rounded-lg flex flex-col items-center justify-center cursor-pointer transition-all duration-300 ${
             isDragOver
-              ? 'border-purple bg-purple/10'
-              : 'border-gray-300 hover:border-purple hover:bg-purple/5'
-          }`}
+              ? 'border-purple bg-purple/10 scale-105 shadow-lg'
+              : 'border-gray-300 hover:border-purple hover:bg-purple/5 hover:scale-102'
+          } ${isUploading ? 'pointer-events-none opacity-75' : ''}`}
           onDrop={handleDrop}
           onDragOver={handleDragOver}
           onDragLeave={handleDragLeave}
           onClick={handleClick}
         >
-          <PhotoIcon className="h-12 w-12 text-gray-400 mb-4" />
-          <div className="text-center">
-            <p className="font-montserrat text-lg text-earle-black mb-2">
-              Upload Project Image
-            </p>
-            <p className="font-raleway text-sm text-earle-black">
-              Click to browse or drag and drop
-            </p>
-            <p className="font-raleway text-xs text-gray-500 mt-1">
-              PNG, JPG, GIF up to 10MB
-            </p>
-          </div>
+          {isUploading ? (
+            <div className="text-center">
+              <div className="w-16 h-16 border-4 border-purple border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+              <p className="font-montserrat text-lg text-earle-black mb-2">
+                Uploading Image...
+              </p>
+              <div className="w-48 bg-gray-200 rounded-full h-2 mb-2">
+                <div 
+                  className="bg-purple h-2 rounded-full transition-all duration-300"
+                  style={{ width: `${uploadProgress}%` }}
+                ></div>
+              </div>
+              <p className="font-raleway text-sm text-earle-black">
+                {Math.round(uploadProgress)}% complete
+              </p>
+            </div>
+          ) : (
+            <>
+              {isDragOver ? (
+                <CloudArrowUpIcon className="h-12 w-12 text-purple mb-4 animate-bounce" />
+              ) : (
+                <PhotoIcon className="h-12 w-12 text-gray-400 mb-4" />
+              )}
+              <div className="text-center">
+                <p className="font-montserrat text-lg text-earle-black mb-2">
+                  {isDragOver ? 'Drop your image here' : 'Upload Project Image'}
+                </p>
+                <p className="font-raleway text-sm text-earle-black">
+                  {isDragOver ? 'Release to upload' : 'Click to browse or drag and drop'}
+                </p>
+                <p className="font-raleway text-xs text-gray-500 mt-1">
+                  PNG, JPG, GIF up to 10MB
+                </p>
+              </div>
+            </>
+          )}
         </div>
       )}
       
