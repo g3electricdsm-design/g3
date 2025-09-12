@@ -16,7 +16,15 @@ interface Pixel {
   };
 }
 
-const colors = ['#6D0091', '#B8860B', '#00FF00', '#00FFFF', '#FF00FF', '#FFFF00', '#FF6B00', '#00BFFF'];
+const colors = [
+  '#6D0091', // purple - primary brand color
+  '#C636FF', // phlox - secondary brand color  
+  '#70877F', // hookers-green - accent color
+  '#F2F2F2', // white-smoke - light accent
+  '#242729', // earle-black - dark accent
+  '#6D0091', // purple again for more variety
+  '#C636FF', // phlox again for more variety
+];
 
 export default function SimplePixelZap() {
   const [pixels, setPixels] = useState<Pixel[]>([]);
@@ -141,10 +149,11 @@ export default function SimplePixelZap() {
             height: pixel.size,
             backgroundColor: pixel.color,
             borderRadius: '50%',
-            boxShadow: `0 0 ${pixel.size * 4}px ${pixel.color}, 0 0 ${pixel.size * 8}px ${pixel.color}40`,
+            boxShadow: `0 0 ${pixel.size * 6}px ${pixel.color}, 0 0 ${pixel.size * 12}px ${pixel.color}60, 0 0 ${pixel.size * 18}px ${pixel.color}30`,
             opacity: Math.max(0, 1 - (pixel.life / pixel.maxLife) * 2), // Quick fade
-            transform: `scale(${1 + Math.sin(pixel.life * 0.5) * 0.3})`, // Pulsing effect
-            filter: 'brightness(1.5) contrast(1.2)',
+            transform: `scale(${1 + Math.sin(pixel.life * 0.8) * 0.4})`, // Enhanced pulsing
+            filter: 'brightness(1.8) contrast(1.4) saturate(1.2)',
+            border: `1px solid ${pixel.color}80`,
           }}
         />
       ))}
