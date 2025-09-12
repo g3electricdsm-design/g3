@@ -1,9 +1,8 @@
-'use client';
-
 import Link from "next/link";
 import { ArrowLeftIcon, HomeIcon, BuildingOfficeIcon, BoltIcon, LightBulbIcon, CalendarIcon, ClockIcon, UserIcon } from "@heroicons/react/24/outline";
 import Navigation from "@/components/Navigation";
 import { getProjectById } from "@/data/projects";
+import Image from "next/image";
 
 
 interface ProjectDetailProps {
@@ -88,14 +87,14 @@ export default function ProjectDetail({ params }: ProjectDetailProps) {
             <div className="lg:col-span-2">
               {/* Project Image */}
               <div className="mb-8">
-                <div className="aspect-video bg-gradient-to-br from-purple/20 to-phlox/20 rounded-lg flex items-center justify-center">
-                  <div className="text-center text-earle-black">
-                    <div className="w-20 h-20 bg-purple/30 rounded-lg flex items-center justify-center mx-auto mb-4">
-                      <BoltIcon className="h-10 w-10 text-purple" />
-                    </div>
-                    <div className="font-montserrat text-lg font-medium">{project.title}</div>
-                    <div className="font-raleway text-sm text-earle-black mt-2">{project.category} • {project.type}</div>
-                  </div>
+                <div className="aspect-video relative rounded-lg overflow-hidden">
+                  <Image
+                    src={project.image}
+                    alt={project.title}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 66vw, 50vw"
+                  />
                 </div>
               </div>
 
@@ -196,7 +195,7 @@ export default function ProjectDetail({ params }: ProjectDetailProps) {
       <footer className="bg-hookers-green py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <h3 className="font-montserrat text-2xl text-white mb-4">G3 Electric</h3>
+            <h3 className="font-megrim text-2xl text-white mb-4">G3 Electric</h3>
             <p className="font-raleway text-white-smoke mb-4">Safe & Dependable Electrical Services</p>
             <div className="flex justify-center space-x-6">
               <Link href="/services" className="text-white-smoke hover:text-purple font-raleway">Services</Link>
@@ -204,6 +203,20 @@ export default function ProjectDetail({ params }: ProjectDetailProps) {
               <Link href="/pricing" className="text-white-smoke hover:text-purple font-raleway">Pricing</Link>
               <Link href="/about" className="text-white-smoke hover:text-purple font-raleway">About</Link>
               <Link href="/contact" className="text-white-smoke hover:text-purple font-raleway">Contact</Link>
+            </div>
+            <div className="mt-6 pt-4 border-t border-white/20">
+              <p className="text-white-smoke text-sm">
+                This digital experience was built by{' '}
+                <a 
+                  href="https://sensory.com" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-purple hover:text-phlox transition-colors font-medium"
+                >
+                  Sensory
+                </a>
+                , a UX-first company.
+              </p>
             </div>
           </div>
         </div>

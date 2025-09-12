@@ -1,7 +1,7 @@
 'use client';
 
-import React, { useState } from 'react';
-import { XMarkIcon, PlusIcon, TrashIcon } from '@heroicons/react/24/outline';
+import React from 'react';
+import { XMarkIcon } from '@heroicons/react/24/outline';
 
 interface ContentEditorProps {
   content: Record<string, unknown> | null;
@@ -11,8 +11,7 @@ interface ContentEditorProps {
   title: string;
 }
 
-export default function ContentEditor({ content, onSave, onCancel, isOpen, title }: ContentEditorProps) {
-  const [editedContent, setEditedContent] = useState(content as Record<string, unknown> | null);
+export default function ContentEditor({ onCancel, isOpen, title }: ContentEditorProps) {
 
   if (!isOpen) return null;
 

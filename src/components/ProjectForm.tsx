@@ -1,8 +1,9 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { XMarkIcon, PhotoIcon } from '@heroicons/react/24/outline';
+import { XMarkIcon } from '@heroicons/react/24/outline';
 import { Project } from '@/data/projects';
+import ImageUpload from './ImageUpload';
 
 interface ProjectFormProps {
   project?: Project | null;
@@ -79,6 +80,17 @@ export default function ProjectForm({ project, onSave, onCancel, isOpen }: Proje
       ...prev,
       services: prev.services.filter((_, i) => i !== index)
     }));
+  };
+
+  const handleImageChange = (imageFile: File | null) => {
+    if (imageFile) {
+      // Create a permanent image URL and update the form data
+      const imageUrl = URL.createObjectURL(imageFile);
+      setFormData(prev => ({
+        ...prev,
+        image: imageUrl
+      }));
+    }
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -311,14 +323,14 @@ export default function ProjectForm({ project, onSave, onCancel, isOpen }: Proje
               </div>
             </div>
 
-            {/* Image Upload Placeholder */}
+            {/* Project Image Upload */}
             <div className="space-y-4">
               <h3 className="font-montserrat text-lg font-semibold text-earle-black">Project Image</h3>
-              <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
-                <PhotoIcon className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                <p className="text-gray-600 mb-2">Image upload coming soon</p>
-                <p className="text-sm text-gray-500">Currently using placeholder: {formData.image}</p>
-              </div>
+              <ImageUpload
+                currentImage={formData.image}
+                onImageChange={handleImageChange}
+                projectTitle={formData.title || 'New Project'}
+              />
             </div>
 
             {/* Form Actions */}

@@ -277,6 +277,9 @@ export const projects: Project[] = [
   }
 ];
 
+// In-memory storage for runtime updates
+let projectsData = [...projects];
+
 // Helper function to get project by ID
 export function getProjectById(id: string): Project | undefined {
   return projects.find(project => project.id.toString() === id);
@@ -284,5 +287,23 @@ export function getProjectById(id: string): Project | undefined {
 
 // Helper function to get all projects
 export function getAllProjects(): Project[] {
-  return projects;
+  return projectsData;
+}
+
+// Helper function to update a project
+export function updateProject(updatedProject: Project): void {
+  const index = projectsData.findIndex(p => p.id === updatedProject.id);
+  if (index !== -1) {
+    projectsData[index] = updatedProject;
+  }
+}
+
+// Helper function to add a new project
+export function addProject(newProject: Project): void {
+  projectsData.push(newProject);
+}
+
+// Helper function to delete a project
+export function deleteProject(id: number): void {
+  projectsData = projectsData.filter(p => p.id !== id);
 }

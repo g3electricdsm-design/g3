@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { ArrowLeftIcon, PlusIcon, PencilIcon, TrashIcon, CogIcon, ChartBarIcon, PhotoIcon, EnvelopeIcon, EyeIcon, HomeIcon, UserIcon } from '@heroicons/react/24/outline';
 import Navigation from '@/components/Navigation';
-import { getAllProjects, Project } from '@/data/projects';
+import { getAllProjects, Project, updateProject, addProject, deleteProject } from '@/data/projects';
 import { getAllServices, Service } from '@/data/services';
 import { getAllFormEntries, FormEntry } from '@/data/formEntries';
 import { getContent, updateContent } from '@/data/content';
@@ -32,6 +32,7 @@ export default function Admin() {
 
   const handleDelete = (id: number) => {
     if (confirm('Are you sure you want to delete this project?')) {
+      deleteProject(id);
       setProjects(projects.filter(p => p.id !== id));
     }
   };
@@ -39,11 +40,15 @@ export default function Admin() {
   const handleSaveProject = (projectData: Project) => {
     if (editingProject) {
       // Update existing project
-      setProjects(projects.map(p => p.id === editingProject.id ? { ...projectData, id: editingProject.id } : p));
+      const updatedProject = { ...projectData, id: editingProject.id };
+      updateProject(updatedProject);
+      setProjects(projects.map(p => p.id === editingProject.id ? updatedProject : p));
     } else {
       // Add new project
       const newId = Math.max(...projects.map(p => p.id), 0) + 1;
-      setProjects([...projects, { ...projectData, id: newId }]);
+      const newProject = { ...projectData, id: newId };
+      addProject(newProject);
+      setProjects([...projects, newProject]);
     }
     setEditingProject(null);
     setShowProjectForm(false);
@@ -181,16 +186,16 @@ export default function Admin() {
                     <div key={project.id} className="bg-white rounded-lg p-4 shadow-sm border border-gray-200">
                       <div className="flex items-start justify-between mb-3">
                         <div className="flex-1">
-                          <h4 className="font-montserrat text-lg font-semibold text-earle-black">{project.title}</h4>
-                          <p className="font-raleway text-sm text-earle-black">{project.category} • {project.type}</p>
+                          <h4 className="font-montserrat text-lg font-semibold" style={{color: '#242729'}}>{project.title}</h4>
+                          <p className="font-raleway text-sm" style={{color: '#242729'}}>{project.category} • {project.type}</p>
                         </div>
                         <div className="flex items-center gap-1">
                           <button
                             onClick={() => handleEdit(project)}
-                            className="p-2 text-purple hover:bg-purple/10 rounded-lg transition-colors"
+                            className="p-2 hover:bg-purple/10 rounded-lg transition-colors"
                             title="Edit project"
                           >
-                            <PencilIcon className="h-4 w-4" />
+                            <PencilIcon className="h-4 w-4" style={{color: '#242729'}} />
                           </button>
                           <button
                             onClick={() => handleDelete(project.id)}
@@ -201,8 +206,8 @@ export default function Admin() {
                           </button>
                         </div>
                       </div>
-                      <p className="font-raleway text-sm text-earle-black mb-3 line-clamp-2">{project.description}</p>
-                      <div className="flex items-center justify-between text-xs text-earle-black">
+                      <p className="font-raleway text-sm mb-3 line-clamp-2" style={{color: '#242729'}}>{project.description}</p>
+                      <div className="flex items-center justify-between text-xs" style={{color: '#242729'}}>
                         <span>{project.client}</span>
                         <span>{project.completed}</span>
                       </div>
@@ -230,21 +235,21 @@ export default function Admin() {
                     <div key={service.id} className="bg-white rounded-lg p-4 shadow-sm border border-gray-200">
                       <div className="flex items-start justify-between mb-3">
                         <div className="flex-1">
-                          <h4 className="font-montserrat text-lg font-semibold text-earle-black">{service.name}</h4>
-                          <p className="font-raleway text-sm text-earle-black">{service.category}</p>
+                          <h4 className="font-montserrat text-lg font-semibold" style={{color: '#242729'}}>{service.name}</h4>
+                          <p className="font-raleway text-sm" style={{color: '#242729'}}>{service.category}</p>
                         </div>
                         <div className="flex items-center gap-1">
-                          <button className="p-2 text-purple hover:bg-purple/10 rounded-lg transition-colors">
-                            <PencilIcon className="h-4 w-4" />
+                          <button className="p-2 hover:bg-purple/10 rounded-lg transition-colors">
+                            <PencilIcon className="h-4 w-4" style={{color: '#242729'}} />
                           </button>
                           <button className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors">
                             <TrashIcon className="h-4 w-4" />
                           </button>
                         </div>
                       </div>
-                      <p className="font-raleway text-sm text-earle-black mb-3">{service.description}</p>
+                      <p className="font-raleway text-sm mb-3" style={{color: '#242729'}}>{service.description}</p>
                       <div className="flex items-center justify-between text-xs">
-                        <span className="text-earle-black">{service.pricing.description}</span>
+                        <span style={{color: '#242729'}}>{service.pricing.description}</span>
                         {service.popular && (
                           <span className="bg-purple/10 text-purple px-2 py-1 rounded-full text-xs font-medium">
                             Popular
@@ -281,7 +286,7 @@ export default function Admin() {
                       <div className="flex items-start justify-between">
                         <div className="flex-1">
                           <div className="flex items-center gap-3 mb-2">
-                            <h4 className="font-montserrat text-lg font-semibold text-earle-black">
+                            <h4 className="font-montserrat text-lg font-semibold" style={{color: '#242729'}}>
                               {entry.customerInfo.name}
                             </h4>
                             <span className={`px-2 py-1 rounded-full text-xs font-medium ${
@@ -293,18 +298,18 @@ export default function Admin() {
                             }`}>
                               {entry.status.charAt(0).toUpperCase() + entry.status.slice(1)}
                             </span>
-                            <span className="text-xs text-earle-black">
+                            <span className="text-xs" style={{color: '#242729'}}>
                               {new Date(entry.timestamp).toLocaleDateString()}
                             </span>
                           </div>
-                          <p className="font-raleway text-sm text-earle-black mb-2">
+                          <p className="font-raleway text-sm mb-2" style={{color: '#242729'}}>
                             {entry.customerInfo.email} • {entry.customerInfo.phone}
                           </p>
-                          <p className="font-raleway text-sm text-earle-black mb-2">
+                          <p className="font-raleway text-sm mb-2" style={{color: '#242729'}}>
                             <strong>Project:</strong> {entry.projectInfo.projectType} • {entry.projectInfo.description?.substring(0, 100)}...
                           </p>
                           {entry.projectInfo.budget && (
-                            <p className="font-raleway text-sm text-earle-black">
+                            <p className="font-raleway text-sm" style={{color: '#242729'}}>
                               <strong>Budget:</strong> {entry.projectInfo.budget}
                             </p>
                           )}
@@ -312,10 +317,11 @@ export default function Admin() {
                         <div className="flex items-center gap-2">
                           <button
                             onClick={() => handleViewFormEntry(entry)}
-                            className="p-2 text-purple hover:bg-purple/10 rounded-lg transition-colors"
+                            className="px-3 py-1 text-sm font-medium hover:bg-purple/10 rounded-lg transition-colors"
                             title="View details"
+                            style={{color: '#242729'}}
                           >
-                            <EyeIcon className="h-4 w-4" />
+                            View entry
                           </button>
                           <button
                             onClick={() => handleDeleteFormEntry(entry.id)}

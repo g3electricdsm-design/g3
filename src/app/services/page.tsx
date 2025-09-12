@@ -212,6 +212,20 @@ export default function Services() {
               <Link href="/about" className="text-white-smoke hover:text-purple font-raleway">About</Link>
               <Link href="/contact" className="text-white-smoke hover:text-purple font-raleway">Contact</Link>
             </div>
+            <div className="mt-6 pt-4 border-t border-white/20">
+              <p className="text-white-smoke text-sm">
+                This digital experience was built by{' '}
+                <a 
+                  href="https://sensory.com" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-purple hover:text-phlox transition-colors font-medium"
+                >
+                  Sensory
+                </a>
+                , a UX-first company.
+              </p>
+            </div>
           </div>
         </div>
       </footer>
