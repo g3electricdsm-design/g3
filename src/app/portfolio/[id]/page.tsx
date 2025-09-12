@@ -1,7 +1,25 @@
 import Link from "next/link";
+import { Metadata } from "next";
 import { ArrowLeftIcon, HomeIcon, BuildingOfficeIcon, BoltIcon, LightBulbIcon, CalendarIcon, ClockIcon, UserIcon } from "@heroicons/react/24/outline";
 import Navigation from "@/components/Navigation";
 import { getProjectById } from "@/data/projects";
+
+export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
+  const project = getProjectById(params.id);
+  
+  if (!project) {
+    return {
+      title: "Project Not Found | G3 Electric Des Moines",
+      description: "The requested electrical project could not be found.",
+    };
+  }
+
+  return {
+    title: `${project.title} | Electrical Project | G3 Electric Des Moines`,
+    description: `${project.description} - ${project.category} electrical project in ${project.location} by G3 Electric, licensed master electricians in Des Moines, IA.`,
+    keywords: `${project.title}, electrical project Des Moines, ${project.category} electrical, ${project.type} installation, G3 Electric, master electrician Iowa`,
+  };
+}
 
 interface ProjectDetailProps {
   params: {

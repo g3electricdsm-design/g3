@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Metadata } from "next";
 import { 
   ArrowLeftIcon, 
   CheckIcon, 
@@ -11,6 +12,12 @@ import {
   AcademicCapIcon
 } from "@heroicons/react/24/outline";
 import Navigation from "@/components/Navigation";
+
+export const metadata: Metadata = {
+  title: "Electrical Service Pricing | G3 Electric Des Moines",
+  description: "Transparent electrical service pricing in Des Moines, IA. Free estimates for residential and commercial electrical work. Licensed master electricians with competitive rates.",
+  keywords: "electrical pricing Des Moines, electrician cost Iowa, electrical service rates, free electrical estimate, electrical contractor pricing, electrical repair cost",
+};
 
 export default function Pricing() {
   const servicePricing = [

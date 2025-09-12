@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Metadata } from "next";
 import { 
   ArrowLeftIcon, 
   LightBulbIcon, 
@@ -13,6 +14,12 @@ import {
 } from "@heroicons/react/24/outline";
 import Navigation from "@/components/Navigation";
 import { getContent } from "@/data/content";
+
+export const metadata: Metadata = {
+  title: "Electrical Services Des Moines | Residential & Commercial Electrician",
+  description: "Professional electrical services in Des Moines, IA. Lighting installation, electrical repairs, panel upgrades, smart home wiring, and emergency electrical services. Licensed master electricians.",
+  keywords: "electrical services Des Moines, electrician Iowa, lighting installation, electrical repairs, panel upgrade, smart home wiring, emergency electrician, commercial electrical",
+};
 
 export default function Services() {
   const content = getContent().services;

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Metadata } from "next";
 import { 
   ArrowLeftIcon, 
   ShieldCheckIcon, 
@@ -11,6 +12,12 @@ import {
 } from "@heroicons/react/24/outline";
 import Navigation from "@/components/Navigation";
 import { getContent } from "@/data/content";
+
+export const metadata: Metadata = {
+  title: "About G3 Electric | Master Electricians Des Moines",
+  description: "Learn about G3 Electric, licensed master electricians serving Des Moines, IA. 15+ years of experience in residential and commercial electrical services. Safety, quality, and reliability.",
+  keywords: "about G3 Electric, master electrician Des Moines, electrical contractor Iowa, licensed electrician, electrical company, electrical services history",
+};
 
 export default function About() {
   const content = getContent().about;

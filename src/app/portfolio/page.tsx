@@ -1,8 +1,15 @@
 import Link from "next/link";
 import Image from "next/image";
+import { Metadata } from "next";
 import { HomeIcon, BuildingOfficeIcon, BoltIcon, LightBulbIcon } from "@heroicons/react/24/outline";
 import Navigation from "@/components/Navigation";
 import { getAllProjects } from "@/data/projects";
+
+export const metadata: Metadata = {
+  title: "Electrical Projects Portfolio | G3 Electric Des Moines",
+  description: "View our electrical project portfolio in Des Moines, IA. Residential and commercial electrical work including lighting installation, panel upgrades, smart home wiring, and emergency repairs.",
+  keywords: "electrical projects Des Moines, electrician portfolio Iowa, lighting installation projects, electrical panel upgrade, smart home installation, commercial electrical projects",
+};
 
 export default function Portfolio() {
   // Get portfolio data from the centralized data file
