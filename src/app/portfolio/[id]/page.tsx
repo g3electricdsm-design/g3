@@ -1,18 +1,35 @@
+'use client';
+
 import Link from "next/link";
 import { ArrowLeftIcon, HomeIcon, BuildingOfficeIcon, BoltIcon, LightBulbIcon, CalendarIcon, ClockIcon, UserIcon } from "@heroicons/react/24/outline";
 import Navigation from "@/components/Navigation";
 import { getProjectById } from "@/data/projects";
 import Image from "next/image";
+import { useParams } from "next/navigation";
+import { useState, useEffect } from "react";
 
+export default function ProjectDetail() {
+  const params = useParams();
+  const [project, setProject] = useState(getProjectById(params.id as string));
+  const [isLoading, setIsLoading] = useState(true);
 
-interface ProjectDetailProps {
-  params: {
-    id: string;
-  };
-}
+  useEffect(() => {
+    const loadProject = () => {
+      const foundProject = getProjectById(params.id as string);
+      setProject(foundProject);
+      setIsLoading(false);
+    };
 
-export default function ProjectDetail({ params }: ProjectDetailProps) {
-  const project = getProjectById(params.id);
+    loadProject();
+  }, [params.id]);
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <div className="text-xl">Loading...</div>
+      </div>
+    );
+  }
 
   if (!project) {
     return (
