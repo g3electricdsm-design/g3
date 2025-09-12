@@ -101,7 +101,7 @@ export default function Home() {
           <div className="text-center mb-16">
             <h2 className="font-montserrat text-4xl text-earle-black mb-4">What Our Customers Say</h2>
             <p className="font-raleway text-lg text-earle-black max-w-2xl mx-auto">
-              Don't just take our word for it. Here's what our satisfied customers have to say about our electrical services.
+              Don&apos;t just take our word for it. Here&apos;s what our satisfied customers have to say about our electrical services.
             </p>
           </div>
           
@@ -114,7 +114,7 @@ export default function Home() {
               </div>
               
               <blockquote className="font-raleway text-earle-black text-lg md:text-xl mb-8 italic leading-relaxed">
-                "{currentTestimonial.text}"
+                &ldquo;{currentTestimonial.text}&rdquo;
               </blockquote>
               
               <div className="flex items-center justify-between">

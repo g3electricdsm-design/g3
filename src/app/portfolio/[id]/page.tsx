@@ -1,12 +1,9 @@
 'use client';
 
 import Link from "next/link";
-import { Metadata } from "next";
 import { ArrowLeftIcon, HomeIcon, BuildingOfficeIcon, BoltIcon, LightBulbIcon, CalendarIcon, ClockIcon, UserIcon } from "@heroicons/react/24/outline";
 import Navigation from "@/components/Navigation";
-import ImageUpload from "@/components/ImageUpload";
 import { getProjectById } from "@/data/projects";
-import { useState } from "react";
 
 
 interface ProjectDetailProps {
@@ -17,27 +14,6 @@ interface ProjectDetailProps {
 
 export default function ProjectDetail({ params }: ProjectDetailProps) {
   const project = getProjectById(params.id);
-  const [uploadedImage, setUploadedImage] = useState<File | null>(null);
-  const [isEditing, setIsEditing] = useState(false);
-
-  const handleImageChange = (imageFile: File | null) => {
-    setUploadedImage(imageFile);
-  };
-
-  const handleSaveImage = () => {
-    if (uploadedImage) {
-      // Here you would typically upload the image to your server
-      console.log('Saving image:', uploadedImage);
-      // For now, we'll just show a success message
-      alert('Image saved successfully!');
-      setIsEditing(false);
-    }
-  };
-
-  const handleCancelEdit = () => {
-    setUploadedImage(null);
-    setIsEditing(false);
-  };
 
   if (!project) {
     return (
