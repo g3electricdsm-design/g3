@@ -80,12 +80,10 @@ export default function SimplePixelZap() {
     };
 
     const handleMouseEnter = () => {
-      console.log('Mouse entered page');
       setIsHovering(true);
     };
 
     const handleMouseLeave = () => {
-      console.log('Mouse left page');
       setIsHovering(false);
     };
 
@@ -132,10 +130,6 @@ export default function SimplePixelZap() {
         background: 'transparent'
       }}
     >
-      {/* Debug info */}
-      <div className="fixed top-4 right-4 bg-red-500 text-white p-2 rounded text-xs pointer-events-auto z-50">
-        Pixels: {pixels.length} | Hover: {isHovering ? 'Yes' : 'No'}
-      </div>
       
       {/* Zap Particles */}
       {pixels.map(pixel => (
