@@ -1,21 +1,16 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useParams } from 'next/navigation';
 import Link from 'next/link';
 import { ArrowLeftIcon } from '@heroicons/react/24/outline';
 import { Project, getProjectById, updateProject, addProject } from '@/data/projects';
 import ImageUpload from '@/components/ImageUpload';
 import Navigation from '@/components/Navigation';
 
-interface EditProjectPageProps {
-  params: {
-    id: string;
-  };
-}
-
-export default function EditProjectPage({ params }: EditProjectPageProps) {
+export default function EditProjectPage() {
   const router = useRouter();
+  const params = useParams();
   const [formData, setFormData] = useState<Project>({
     id: 0,
     title: '',
@@ -39,12 +34,14 @@ export default function EditProjectPage({ params }: EditProjectPageProps) {
   const [isSaving, setIsSaving] = useState(false);
 
   useEffect(() => {
-    if (params.id === 'new') {
+    const id = params.id as string;
+    
+    if (id === 'new') {
       // Creating a new project
       setIsLoading(false);
     } else {
       // Editing existing project
-      const project = getProjectById(params.id);
+      const project = getProjectById(id);
       if (project) {
         setFormData(project);
       } else {
@@ -94,7 +91,9 @@ export default function EditProjectPage({ params }: EditProjectPageProps) {
     setIsSaving(true);
 
     try {
-      if (params.id === 'new') {
+      const id = params.id as string;
+      
+      if (id === 'new') {
         // Create new project
         const newId = Date.now(); // Simple ID generation
         const newProject = { ...formData, id: newId };
@@ -144,10 +143,10 @@ export default function EditProjectPage({ params }: EditProjectPageProps) {
             </Link>
           </div>
           <h1 className="font-megrim text-5xl md:text-6xl mb-4">
-            {params.id === 'new' ? 'Add New Project' : 'Edit Project'}
+            {formData.id === 0 ? 'Add New Project' : 'Edit Project'}
           </h1>
           <p className="font-raleway text-lg md:text-xl max-w-3xl">
-            {params.id === 'new' 
+            {formData.id === 0 
               ? 'Create a new project to showcase your electrical work.'
               : 'Update project details and information.'
             }
@@ -409,7 +408,7 @@ export default function EditProjectPage({ params }: EditProjectPageProps) {
                   disabled={isSaving}
                   className="px-8 py-3 bg-purple text-white rounded-lg hover:bg-phlox transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  {isSaving ? 'Saving...' : (params.id === 'new' ? 'Create Project' : 'Update Project')}
+                  {isSaving ? 'Saving...' : (formData.id === 0 ? 'Create Project' : 'Update Project')}
                 </button>
               </div>
             </form>
