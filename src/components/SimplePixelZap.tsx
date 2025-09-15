@@ -21,9 +21,9 @@ const colors = [
   '#C636FF', // phlox - secondary brand color  
   '#70877F', // hookers-green - accent color
   '#F2F2F2', // white-smoke - light accent
-  '#242729', // earle-black - dark accent
   '#6D0091', // purple again for more variety
   '#C636FF', // phlox again for more variety
+  '#70877F', // hookers-green again for more variety
 ];
 
 export default function SimplePixelZap() {
@@ -47,7 +47,7 @@ export default function SimplePixelZap() {
         size,
         color: colors[Math.floor(Math.random() * colors.length)],
         life: 0,
-        maxLife: Math.random() * 15 + 5, // Much shorter life (5-20 frames)
+        maxLife: Math.random() * 25 + 15, // Longer life (15-40 frames)
         velocity: {
           x: Math.cos(angle) * speed,
           y: Math.sin(angle) * speed,
@@ -110,8 +110,8 @@ export default function SimplePixelZap() {
             y: pixel.y + pixel.velocity.y,
             life: pixel.life + 1,
             velocity: {
-              x: pixel.velocity.x * 0.85, // More friction for quick stop
-              y: pixel.velocity.y * 0.85 + 0.2, // Slight gravity
+              x: pixel.velocity.x * 0.88, // Less friction for longer movement
+              y: pixel.velocity.y * 0.88 + 0.1, // Reduced gravity
             },
           }))
           .filter(pixel => pixel.life < pixel.maxLife)
