@@ -66,6 +66,9 @@ export default function SimplePixelZap() {
       const x = e.clientX;
       const y = e.clientY;
       
+      // Only create particles if mouse is within viewport bounds
+      if (x < 0 || y < 0 || x > window.innerWidth || y > window.innerHeight) return;
+      
       // Create zap burst - more particles, tighter spread
       const pixelCount = Math.random() * 8 + 4; // 4-12 particles per burst
       const newPixels: Pixel[] = [];
@@ -87,15 +90,24 @@ export default function SimplePixelZap() {
       setIsHovering(false);
     };
 
-    // Add global event listeners
-    document.addEventListener('mouseenter', handleMouseEnter, true);
-    document.addEventListener('mouseleave', handleMouseLeave, true);
-    document.addEventListener('mousemove', handleMouseMove, true);
+    // Add global event listeners with capture phase to ensure they work everywhere
+    document.addEventListener('mouseenter', handleMouseEnter, { capture: true, passive: true });
+    document.addEventListener('mouseleave', handleMouseLeave, { capture: true, passive: true });
+    document.addEventListener('mousemove', handleMouseMove, { capture: true, passive: true });
+    
+    // Also add to window to ensure full coverage
+    window.addEventListener('mouseenter', handleMouseEnter, { capture: true, passive: true });
+    window.addEventListener('mouseleave', handleMouseLeave, { capture: true, passive: true });
+    window.addEventListener('mousemove', handleMouseMove, { capture: true, passive: true });
 
     return () => {
-      document.removeEventListener('mouseenter', handleMouseEnter, true);
-      document.removeEventListener('mouseleave', handleMouseLeave, true);
-      document.removeEventListener('mousemove', handleMouseMove, true);
+      document.removeEventListener('mouseenter', handleMouseEnter, { capture: true });
+      document.removeEventListener('mouseleave', handleMouseLeave, { capture: true });
+      document.removeEventListener('mousemove', handleMouseMove, { capture: true });
+      
+      window.removeEventListener('mouseenter', handleMouseEnter, { capture: true });
+      window.removeEventListener('mouseleave', handleMouseLeave, { capture: true });
+      window.removeEventListener('mousemove', handleMouseMove, { capture: true });
     };
   }, [isHovering]);
 
@@ -125,9 +137,15 @@ export default function SimplePixelZap() {
   return (
     <div 
       ref={containerRef}
-      className="fixed inset-0 pointer-events-none z-50"
+      className="fixed inset-0 pointer-events-none z-50 w-full h-full"
       style={{ 
-        background: 'transparent'
+        background: 'transparent',
+        width: '100vw',
+        height: '100vh',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0
       }}
     >
       
