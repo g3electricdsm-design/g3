@@ -37,11 +37,49 @@ export default function Contact() {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission here
-    console.log('Form submitted:', formData);
-    alert('Thank you for your quote request! We\'ll get back to you within 24 hours.');
+    setIsSubmitting(true);
+    setSubmitStatus('idle');
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        setSubmitStatus('success');
+        // Reset form
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          projectType: '',
+          description: '',
+          budget: '',
+          services: [],
+          timeline: '',
+          workArea: '',
+          message: ''
+        });
+      } else {
+        setSubmitStatus('error');
+      }
+    } catch (error) {
+      console.error('Form submission error:', error);
+      setSubmitStatus('error');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -130,6 +168,21 @@ export default function Contact() {
             {/* Quote Request Form */}
             <div>
               <h2 className="font-montserrat text-3xl text-earle-black mb-8">Request a Quote</h2>
+              
+              {/* Success/Error Messages */}
+              {submitStatus === 'success' && (
+                <div className="mb-6 p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg">
+                  <p className="font-montserrat font-medium">Thank you for your quote request!</p>
+                  <p className="font-raleway text-sm mt-1">We'll get back to you within 24 hours.</p>
+                </div>
+              )}
+              
+              {submitStatus === 'error' && (
+                <div className="mb-6 p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg">
+                  <p className="font-montserrat font-medium">There was an error sending your message.</p>
+                  <p className="font-raleway text-sm mt-1">Please try again or contact us directly.</p>
+                </div>
+              )}
               
               <form onSubmit={handleSubmit} className="space-y-6">
                 {/* Basic Information */}
@@ -328,9 +381,10 @@ export default function Contact() {
 
                 <button
                   type="submit"
-                  className="btn-primary w-full text-sm sm:text-base focus:ring-2 focus:ring-purple focus:ring-offset-2"
+                  disabled={isSubmitting}
+                  className="btn-primary w-full text-sm sm:text-base focus:ring-2 focus:ring-purple focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  Request Free Quote
+                  {isSubmitting ? 'Sending...' : 'Request Free Quote'}
                 </button>
 
                 <p className="font-raleway text-sm text-earle-black text-center">
