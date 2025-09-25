@@ -3,7 +3,7 @@
 
 export const emailConfig = {
   // Your email address where contact form submissions will be sent
-  recipientEmail: 'your-email@example.com', // UPDATE THIS WITH YOUR ACTUAL EMAIL
+  recipientEmail: 'info@g3electricdsm.com', // G3 Electric Des Moines contact email
   
   // Email service configuration
   service: {
@@ -39,8 +39,8 @@ export const emailConfig = {
   // Email templates
   templates: {
     contactForm: {
-      subject: 'New Contact Form Submission - G3 Electric',
-      from: 'noreply@g3electric.com', // You can customize this
+      subject: 'New Contact Form Submission - G3 Electric Des Moines',
+      from: 'noreply@g3electricdsm.com', // G3 Electric Des Moines domain
       replyTo: '{{customerEmail}}' // This will use the customer's email as reply-to
     }
   }
