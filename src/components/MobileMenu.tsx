@@ -46,10 +46,17 @@ export default function MobileMenu({ currentPath }: MobileMenuProps) {
         )}
       </button>
 
-      {/* Mobile menu */}
+      {/* Mobile menu - CACHE BUSTING VERSION */}
       <div
-        className={`${isOpen ? 'block' : 'hidden'} absolute top-16 left-0 right-0 z-50 bg-gray-900 border-b-2 border-purple shadow-2xl`}
-        style={{ backgroundColor: '#1a1a1a', opacity: 1, zIndex: 9999, position: 'absolute' }}
+        className={`${isOpen ? 'block' : 'hidden'} absolute top-16 left-0 right-0 z-50`}
+        style={{ 
+          backgroundColor: '#1a1a1a', 
+          opacity: 1, 
+          zIndex: 9999, 
+          position: 'absolute',
+          borderBottom: '2px solid #6D0091',
+          boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)'
+        }}
         id="mobile-menu"
       >
         <div className="px-2 pt-2 pb-3 space-y-1">
@@ -60,8 +67,9 @@ export default function MobileMenu({ currentPath }: MobileMenuProps) {
               className={`block px-3 py-2 rounded-md text-base font-medium transition-all duration-200 ${
                 isCurrentPath(item.href)
                   ? 'text-white bg-purple/30 border-l-4 border-purple shadow-md'
-                  : 'text-white-smoke hover:text-white hover:bg-purple/20 hover:shadow-sm'
+                  : 'text-white hover:text-white hover:bg-purple/20 hover:shadow-sm'
               }`}
+              style={{ color: isCurrentPath(item.href) ? '#ffffff' : '#ffffff' }}
               onClick={() => setIsOpen(false)}
             >
               {item.name}
