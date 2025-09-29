@@ -6,7 +6,9 @@
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "deploy": "vercel --prod --force --yes",
+    "deploy:clear-cache": "./scripts/deploy.sh"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.7",
