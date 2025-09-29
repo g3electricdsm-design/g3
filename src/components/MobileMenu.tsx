@@ -46,7 +46,7 @@ export default function MobileMenu({ currentPath }: MobileMenuProps) {
         )}
       </button>
 
-      {/* Mobile menu - CACHE BUSTING VERSION */}
+      {/* Mobile menu - FORCE CACHE CLEAR VERSION */}
       <div
         className={`${isOpen ? 'block' : 'hidden'} absolute top-16 left-0 right-0 z-50`}
         style={{ 
@@ -55,7 +55,10 @@ export default function MobileMenu({ currentPath }: MobileMenuProps) {
           zIndex: 9999, 
           position: 'absolute',
           borderBottom: '2px solid #6D0091',
-          boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)'
+          boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
+          width: '100%',
+          left: '0',
+          right: '0'
         }}
         id="mobile-menu"
       >
