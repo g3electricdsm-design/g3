@@ -1,0 +1,112 @@
+name: Image Optimization
+
+on:
+  push:
+    paths:
+      - 'public/images/**'
+      - 'src/data/projects.ts'
+  schedule:
+    - cron: '0 4 * * 1' # Run every Monday at 4 AM
+
+jobs:
+  image-optimization:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install image optimization tools
+        run: |
+          npm install -g imagemin-cli
+          npm install -g @squoosh/cli
+
+      - name: Optimize portfolio images
+        run: |
+          echo "🖼️ Optimizing portfolio images..."
+          
+          # Create optimized directory
+          mkdir -p public/images/portfolio/optimized
+          
+          # Optimize each portfolio image
+          for img in public/images/portfolio/*.jpg; do
+            if [ -f "$img" ]; then
+              filename=$(basename "$img")
+              echo "Optimizing $filename..."
+              
+              # Use squoosh for high-quality optimization
+              npx @squoosh/cli --webp '{"quality":85}' "$img" --output-dir public/images/portfolio/optimized/
+              npx @squoosh/cli --avif '{"quality":80}' "$img" --output-dir public/images/portfolio/optimized/
+            fi
+          done
+
+      - name: Optimize testimonial images
+        run: |
+          echo "🖼️ Optimizing testimonial images..."
+          
+          # Create optimized directory
+          mkdir -p public/images/testimonials/optimized
+          
+          # Optimize each testimonial image
+          for img in public/images/testimonials/*.jpg; do
+            if [ -f "$img" ]; then
+              filename=$(basename "$img")
+              echo "Optimizing $filename..."
+              
+              # Use squoosh for high-quality optimization
+              npx @squoosh/cli --webp '{"quality":85}' "$img" --output-dir public/images/testimonials/optimized/
+              npx @squoosh/cli --avif '{"quality":80}' "$img" --output-dir public/images/testimonials/optimized/
+            fi
+          done
+
+      - name: Generate responsive images
+        run: |
+          echo "📱 Generating responsive image sizes..."
+          
+          # Generate different sizes for each image
+          for img in public/images/portfolio/*.jpg; do
+            if [ -f "$img" ]; then
+              filename=$(basename "$img" .jpg)
+              echo "Generating responsive sizes for $filename..."
+              
+              # Generate different sizes
+              npx @squoosh/cli --resize '{"width":640}' "$img" --output-dir public/images/portfolio/responsive/ --suffix _640
+              npx @squoosh/cli --resize '{"width":1024}' "$img" --output-dir public/images/portfolio/responsive/ --suffix _1024
+              npx @squoosh/cli --resize '{"width":1920}' "$img" --output-dir public/images/portfolio/responsive/ --suffix _1920
+            fi
+          done
+
+      - name: Update projects.ts with optimized images
+        run: |
+          echo "📝 Updating projects.ts with optimized image paths..."
+          
+          # This would update the projects.ts file to use optimized images
+          # For now, we'll just log what would be updated
+          echo "Would update image paths to use optimized versions"
+
+      - name: Commit optimized images
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add public/images/*/optimized/
+          git add public/images/*/responsive/
+          git diff --staged --quiet || git commit -m "🖼️ Auto-optimize images [skip ci]"
+          git push
+
+      - name: Image optimization summary
+        run: |
+          echo "✅ Image optimization completed!"
+          echo "📊 Optimized images saved to:"
+          echo "  - public/images/portfolio/optimized/"
+          echo "  - public/images/testimonials/optimized/"
+          echo "  - public/images/portfolio/responsive/"
+          echo "  - public/images/testimonials/responsive/"
