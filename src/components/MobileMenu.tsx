@@ -29,7 +29,11 @@ export default function MobileMenu({ currentPath }: MobileMenuProps) {
       {/* Mobile menu button */}
       <button
         type="button"
-        className="inline-flex items-center justify-center p-2 rounded-md text-white-smoke hover:text-purple hover:bg-white-smoke focus:outline-none focus:ring-2 focus:ring-inset focus:ring-purple"
+        className={`inline-flex items-center justify-center p-2 rounded-md text-white-smoke focus:outline-none focus:ring-2 focus:ring-inset focus:ring-purple transition-all duration-200 ${
+          isOpen 
+            ? 'bg-purple/20 text-purple shadow-lg' 
+            : 'hover:text-purple hover:bg-purple/10'
+        }`}
         aria-controls="mobile-menu"
         aria-expanded={isOpen}
         onClick={() => setIsOpen(!isOpen)}
@@ -44,7 +48,7 @@ export default function MobileMenu({ currentPath }: MobileMenuProps) {
 
       {/* Mobile menu */}
       <div
-        className={`${isOpen ? 'block' : 'hidden'} absolute top-16 left-0 right-0 z-50 bg-earle-black border-b border-gray-200 shadow-lg`}
+        className={`${isOpen ? 'block' : 'hidden'} absolute top-16 left-0 right-0 z-50 bg-gradient-to-b from-earle-black to-purple/20 border-b border-purple/30 shadow-2xl`}
         id="mobile-menu"
       >
         <div className="px-2 pt-2 pb-3 space-y-1">
@@ -52,10 +56,10 @@ export default function MobileMenu({ currentPath }: MobileMenuProps) {
             <Link
               key={item.name}
               href={item.href}
-              className={`block px-3 py-2 rounded-md text-base font-medium transition-colors ${
+              className={`block px-3 py-2 rounded-md text-base font-medium transition-all duration-200 ${
                 isCurrentPath(item.href)
-                  ? 'text-purple bg-purple/10'
-                  : 'text-white-smoke hover:text-purple hover:bg-white-smoke'
+                  ? 'text-white bg-purple/30 border-l-4 border-purple shadow-md'
+                  : 'text-white-smoke hover:text-white hover:bg-purple/20 hover:shadow-sm'
               }`}
               onClick={() => setIsOpen(false)}
             >
