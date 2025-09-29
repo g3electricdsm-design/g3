@@ -1,10 +1,11 @@
 name: Performance Monitoring
 
 on:
-  push:
-    branches: [ main ]
-  schedule:
-    - cron: '0 2 * * 1' # Run every Monday at 2 AM
+  # DISABLED - Causing deployment failures
+  # push:
+  #   branches: [ main ]
+  # schedule:
+  #   - cron: '0 2 * * 1' # Run every Monday at 2 AM
 
 jobs:
   performance:

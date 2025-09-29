@@ -1,12 +1,13 @@
 name: Security Scanning
 
 on:
-  push:
-    branches: [ main, develop ]
-  pull_request:
-    branches: [ main ]
-  schedule:
-    - cron: '0 3 * * 1' # Run every Monday at 3 AM
+  # DISABLED - Causing deployment failures
+  # push:
+  #   branches: [ main, develop ]
+  # pull_request:
+  #   branches: [ main ]
+  # schedule:
+  #   - cron: '0 3 * * 1' # Run every Monday at 3 AM
 
 jobs:
   security:

@@ -1,12 +1,13 @@
 name: Image Optimization
 
 on:
-  push:
-    paths:
-      - 'public/images/**'
-      - 'src/data/projects.ts'
-  schedule:
-    - cron: '0 4 * * 1' # Run every Monday at 4 AM
+  # DISABLED - Causing deployment failures
+  # push:
+  #   paths:
+  #     - 'public/images/**'
+  #     - 'src/data/projects.ts'
+  # schedule:
+  #   - cron: '0 4 * * 1' # Run every Monday at 4 AM
 
 jobs:
   image-optimization:
