@@ -33,11 +33,22 @@ jobs:
         run: |
           echo "🧹 Clearing Vercel cache..."
           echo "Waiting for deployment to complete..."
-          sleep 30
+          sleep 60
           
-          # Clear cache by making requests with cache-busting parameters
-          echo "Making cache-busting requests..."
-          curl -s "https://g3-sandy.vercel.app?v=$(date +%s)" > /dev/null || true
-          curl -s "https://g3-sandy.vercel.app?cache_bust=$(date +%s)" > /dev/null || true
+          # Multiple cache-busting requests with different parameters
+          echo "Making aggressive cache-busting requests..."
+          for i in {1..5}; do
+            echo "Cache bust attempt $i..."
+            curl -s "https://g3-sandy.vercel.app?v=$(date +%s)&bust=$i" > /dev/null || true
+            curl -s "https://g3-sandy.vercel.app?cache_bust=$(date +%s)&force=$i" > /dev/null || true
+            curl -s "https://g3-sandy.vercel.app?clear_cache=$(date +%s)&attempt=$i" > /dev/null || true
+            sleep 5
+          done
           
-          echo "✅ Cache clearing complete!"
+          # Force a hard refresh by requesting specific pages
+          echo "Requesting specific pages to clear cache..."
+          curl -s "https://g3-sandy.vercel.app/services?v=$(date +%s)" > /dev/null || true
+          curl -s "https://g3-sandy.vercel.app/portfolio?v=$(date +%s)" > /dev/null || true
+          curl -s "https://g3-sandy.vercel.app/contact?v=$(date +%s)" > /dev/null || true
+          
+          echo "✅ Aggressive cache clearing complete!"
