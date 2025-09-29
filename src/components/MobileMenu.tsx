@@ -48,7 +48,8 @@ export default function MobileMenu({ currentPath }: MobileMenuProps) {
 
       {/* Mobile menu */}
       <div
-        className={`${isOpen ? 'block' : 'hidden'} absolute top-16 left-0 right-0 z-50 bg-gradient-to-b from-earle-black to-purple/20 border-b border-purple/30 shadow-2xl`}
+        className={`${isOpen ? 'block' : 'hidden'} absolute top-16 left-0 right-0 z-50 bg-gray-900 border-b-2 border-purple shadow-2xl`}
+        style={{ backgroundColor: '#1a1a1a' }}
         id="mobile-menu"
       >
         <div className="px-2 pt-2 pb-3 space-y-1">
