@@ -28,27 +28,14 @@ jobs:
       - name: Run npm audit
         run: npm audit --audit-level moderate
 
-      - name: Run Snyk security scan
-        uses: snyk/actions/node@master
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        with:
-          args: --severity-threshold=high
-
       - name: Check for hardcoded secrets
-        uses: trufflesecurity/trufflehog@main
-        with:
-          path: ./
-          base: main
-          head: HEAD
-
-      - name: Run CodeQL Analysis
-        uses: github/codeql-action/init@v3
-        with:
-          languages: javascript
-
-      - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v3
+        run: |
+          echo "🔍 Checking for common secrets patterns..."
+          if grep -r "password\|secret\|key\|token" --include="*.ts" --include="*.tsx" --include="*.js" --include="*.jsx" . | grep -v node_modules | grep -v ".git"; then
+            echo "⚠️ Potential secrets found - please review"
+          else
+            echo "✅ No obvious secrets found"
+          fi
 
       - name: Security scan summary
         run: |

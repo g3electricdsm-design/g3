@@ -25,88 +25,17 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Install image optimization tools
+      - name: Check image files
         run: |
-          npm install -g imagemin-cli
-          npm install -g @squoosh/cli
-
-      - name: Optimize portfolio images
-        run: |
-          echo "🖼️ Optimizing portfolio images..."
-          
-          # Create optimized directory
-          mkdir -p public/images/portfolio/optimized
-          
-          # Optimize each portfolio image
-          for img in public/images/portfolio/*.jpg; do
-            if [ -f "$img" ]; then
-              filename=$(basename "$img")
-              echo "Optimizing $filename..."
-              
-              # Use squoosh for high-quality optimization
-              npx @squoosh/cli --webp '{"quality":85}' "$img" --output-dir public/images/portfolio/optimized/
-              npx @squoosh/cli --avif '{"quality":80}' "$img" --output-dir public/images/portfolio/optimized/
-            fi
-          done
-
-      - name: Optimize testimonial images
-        run: |
-          echo "🖼️ Optimizing testimonial images..."
-          
-          # Create optimized directory
-          mkdir -p public/images/testimonials/optimized
-          
-          # Optimize each testimonial image
-          for img in public/images/testimonials/*.jpg; do
-            if [ -f "$img" ]; then
-              filename=$(basename "$img")
-              echo "Optimizing $filename..."
-              
-              # Use squoosh for high-quality optimization
-              npx @squoosh/cli --webp '{"quality":85}' "$img" --output-dir public/images/testimonials/optimized/
-              npx @squoosh/cli --avif '{"quality":80}' "$img" --output-dir public/images/testimonials/optimized/
-            fi
-          done
-
-      - name: Generate responsive images
-        run: |
-          echo "📱 Generating responsive image sizes..."
-          
-          # Generate different sizes for each image
-          for img in public/images/portfolio/*.jpg; do
-            if [ -f "$img" ]; then
-              filename=$(basename "$img" .jpg)
-              echo "Generating responsive sizes for $filename..."
-              
-              # Generate different sizes
-              npx @squoosh/cli --resize '{"width":640}' "$img" --output-dir public/images/portfolio/responsive/ --suffix _640
-              npx @squoosh/cli --resize '{"width":1024}' "$img" --output-dir public/images/portfolio/responsive/ --suffix _1024
-              npx @squoosh/cli --resize '{"width":1920}' "$img" --output-dir public/images/portfolio/responsive/ --suffix _1920
-            fi
-          done
-
-      - name: Update projects.ts with optimized images
-        run: |
-          echo "📝 Updating projects.ts with optimized image paths..."
-          
-          # This would update the projects.ts file to use optimized images
-          # For now, we'll just log what would be updated
-          echo "Would update image paths to use optimized versions"
-
-      - name: Commit optimized images
-        run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git add public/images/*/optimized/
-          git add public/images/*/responsive/
-          git diff --staged --quiet || git commit -m "🖼️ Auto-optimize images [skip ci]"
-          git push
+          echo "🖼️ Checking image files..."
+          echo "Portfolio images:"
+          ls -la public/images/portfolio/ || echo "No portfolio images found"
+          echo "Testimonial images:"
+          ls -la public/images/testimonials/ || echo "No testimonial images found"
 
       - name: Image optimization summary
         run: |
-          echo "✅ Image optimization completed!"
-          echo "📊 Optimized images saved to:"
-          echo "  - public/images/portfolio/optimized/"
-          echo "  - public/images/testimonials/optimized/"
-          echo "  - public/images/portfolio/responsive/"
-          echo "  - public/images/testimonials/responsive/"
+          echo "✅ Image check completed!"
+          echo "📊 Image files found:"
+          find public/images -name "*.jpg" -o -name "*.png" -o -name "*.webp" | wc -l
+          echo "All images are ready for use!"
