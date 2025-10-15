@@ -22,6 +22,15 @@ export default function Admin() {
   const [showContentEditor, setShowContentEditor] = useState(false);
   const [activeTab, setActiveTab] = useState<'projects' | 'services' | 'formEntries' | 'content' | 'analytics' | 'settings'>('projects');
 
+  const handleLogout = () => {
+    // Clear authentication cookies
+    document.cookie = 'admin_authenticated=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
+    document.cookie = 'admin_timestamp=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
+    
+    // Redirect to login page
+    window.location.href = '/admin/login';
+  };
+
   const handleDelete = (id: number) => {
     if (confirm('Are you sure you want to delete this project?')) {
       deleteProject(id);
@@ -79,10 +88,20 @@ export default function Admin() {
       {/* Header */}
       <section className="bg-gradient-to-br from-purple to-phlox text-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h1 className="font-megrim text-4xl md:text-5xl mb-4">Content Management</h1>
-          <p className="font-raleway text-lg md:text-xl max-w-3xl">
-            Manage your portfolio projects and website content.
-          </p>
+          <div className="flex justify-between items-start">
+            <div>
+              <h1 className="font-megrim text-4xl md:text-5xl mb-4">Content Management</h1>
+              <p className="font-raleway text-lg md:text-xl max-w-3xl">
+                Manage your portfolio projects and website content.
+              </p>
+            </div>
+            <button
+              onClick={handleLogout}
+              className="bg-white/20 hover:bg-white/30 text-white px-4 py-2 rounded-lg font-raleway font-medium transition-colors duration-200 backdrop-blur-sm"
+            >
+              Logout
+            </button>
+          </div>
         </div>
       </section>
 
