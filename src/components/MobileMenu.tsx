@@ -26,69 +26,79 @@ export default function MobileMenu({ currentPath }: MobileMenuProps) {
   return (
     <div className="md:hidden">
       <style jsx>{`
-        @keyframes glitchIn {
+        @keyframes particleIn {
           0% {
             opacity: 0;
-            transform: translateX(-10px) skewX(5deg);
-            filter: hue-rotate(90deg) contrast(150%);
+            transform: scale(0.3) translateY(-20px);
+            filter: blur(10px) brightness(200%);
           }
-          20% {
-            opacity: 0.3;
-            transform: translateX(5px) skewX(-3deg);
-            filter: hue-rotate(180deg) contrast(200%);
+          15% {
+            opacity: 0.2;
+            transform: scale(0.5) translateY(-15px) rotate(5deg);
+            filter: blur(8px) brightness(180%);
           }
-          40% {
+          30% {
+            opacity: 0.4;
+            transform: scale(0.7) translateY(-10px) rotate(-3deg);
+            filter: blur(6px) brightness(160%);
+          }
+          45% {
             opacity: 0.6;
-            transform: translateX(-3px) skewX(2deg);
-            filter: hue-rotate(270deg) contrast(120%);
+            transform: scale(0.85) translateY(-5px) rotate(2deg);
+            filter: blur(4px) brightness(140%);
           }
           60% {
             opacity: 0.8;
-            transform: translateX(2px) skewX(-1deg);
-            filter: hue-rotate(360deg) contrast(110%);
+            transform: scale(0.95) translateY(-2px) rotate(-1deg);
+            filter: blur(2px) brightness(120%);
           }
-          80% {
+          75% {
             opacity: 0.9;
-            transform: translateX(-1px) skewX(0.5deg);
-            filter: hue-rotate(0deg) contrast(105%);
+            transform: scale(0.98) translateY(-1px) rotate(0.5deg);
+            filter: blur(1px) brightness(110%);
           }
           100% {
             opacity: 1;
-            transform: translateX(0) skewX(0deg);
-            filter: hue-rotate(0deg) contrast(100%);
+            transform: scale(1) translateY(0) rotate(0deg);
+            filter: blur(0px) brightness(100%);
           }
         }
         
-        @keyframes glitchOut {
+        @keyframes particleOut {
           0% {
             opacity: 1;
-            transform: translateX(0) skewX(0deg);
-            filter: hue-rotate(0deg) contrast(100%);
+            transform: scale(1) translateY(0) rotate(0deg);
+            filter: blur(0px) brightness(100%);
           }
-          20% {
+          15% {
             opacity: 0.9;
-            transform: translateX(-1px) skewX(0.5deg);
-            filter: hue-rotate(90deg) contrast(105%);
+            transform: scale(0.98) translateY(-1px) rotate(0.5deg);
+            filter: blur(1px) brightness(110%);
           }
-          40% {
+          30% {
             opacity: 0.8;
-            transform: translateX(2px) skewX(-1deg);
-            filter: hue-rotate(180deg) contrast(110%);
+            transform: scale(0.95) translateY(-2px) rotate(-1deg);
+            filter: blur(2px) brightness(120%);
+          }
+          45% {
+            opacity: 0.6;
+            transform: scale(0.85) translateY(-5px) rotate(2deg);
+            filter: blur(4px) brightness(140%);
           }
           60% {
-            opacity: 0.6;
-            transform: translateX(-3px) skewX(2deg);
-            filter: hue-rotate(270deg) contrast(120%);
+            opacity: 0.4;
+            transform: scale(0.7) translateY(-10px) rotate(-3deg);
+            filter: blur(6px) brightness(160%);
           }
-          80% {
-            opacity: 0.3;
-            transform: translateX(5px) skewX(-3deg);
-            filter: hue-rotate(360deg) contrast(200%);
+          75% {
+            opacity: 0.2;
+            transform: scale(0.5) translateY(-15px) rotate(5deg);
+            filter: blur(8px) brightness(180%);
           }
           100% {
             opacity: 0;
-            transform: translateX(-10px) skewX(5deg);
-            filter: hue-rotate(90deg) contrast(150%);
+            transform: scale(0.3) translateY(-20px);
+            filter: blur(10px) brightness(200%);
           }
         }
       `}</style>
@@ -126,7 +136,7 @@ export default function MobileMenu({ currentPath }: MobileMenuProps) {
           width: '100%',
           left: '0',
           right: '0',
-          animation: isOpen ? 'glitchIn 0.7s ease-in-out' : 'glitchOut 0.7s ease-in-out'
+          animation: isOpen ? 'particleIn 0.7s ease-in-out' : 'particleOut 0.7s ease-in-out'
         }}
         id="mobile-menu"
       >
