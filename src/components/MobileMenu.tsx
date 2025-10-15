@@ -45,12 +45,13 @@ export default function MobileMenu({ currentPath }: MobileMenuProps) {
         )}
       </button>
 
-      {/* Mobile menu - FORCE CACHE CLEAR VERSION */}
+      {/* Mobile menu with smooth transitions */}
       <div
-        className={`${isOpen ? 'block' : 'hidden'} absolute top-16 left-0 right-0 z-50`}
+        className={`absolute top-16 left-0 right-0 z-50 transition-all duration-300 ease-in-out ${
+          isOpen ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4 pointer-events-none'
+        }`}
         style={{ 
           backgroundColor: '#242729', 
-          opacity: 1, 
           zIndex: 9999, 
           position: 'absolute',
           borderBottom: '2px solid #6D0091',
@@ -62,16 +63,19 @@ export default function MobileMenu({ currentPath }: MobileMenuProps) {
         id="mobile-menu"
       >
         <div className="px-2 pt-2 pb-3 space-y-1">
-          {navigation.map((item) => (
+          {navigation.map((item, index) => (
             <Link
               key={item.name}
               href={item.href}
-              className={`block px-3 py-2 rounded-md text-base font-medium transition-all duration-200 ${
+              className={`block px-3 py-2 rounded-md text-base font-medium transition-all duration-300 ease-out ${
                 isCurrentPath(item.href)
                   ? 'text-white bg-purple/30 border-l-4 border-purple shadow-md'
                   : 'text-white hover:text-white hover:bg-purple/20 hover:shadow-sm'
-              }`}
-              style={{ color: isCurrentPath(item.href) ? '#ffffff' : '#ffffff' }}
+              } ${isOpen ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4'}`}
+              style={{ 
+                color: isCurrentPath(item.href) ? '#ffffff' : '#ffffff',
+                transitionDelay: isOpen ? `${index * 50}ms` : '0ms'
+              }}
               onClick={() => setIsOpen(false)}
             >
               {item.name}
