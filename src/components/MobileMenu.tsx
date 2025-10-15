@@ -48,7 +48,7 @@ export default function MobileMenu({ currentPath }: MobileMenuProps) {
       {/* Mobile menu with smooth transitions */}
       <div
         className={`absolute top-16 left-0 right-0 z-50 transition-all duration-500 ease-in-out ${
-          isOpen ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4 pointer-events-none'
+          isOpen ? 'opacity-100 blur-0' : 'opacity-0 blur-sm pointer-events-none'
         }`}
         style={{ 
           backgroundColor: '#242729', 
@@ -71,10 +71,10 @@ export default function MobileMenu({ currentPath }: MobileMenuProps) {
                 isCurrentPath(item.href)
                   ? 'text-white bg-purple/30 border-l-4 border-purple shadow-md'
                   : 'text-white hover:text-white hover:bg-purple/20 hover:shadow-sm'
-              } ${isOpen ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4'}`}
+              } ${isOpen ? 'opacity-100 blur-0' : 'opacity-0 blur-sm'}`}
               style={{ 
                 color: isCurrentPath(item.href) ? '#ffffff' : '#ffffff',
-                transitionDelay: isOpen ? `${index * 75}ms` : '0ms'
+                transitionDelay: isOpen ? `${index * 50}ms` : '0ms'
               }}
               onClick={() => setIsOpen(false)}
             >
