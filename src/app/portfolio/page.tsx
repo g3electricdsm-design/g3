@@ -85,24 +85,6 @@ export default function Portfolio() {
       {/* Portfolio Grid */}
       <section className="py-20 bg-earle-black">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Filter Tabs */}
-          <div className="flex flex-wrap justify-center gap-4 mb-12">
-            <button className="px-6 py-2 bg-purple text-white rounded-lg font-montserrat font-medium">
-              All Projects
-            </button>
-            <button className="px-6 py-2 bg-white-smoke text-earle-black rounded-lg font-montserrat font-medium hover:bg-gray-200 transition-colors">
-              Residential
-            </button>
-            <button className="px-6 py-2 bg-white-smoke text-earle-black rounded-lg font-montserrat font-medium hover:bg-gray-200 transition-colors">
-              Commercial
-            </button>
-            <button className="px-6 py-2 bg-white-smoke text-earle-black rounded-lg font-montserrat font-medium hover:bg-gray-200 transition-colors">
-              Lighting
-            </button>
-            <button className="px-6 py-2 bg-white-smoke text-earle-black rounded-lg font-montserrat font-medium hover:bg-gray-200 transition-colors">
-              New Builds
-            </button>
-          </div>
 
           {/* Bento Box Grid */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[200px]">
