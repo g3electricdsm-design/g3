@@ -47,7 +47,7 @@ export default function MobileMenu({ currentPath }: MobileMenuProps) {
 
       {/* Mobile menu with smooth transitions */}
       <div
-        className={`absolute top-16 left-0 right-0 z-50 transition-all duration-300 ease-in-out ${
+        className={`absolute top-16 left-0 right-0 z-50 transition-all duration-500 ease-in-out ${
           isOpen ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4 pointer-events-none'
         }`}
         style={{ 
@@ -67,14 +67,14 @@ export default function MobileMenu({ currentPath }: MobileMenuProps) {
             <Link
               key={item.name}
               href={item.href}
-              className={`block px-3 py-2 rounded-md text-base font-medium transition-all duration-300 ease-out ${
+              className={`block px-3 py-2 rounded-md text-base font-medium transition-all duration-500 ease-out ${
                 isCurrentPath(item.href)
                   ? 'text-white bg-purple/30 border-l-4 border-purple shadow-md'
                   : 'text-white hover:text-white hover:bg-purple/20 hover:shadow-sm'
               } ${isOpen ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4'}`}
               style={{ 
                 color: isCurrentPath(item.href) ? '#ffffff' : '#ffffff',
-                transitionDelay: isOpen ? `${index * 50}ms` : '0ms'
+                transitionDelay: isOpen ? `${index * 75}ms` : '0ms'
               }}
               onClick={() => setIsOpen(false)}
             >
