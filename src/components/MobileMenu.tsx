@@ -49,12 +49,12 @@ export default function MobileMenu({ currentPath }: MobileMenuProps) {
       <div
         className={`${isOpen ? 'block' : 'hidden'} absolute top-16 left-0 right-0 z-50`}
         style={{ 
-          backgroundColor: '#1a1a1a', 
+          backgroundColor: '#0f0f0f', 
           opacity: 1, 
           zIndex: 9999, 
           position: 'absolute',
           borderBottom: '2px solid #6D0091',
-          boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
+          boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5)',
           width: '100%',
           left: '0',
           right: '0'
