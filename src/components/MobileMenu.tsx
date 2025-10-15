@@ -25,6 +25,73 @@ export default function MobileMenu({ currentPath }: MobileMenuProps) {
 
   return (
     <div className="md:hidden">
+      <style jsx>{`
+        @keyframes glitchIn {
+          0% {
+            opacity: 0;
+            transform: translateX(-10px) skewX(5deg);
+            filter: hue-rotate(90deg) contrast(150%);
+          }
+          20% {
+            opacity: 0.3;
+            transform: translateX(5px) skewX(-3deg);
+            filter: hue-rotate(180deg) contrast(200%);
+          }
+          40% {
+            opacity: 0.6;
+            transform: translateX(-3px) skewX(2deg);
+            filter: hue-rotate(270deg) contrast(120%);
+          }
+          60% {
+            opacity: 0.8;
+            transform: translateX(2px) skewX(-1deg);
+            filter: hue-rotate(360deg) contrast(110%);
+          }
+          80% {
+            opacity: 0.9;
+            transform: translateX(-1px) skewX(0.5deg);
+            filter: hue-rotate(0deg) contrast(105%);
+          }
+          100% {
+            opacity: 1;
+            transform: translateX(0) skewX(0deg);
+            filter: hue-rotate(0deg) contrast(100%);
+          }
+        }
+        
+        @keyframes glitchOut {
+          0% {
+            opacity: 1;
+            transform: translateX(0) skewX(0deg);
+            filter: hue-rotate(0deg) contrast(100%);
+          }
+          20% {
+            opacity: 0.9;
+            transform: translateX(-1px) skewX(0.5deg);
+            filter: hue-rotate(90deg) contrast(105%);
+          }
+          40% {
+            opacity: 0.8;
+            transform: translateX(2px) skewX(-1deg);
+            filter: hue-rotate(180deg) contrast(110%);
+          }
+          60% {
+            opacity: 0.6;
+            transform: translateX(-3px) skewX(2deg);
+            filter: hue-rotate(270deg) contrast(120%);
+          }
+          80% {
+            opacity: 0.3;
+            transform: translateX(5px) skewX(-3deg);
+            filter: hue-rotate(360deg) contrast(200%);
+          }
+          100% {
+            opacity: 0;
+            transform: translateX(-10px) skewX(5deg);
+            filter: hue-rotate(90deg) contrast(150%);
+          }
+        }
+      `}</style>
       {/* Mobile menu button */}
       <button
         type="button"
@@ -47,8 +114,8 @@ export default function MobileMenu({ currentPath }: MobileMenuProps) {
 
       {/* Mobile menu with smooth transitions */}
       <div
-        className={`absolute top-16 left-0 right-0 z-50 transition-all duration-500 ease-in-out ${
-          isOpen ? 'opacity-100 blur-0' : 'opacity-0 blur-sm pointer-events-none'
+        className={`absolute top-16 left-0 right-0 z-50 transition-all duration-700 ease-in-out ${
+          isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
         }`}
         style={{ 
           backgroundColor: '#242729', 
@@ -58,7 +125,8 @@ export default function MobileMenu({ currentPath }: MobileMenuProps) {
           boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5)',
           width: '100%',
           left: '0',
-          right: '0'
+          right: '0',
+          animation: isOpen ? 'glitchIn 0.7s ease-in-out' : 'glitchOut 0.7s ease-in-out'
         }}
         id="mobile-menu"
       >
@@ -67,11 +135,11 @@ export default function MobileMenu({ currentPath }: MobileMenuProps) {
             <Link
               key={item.name}
               href={item.href}
-              className={`block px-3 py-2 rounded-md text-base font-medium transition-all duration-500 ease-out ${
+              className={`block px-3 py-2 rounded-md text-base font-medium transition-all duration-700 ease-in-out ${
                 isCurrentPath(item.href)
                   ? 'text-white bg-purple/30 border-l-4 border-purple shadow-md'
                   : 'text-white hover:text-white hover:bg-purple/20 hover:shadow-sm'
-              } ${isOpen ? 'opacity-100 blur-0' : 'opacity-0 blur-sm'}`}
+              } ${isOpen ? 'opacity-100' : 'opacity-0'}`}
               style={{ 
                 color: isCurrentPath(item.href) ? '#ffffff' : '#ffffff',
                 transitionDelay: isOpen ? `${index * 50}ms` : '0ms'
