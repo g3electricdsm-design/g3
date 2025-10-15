@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { ArrowLeftIcon, PhoneIcon, EnvelopeIcon, MapPinIcon, ClockIcon } from "@heroicons/react/24/outline";
+import { PhoneIcon, EnvelopeIcon, MapPinIcon, ClockIcon } from "@heroicons/react/24/outline";
 import Navigation from "@/components/Navigation";
 
 export default function Contact() {
@@ -90,12 +90,6 @@ export default function Contact() {
       {/* Header */}
       <section className="bg-gradient-to-br from-purple to-phlox text-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center mb-6">
-            <Link href="/" className="flex items-center text-white hover:text-white-smoke transition-colors">
-              <ArrowLeftIcon className="h-5 w-5 mr-2" />
-              Back to Home
-            </Link>
-          </div>
           <h1 className="font-megrim text-5xl md:text-6xl mb-4">Get Your Free Quote</h1>
           <p className="font-raleway text-lg md:text-xl max-w-3xl">
             Ready to start your electrical project? Fill out the form below and we&apos;ll get back to you within 24 hours with a detailed quote.
