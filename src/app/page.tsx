@@ -417,7 +417,6 @@ export default function Home() {
               <Link href="/pricing" className="text-white-smoke hover:text-purple font-raleway">Pricing</Link>
               <Link href="/about" className="text-white-smoke hover:text-purple font-raleway">About</Link>
               <Link href="/contact" className="text-white-smoke hover:text-purple font-raleway">Contact</Link>
-              <Link href="/pay" className="text-purple hover:text-phlox font-raleway font-semibold">Pay Bill</Link>
             </div>
             <div className="mt-6 pt-4 border-t border-white/20">
               <p className="text-white-smoke text-sm">

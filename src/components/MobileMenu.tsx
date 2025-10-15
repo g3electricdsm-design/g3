@@ -17,7 +17,6 @@ export default function MobileMenu({ currentPath }: MobileMenuProps) {
     { name: 'Pricing', href: '/pricing' },
     { name: 'About', href: '/about' },
     { name: 'Contact', href: '/contact' },
-    { name: 'Pay Bill', href: '/pay' },
   ];
 
   const isCurrentPath = (path: string) => {
