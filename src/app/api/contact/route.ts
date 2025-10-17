@@ -64,7 +64,7 @@ Source: G3 Electric Website Contact Form
       
       return NextResponse.json({ 
         success: true, 
-        message: 'Thank you for your quote request! We\'ll get back to you within 24 hours.' 
+        message: 'Thank you for your quote request! We&apos;ll get back to you within 24 hours.' 
       });
     } else {
       throw new Error('Failed to send email');
