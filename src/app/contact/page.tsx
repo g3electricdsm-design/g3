@@ -167,7 +167,7 @@ export default function Contact() {
               {submitStatus === 'success' && (
                 <div className="mb-6 p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg">
                   <p className="font-montserrat font-medium">Thank you for your quote request!</p>
-                  <p className="font-raleway text-sm mt-1">We'll get back to you within 24 hours.</p>
+                  <p className="font-raleway text-sm mt-1">We&apos;ll get back to you within 24 hours.</p>
                 </div>
               )}
               

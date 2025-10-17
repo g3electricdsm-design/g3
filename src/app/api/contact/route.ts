@@ -80,11 +80,10 @@ Source: G3 Electric Website Contact Form
 }
 
 // Simple email sending function - replace with your preferred email service
-async function sendEmail({ to, subject, text, from }: {
+async function sendEmail({ to, subject, text }: {
   to: string;
   subject: string;
   text: string;
-  from: string;
 }) {
   // Option 1: Using Nodemailer (requires additional setup)
   // Option 2: Using SendGrid (requires API key)
