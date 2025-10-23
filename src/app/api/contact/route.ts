@@ -54,8 +54,7 @@ Source: G3 Electric Website Contact Form
     const emailResult = await sendEmail({
       to: recipientEmail,
       subject: `New Contact Form Submission from ${name}`,
-      text: emailContent,
-      from: 'noreply@g3electric.com' // You can customize this
+      text: emailContent
     });
 
     if (emailResult.success) {
