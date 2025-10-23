@@ -50,7 +50,7 @@ Source: G3 Electric Website Contact Form
     // For now, we'll use a simple email service
     // You can replace this with your preferred email service (SendGrid, Nodemailer, etc.)
     
-    // Example using a simple email service (you'll need to configure this)
+    // Send email using the configured service
     const emailResult = await sendEmail({
       to: recipientEmail,
       subject: `New Contact Form Submission from ${name}`,
