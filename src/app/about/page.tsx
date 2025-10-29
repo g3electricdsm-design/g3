@@ -10,6 +10,7 @@ import {
   UserGroupIcon
 } from "@heroicons/react/24/outline";
 import Navigation from "@/components/Navigation";
+import Footer from "@/components/Footer";
 import { getContent } from "@/data/content";
 
 export const metadata: Metadata = {
@@ -233,35 +234,7 @@ export default function About() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-hookers-green py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h3 className="font-megrim text-2xl text-white mb-4">G3 Electric</h3>
-            <p className="font-raleway text-white-smoke mb-4">Safe & Dependable Electrical Services</p>
-            <div className="flex justify-center space-x-6">
-              <Link href="/services" className="text-white-smoke hover:text-purple font-raleway">Services</Link>
-              <Link href="/portfolio" className="text-white-smoke hover:text-purple font-raleway">Portfolio</Link>
-              <Link href="/pricing" className="text-white-smoke hover:text-purple font-raleway">Pricing</Link>
-              <Link href="/about" className="text-purple font-raleway">About</Link>
-              <Link href="/contact" className="text-white-smoke hover:text-purple font-raleway">Contact</Link>
-            </div>
-            <div className="mt-6 pt-4 border-t border-white/20">
-              <p className="text-white-smoke text-sm">
-                This digital experience was built by{' '}
-                <a 
-                  href="https://sensory.com" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="text-purple hover:text-phlox transition-colors font-medium"
-                >
-                  Sensory
-                </a>
-                , a UX-first company.
-              </p>
-            </div>
-          </div>
-        </div>
-      </footer>
+      <Footer currentPath="/about" />
     </div>
   );
 }

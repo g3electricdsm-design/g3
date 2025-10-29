@@ -7,6 +7,7 @@ import { ArrowLeftIcon } from '@heroicons/react/24/outline';
 import { Project, getProjectById, updateProject, addProject } from '@/data/projects';
 import ImageUpload from '@/components/ImageUpload';
 import Navigation from '@/components/Navigation';
+import Footer from '@/components/Footer';
 
 export default function EditProjectPage() {
   const router = useRouter();
@@ -423,28 +424,7 @@ export default function EditProjectPage() {
       </section>
 
       {/* Footer */}
-      <footer className="py-12" style={{backgroundColor: '#70877F'}}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h3 className="font-megrim text-2xl text-white mb-4">G3 Electric</h3>
-            <p className="font-raleway text-white-smoke mb-4">Safe & Dependable Electrical Services</p>
-            <div className="mt-6 pt-4 border-t border-white/20">
-              <p className="text-white-smoke text-sm">
-                This digital experience was built by{' '}
-                <a
-                  href="https://sensory.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-purple hover:text-phlox transition-colors font-medium"
-                >
-                  Sensory
-                </a>
-                , a UX-first company.
-              </p>
-            </div>
-          </div>
-        </div>
-      </footer>
+      <Footer currentPath="/admin" />
     </div>
   );
 }
