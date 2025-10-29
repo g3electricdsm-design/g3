@@ -24,7 +24,7 @@ interface ServiceIconProps {
   className?: string;
 }
 
-export function ServiceIcon({ iconName, className = "h-12 w-12" }: ServiceIconProps) {
+export function ServiceIcon({ iconName, className = "w-full h-auto" }: ServiceIconProps) {
   const iconMap: Record<string, string> = {
     lightbulb: FIGMA_ICONS.lightbulb,
     'led-lighting': FIGMA_ICONS.ledLighting,

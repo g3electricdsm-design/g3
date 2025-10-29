@@ -3,8 +3,8 @@
 import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import { StarIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
-import { getAllTestimonials, Testimonial } from "@/data/testimonials";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { getAllTestimonials } from "@/data/testimonials";
+import { motion, useTransform, useMotionValue } from "framer-motion";
 import { MotionValue } from "framer-motion";
 
 interface TestimonialCarouselProps {
@@ -21,6 +21,15 @@ export default function TestimonialCarousel({
   const allTestimonials = getAllTestimonials();
   const [currentTestimonialIndex, setCurrentTestimonialIndex] = useState(0);
   const currentTestimonial = allTestimonials[currentTestimonialIndex];
+
+  // Ensure hooks are called unconditionally: derive transforms from a motion value
+  // If no scrollYProgress is provided, use a static 0 motion value
+  const defaultProgress = useMotionValue(0);
+  const progress = scrollYProgress ?? defaultProgress;
+  const bgTopY = useTransform(progress, [0.4, 0.9], [0, -80]);
+  const bgTopX = useTransform(progress, [0.4, 0.9], [0, 20]);
+  const bgBottomY = useTransform(progress, [0.4, 0.9], [0, 60]);
+  const bgBottomX = useTransform(progress, [0.4, 0.9], [0, -30]);
 
   const nextTestimonial = useCallback(() => {
     setCurrentTestimonialIndex((prev) => (prev + 1) % allTestimonials.length);
@@ -65,17 +74,11 @@ export default function TestimonialCarousel({
         <>
           <motion.div 
             className="absolute top-10 left-10 w-32 h-32 bg-purple/5 rounded-full"
-            style={{ 
-              y: useTransform(scrollYProgress, [0.4, 0.9], [0, -80]),
-              x: useTransform(scrollYProgress, [0.4, 0.9], [0, 20])
-            }}
+            style={{ y: bgTopY, x: bgTopX }}
           />
           <motion.div 
             className="absolute bottom-20 right-20 w-24 h-24 bg-phlox/5 rounded-full"
-            style={{ 
-              y: useTransform(scrollYProgress, [0.4, 0.9], [0, 60]),
-              x: useTransform(scrollYProgress, [0.4, 0.9], [0, -30])
-            }}
+            style={{ y: bgBottomY, x: bgBottomX }}
           />
         </>
       )}

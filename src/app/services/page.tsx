@@ -42,13 +42,15 @@ export default function Services() {
               return (
                 <div key={index} className="w-full max-w-[1200px] bg-earle-black border border-white/10 rounded-2xl p-8 hover:border-purple/50 hover:shadow-xl transition-all shadow-lg">
                   <div className="mb-6">
-                    <div className="flex items-center gap-4 mb-4">
-                      <div className="w-16 h-16 bg-purple/20 rounded-xl flex items-center justify-center flex-shrink-0">
-                        <ServiceIcon iconName={getServiceIcon(service.id)} className="h-10 w-10" />
+                    <div className="flex items-start gap-6 mb-2 justify-between">
+                      <div className="flex-1">
+                        <h3 className="font-montserrat text-2xl font-semibold text-white mb-2">{service.title}</h3>
+                        <p className="font-raleway text-white-smoke">{service.description}</p>
                       </div>
-                      <h3 className="font-montserrat text-2xl font-semibold text-white">{service.title}</h3>
+                      <div className="w-28 bg-purple/10 rounded-xl p-3 flex items-center justify-center ml-6 flex-shrink-0">
+                        <ServiceIcon iconName={getServiceIcon(service.id)} className="w-full h-auto" />
+                      </div>
                     </div>
-                    <p className="font-raleway text-white-smoke mb-3">{service.description}</p>
                   </div>
                   
                   <div>
