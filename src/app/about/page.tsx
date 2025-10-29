@@ -14,9 +14,8 @@ import Footer from "@/components/Footer";
 import { getContent } from "@/data/content";
 
 export const metadata: Metadata = {
-  title: "About G3 Electric | Master Electricians Des Moines",
-  description: "Learn about G3 Electric, licensed master electricians serving Des Moines, IA. 15+ years of experience in residential and commercial electrical services. Safety, quality, and reliability.",
-  keywords: "about G3 Electric, master electrician Des Moines, electrical contractor Iowa, licensed electrician, electrical company, electrical services history",
+  title: "About Us",
+  description: "Licensed electricians with over 15 years of experience. Safety and quality in every project.",
 };
 
 export default function About() {

@@ -11,9 +11,8 @@ import { getContent } from "@/data/content";
 import { ServiceIcon, getServiceIcon } from "@/utils/icons";
 
 export const metadata: Metadata = {
-  title: "Electrical Services Des Moines | Residential & Commercial Electrician",
-  description: "Professional electrical services in Des Moines, IA. Lighting installation, electrical repairs, panel upgrades, smart home wiring, and emergency electrical services. Licensed master electricians.",
-  keywords: "electrical services Des Moines, electrician Iowa, lighting installation, electrical repairs, panel upgrade, smart home wiring, emergency electrician, commercial electrical",
+  title: "Services",
+  description: "Electrical services for your home and business. Lighting, repairs, upgrades, and more.",
 };
 
 export default function Services() {
@@ -40,29 +39,30 @@ export default function Services() {
           <div className="flex flex-col items-center gap-8">
             {content.services.map((service, index) => {
               return (
-                <div key={index} className="w-full max-w-[1200px] bg-earle-black border border-white/10 rounded-2xl p-8 hover:border-purple/50 hover:shadow-xl transition-all shadow-lg">
-                  <div className="mb-6">
-                    <div className="flex items-start gap-6 mb-2 justify-between">
-                      <div className="flex-1">
-                        <h3 className="font-montserrat text-2xl font-semibold text-white mb-2">{service.title}</h3>
+                <div key={index} className="w-full max-w-[1200px] bg-earle-black border border-white/10 rounded-2xl pl-[33px] pr-[100px] py-[32px] hover:border-purple/50 hover:shadow-xl transition-all shadow-lg">
+                  <div className="flex items-center justify-between gap-6">
+                    <div className="flex flex-col gap-[22px] max-w-[600px]">
+                      <div className="flex flex-col gap-2">
+                        <h3 className="font-montserrat text-2xl font-semibold text-white">{service.title}</h3>
                         <p className="font-raleway text-white-smoke">{service.description}</p>
                       </div>
-                      <div className="w-28 bg-purple/10 rounded-xl p-3 flex items-center justify-center ml-6 flex-shrink-0">
-                        <ServiceIcon iconName={getServiceIcon(service.id)} className="w-full h-auto" />
+                      
+                      <div className="flex flex-col gap-4">
+                        <h4 className="font-montserrat text-lg font-semibold text-white">What We Include:</h4>
+                        <ul className="space-y-2">
+                          {service.features.map((feature, featureIndex) => (
+                            <li key={featureIndex} className="flex items-center font-raleway text-white-smoke">
+                              <div className="w-3 h-3 bg-phlox rounded-full mr-3 flex-shrink-0"></div>
+                              {feature}
+                            </li>
+                          ))}
+                        </ul>
                       </div>
                     </div>
-                  </div>
-                  
-                  <div>
-                    <h4 className="font-montserrat text-lg font-semibold text-white mb-4">What We Include:</h4>
-                    <ul className="space-y-2">
-                      {service.features.map((feature, featureIndex) => (
-                        <li key={featureIndex} className="flex items-center font-raleway text-white-smoke">
-                          <div className="w-3 h-3 bg-phlox rounded-full mr-3 flex-shrink-0"></div>
-                          {feature}
-                        </li>
-                      ))}
-                    </ul>
+                    
+                    <div className="w-[252px] h-[252px] bg-purple/10 rounded-2xl flex items-center justify-center flex-shrink-0 relative overflow-clip p-[10%]">
+                      <ServiceIcon iconName={getServiceIcon(service.id)} className="w-full h-auto scale-[3]" />
+                    </div>
                   </div>
                 </div>
               );
