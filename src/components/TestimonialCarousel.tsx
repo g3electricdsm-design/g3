@@ -19,6 +19,7 @@ export default function TestimonialCarousel({
 }: TestimonialCarouselProps) {
   const allTestimonials = getAllTestimonials();
   const [currentTestimonialIndex, setCurrentTestimonialIndex] = useState(0);
+  const [isHovering, setIsHovering] = useState(false);
   const currentTestimonial = allTestimonials[currentTestimonialIndex];
 
   // Ensure hooks are called unconditionally: derive transforms from a motion value
@@ -121,19 +122,36 @@ export default function TestimonialCarousel({
             </div>
             
             {/* Right side - Image (bleeds to edge) */}
-            <div className="overflow-hidden relative shrink-0 w-full md:w-[495px] hidden md:block h-[476px]">
+            <div 
+              className="overflow-hidden relative shrink-0 w-full md:w-[495px] hidden md:block h-[476px]"
+              onMouseEnter={() => setIsHovering(true)}
+              onMouseLeave={() => setIsHovering(false)}
+            >
               <div className="absolute inset-0 overflow-hidden">
-                <Image 
-                  src={`/images/testimonials/${currentTestimonial.name.toLowerCase().replace(/\s+/g, '-')}.jpg`}
-                  alt={`${currentTestimonial.name} - Customer testimonial`}
-                  width={495}
-                  height={476}
-                  className="absolute h-[143.73%] left-[-1.62%] top-[-43.73%] w-[103.59%] object-cover"
-                  onError={(e) => {
-                    const target = e.target as HTMLImageElement;
-                    target.style.display = 'none';
-                  }}
-                />
+                {/* Primary image */}
+                {currentTestimonial.image && (
+                  <img
+                    src={currentTestimonial.image}
+                    alt={`${currentTestimonial.name} - Customer testimonial`}
+                    className={`absolute h-[143.73%] left-[-1.62%] top-[-43.73%] w-[103.59%] object-cover transition-opacity duration-300 ${isHovering && currentTestimonial.image2 ? 'opacity-0' : 'opacity-100'}`}
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.style.display = 'none';
+                    }}
+                  />
+                )}
+                {/* Hover image */}
+                {currentTestimonial.image2 && (
+                  <img
+                    src={currentTestimonial.image2}
+                    alt={`${currentTestimonial.name} - After`}
+                    className={`absolute h-[143.73%] left-[-1.62%] top-[-43.73%] w-[103.59%] object-cover transition-opacity duration-300 ${isHovering ? 'opacity-100' : 'opacity-0'}`}
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.style.display = 'none';
+                    }}
+                  />
+                )}
               </div>
             </div>
           </div>

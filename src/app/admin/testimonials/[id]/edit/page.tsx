@@ -19,7 +19,8 @@ export default function EditTestimonialPage() {
     project: '',
     rating: 5,
     text: '',
-    image: ''
+    image: '',
+    image2: ''
   });
 
   const [isLoading, setIsLoading] = useState(true);
@@ -59,6 +60,21 @@ export default function EditTestimonialPage() {
         setFormData(prev => ({
           ...prev,
           image: dataUrl
+        }));
+      };
+      reader.readAsDataURL(imageFile);
+    }
+  };
+
+  const handleImage2Change = (imageFile: File | null) => {
+    if (imageFile) {
+      // Convert file to base64 data URL for persistence
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const dataUrl = e.target?.result as string;
+        setFormData(prev => ({
+          ...prev,
+          image2: dataUrl
         }));
       };
       reader.readAsDataURL(imageFile);
@@ -217,15 +233,29 @@ export default function EditTestimonialPage() {
 
                   <div>
                     <label className="block text-sm font-medium text-earle-black mb-2">
-                      Upload Customer Photo
+                      Upload Customer Photo (Primary)
                     </label>
                     <ImageUpload
                       currentImage={formData.image}
                       onImageChange={handleImageChange}
-                      label="Select customer photo"
+                      label="Select primary photo"
                     />
                     <p className="mt-2 text-sm text-gray-600">
-                      Upload a photo of the customer for display in the testimonial.
+                      Upload the primary photo of the customer for display in the testimonial.
+                    </p>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-earle-black mb-2">
+                      Upload Second Photo (Hover)
+                    </label>
+                    <ImageUpload
+                      currentImage={formData.image2}
+                      onImageChange={handleImage2Change}
+                      label="Select hover photo"
+                    />
+                    <p className="mt-2 text-sm text-gray-600">
+                      Upload a second photo that will display on hover over the testimonial.
                     </p>
                   </div>
                 </div>

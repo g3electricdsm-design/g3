@@ -9,6 +9,7 @@ export interface Testimonial {
   rating: number;
   text: string;
   image?: string;
+  image2?: string;
 }
 
 export const testimonials: Testimonial[] = [
