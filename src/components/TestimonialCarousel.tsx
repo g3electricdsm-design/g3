@@ -121,7 +121,7 @@ export default function TestimonialCarousel({
             </div>
             
             {/* Right side - Image (bleeds to edge) */}
-            <div className="overflow-hidden relative shrink-0 w-full md:w-[495px] md:mr-0 md:-mr-8 hidden md:block h-[476px]">
+            <div className="overflow-hidden relative shrink-0 w-full md:w-[495px] hidden md:block h-[476px]">
               <div className="absolute inset-0 overflow-hidden">
                 <Image 
                   src={`/images/testimonials/${currentTestimonial.name.toLowerCase().replace(/\s+/g, '-')}.jpg`}
