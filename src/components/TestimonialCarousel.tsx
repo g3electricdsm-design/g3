@@ -54,15 +54,6 @@ export default function TestimonialCarousel({
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [nextTestimonial, previousTestimonial]);
 
-  // Auto-rotate testimonials (optional - every 10 seconds)
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentTestimonialIndex((prev) => (prev + 1) % allTestimonials.length);
-    }, 10000);
-
-    return () => clearInterval(interval);
-  }, [allTestimonials.length]);
-
   return (
     <motion.section 
       className="py-20 relative overflow-hidden bg-earle-black"
