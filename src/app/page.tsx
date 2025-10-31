@@ -56,7 +56,7 @@ export default function Home() {
           style={{ y: heroY, scale: heroScale }}
         >
           <Image
-            src="/images/hero-electrical-project.jpg"
+            src="/images/bathroom-lighting.jpeg"
             alt="Professional electrical work - G3 Electric"
             fill
             className="object-cover"
