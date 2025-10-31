@@ -274,7 +274,7 @@ export default function EditTestimonialPage() {
         </div>
       </section>
 
-      <Footer />
+      <Footer currentPath="/admin" />
     </div>
   );
 }
