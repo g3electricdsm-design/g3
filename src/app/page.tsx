@@ -68,12 +68,12 @@ export default function Home() {
         </motion.div>
         
         {/* Hero Content Overlay with Staggered Animations */}
-        <div className="absolute inset-0 flex items-start justify-center pt-[200px]">
+        <div className="absolute inset-0 flex items-start justify-center pt-[175px]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <motion.h1 
               className="font-megrim text-6xl md:text-8xl lg:text-9xl mb-6 text-white drop-shadow-2xl"
-              initial={{ opacity: 0, y: 100, scale: 0.8 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ 
                 duration: 1.2, 
                 ease: "easeOut",
@@ -84,12 +84,12 @@ export default function Home() {
             </motion.h1>
             <motion.h2 
               className="font-montserrat text-3xl md:text-4xl lg:text-5xl mb-8 font-light text-white drop-shadow-xl"
-              initial={{ opacity: 0, x: -100 }}
-              animate={{ opacity: 1, x: 0 }}
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ 
                 duration: 1, 
                 ease: "easeOut",
-                delay: 0.6
+                delay: 0.4
               }}
             >
               {content.hero.subtitle}
@@ -101,7 +101,7 @@ export default function Home() {
               transition={{ 
                 duration: 1, 
                 ease: "easeOut",
-                delay: 1
+                delay: 0.6
               }}
             >
               {content.hero.description}
@@ -113,7 +113,7 @@ export default function Home() {
               transition={{ 
                 duration: 1, 
                 ease: "easeOut",
-                delay: 1.4
+                delay: 0.8
               }}
             >
               <motion.div
