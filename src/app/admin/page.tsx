@@ -1,6 +1,7 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { PlusIcon, PencilIcon, TrashIcon, CogIcon, ChartBarIcon, PhotoIcon, EnvelopeIcon, EyeIcon, HomeIcon, UserIcon } from '@heroicons/react/24/outline';
 import Navigation from '@/components/Navigation';
@@ -9,19 +10,34 @@ import { getAllProjects, Project, deleteProject } from '@/data/projects';
 import { getAllServices, Service } from '@/data/services';
 import { getAllFormEntries, FormEntry } from '@/data/formEntries';
 import { getContent, updateContent } from '@/data/content';
+import { getAllTestimonials, Testimonial, deleteTestimonial } from '@/data/testimonials';
 import FormEntryModal from '@/components/FormEntryModal';
 import ContentEditor from '@/components/ContentEditor';
 
 export default function Admin() {
+  const searchParams = useSearchParams();
   const [projects, setProjects] = useState<Project[]>(getAllProjects());
   const [services] = useState<Service[]>(getAllServices());
   const [formEntries, setFormEntries] = useState<FormEntry[]>(getAllFormEntries());
+  const [testimonials, setTestimonials] = useState<Testimonial[]>(getAllTestimonials());
   const [content, setContent] = useState(getContent());
   const [selectedFormEntry, setSelectedFormEntry] = useState<FormEntry | null>(null);
   const [editingContent, setEditingContent] = useState<{ page: string; content: Record<string, unknown> } | null>(null);
   const [showFormEntryModal, setShowFormEntryModal] = useState(false);
   const [showContentEditor, setShowContentEditor] = useState(false);
-  const [activeTab, setActiveTab] = useState<'projects' | 'services' | 'formEntries' | 'content' | 'analytics' | 'settings'>('projects');
+  const [activeTab, setActiveTab] = useState<'projects' | 'services' | 'formEntries' | 'testimonials' | 'content' | 'analytics' | 'settings'>('projects');
+
+  // Check for tab parameter in URL
+  useEffect(() => {
+    const tabParam = searchParams.get('tab');
+    if (tabParam && ['projects', 'services', 'formEntries', 'testimonials', 'content', 'analytics', 'settings'].includes(tabParam)) {
+      setActiveTab(tabParam as typeof activeTab);
+      // Refresh testimonials when switching to testimonials tab
+      if (tabParam === 'testimonials') {
+        setTestimonials(getAllTestimonials());
+      }
+    }
+  }, [searchParams]);
 
   const handleLogout = () => {
     // Clear authentication cookies
@@ -36,6 +52,13 @@ export default function Admin() {
     if (confirm('Are you sure you want to delete this project?')) {
       deleteProject(id);
       setProjects(projects.filter(p => p.id !== id));
+    }
+  };
+
+  const handleDeleteTestimonial = (id: number) => {
+    if (confirm('Are you sure you want to delete this testimonial?')) {
+      deleteTestimonial(id);
+      setTestimonials(testimonials.filter(t => t.id !== id));
     }
   };
 
@@ -121,6 +144,7 @@ export default function Admin() {
               {[
                 { id: 'projects', name: 'Projects', icon: PhotoIcon },
                 { id: 'services', name: 'Services', icon: CogIcon },
+                { id: 'testimonials', name: 'Testimonials', icon: UserIcon },
                 { id: 'formEntries', name: 'Form Entries', icon: EnvelopeIcon },
                 { id: 'content', name: 'Content', icon: PencilIcon },
                 { id: 'analytics', name: 'Analytics', icon: ChartBarIcon },
@@ -130,7 +154,7 @@ export default function Admin() {
                 return (
                   <button
                     key={tab.id}
-                    onClick={() => setActiveTab(tab.id as 'projects' | 'services' | 'formEntries' | 'content' | 'analytics' | 'settings')}
+                    onClick={() => setActiveTab(tab.id as 'projects' | 'services' | 'formEntries' | 'testimonials' | 'content' | 'analytics' | 'settings')}
                     className={`flex items-center gap-2 px-4 py-2 rounded-lg font-montserrat font-medium transition-colors ${
                       activeTab === tab.id
                         ? 'bg-purple text-white'
@@ -165,8 +189,8 @@ export default function Admin() {
                     <div key={project.id} className="bg-white rounded-lg p-4 shadow-sm border border-gray-200">
                       <div className="flex items-start justify-between mb-3">
                         <div className="flex-1">
-                          <h4 className="font-montserrat text-lg font-semibold">{project.title}</h4>
-                          <p className="font-raleway text-sm uppercase">{project.category} • {project.type}</p>
+                          <h4 className="font-montserrat text-lg font-semibold text-earle-black">{project.title}</h4>
+                          <p className="font-raleway text-sm uppercase text-earle-black">{project.category} • {project.type}</p>
                         </div>
                         <div className="flex items-center gap-1">
                           <Link
@@ -174,7 +198,7 @@ export default function Admin() {
                             className="p-2 hover:bg-purple/10 rounded-lg transition-colors"
                             title="Edit project"
                           >
-                            <PencilIcon className="h-4 w-4" />
+                            <PencilIcon className="h-4 w-4 text-earle-black" />
                           </Link>
                           <button
                             onClick={() => handleDelete(project.id)}
@@ -185,8 +209,8 @@ export default function Admin() {
                           </button>
                         </div>
                       </div>
-                      <p className="font-raleway text-sm mb-3 line-clamp-2">{project.description}</p>
-                      <div className="flex items-center justify-between text-xs">
+                      <p className="font-raleway text-sm mb-3 line-clamp-2 text-earle-black">{project.description}</p>
+                      <div className="flex items-center justify-between text-xs text-earle-black">
                         <span>{project.client}</span>
                         <span>{project.completed}</span>
                       </div>
@@ -214,26 +238,80 @@ export default function Admin() {
                     <div key={service.id} className="bg-white rounded-lg p-4 shadow-sm border border-gray-200">
                       <div className="flex items-start justify-between mb-3">
                         <div className="flex-1">
-                          <h4 className="font-montserrat text-lg font-semibold">{service.name}</h4>
-                          <p className="font-raleway text-sm uppercase">{service.category}</p>
+                          <h4 className="font-montserrat text-lg font-semibold text-earle-black">{service.name}</h4>
+                          <p className="font-raleway text-sm uppercase text-earle-black">{service.category}</p>
                         </div>
                         <div className="flex items-center gap-1">
                           <button className="p-2 hover:bg-purple/10 rounded-lg transition-colors">
-                            <PencilIcon className="h-4 w-4" />
+                            <PencilIcon className="h-4 w-4 text-earle-black" />
                           </button>
                           <button className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors">
                             <TrashIcon className="h-4 w-4" />
                           </button>
                         </div>
                       </div>
-                      <p className="font-raleway text-sm mb-3">{service.description}</p>
-                      <div className="flex items-center justify-between text-xs">
+                      <p className="font-raleway text-sm mb-3 text-earle-black">{service.description}</p>
+                      <div className="flex items-center justify-between text-xs text-earle-black">
                         <span>{service.pricing.description}</span>
                         {service.popular && (
                           <span className="bg-purple/10 text-purple px-2 py-1 rounded-full text-xs font-medium">
                             Popular
                           </span>
                         )}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Testimonials Tab */}
+          {activeTab === 'testimonials' && (
+            <div className="space-y-6">
+              <div className="flex justify-between items-center">
+                <h3 className="font-montserrat text-2xl text-white">Testimonials</h3>
+                <Link
+                  href="/admin/testimonials/new/edit"
+                  className="btn-primary flex items-center gap-2"
+                >
+                  <PlusIcon className="h-5 w-5" />
+                  Add New Testimonial
+                </Link>
+              </div>
+
+              <div className="bg-white-smoke rounded-lg p-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {testimonials.map((testimonial) => (
+                    <div key={testimonial.id} className="bg-white rounded-lg p-4 shadow-sm border border-gray-200">
+                      <div className="flex items-start justify-between mb-3">
+                        <div className="flex-1">
+                          <h4 className="font-montserrat text-lg font-semibold text-earle-black">{testimonial.name}</h4>
+                          <p className="font-raleway text-sm text-gray-600">{testimonial.location}</p>
+                          <p className="font-raleway text-xs text-gray-500">{testimonial.project}</p>
+                        </div>
+                        <div className="flex items-center gap-1">
+                          <Link
+                            href={`/admin/testimonials/${testimonial.id}/edit`}
+                            className="p-2 hover:bg-purple/10 rounded-lg transition-colors"
+                            title="Edit testimonial"
+                          >
+                            <PencilIcon className="h-4 w-4 text-earle-black" />
+                          </Link>
+                          <button
+                            onClick={() => handleDeleteTestimonial(testimonial.id)}
+                            className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                            title="Delete testimonial"
+                          >
+                            <TrashIcon className="h-4 w-4" />
+                          </button>
+                        </div>
+                      </div>
+                      <p className="font-raleway text-sm mb-3 line-clamp-3 text-earle-black">{testimonial.text}</p>
+                      <div className="flex items-center gap-1 text-yellow-500">
+                        {[...Array(testimonial.rating)].map((_, i) => (
+                          <span key={i}>★</span>
+                        ))}
                       </div>
                     </div>
                   ))}

@@ -168,8 +168,8 @@ export interface ContactContent {
 // Default content data
 export const defaultHomepageContent: HomepageContent = {
   hero: {
-    title: "Safe & Dependable",
-    subtitle: "Electrical Services You Can Trust",
+    title: "G3 Electric",
+    subtitle: "Safe & Dependable Electrical Services",
     description: "Your family's safety is our #1 priority. Professional electrical services for residential and commercial projects with the dependability you deserve.",
     ctaPrimary: "Get Free Quote",
     ctaSecondary: "View Our Work",

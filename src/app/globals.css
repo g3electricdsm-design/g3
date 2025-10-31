@@ -83,3 +83,8 @@ body {
       padding: 0.75rem 1.5rem;
     }
   }
+
+  /* Testimonials section */
+  .testimonial-bg {
+    background-color: #748680;
+  }

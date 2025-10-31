@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface MobileMenuProps {
   currentPath: string;
@@ -24,29 +25,6 @@ export default function MobileMenu({ currentPath }: MobileMenuProps) {
 
   return (
     <div className="md:hidden">
-      <style jsx>{`
-        @keyframes fadeScaleIn {
-          0% {
-            opacity: 0;
-            transform: scale(0.95);
-          }
-          100% {
-            opacity: 1;
-            transform: scale(1);
-          }
-        }
-        
-        @keyframes fadeScaleOut {
-          0% {
-            opacity: 1;
-            transform: scale(1);
-          }
-          100% {
-            opacity: 0;
-            transform: scale(0.95);
-          }
-        }
-      `}</style>
       {/* Mobile menu button */}
       <button
         type="button"
@@ -67,45 +45,41 @@ export default function MobileMenu({ currentPath }: MobileMenuProps) {
         )}
       </button>
 
-      {/* Mobile menu with smooth transitions */}
-      <div
-        className={`absolute top-16 left-0 right-0 z-50 transition-all duration-700 ease-in-out ${
-          isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
-        }`}
-        style={{ 
-          backgroundColor: '#242729', 
-          zIndex: 9999, 
-          position: 'absolute',
-          borderBottom: '2px solid #6D0091',
-          boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5)',
-          width: '100%',
-          left: '0',
-          right: '0',
-          animation: isOpen ? 'fadeScaleIn 0.7s ease-in-out' : 'fadeScaleOut 0.7s ease-in-out'
-        }}
-        id="mobile-menu"
-      >
-        <div className="px-2 pt-2 pb-3 space-y-1">
-          {navigation.map((item, index) => (
-            <Link
-              key={item.name}
-              href={item.href}
-              className={`block px-3 py-2 rounded-md text-base font-medium transition-all duration-700 ease-in-out ${
-                isCurrentPath(item.href)
-                  ? 'text-white bg-purple/30 border-l-4 border-purple shadow-md'
-                  : 'text-white hover:text-white hover:bg-purple/20 hover:shadow-sm'
-              } ${isOpen ? 'opacity-100' : 'opacity-0'}`}
-              style={{ 
-                color: isCurrentPath(item.href) ? '#ffffff' : '#ffffff',
-                transitionDelay: isOpen ? `${index * 50}ms` : '0ms'
-              }}
-              onClick={() => setIsOpen(false)}
-            >
-              {item.name}
-            </Link>
-          ))}
-        </div>
-      </div>
+      {/* Mobile menu - Full screen overlay with slide-in animation */}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ height: 0 }}
+            animate={{ height: 'calc(100vh - 64px)' }}
+            exit={{ height: 0 }}
+            transition={{ duration: 0.5, ease: 'easeInOut' }}
+            className="fixed top-16 left-0 right-0 z-50 overflow-hidden"
+            style={{ backgroundColor: '#242729' }}
+            id="mobile-menu"
+          >
+            <div className="flex items-center justify-center h-full px-4">
+              <div className="flex flex-col space-y-12">
+                {navigation.map((item) => (
+                  <Link
+                    key={item.name}
+                    href={item.href}
+                    className="group transition-all duration-300"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    <span className={`text-5xl text-white font-montserrat transition-all duration-300 ${
+                      isCurrentPath(item.href) 
+                        ? 'font-bold' 
+                        : 'font-light group-hover:font-bold'
+                    }`}>
+                      {item.name}
+                    </span>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

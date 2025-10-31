@@ -56,7 +56,7 @@ export default function Home() {
           style={{ y: heroY, scale: heroScale }}
         >
           <Image
-            src="/images/hero-electrical-project.jpg"
+            src="/images/bathroom-lighting.jpeg"
             alt="Professional electrical work - G3 Electric"
             fill
             className="object-cover"
@@ -68,12 +68,12 @@ export default function Home() {
         </motion.div>
         
         {/* Hero Content Overlay with Staggered Animations */}
-        <div className="absolute inset-0 flex items-center justify-center">
+        <div className="absolute inset-0 flex items-start justify-center pt-[175px]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <motion.h1 
               className="font-megrim text-6xl md:text-8xl lg:text-9xl mb-6 text-white drop-shadow-2xl"
-              initial={{ opacity: 0, y: 100, scale: 0.8 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ 
                 duration: 1.2, 
                 ease: "easeOut",
@@ -84,12 +84,12 @@ export default function Home() {
             </motion.h1>
             <motion.h2 
               className="font-montserrat text-3xl md:text-4xl lg:text-5xl mb-8 font-light text-white drop-shadow-xl"
-              initial={{ opacity: 0, x: -100 }}
-              animate={{ opacity: 1, x: 0 }}
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ 
                 duration: 1, 
                 ease: "easeOut",
-                delay: 0.6
+                delay: 0.4
               }}
             >
               {content.hero.subtitle}
@@ -101,7 +101,7 @@ export default function Home() {
               transition={{ 
                 duration: 1, 
                 ease: "easeOut",
-                delay: 1
+                delay: 0.6
               }}
             >
               {content.hero.description}
@@ -113,24 +113,9 @@ export default function Home() {
               transition={{ 
                 duration: 1, 
                 ease: "easeOut",
-                delay: 1.4
+                delay: 0.8
               }}
             >
-              <motion.div
-                whileHover={{ 
-                  scale: 1.05,
-                  boxShadow: "0 20px 40px rgba(109, 0, 145, 0.3)"
-                }}
-                whileTap={{ scale: 0.95 }}
-                transition={{ type: "spring", stiffness: 300, damping: 20 }}
-              >
-                <Link 
-                  href="/contact" 
-                  className="btn-primary text-sm sm:text-lg shadow-2xl w-full sm:w-auto block"
-                >
-                  {content.hero.ctaPrimary}
-                </Link>
-              </motion.div>
               <motion.div
                 whileHover={{ 
                   scale: 1.05,
@@ -144,6 +129,21 @@ export default function Home() {
                   className="btn-secondary text-sm sm:text-lg shadow-2xl border-white text-white hover:bg-white hover:text-purple w-full sm:w-auto block"
                 >
                   {content.hero.ctaSecondary}
+                </Link>
+              </motion.div>
+              <motion.div
+                whileHover={{ 
+                  scale: 1.05,
+                  boxShadow: "0 20px 40px rgba(109, 0, 145, 0.3)"
+                }}
+                whileTap={{ scale: 0.95 }}
+                transition={{ type: "spring", stiffness: 300, damping: 20 }}
+              >
+                <Link 
+                  href="/contact" 
+                  className="btn-primary text-sm sm:text-lg shadow-2xl w-full sm:w-auto block"
+                >
+                  {content.hero.ctaPrimary}
                 </Link>
               </motion.div>
             </motion.div>
@@ -198,10 +198,7 @@ export default function Home() {
                 }}
               >
                 <motion.div 
-                  className="h-32 bg-gradient-to-br from-purple/20 to-phlox/20 flex items-center justify-center"
-                  whileHover={{ 
-                    background: "linear-gradient(135deg, rgba(109, 0, 145, 0.3), rgba(109, 0, 145, 0.5))"
-                  }}
+                  className="h-32 bg-gradient-to-br from-purple/60 to-phlox/60 flex items-center justify-center"
                 >
                   <motion.div
                     whileHover={{ 
