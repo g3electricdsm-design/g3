@@ -133,7 +133,7 @@ export default function TestimonialCarousel({
                   <img
                     src={currentTestimonial.image}
                     alt={`${currentTestimonial.name} - Customer testimonial`}
-                    className={`absolute h-[143.73%] left-[-1.62%] top-[-43.73%] w-[103.59%] object-cover transition-opacity duration-500 ${isHovering && currentTestimonial.image2 ? 'opacity-0' : 'opacity-100'}`}
+                    className={`absolute h-[143.73%] left-[-1.62%] top-[-43.73%] w-[103.59%] object-cover transition-opacity duration-300 ${isHovering && currentTestimonial.image2 ? 'opacity-0' : 'opacity-100'}`}
                     onError={(e) => {
                       const target = e.target as HTMLImageElement;
                       target.style.display = 'none';
@@ -145,7 +145,7 @@ export default function TestimonialCarousel({
                   <img
                     src={currentTestimonial.image2}
                     alt={`${currentTestimonial.name} - After`}
-                    className={`absolute h-[143.73%] left-[-1.62%] top-[-43.73%] w-[103.59%] object-cover transition-opacity duration-500 ${isHovering ? 'opacity-100' : 'opacity-0'}`}
+                    className={`absolute h-[143.73%] left-[-1.62%] top-[-43.73%] w-[103.59%] object-cover transition-opacity duration-300 ${isHovering ? 'opacity-100' : 'opacity-0'}`}
                     onError={(e) => {
                       const target = e.target as HTMLImageElement;
                       target.style.display = 'none';
