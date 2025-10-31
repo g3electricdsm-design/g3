@@ -119,21 +119,6 @@ export default function Home() {
               <motion.div
                 whileHover={{ 
                   scale: 1.05,
-                  boxShadow: "0 20px 40px rgba(109, 0, 145, 0.3)"
-                }}
-                whileTap={{ scale: 0.95 }}
-                transition={{ type: "spring", stiffness: 300, damping: 20 }}
-              >
-                <Link 
-                  href="/contact" 
-                  className="btn-primary text-sm sm:text-lg shadow-2xl w-full sm:w-auto block"
-                >
-                  {content.hero.ctaPrimary}
-                </Link>
-              </motion.div>
-              <motion.div
-                whileHover={{ 
-                  scale: 1.05,
                   boxShadow: "0 20px 40px rgba(255, 255, 255, 0.2)"
                 }}
                 whileTap={{ scale: 0.95 }}
@@ -144,6 +129,21 @@ export default function Home() {
                   className="btn-secondary text-sm sm:text-lg shadow-2xl border-white text-white hover:bg-white hover:text-purple w-full sm:w-auto block"
                 >
                   {content.hero.ctaSecondary}
+                </Link>
+              </motion.div>
+              <motion.div
+                whileHover={{ 
+                  scale: 1.05,
+                  boxShadow: "0 20px 40px rgba(109, 0, 145, 0.3)"
+                }}
+                whileTap={{ scale: 0.95 }}
+                transition={{ type: "spring", stiffness: 300, damping: 20 }}
+              >
+                <Link 
+                  href="/contact" 
+                  className="btn-primary text-sm sm:text-lg shadow-2xl w-full sm:w-auto block"
+                >
+                  {content.hero.ctaPrimary}
                 </Link>
               </motion.div>
             </motion.div>

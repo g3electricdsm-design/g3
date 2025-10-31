@@ -217,16 +217,16 @@ export default function About() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Link 
-              href="/contact" 
-              className="btn-primary w-full sm:w-auto text-sm sm:text-base"
-            >
-              Get Free Quote
-            </Link>
-            <Link 
               href="/portfolio" 
               className="btn-secondary border-white text-white hover:bg-white hover:text-purple w-full sm:w-auto text-sm sm:text-base"
             >
               View Our Work
+            </Link>
+            <Link 
+              href="/contact" 
+              className="btn-primary w-full sm:w-auto text-sm sm:text-base"
+            >
+              Get Free Quote
             </Link>
           </div>
         </div>
