@@ -189,8 +189,8 @@ export default function Admin() {
                     <div key={project.id} className="bg-white rounded-lg p-4 shadow-sm border border-gray-200">
                       <div className="flex items-start justify-between mb-3">
                         <div className="flex-1">
-                          <h4 className="font-montserrat text-lg font-semibold">{project.title}</h4>
-                          <p className="font-raleway text-sm uppercase">{project.category} • {project.type}</p>
+                          <h4 className="font-montserrat text-lg font-semibold text-earle-black">{project.title}</h4>
+                          <p className="font-raleway text-sm uppercase text-earle-black">{project.category} • {project.type}</p>
                         </div>
                         <div className="flex items-center gap-1">
                           <Link
@@ -198,7 +198,7 @@ export default function Admin() {
                             className="p-2 hover:bg-purple/10 rounded-lg transition-colors"
                             title="Edit project"
                           >
-                            <PencilIcon className="h-4 w-4" />
+                            <PencilIcon className="h-4 w-4 text-earle-black" />
                           </Link>
                           <button
                             onClick={() => handleDelete(project.id)}
@@ -209,8 +209,8 @@ export default function Admin() {
                           </button>
                         </div>
                       </div>
-                      <p className="font-raleway text-sm mb-3 line-clamp-2">{project.description}</p>
-                      <div className="flex items-center justify-between text-xs">
+                      <p className="font-raleway text-sm mb-3 line-clamp-2 text-earle-black">{project.description}</p>
+                      <div className="flex items-center justify-between text-xs text-earle-black">
                         <span>{project.client}</span>
                         <span>{project.completed}</span>
                       </div>
@@ -238,20 +238,20 @@ export default function Admin() {
                     <div key={service.id} className="bg-white rounded-lg p-4 shadow-sm border border-gray-200">
                       <div className="flex items-start justify-between mb-3">
                         <div className="flex-1">
-                          <h4 className="font-montserrat text-lg font-semibold">{service.name}</h4>
-                          <p className="font-raleway text-sm uppercase">{service.category}</p>
+                          <h4 className="font-montserrat text-lg font-semibold text-earle-black">{service.name}</h4>
+                          <p className="font-raleway text-sm uppercase text-earle-black">{service.category}</p>
                         </div>
                         <div className="flex items-center gap-1">
                           <button className="p-2 hover:bg-purple/10 rounded-lg transition-colors">
-                            <PencilIcon className="h-4 w-4" />
+                            <PencilIcon className="h-4 w-4 text-earle-black" />
                           </button>
                           <button className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors">
                             <TrashIcon className="h-4 w-4" />
                           </button>
                         </div>
                       </div>
-                      <p className="font-raleway text-sm mb-3">{service.description}</p>
-                      <div className="flex items-center justify-between text-xs">
+                      <p className="font-raleway text-sm mb-3 text-earle-black">{service.description}</p>
+                      <div className="flex items-center justify-between text-xs text-earle-black">
                         <span>{service.pricing.description}</span>
                         {service.popular && (
                           <span className="bg-purple/10 text-purple px-2 py-1 rounded-full text-xs font-medium">
@@ -286,7 +286,7 @@ export default function Admin() {
                     <div key={testimonial.id} className="bg-white rounded-lg p-4 shadow-sm border border-gray-200">
                       <div className="flex items-start justify-between mb-3">
                         <div className="flex-1">
-                          <h4 className="font-montserrat text-lg font-semibold">{testimonial.name}</h4>
+                          <h4 className="font-montserrat text-lg font-semibold text-earle-black">{testimonial.name}</h4>
                           <p className="font-raleway text-sm text-gray-600">{testimonial.location}</p>
                           <p className="font-raleway text-xs text-gray-500">{testimonial.project}</p>
                         </div>
@@ -296,7 +296,7 @@ export default function Admin() {
                             className="p-2 hover:bg-purple/10 rounded-lg transition-colors"
                             title="Edit testimonial"
                           >
-                            <PencilIcon className="h-4 w-4" />
+                            <PencilIcon className="h-4 w-4 text-earle-black" />
                           </Link>
                           <button
                             onClick={() => handleDeleteTestimonial(testimonial.id)}
@@ -307,7 +307,7 @@ export default function Admin() {
                           </button>
                         </div>
                       </div>
-                      <p className="font-raleway text-sm mb-3 line-clamp-3">{testimonial.text}</p>
+                      <p className="font-raleway text-sm mb-3 line-clamp-3 text-earle-black">{testimonial.text}</p>
                       <div className="flex items-center gap-1 text-yellow-500">
                         {[...Array(testimonial.rating)].map((_, i) => (
                           <span key={i}>★</span>
