@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
-import { ChevronRightIcon } from "@heroicons/react/24/outline";
 import { getAllTestimonials } from "@/data/testimonials";
 import { motion, useTransform, useMotionValue } from "framer-motion";
 import { MotionValue } from "framer-motion";
@@ -102,24 +101,36 @@ export default function TestimonialCarousel({
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <div className="flex gap-[72px] items-center overflow-hidden p-8 md:px-0 md:py-8">
-            {/* Left side - Text content */}
-            <div className="flex flex-col gap-[22px] shrink-0 w-full md:w-[600px] pl-8 md:pl-8">
-              <div className="flex flex-col gap-2 items-start">
-                {/* Client name and location */}
-                <div className="font-montserrat font-semibold text-2xl text-white leading-8">
-                  {currentTestimonial.name}, a {currentTestimonial.location} client said
-                </div>
-                
-                {/* Testimonial text */}
-                <div className="font-raleway text-base text-white-smoke leading-6">
-                  &ldquo;{currentTestimonial.text}&rdquo;
+          <div className="flex gap-[72px] items-center overflow-hidden pl-[33px] pr-0 py-8">
+            {/* Left side - Text content and button */}
+            <div className="flex flex-col gap-[72px] items-start justify-center shrink-0 w-full md:w-[600px]">
+              <div className="flex flex-col gap-[22px] items-start">
+                <div className="flex flex-col gap-2 items-start">
+                  {/* Client name and location */}
+                  <div className="font-montserrat font-semibold text-2xl text-white leading-8">
+                    {currentTestimonial.name}, a {currentTestimonial.location} client said
+                  </div>
+                  
+                  {/* Testimonial text */}
+                  <div className="font-raleway text-base text-white-smoke leading-6">
+                    &ldquo;{currentTestimonial.text}&rdquo;
+                  </div>
                 </div>
               </div>
+              
+              {/* Next button */}
+              <button
+                onClick={nextTestimonial}
+                className="bg-earle-black text-white px-[10px] py-[10px] rounded-lg hover:opacity-90 transition-opacity focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-hookers-green"
+                aria-label="Next testimonial"
+                type="button"
+              >
+                <span className="font-montserrat font-bold text-lg">Next</span>
+              </button>
             </div>
             
             {/* Right side - Image (bleeds to edge) */}
-            <div className="h-[475px] overflow-hidden relative shrink-0 w-full md:w-[495px] md:mr-0 md:-mr-8 hidden md:block">
+            <div className="h-[475px] overflow-hidden relative shrink-0 w-full md:w-[495px] hidden md:block">
               <div className="absolute inset-0">
                 <Image 
                   src={`/images/testimonials/${currentTestimonial.name.toLowerCase().replace(/\s+/g, '-')}.jpg`}
@@ -134,32 +145,6 @@ export default function TestimonialCarousel({
                 />
               </div>
             </div>
-          </div>
-          
-          {/* Navigation arrows and dots */}
-          <div className="flex items-center justify-between px-8 pb-8">
-            <div className="flex space-x-2">
-              {allTestimonials.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => setCurrentTestimonialIndex(index)}
-                  className={`w-2 h-2 rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-hookers-green ${
-                    index === currentTestimonialIndex ? 'bg-white' : 'bg-white/30'
-                  }`}
-                  aria-label={`Go to testimonial ${index + 1}`}
-                  type="button"
-                />
-              ))}
-            </div>
-            
-            <button
-              onClick={nextTestimonial}
-              className="bg-white/10 text-white p-3 rounded-full hover:bg-white/20 transition-colors border border-white/20 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-hookers-green"
-              aria-label="Next testimonial"
-              type="button"
-            >
-              <ChevronRightIcon className="h-6 w-6 text-white" />
-            </button>
           </div>
         </motion.div>
       </div>
