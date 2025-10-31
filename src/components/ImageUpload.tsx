@@ -7,10 +7,11 @@ import Image from 'next/image';
 interface ImageUploadProps {
   currentImage?: string;
   onImageChange: (imageFile: File | null) => void;
-  projectTitle: string;
+  projectTitle?: string;
+  label?: string;
 }
 
-export default function ImageUpload({ currentImage, onImageChange, projectTitle }: ImageUploadProps) {
+export default function ImageUpload({ currentImage, onImageChange, projectTitle, label }: ImageUploadProps) {
   const [preview, setPreview] = useState<string | null>(currentImage || null);
   const [isDragOver, setIsDragOver] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
@@ -22,7 +23,51 @@ export default function ImageUpload({ currentImage, onImageChange, projectTitle 
     setPreview(currentImage || null);
   }, [currentImage]);
 
-  const handleFileSelect = (file: File) => {
+  const compressImage = (file: File, maxWidth: number = 2000, quality: number = 0.92): Promise<File> => {
+    return new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const img = new window.Image();
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          let width = img.width;
+          let height = img.height;
+
+          // Resize if larger than maxWidth
+          if (width > maxWidth) {
+            height = (height * maxWidth) / width;
+            width = maxWidth;
+          }
+
+          canvas.width = width;
+          canvas.height = height;
+
+          const ctx = canvas.getContext('2d');
+          ctx?.drawImage(img, 0, 0, width, height);
+
+          canvas.toBlob(
+            (blob) => {
+              if (blob) {
+                const compressedFile = new File([blob], file.name, {
+                  type: 'image/jpeg',
+                  lastModified: Date.now()
+                });
+                resolve(compressedFile);
+              } else {
+                resolve(file);
+              }
+            },
+            'image/jpeg',
+            quality
+          );
+        };
+        img.src = e.target?.result as string;
+      };
+      reader.readAsDataURL(file);
+    });
+  };
+
+  const handleFileSelect = async (file: File) => {
     // Validate file type
     if (!file.type.startsWith('image/')) {
       alert('Please select a valid image file (PNG, JPG, GIF, etc.)');
@@ -37,32 +82,51 @@ export default function ImageUpload({ currentImage, onImageChange, projectTitle 
     }
 
     setIsUploading(true);
-    setUploadProgress(0);
+    setUploadProgress(50); // Show progress during compression
 
-    const reader = new FileReader();
-    
-    reader.onprogress = (e) => {
-      if (e.lengthComputable) {
-        const progress = (e.loaded / e.total) * 100;
-        setUploadProgress(progress);
-      }
-    };
+    try {
+      // Compress image to max 2000px width with 92% quality for good balance
+      const compressedFile = await compressImage(file, 2000, 0.92);
+      setUploadProgress(80);
 
-    reader.onload = (e) => {
-      const result = e.target?.result as string;
-      setPreview(result);
-      onImageChange(file);
-      setIsUploading(false);
-      setUploadProgress(0);
-    };
+      const reader = new FileReader();
+      
+      reader.onprogress = (e) => {
+        if (e.lengthComputable) {
+          const progress = 80 + (e.loaded / e.total) * 20; // Remaining 20% for reading
+          setUploadProgress(progress);
+        }
+      };
 
-    reader.onerror = () => {
-      alert('Error reading file. Please try again.');
-      setIsUploading(false);
-      setUploadProgress(0);
-    };
+      reader.onload = (e) => {
+        const result = e.target?.result as string;
+        setPreview(result);
+        onImageChange(compressedFile);
+        setIsUploading(false);
+        setUploadProgress(0);
+      };
 
-    reader.readAsDataURL(file);
+      reader.onerror = () => {
+        alert('Error reading file. Please try again.');
+        setIsUploading(false);
+        setUploadProgress(0);
+      };
+
+      reader.readAsDataURL(compressedFile);
+    } catch (error) {
+      console.error('Error compressing image:', error);
+      alert('Error processing image. Using original file.');
+      // Fallback to original file if compression fails
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const result = e.target?.result as string;
+        setPreview(result);
+        onImageChange(file);
+        setIsUploading(false);
+        setUploadProgress(0);
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   const handleDrop = (e: React.DragEvent) => {
@@ -110,7 +174,7 @@ export default function ImageUpload({ currentImage, onImageChange, projectTitle 
           <div className="aspect-video relative rounded-lg overflow-hidden">
             <Image
               src={preview}
-              alt={projectTitle}
+              alt={projectTitle || label || 'Uploaded image'}
               fill
               className="object-cover"
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 66vw, 50vw"
@@ -168,7 +232,7 @@ export default function ImageUpload({ currentImage, onImageChange, projectTitle 
               )}
               <div className="text-center">
                 <p className="font-montserrat text-lg text-earle-black mb-2">
-                  {isDragOver ? 'Drop your image here' : 'Upload Project Image'}
+                  {isDragOver ? 'Drop your image here' : label || 'Upload Image'}
                 </p>
                 <p className="font-raleway text-sm text-earle-black">
                   {isDragOver ? 'Release to upload' : 'Click to browse or drag and drop'}
