@@ -61,6 +61,32 @@ export default function TestimonialCarousel({
     setDragX(0);
   }, [currentTestimonialIndex]);
 
+  // Global mouse event handlers for dragging
+  useEffect(() => {
+    if (!isDragging || !currentTestimonial.image2) return;
+
+    const handleMouseMove = (e: MouseEvent) => {
+      const container = document.getElementById('testimonial-image-container');
+      if (!container) return;
+      const rect = container.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const clampedX = Math.max(0, Math.min(rect.width, x));
+      setDragX(clampedX);
+    };
+
+    const handleMouseUp = () => {
+      setIsDragging(false);
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mouseup', handleMouseUp);
+
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mouseup', handleMouseUp);
+    };
+  }, [isDragging, currentTestimonial.image2]);
+
   // Handle drag start
   const handleMouseDown = (e: React.MouseEvent) => {
     if (!currentTestimonial.image2) return;
@@ -68,20 +94,6 @@ export default function TestimonialCarousel({
     const rect = e.currentTarget.getBoundingClientRect();
     const x = e.clientX - rect.left;
     setDragX(x);
-  };
-
-  // Handle drag move
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (!isDragging || !currentTestimonial.image2) return;
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const clampedX = Math.max(0, Math.min(rect.width, x));
-    setDragX(clampedX);
-  };
-
-  // Handle drag end
-  const handleMouseUp = () => {
-    setIsDragging(false);
   };
 
   // Calculate opacity based on drag position
@@ -166,11 +178,9 @@ export default function TestimonialCarousel({
             
             {/* Right side - Image (bleeds to edge) */}
             <div 
+              id="testimonial-image-container"
               className={`overflow-hidden relative shrink-0 w-full md:w-[495px] hidden md:block h-[476px] ${currentTestimonial.image2 ? 'cursor-ew-resize' : ''}`}
               onMouseDown={handleMouseDown}
-              onMouseMove={handleMouseMove}
-              onMouseUp={handleMouseUp}
-              onMouseLeave={handleMouseUp}
             >
               <div className="absolute inset-0 overflow-hidden">
                 {/* Primary image */}
