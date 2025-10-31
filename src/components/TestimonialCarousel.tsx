@@ -19,7 +19,8 @@ export default function TestimonialCarousel({
 }: TestimonialCarouselProps) {
   const allTestimonials = getAllTestimonials();
   const [currentTestimonialIndex, setCurrentTestimonialIndex] = useState(0);
-  const [isHovering, setIsHovering] = useState(false);
+  const [dragX, setDragX] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
   const currentTestimonial = allTestimonials[currentTestimonialIndex];
 
   // Ensure hooks are called unconditionally: derive transforms from a motion value
@@ -54,6 +55,48 @@ export default function TestimonialCarousel({
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [nextTestimonial, previousTestimonial]);
+
+  // Reset drag position when testimonial changes
+  useEffect(() => {
+    setDragX(0);
+  }, [currentTestimonialIndex]);
+
+  // Handle drag start
+  const handleMouseDown = (e: React.MouseEvent) => {
+    if (!currentTestimonial.image2) return;
+    setIsDragging(true);
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    setDragX(x);
+  };
+
+  // Handle drag move
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging || !currentTestimonial.image2) return;
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const clampedX = Math.max(0, Math.min(rect.width, x));
+    setDragX(clampedX);
+  };
+
+  // Handle drag end
+  const handleMouseUp = () => {
+    setIsDragging(false);
+  };
+
+  // Calculate opacity based on drag position
+  const getImageOpacity = (isSecondImage: boolean) => {
+    if (!currentTestimonial.image2) return isSecondImage ? 0 : 1;
+    
+    const rectWidth = 495; // Container width
+    const progress = dragX / rectWidth;
+    
+    if (isSecondImage) {
+      return progress;
+    } else {
+      return 1 - progress;
+    }
+  };
 
   return (
     <motion.section 
@@ -123,9 +166,11 @@ export default function TestimonialCarousel({
             
             {/* Right side - Image (bleeds to edge) */}
             <div 
-              className="overflow-hidden relative shrink-0 w-full md:w-[495px] hidden md:block h-[476px]"
-              onMouseEnter={() => setIsHovering(true)}
-              onMouseLeave={() => setIsHovering(false)}
+              className={`overflow-hidden relative shrink-0 w-full md:w-[495px] hidden md:block h-[476px] ${currentTestimonial.image2 ? 'cursor-ew-resize' : ''}`}
+              onMouseDown={handleMouseDown}
+              onMouseMove={handleMouseMove}
+              onMouseUp={handleMouseUp}
+              onMouseLeave={handleMouseUp}
             >
               <div className="absolute inset-0 overflow-hidden">
                 {/* Primary image */}
@@ -133,19 +178,21 @@ export default function TestimonialCarousel({
                   <img
                     src={currentTestimonial.image}
                     alt={`${currentTestimonial.name} - Customer testimonial`}
-                    className={`absolute h-[143.73%] left-[-1.62%] top-[-43.73%] w-[103.59%] object-cover transition-opacity duration-300 ${isHovering && currentTestimonial.image2 ? 'opacity-0' : 'opacity-100'}`}
+                    className="absolute h-[143.73%] left-[-1.62%] top-[-43.73%] w-[103.59%] object-cover transition-opacity duration-100"
+                    style={{ opacity: getImageOpacity(false) }}
                     onError={(e) => {
                       const target = e.target as HTMLImageElement;
                       target.style.display = 'none';
                     }}
                   />
                 )}
-                {/* Hover image */}
+                {/* Second image */}
                 {currentTestimonial.image2 && (
                   <img
                     src={currentTestimonial.image2}
                     alt={`${currentTestimonial.name} - After`}
-                    className={`absolute h-[143.73%] left-[-1.62%] top-[-43.73%] w-[103.59%] object-cover transition-opacity duration-300 ${isHovering ? 'opacity-100' : 'opacity-0'}`}
+                    className="absolute h-[143.73%] left-[-1.62%] top-[-43.73%] w-[103.59%] object-cover transition-opacity duration-100"
+                    style={{ opacity: getImageOpacity(true) }}
                     onError={(e) => {
                       const target = e.target as HTMLImageElement;
                       target.style.display = 'none';
@@ -153,6 +200,13 @@ export default function TestimonialCarousel({
                   />
                 )}
               </div>
+              {/* Drag indicator line */}
+              {currentTestimonial.image2 && (
+                <div 
+                  className="absolute top-0 bottom-0 w-0.5 bg-white opacity-50 pointer-events-none"
+                  style={{ left: `${dragX}px` }}
+                />
+              )}
             </div>
           </div>
         </motion.div>
