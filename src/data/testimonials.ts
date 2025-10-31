@@ -15,7 +15,7 @@ export const testimonials: Testimonial[] = [
   {
     id: 1,
     name: "Nick",
-    location: "Waukee windstorm",
+    location: "Waukee, IA",
     project: "Windstorm client",
     rating: 5,
     text: "Austin & Lacey at G3 turned what would have been a nightmare into a dream. We had a 75-year-old tree fall onto our garage from a wind storm, and he was there to provide estimates by the end of the day. Throughout the entirety of the project, he kept in constant communication with our roofing contractors and included us in all design decisions. Dependable, safe, and fast are what you need in an electrical professional; G3 is all three.",
@@ -62,12 +62,38 @@ export const testimonials: Testimonial[] = [
   }
 ];
 
+// In-memory storage for runtime updates
+let testimonialsData = [...testimonials];
+
 // Helper function to get all testimonials
 export function getAllTestimonials(): Testimonial[] {
-  return testimonials;
+  return testimonialsData;
 }
 
 // Helper function to get featured testimonials (for homepage)
 export function getFeaturedTestimonials(count: number = 3): Testimonial[] {
-  return testimonials.slice(0, count);
+  return testimonialsData.slice(0, count);
+}
+
+// Helper function to get testimonial by ID
+export function getTestimonialById(id: string): Testimonial | undefined {
+  return testimonialsData.find(testimonial => testimonial.id.toString() === id);
+}
+
+// Helper function to update a testimonial
+export function updateTestimonial(updatedTestimonial: Testimonial): void {
+  const index = testimonialsData.findIndex(t => t.id === updatedTestimonial.id);
+  if (index !== -1) {
+    testimonialsData[index] = updatedTestimonial;
+  }
+}
+
+// Helper function to add a new testimonial
+export function addTestimonial(newTestimonial: Testimonial): void {
+  testimonialsData.push(newTestimonial);
+}
+
+// Helper function to delete a testimonial
+export function deleteTestimonial(id: number): void {
+  testimonialsData = testimonialsData.filter(t => t.id !== id);
 }
