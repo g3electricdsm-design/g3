@@ -65,8 +65,8 @@ export default function TestimonialCarousel({
 
   return (
     <motion.section 
-      className="py-20 bg-hookers-green relative overflow-hidden"
-      style={{ y: testimonialsY, scale: testimonialsScale }}
+      className="py-20 relative overflow-hidden"
+      style={{ y: testimonialsY, scale: testimonialsScale, backgroundColor: '#748680' }}
     >
       {/* Floating background elements */}
       {scrollYProgress && (
@@ -95,7 +95,8 @@ export default function TestimonialCarousel({
         </motion.div>
         
         <motion.div 
-          className="rounded-2xl border border-white/10 bg-hookers-green relative overflow-hidden"
+          className="rounded-2xl border border-white/10 relative overflow-hidden"
+          style={{ backgroundColor: '#748680' }}
           key={currentTestimonialIndex}
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
