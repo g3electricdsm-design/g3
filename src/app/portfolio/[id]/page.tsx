@@ -1,15 +1,19 @@
 'use client';
 
 import Link from "next/link";
-import { ArrowLeftIcon, HomeIcon, BuildingOfficeIcon, BoltIcon, LightBulbIcon, CalendarIcon, ClockIcon, UserIcon } from "@heroicons/react/24/outline";
+import { ArrowLeftIcon, CalendarIcon, ClockIcon, UserIcon, BoltIcon } from "@heroicons/react/24/outline";
 import Navigation from "@/components/Navigation";
+import Footer from "@/components/Footer";
+import ProjectDetailSkeleton from "@/components/ProjectDetailSkeleton";
 import { getProjectById } from "@/data/projects";
+import { getCategoryIcon, getTypeIcon } from "@/utils/icons";
 import Image from "next/image";
-import { useParams } from "next/navigation";
+import { useParams, usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 
 export default function ProjectDetail() {
   const params = useParams();
+  const pathname = usePathname();
   const [project, setProject] = useState(getProjectById(params.id as string));
   const [isLoading, setIsLoading] = useState(true);
 
@@ -25,9 +29,11 @@ export default function ProjectDetail() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-white flex items-center justify-center">
-        <div className="text-xl">Loading...</div>
-      </div>
+      <>
+        <Navigation currentPath="/portfolio" />
+        <ProjectDetailSkeleton />
+        <Footer currentPath="/portfolio" />
+      </>
     );
   }
 
@@ -48,27 +54,6 @@ export default function ProjectDetail() {
     );
   }
 
-  const getCategoryIcon = (category: string) => {
-    switch (category) {
-      case 'Residential':
-        return <HomeIcon className="h-6 w-6" />;
-      case 'Commercial':
-        return <BuildingOfficeIcon className="h-6 w-6" />;
-      default:
-        return <BoltIcon className="h-6 w-6" />;
-    }
-  };
-
-  const getTypeIcon = (type: string) => {
-    switch (type) {
-      case 'Lighting':
-        return <LightBulbIcon className="h-5 w-5" />;
-      case 'Fans':
-        return <BoltIcon className="h-5 w-5" />;
-      default:
-        return <BoltIcon className="h-5 w-5" />;
-    }
-  };
 
   return (
     <div className="min-h-screen bg-earle-black">
@@ -79,17 +64,20 @@ export default function ProjectDetail() {
       <section className="bg-gradient-to-br from-purple to-phlox text-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center mb-6">
-            <Link href="/portfolio" className="flex items-center text-white hover:text-white-smoke transition-colors">
+            <Link 
+              href="/portfolio" 
+              className="flex items-center text-white bg-white/10 hover:bg-white/20 px-4 py-2 rounded-lg transition-all font-raleway font-medium backdrop-blur-sm"
+            >
               <ArrowLeftIcon className="h-5 w-5 mr-2" />
               Back to Portfolio
             </Link>
           </div>
           <div className="flex items-center gap-3 mb-4">
-            <span className="text-purple-300">{getCategoryIcon(project.category)}</span>
-            <span className="font-montserrat text-lg">{project.category}</span>
+            <span className="text-purple-300">{getCategoryIcon(project.category, 'lg')}</span>
+            <span className="font-raleway text-lg uppercase">{project.category}</span>
             <span className="text-white">•</span>
-            <span className="text-purple-300">{getTypeIcon(project.type)}</span>
-            <span className="font-montserrat text-lg">{project.type}</span>
+            <span className="text-purple-300">{getTypeIcon(project.type, 'lg')}</span>
+            <span className="font-raleway text-lg uppercase">{project.type}</span>
           </div>
           <h1 className="font-megrim text-4xl md:text-5xl mb-4">{project.title}</h1>
           <p className="font-raleway text-lg md:text-xl max-w-3xl">{project.description}</p>
@@ -149,7 +137,7 @@ export default function ProjectDetail() {
 
             {/* Sidebar */}
             <div className="lg:col-span-1">
-              <div className="bg-white-smoke rounded-lg p-6 sticky top-8">
+              <div className="bg-white-smoke rounded-lg p-6 lg:sticky lg:top-8">
                 <h3 className="font-montserrat text-xl text-earle-black mb-6">Project Details</h3>
                 
                 <div className="space-y-6">
@@ -209,35 +197,7 @@ export default function ProjectDetail() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-hookers-green py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h3 className="font-megrim text-2xl text-white mb-4">G3 Electric</h3>
-            <p className="font-raleway text-white-smoke mb-4">Safe & Dependable Electrical Services</p>
-            <div className="flex justify-center space-x-6">
-              <Link href="/services" className="text-white-smoke hover:text-purple font-raleway">Services</Link>
-              <Link href="/portfolio" className="text-purple font-raleway">Portfolio</Link>
-              <Link href="/pricing" className="text-white-smoke hover:text-purple font-raleway">Pricing</Link>
-              <Link href="/about" className="text-white-smoke hover:text-purple font-raleway">About</Link>
-              <Link href="/contact" className="text-white-smoke hover:text-purple font-raleway">Contact</Link>
-            </div>
-            <div className="mt-6 pt-4 border-t border-white/20">
-              <p className="text-white-smoke text-sm">
-                This digital experience was built by{' '}
-                <a 
-                  href="https://sensory.com" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="text-purple hover:text-phlox transition-colors font-medium"
-                >
-                  Sensory
-                </a>
-                , a UX-first company.
-              </p>
-            </div>
-          </div>
-        </div>
-      </footer>
+      <Footer currentPath={pathname} />
     </div>
   );
 }

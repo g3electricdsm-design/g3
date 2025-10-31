@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { PlusIcon, PencilIcon, TrashIcon, CogIcon, ChartBarIcon, PhotoIcon, EnvelopeIcon, EyeIcon, HomeIcon, UserIcon } from '@heroicons/react/24/outline';
 import Navigation from '@/components/Navigation';
+import Footer from '@/components/Footer';
 import { getAllProjects, Project, deleteProject } from '@/data/projects';
 import { getAllServices, Service } from '@/data/services';
 import { getAllFormEntries, FormEntry } from '@/data/formEntries';
@@ -164,8 +165,8 @@ export default function Admin() {
                     <div key={project.id} className="bg-white rounded-lg p-4 shadow-sm border border-gray-200">
                       <div className="flex items-start justify-between mb-3">
                         <div className="flex-1">
-                          <h4 className="font-montserrat text-lg font-semibold" style={{color: '#242729'}}>{project.title}</h4>
-                          <p className="font-raleway text-sm" style={{color: '#242729'}}>{project.category} • {project.type}</p>
+                          <h4 className="font-montserrat text-lg font-semibold">{project.title}</h4>
+                          <p className="font-raleway text-sm uppercase">{project.category} • {project.type}</p>
                         </div>
                         <div className="flex items-center gap-1">
                           <Link
@@ -173,7 +174,7 @@ export default function Admin() {
                             className="p-2 hover:bg-purple/10 rounded-lg transition-colors"
                             title="Edit project"
                           >
-                            <PencilIcon className="h-4 w-4" style={{color: '#242729'}} />
+                            <PencilIcon className="h-4 w-4" />
                           </Link>
                           <button
                             onClick={() => handleDelete(project.id)}
@@ -184,8 +185,8 @@ export default function Admin() {
                           </button>
                         </div>
                       </div>
-                      <p className="font-raleway text-sm mb-3 line-clamp-2" style={{color: '#242729'}}>{project.description}</p>
-                      <div className="flex items-center justify-between text-xs" style={{color: '#242729'}}>
+                      <p className="font-raleway text-sm mb-3 line-clamp-2">{project.description}</p>
+                      <div className="flex items-center justify-between text-xs">
                         <span>{project.client}</span>
                         <span>{project.completed}</span>
                       </div>
@@ -213,21 +214,21 @@ export default function Admin() {
                     <div key={service.id} className="bg-white rounded-lg p-4 shadow-sm border border-gray-200">
                       <div className="flex items-start justify-between mb-3">
                         <div className="flex-1">
-                          <h4 className="font-montserrat text-lg font-semibold" style={{color: '#242729'}}>{service.name}</h4>
-                          <p className="font-raleway text-sm" style={{color: '#242729'}}>{service.category}</p>
+                          <h4 className="font-montserrat text-lg font-semibold">{service.name}</h4>
+                          <p className="font-raleway text-sm uppercase">{service.category}</p>
                         </div>
                         <div className="flex items-center gap-1">
                           <button className="p-2 hover:bg-purple/10 rounded-lg transition-colors">
-                            <PencilIcon className="h-4 w-4" style={{color: '#242729'}} />
+                            <PencilIcon className="h-4 w-4" />
                           </button>
                           <button className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors">
                             <TrashIcon className="h-4 w-4" />
                           </button>
                         </div>
                       </div>
-                      <p className="font-raleway text-sm mb-3" style={{color: '#242729'}}>{service.description}</p>
+                      <p className="font-raleway text-sm mb-3">{service.description}</p>
                       <div className="flex items-center justify-between text-xs">
-                        <span style={{color: '#242729'}}>{service.pricing.description}</span>
+                        <span>{service.pricing.description}</span>
                         {service.popular && (
                           <span className="bg-purple/10 text-purple px-2 py-1 rounded-full text-xs font-medium">
                             Popular
@@ -264,10 +265,10 @@ export default function Admin() {
                       <div className="flex items-start justify-between">
                         <div className="flex-1">
                           <div className="flex items-center gap-3 mb-2">
-                            <h4 className="font-montserrat text-lg font-semibold" style={{color: '#242729'}}>
+                            <h4 className="font-montserrat text-lg font-semibold">
                               {entry.customerInfo.name}
                             </h4>
-                            <span className={`px-2 py-1 rounded-full text-xs font-medium ${
+                            <span className={`px-2 py-1 rounded-full text-xs font-raleway font-medium uppercase ${
                               entry.status === 'new' ? 'bg-blue-100 text-blue-800' :
                               entry.status === 'read' ? 'bg-yellow-100 text-yellow-800' :
                               entry.status === 'contacted' ? 'bg-purple-100 text-purple-800' :
@@ -276,18 +277,18 @@ export default function Admin() {
                             }`}>
                               {entry.status.charAt(0).toUpperCase() + entry.status.slice(1)}
                             </span>
-                            <span className="text-xs" style={{color: '#242729'}}>
+                            <span className="text-xs">
                               {new Date(entry.timestamp).toLocaleDateString()}
                             </span>
                           </div>
-                          <p className="font-raleway text-sm mb-2" style={{color: '#242729'}}>
+                          <p className="font-raleway text-sm mb-2">
                             {entry.customerInfo.email} • {entry.customerInfo.phone}
                           </p>
-                          <p className="font-raleway text-sm mb-2" style={{color: '#242729'}}>
+                          <p className="font-raleway text-sm mb-2">
                             <strong>Project:</strong> {entry.projectInfo.projectType} • {entry.projectInfo.description?.substring(0, 100)}...
                           </p>
                           {entry.projectInfo.budget && (
-                            <p className="font-raleway text-sm" style={{color: '#242729'}}>
+                            <p className="font-raleway text-sm">
                               <strong>Budget:</strong> {entry.projectInfo.budget}
                             </p>
                           )}
@@ -297,7 +298,6 @@ export default function Admin() {
                             onClick={() => handleViewFormEntry(entry)}
                             className="px-3 py-1 text-sm font-medium hover:bg-purple/10 rounded-lg transition-colors"
                             title="View details"
-                            style={{color: '#242729'}}
                           >
                             View entry
                           </button>
@@ -542,21 +542,7 @@ export default function Admin() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-hookers-green py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h3 className="font-montserrat text-2xl text-white mb-4">G3 Electric</h3>
-            <p className="font-raleway text-white-smoke mb-4">Safe & Dependable Electrical Services</p>
-            <div className="flex justify-center space-x-6">
-              <Link href="/services" className="text-white-smoke hover:text-purple font-raleway">Services</Link>
-              <Link href="/portfolio" className="text-purple font-raleway">Portfolio</Link>
-              <Link href="/pricing" className="text-white-smoke hover:text-purple font-raleway">Pricing</Link>
-              <Link href="/about" className="text-white-smoke hover:text-purple font-raleway">About</Link>
-              <Link href="/contact" className="text-white-smoke hover:text-purple font-raleway">Contact</Link>
-            </div>
-          </div>
-        </div>
-      </footer>
+      <Footer currentPath="/admin" />
     </div>
   );
 }

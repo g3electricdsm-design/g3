@@ -21,19 +21,18 @@ const raleway = Raleway({
 });
 
 export const metadata: Metadata = {
-  title: "Master Electricians Des Moines | G3 Electric - Licensed Electrical Services",
-  description: "Licensed master electricians in Des Moines, IA. Professional residential & commercial electrical services, emergency repairs, lighting installation, and electrical panel upgrades. 24/7 emergency service available.",
-  keywords: "master electrician Des Moines, electrical contractor Iowa, licensed electrician, electrical services, emergency electrical repair, electrical panel upgrade, lighting installation, commercial electrical, residential electrical",
+  title: "G3 Electric | Licensed Electricians in Des Moines",
+  description: "Professional electrical services for homes and businesses. Safety and reliability you can trust.",
   openGraph: {
-    title: "Master Electricians Des Moines | G3 Electric - Licensed Electrical Services",
-    description: "Licensed master electricians in Des Moines, IA. Professional residential & commercial electrical services, emergency repairs, lighting installation, and electrical panel upgrades.",
+    title: "G3 Electric | Licensed Electricians in Des Moines",
+    description: "Professional electrical services for homes and businesses. Safety and reliability you can trust.",
     type: "website",
     locale: "en_US",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Master Electricians Des Moines | G3 Electric",
-    description: "Licensed master electricians in Des Moines, IA. Professional electrical services you can trust.",
+    title: "G3 Electric",
+    description: "Professional electrical services you can trust.",
   },
   robots: {
     index: true,

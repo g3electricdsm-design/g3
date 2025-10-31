@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { LockClosedIcon, EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
 import Navigation from '@/components/Navigation';
+import Footer from '@/components/Footer';
 
 export default function AdminLogin() {
   const [password, setPassword] = useState('');
@@ -118,14 +119,7 @@ export default function AdminLogin() {
       </section>
 
       {/* Footer */}
-      <footer className="py-12" style={{backgroundColor: '#70877F'}}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h3 className="font-megrim text-2xl text-white mb-4">G3 Electric</h3>
-            <p className="font-raleway text-white-smoke mb-4">Safe & Dependable Electrical Services</p>
-          </div>
-        </div>
-      </footer>
+      <Footer currentPath="/admin/login" />
     </div>
   );
 }

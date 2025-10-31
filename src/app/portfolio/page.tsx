@@ -2,18 +2,26 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { HomeIcon, BuildingOfficeIcon, BoltIcon, LightBulbIcon } from "@heroicons/react/24/outline";
 import Navigation from "@/components/Navigation";
+import Footer from "@/components/Footer";
+import PortfolioSkeleton from "@/components/PortfolioSkeleton";
 import { getAllProjects } from "@/data/projects";
+import { getCategoryIcon, getTypeIcon } from "@/utils/icons";
 import { useState, useEffect } from "react";
 
 export default function Portfolio() {
   const [portfolioItems, setPortfolioItems] = useState(getAllProjects());
+  const [isLoading, setIsLoading] = useState(false);
 
   // Refresh portfolio data when component mounts or when data might have changed
   useEffect(() => {
     const refreshData = () => {
-      setPortfolioItems(getAllProjects());
+      setIsLoading(true);
+      // Simulate a brief delay for smoother UX
+      setTimeout(() => {
+        setPortfolioItems(getAllProjects());
+        setIsLoading(false);
+      }, 300);
     };
 
     // Refresh on mount
@@ -45,27 +53,6 @@ export default function Portfolio() {
     }
   };
 
-  const getCategoryIcon = (category: string) => {
-    switch (category) {
-      case 'Residential':
-        return <HomeIcon className="h-5 w-5" />;
-      case 'Commercial':
-        return <BuildingOfficeIcon className="h-5 w-5" />;
-      default:
-        return <BoltIcon className="h-5 w-5" />;
-    }
-  };
-
-  const getTypeIcon = (type: string) => {
-    switch (type) {
-      case 'Lighting':
-        return <LightBulbIcon className="h-4 w-4" />;
-      case 'Fans':
-        return <BoltIcon className="h-4 w-4" />;
-      default:
-        return <BoltIcon className="h-4 w-4" />;
-    }
-  };
 
   return (
     <div className="min-h-screen bg-earle-black">
@@ -75,7 +62,7 @@ export default function Portfolio() {
       {/* Header */}
       <section className="bg-gradient-to-br from-purple to-phlox text-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h1 className="font-megrim text-5xl md:text-6xl mb-4">Our Portfolio</h1>
+          <h1 className="font-megrim text-5xl md:text-6xl mb-4">Portfolio</h1>
           <p className="font-raleway text-lg md:text-xl max-w-3xl">
             See our recent work showcasing safe, dependable electrical solutions for both residential and commercial projects.
           </p>
@@ -87,7 +74,23 @@ export default function Portfolio() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
           {/* Bento Box Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[200px]">
+          {isLoading ? (
+            <PortfolioSkeleton />
+          ) : portfolioItems.length === 0 ? (
+            <div className="text-center py-16">
+              <h2 className="font-montserrat text-3xl text-white mb-4">No Projects Yet</h2>
+              <p className="font-raleway text-lg text-white-smoke mb-8 max-w-2xl mx-auto">
+                We&apos;re busy working on amazing projects! Check back soon to see our portfolio, or contact us to discuss your next electrical project.
+              </p>
+              <Link 
+                href="/contact" 
+                className="bg-purple text-white px-8 py-3 rounded-lg font-montserrat font-semibold hover:bg-phlox transition-colors inline-block"
+              >
+                Get Started
+              </Link>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[minmax(200px,auto)]">
             {portfolioItems.map((item, index) => (
               <Link
                 key={item.id}
@@ -109,11 +112,11 @@ export default function Portfolio() {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                   <div className="absolute bottom-4 left-4 right-4 text-white">
                     <div className="flex items-center gap-2 mb-2">
-                      <span className="text-purple-300">{getCategoryIcon(item.category)}</span>
-                      <span className="font-montserrat text-sm font-medium">{item.category}</span>
+                      <span className="text-purple-300">{getCategoryIcon(item.category, 'md')}</span>
+                      <span className="font-raleway text-sm font-medium uppercase">{item.category}</span>
                       <span className="text-white">•</span>
-                      <span className="text-purple-300">{getTypeIcon(item.type)}</span>
-                      <span className="font-montserrat text-sm font-medium">{item.type}</span>
+                      <span className="text-purple-300">{getTypeIcon(item.type, 'md')}</span>
+                      <span className="font-raleway text-sm font-medium uppercase">{item.type}</span>
                     </div>
                     <h3 className="font-montserrat text-lg font-semibold mb-1">{item.title}</h3>
                     <p className="font-raleway text-sm text-white">{item.description}</p>
@@ -123,17 +126,18 @@ export default function Portfolio() {
                 {/* Always visible content for smaller items */}
                 <div className="absolute bottom-4 left-4 right-4 text-white md:hidden">
                   <div className="flex items-center gap-2 mb-2">
-                    <span className="text-purple-300">{getCategoryIcon(item.category)}</span>
-                    <span className="font-montserrat text-sm font-medium text-white">{item.category}</span>
+                    <span className="text-purple-300">{getCategoryIcon(item.category, 'md')}</span>
+                    <span className="font-raleway text-sm font-medium text-white uppercase">{item.category}</span>
                     <span className="text-white">•</span>
-                    <span className="text-purple-300">{getTypeIcon(item.type)}</span>
-                    <span className="font-montserrat text-sm font-medium text-white">{item.type}</span>
+                    <span className="text-purple-300">{getTypeIcon(item.type, 'md')}</span>
+                    <span className="font-raleway text-sm font-medium text-white uppercase">{item.type}</span>
                   </div>
                   <h3 className="font-montserrat text-lg font-semibold mb-1 text-white">{item.title}</h3>
                 </div>
               </Link>
             ))}
           </div>
+          )}
 
           {/* CTA Section */}
           <div className="text-center mt-16">
@@ -152,35 +156,7 @@ export default function Portfolio() {
       </section>
 
       {/* Footer */}
-      <footer className="py-12" style={{backgroundColor: '#70877F'}}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h3 className="font-megrim text-2xl text-white mb-4">G3 Electric</h3>
-            <p className="font-raleway text-white-smoke mb-4">Safe & Dependable Electrical Services</p>
-            <div className="flex justify-center space-x-6">
-              <Link href="/services" className="text-white-smoke hover:text-purple font-raleway">Services</Link>
-              <Link href="/portfolio" className="text-purple font-raleway">Portfolio</Link>
-              <Link href="/pricing" className="text-white-smoke hover:text-purple font-raleway">Pricing</Link>
-              <Link href="/about" className="text-white-smoke hover:text-purple font-raleway">About</Link>
-              <Link href="/contact" className="text-white-smoke hover:text-purple font-raleway">Contact</Link>
-            </div>
-            <div className="mt-6 pt-4 border-t border-white/20">
-              <p className="text-white-smoke text-sm">
-                This digital experience was built by{' '}
-                <a 
-                  href="https://sensory.com" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="text-purple hover:text-phlox transition-colors font-medium"
-                >
-                  Sensory
-                </a>
-                , a UX-first company.
-              </p>
-            </div>
-          </div>
-        </div>
-      </footer>
+      <Footer currentPath="/portfolio" />
     </div>
   );
 }

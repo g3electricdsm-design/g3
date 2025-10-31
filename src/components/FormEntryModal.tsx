@@ -60,7 +60,7 @@ export default function FormEntryModal({ entry, onClose, onUpdateStatus, onAddNo
                 Form Entry #{entry.id}
               </h2>
               <div className="flex items-center gap-3">
-                <span className={`px-3 py-1 rounded-full text-sm font-medium ${getStatusColor(entry.status)}`}>
+                <span className={`px-3 py-1 rounded-full text-sm font-raleway font-medium uppercase ${getStatusColor(entry.status)}`}>
                   {entry.status.charAt(0).toUpperCase() + entry.status.slice(1)}
                 </span>
                 <span className="text-sm text-gray-600">
@@ -109,7 +109,7 @@ export default function FormEntryModal({ entry, onClose, onUpdateStatus, onAddNo
                 {entry.additionalInfo?.urgency && (
                   <div className="flex items-center gap-3">
                     <ClockIcon className="h-5 w-5 text-purple" />
-                    <span className={`px-2 py-1 rounded text-sm font-medium ${getUrgencyColor(entry.additionalInfo.urgency)}`}>
+                    <span className={`px-2 py-1 rounded text-sm font-raleway font-medium uppercase ${getUrgencyColor(entry.additionalInfo.urgency)}`}>
                       {entry.additionalInfo.urgency.charAt(0).toUpperCase() + entry.additionalInfo.urgency.slice(1)} Priority
                     </span>
                   </div>

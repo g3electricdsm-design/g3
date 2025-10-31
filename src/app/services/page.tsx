@@ -1,39 +1,22 @@
 import Link from "next/link";
 import { Metadata } from "next";
 import { 
-  LightBulbIcon, 
-  CpuChipIcon, 
-  PowerIcon, 
-  HomeIcon, 
-  BuildingOfficeIcon, 
-  AcademicCapIcon,
   ShieldCheckIcon,
   BoltIcon,
   WrenchScrewdriverIcon
 } from "@heroicons/react/24/outline";
 import Navigation from "@/components/Navigation";
+import Footer from "@/components/Footer";
 import { getContent } from "@/data/content";
+import { ServiceIcon, getServiceIcon } from "@/utils/icons";
 
 export const metadata: Metadata = {
-  title: "Electrical Services Des Moines | Residential & Commercial Electrician",
-  description: "Professional electrical services in Des Moines, IA. Lighting installation, electrical repairs, panel upgrades, smart home wiring, and emergency electrical services. Licensed master electricians.",
-  keywords: "electrical services Des Moines, electrician Iowa, lighting installation, electrical repairs, panel upgrade, smart home wiring, emergency electrician, commercial electrical",
+  title: "Services",
+  description: "Electrical services for your home and business. Lighting, repairs, upgrades, and more.",
 };
 
 export default function Services() {
   const content = getContent().services;
-  
-  const iconMap = {
-    LightBulbIcon,
-    CpuChipIcon,
-    PowerIcon,
-    HomeIcon,
-    BuildingOfficeIcon,
-    AcademicCapIcon,
-    ShieldCheckIcon,
-    BoltIcon,
-    WrenchScrewdriverIcon
-  };
 
   return (
     <div className="min-h-screen bg-earle-black">
@@ -53,39 +36,33 @@ export default function Services() {
       {/* Services Grid */}
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div className="flex flex-col items-center gap-8">
             {content.services.map((service, index) => {
-              const IconComponent = iconMap[service.icon as keyof typeof iconMap] || LightBulbIcon;
               return (
-                <div key={index} className="bg-white border border-gray-200 rounded-lg p-8 hover:shadow-lg transition-shadow shadow-md">
-                  <div className="flex items-start mb-6">
-                    <div className="flex-shrink-0">
-                      <div className="w-12 h-12 bg-purple rounded-lg flex items-center justify-center">
-                        <IconComponent className="h-6 w-6 text-white" />
+                <div key={index} className="w-full max-w-[1200px] bg-earle-black border border-white/10 rounded-2xl pl-[33px] pr-[100px] py-[32px] hover:border-purple/50 hover:shadow-xl transition-all shadow-lg">
+                  <div className="flex items-center justify-between gap-6">
+                    <div className="flex flex-col gap-[22px] max-w-[600px]">
+                      <div className="flex flex-col gap-2">
+                        <h3 className="font-montserrat text-2xl font-semibold text-white">{service.title}</h3>
+                        <p className="font-raleway text-white-smoke">{service.description}</p>
+                      </div>
+                      
+                      <div className="flex flex-col gap-4">
+                        <h4 className="font-montserrat text-lg font-semibold text-white">What We Include:</h4>
+                        <ul className="space-y-2">
+                          {service.features.map((feature, featureIndex) => (
+                            <li key={featureIndex} className="flex items-center font-raleway text-white-smoke">
+                              <div className="w-3 h-3 bg-phlox rounded-full mr-3 flex-shrink-0"></div>
+                              {feature}
+                            </li>
+                          ))}
+                        </ul>
                       </div>
                     </div>
-                    <div className="ml-4 flex-1">
-                      <div className="flex items-start gap-3 mb-2">
-                        <BoltIcon className="h-6 w-6 text-purple flex-shrink-0 mt-1" />
-                        <h3 className="font-montserrat text-2xl font-semibold text-earle-black" style={{color: '#242729'}}>{service.title}</h3>
-                      </div>
-                      <div className="flex items-start gap-3">
-                        <BoltIcon className="h-5 w-5 text-purple flex-shrink-0 mt-1" />
-                        <p className="font-raleway text-earle-black mb-3" style={{color: '#242729'}}>{service.description}</p>
-                      </div>
+                    
+                    <div className="w-[252px] h-[252px] bg-purple/10 rounded-2xl flex items-center justify-center flex-shrink-0 relative overflow-clip p-[10%]">
+                      <ServiceIcon iconName={getServiceIcon(service.id)} className="w-full h-auto scale-[3]" />
                     </div>
-                  </div>
-                  
-                  <div>
-                    <h4 className="font-montserrat text-lg font-semibold text-earle-black mb-4" style={{color: '#242729'}}>What We Include:</h4>
-                    <ul className="space-y-2">
-                      {service.features.map((feature, featureIndex) => (
-                        <li key={featureIndex} className="flex items-center font-raleway text-earle-black" style={{color: '#242729'}}>
-                          <div className="w-2 h-2 bg-purple rounded-full mr-3 flex-shrink-0" style={{backgroundColor: '#6D0091'}}></div>
-                          {feature}
-                        </li>
-                      ))}
-                    </ul>
                   </div>
                 </div>
               );
@@ -98,7 +75,7 @@ export default function Services() {
       <section className="py-20 bg-white-smoke">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="font-megrim text-4xl text-earle-black mb-4">Safety & Quality Guarantee</h2>
+            <h2 className="font-montserrat text-4xl text-earle-black mb-4">Safety & Quality Guarantee</h2>
             <p className="font-raleway text-lg text-earle-black max-w-3xl mx-auto">
               Your safety is our #1 priority. Every project is completed with the highest standards of safety and quality.
             </p>
@@ -134,7 +111,7 @@ export default function Services() {
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="font-megrim text-4xl text-earle-black mb-4">Our Process</h2>
+            <h2 className="font-montserrat text-4xl text-earle-black mb-4">Our Process</h2>
             <p className="font-raleway text-lg text-earle-black max-w-3xl mx-auto">
               From initial consultation to project completion, we ensure a smooth and safe experience.
             </p>
@@ -171,7 +148,7 @@ export default function Services() {
       {/* CTA Section */}
       <section className="py-20 bg-earle-black text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="font-megrim text-4xl mb-6">{content.cta.title}</h2>
+          <h2 className="font-montserrat text-4xl mb-6">{content.cta.title}</h2>
           <p className="font-raleway text-lg mb-8 max-w-2xl mx-auto">
             {content.cta.description}
           </p>
@@ -193,35 +170,7 @@ export default function Services() {
       </section>
 
       {/* Footer */}
-      <footer className="py-12" style={{backgroundColor: '#70877F'}}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h3 className="font-megrim text-2xl text-white mb-4">G3 Electric</h3>
-            <p className="font-raleway text-white-smoke mb-4">Safe & Dependable Electrical Services</p>
-            <div className="flex justify-center space-x-6">
-              <Link href="/services" className="text-purple font-raleway">Services</Link>
-              <Link href="/portfolio" className="text-white-smoke hover:text-purple font-raleway">Portfolio</Link>
-              <Link href="/pricing" className="text-white-smoke hover:text-purple font-raleway">Pricing</Link>
-              <Link href="/about" className="text-white-smoke hover:text-purple font-raleway">About</Link>
-              <Link href="/contact" className="text-white-smoke hover:text-purple font-raleway">Contact</Link>
-            </div>
-            <div className="mt-6 pt-4 border-t border-white/20">
-              <p className="text-white-smoke text-sm">
-                This digital experience was built by{' '}
-                <a 
-                  href="https://sensory.com" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="text-purple hover:text-phlox transition-colors font-medium"
-                >
-                  Sensory
-                </a>
-                , a UX-first company.
-              </p>
-            </div>
-          </div>
-        </div>
-      </footer>
+      <Footer currentPath="/services" />
     </div>
   );
 }

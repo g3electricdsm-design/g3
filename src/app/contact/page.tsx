@@ -1,9 +1,9 @@
 'use client';
 
-import Link from "next/link";
 import { useState } from "react";
 import { PhoneIcon, EnvelopeIcon, MapPinIcon, ClockIcon } from "@heroicons/react/24/outline";
 import Navigation from "@/components/Navigation";
+import Footer from "@/components/Footer";
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -19,13 +19,6 @@ export default function Contact() {
     message: ''
   });
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
-  };
 
   const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value, checked } = e.target;
@@ -39,11 +32,83 @@ export default function Contact() {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [errors, setErrors] = useState<Record<string, string>>({});
+
+  const validateField = (name: string, value: string): string => {
+    switch (name) {
+      case 'name':
+        if (!value.trim()) return 'Name is required';
+        if (value.trim().length < 2) return 'Name must be at least 2 characters';
+        return '';
+      case 'email':
+        if (!value.trim()) return 'Email is required';
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(value)) return 'Please enter a valid email address';
+        return '';
+      case 'projectType':
+        if (!value) return 'Project type is required';
+        return '';
+      case 'phone':
+        if (value && value.trim().length > 0) {
+          const phoneRegex = /^[\d\s\-\(\)\+]+$/;
+          if (!phoneRegex.test(value)) return 'Please enter a valid phone number';
+        }
+        return '';
+      default:
+        return '';
+    }
+  };
+
+  const validateForm = (): boolean => {
+    const newErrors: Record<string, string> = {};
+    
+    newErrors.name = validateField('name', formData.name);
+    newErrors.email = validateField('email', formData.email);
+    newErrors.projectType = validateField('projectType', formData.projectType);
+    if (formData.phone) {
+      newErrors.phone = validateField('phone', formData.phone);
+    }
+    
+    setErrors(newErrors);
+    return !Object.values(newErrors).some(error => error !== '');
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+    
+    // Clear error for this field when user starts typing, then validate new value
+    // Only validate in real-time if there was a previous error (after user has made an error)
+    const previousError = errors[name];
+    if (previousError) {
+      const newError = validateField(name, value);
+      setErrors(prev => {
+        const updatedErrors = { ...prev };
+        if (newError) {
+          // Re-add error if validation still fails
+          updatedErrors[name] = newError;
+        } else {
+          // Remove error if validation passes
+          delete updatedErrors[name];
+        }
+        return updatedErrors;
+      });
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (!validateForm()) {
+      return;
+    }
+    
     setIsSubmitting(true);
     setSubmitStatus('idle');
+    setErrors({});
 
     try {
       const response = await fetch('/api/contact', {
@@ -58,6 +123,7 @@ export default function Contact() {
 
       if (result.success) {
         setSubmitStatus('success');
+        setErrors({});
         // Reset form
         setFormData({
           name: '',
@@ -192,10 +258,18 @@ export default function Contact() {
                       required
                       value={formData.name}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple focus:border-purple font-raleway text-earle-black"
+                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-purple focus:border-purple font-raleway text-earle-black ${
+                        errors.name ? 'border-red-500' : 'border-gray-300'
+                      }`}
                       placeholder="Your full name"
                       aria-describedby="name-error"
+                      aria-invalid={errors.name ? 'true' : 'false'}
                     />
+                    {errors.name && (
+                      <p id="name-error" className="mt-1 text-sm text-red-600 font-raleway" role="alert">
+                        {errors.name}
+                      </p>
+                    )}
                   </div>
                   <div>
                     <label htmlFor="email" className="block font-montserrat text-sm font-medium text-earle-black mb-2">
@@ -208,10 +282,18 @@ export default function Contact() {
                       required
                       value={formData.email}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple focus:border-purple font-raleway text-earle-black"
+                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-purple focus:border-purple font-raleway text-earle-black ${
+                        errors.email ? 'border-red-500' : 'border-gray-300'
+                      }`}
                       placeholder="your.email@example.com"
                       aria-describedby="email-error"
+                      aria-invalid={errors.email ? 'true' : 'false'}
                     />
+                    {errors.email && (
+                      <p id="email-error" className="mt-1 text-sm text-red-600 font-raleway" role="alert">
+                        {errors.email}
+                      </p>
+                    )}
                   </div>
                 </div>
 
@@ -225,10 +307,18 @@ export default function Contact() {
                       name="phone"
                       value={formData.phone}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple focus:border-purple font-raleway text-earle-black"
+                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-purple focus:border-purple font-raleway text-earle-black ${
+                        errors.phone ? 'border-red-500' : 'border-gray-300'
+                      }`}
                       placeholder="(555) 123-4567"
                       aria-describedby="phone-error"
+                      aria-invalid={errors.phone ? 'true' : 'false'}
                     />
+                    {errors.phone && (
+                      <p id="phone-error" className="mt-1 text-sm text-red-600 font-raleway" role="alert">
+                        {errors.phone}
+                      </p>
+                    )}
                 </div>
 
                 {/* Project Details */}
@@ -242,14 +332,22 @@ export default function Contact() {
                       required
                       value={formData.projectType}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple focus:border-purple font-raleway text-earle-black"
+                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-purple focus:border-purple font-raleway text-earle-black ${
+                        errors.projectType ? 'border-red-500' : 'border-gray-300'
+                      }`}
                       aria-describedby="projectType-error"
+                      aria-invalid={errors.projectType ? 'true' : 'false'}
                     >
                     <option value="">Select project type</option>
                     <option value="residential">Residential</option>
                     <option value="commercial">Commercial</option>
                     <option value="both">Both</option>
                   </select>
+                  {errors.projectType && (
+                    <p id="projectType-error" className="mt-1 text-sm text-red-600 font-raleway" role="alert">
+                      {errors.projectType}
+                    </p>
+                  )}
                 </div>
 
                 <div>
@@ -391,35 +489,7 @@ export default function Contact() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-hookers-green py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h3 className="font-megrim text-2xl text-white mb-4">G3 Electric</h3>
-            <p className="font-raleway text-white-smoke mb-4">Safe & Dependable Electrical Services</p>
-            <div className="flex justify-center space-x-6">
-              <Link href="/services" className="text-white-smoke hover:text-purple font-raleway">Services</Link>
-              <Link href="/portfolio" className="text-white-smoke hover:text-purple font-raleway">Portfolio</Link>
-              <Link href="/pricing" className="text-white-smoke hover:text-purple font-raleway">Pricing</Link>
-              <Link href="/about" className="text-white-smoke hover:text-purple font-raleway">About</Link>
-              <Link href="/contact" className="text-purple font-raleway">Contact</Link>
-            </div>
-            <div className="mt-6 pt-4 border-t border-white/20">
-              <p className="text-white-smoke text-sm">
-                This digital experience was built by{' '}
-                <a 
-                  href="https://sensory.com" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="text-purple hover:text-phlox transition-colors font-medium"
-                >
-                  Sensory
-                </a>
-                , a UX-first company.
-              </p>
-            </div>
-          </div>
-        </div>
-      </footer>
+      <Footer currentPath="/contact" />
     </div>
   );
 }
