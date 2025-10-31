@@ -90,7 +90,7 @@ export default function MobileMenu({ currentPath }: MobileMenuProps) {
             <Link
               key={item.name}
               href={item.href}
-              className={`block px-3 py-2 rounded-md text-base font-medium transition-all duration-700 ease-in-out ${
+              className={`block px-3 py-2 rounded-md text-base font-medium font-montserrat transition-all duration-700 ease-in-out ${
                 isCurrentPath(item.href)
                   ? 'text-white bg-purple/30 border-l-4 border-purple shadow-md'
                   : 'text-white hover:text-white hover:bg-purple/20 hover:shadow-sm'
