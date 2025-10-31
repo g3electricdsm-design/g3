@@ -1,6 +1,5 @@
 'use client';
 
-import Link from "next/link";
 import { useState } from "react";
 import { PhoneIcon, EnvelopeIcon, MapPinIcon, ClockIcon } from "@heroicons/react/24/outline";
 import Navigation from "@/components/Navigation";
@@ -81,21 +80,22 @@ export default function Contact() {
       [name]: value
     }));
     
-    // Clear error for this field when user starts typing
-    if (errors[name]) {
+    // Clear error for this field when user starts typing, then validate new value
+    // Only validate in real-time if there was a previous error (after user has made an error)
+    const previousError = errors[name];
+    if (previousError) {
+      const newError = validateField(name, value);
       setErrors(prev => {
-        const newErrors = { ...prev };
-        delete newErrors[name];
-        return newErrors;
+        const updatedErrors = { ...prev };
+        if (newError) {
+          // Re-add error if validation still fails
+          updatedErrors[name] = newError;
+        } else {
+          // Remove error if validation passes
+          delete updatedErrors[name];
+        }
+        return updatedErrors;
       });
-    }
-    
-    // Validate field in real-time (after user has made an error)
-    if (errors[name]) {
-      const error = validateField(name, value);
-      if (error) {
-        setErrors(prev => ({ ...prev, [name]: error }));
-      }
     }
   };
 
