@@ -84,15 +84,16 @@ export default function TestimonialCarousel({
             Don&apos;t just take our word for it. Here&apos;s what our satisfied customers have to say about our electrical services.
           </p>
         </motion.div>
-        
-        <motion.div 
-          className="rounded-2xl border border-white/10 relative overflow-hidden testimonial-bg"
-          key={currentTestimonialIndex}
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          <div className="flex gap-[72px] items-stretch overflow-hidden pl-[33px] pr-0 pb-8 max-h-[477px]">
+      </div>
+      
+      <motion.div 
+        className="rounded-2xl border border-white/10 relative overflow-hidden testimonial-bg"
+        key={currentTestimonialIndex}
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="flex gap-[72px] items-stretch overflow-hidden pl-[33px] pr-0 max-h-[477px]">
             {/* Left side - Text content and button */}
             <div className="flex flex-col gap-[72px] items-start justify-center shrink-0 w-full md:w-[600px]">
               <div className="flex flex-col gap-[22px] items-start">
@@ -121,7 +122,7 @@ export default function TestimonialCarousel({
             </div>
             
             {/* Right side - Image (bleeds to edge) */}
-            <div className="overflow-hidden relative shrink-0 w-full md:w-[495px] md:mr-0 md:-mr-8 hidden md:block">
+            <div className="overflow-hidden relative shrink-0 w-full md:w-[495px] hidden md:block">
               <Image 
                 src={`/images/testimonials/${currentTestimonial.name.toLowerCase().replace(/\s+/g, '-')}.jpg`}
                 alt={`${currentTestimonial.name} - Customer testimonial`}
@@ -136,7 +137,6 @@ export default function TestimonialCarousel({
             </div>
           </div>
         </motion.div>
-      </div>
     </motion.section>
   );
 }
