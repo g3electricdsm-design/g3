@@ -15,7 +15,7 @@ export const testimonials: Testimonial[] = [
   {
     id: 1,
     name: "Nick",
-    location: "Waukee, IA",
+    location: "Waukee windstorm",
     project: "Windstorm client",
     rating: 5,
     text: "Austin & Lacey at G3 turned what would have been a nightmare into a dream. We had a 75-year-old tree fall onto our garage from a wind storm, and he was there to provide estimates by the end of the day. Throughout the entirety of the project, he kept in constant communication with our roofing contractors and included us in all design decisions. Dependable, safe, and fast are what you need in an electrical professional; G3 is all three.",
