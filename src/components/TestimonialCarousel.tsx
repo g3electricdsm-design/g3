@@ -66,7 +66,7 @@ export default function TestimonialCarousel({
   return (
     <motion.section 
       className="py-20 relative overflow-hidden"
-      style={{ y: testimonialsY, scale: testimonialsScale, backgroundColor: '#748680' }}
+      style={{ ...(testimonialsY && { y: testimonialsY, scale: testimonialsScale }), backgroundColor: '#748680' }}
     >
       {/* Floating background elements */}
       {scrollYProgress && (
