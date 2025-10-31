@@ -68,7 +68,7 @@ export default function Home() {
         </motion.div>
         
         {/* Hero Content Overlay with Staggered Animations */}
-        <div className="absolute inset-0 flex items-start justify-center pt-[100px]">
+        <div className="absolute inset-0 flex items-start justify-center pt-[200px]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <motion.h1 
               className="font-megrim text-6xl md:text-8xl lg:text-9xl mb-6 text-white drop-shadow-2xl"
