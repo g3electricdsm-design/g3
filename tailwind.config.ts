@@ -12,7 +12,7 @@ const config: Config = {
         'purple': '#6D0091',
         'earle-black': '#242729',
         'white-smoke': '#F2F2F2',
-        'hookers-green': '#70877F',
+        'hookers-green': '#748680',
         'phlox': '#C636FF',
       },
       fontFamily: {
