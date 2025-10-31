@@ -37,14 +37,6 @@ export const testimonials: Testimonial[] = [
     text: "G3 Electric made our smart home dreams a reality. They installed smart switches, outlets, and integrated everything seamlessly. The team was patient and answered all our questions. Excellent service!",
   },
   {
-    id: 4,
-    name: "Robert Martinez",
-    location: "Urbandale, IA",
-    project: "Commercial Office Wiring",
-    rating: 5,
-    text: "Professional electrical work for our new office space. G3 Electric completed the project on time and within budget. Their attention to detail and code compliance was impressive. Will definitely use them again.",
-  },
-  {
     id: 5,
     name: "Jennifer Davis",
     location: "Johnston, IA",
