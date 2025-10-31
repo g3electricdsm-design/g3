@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect, useCallback } from "react";
-import Image from "next/image";
 import { getAllTestimonials } from "@/data/testimonials";
 import { motion, useTransform, useMotionValue } from "framer-motion";
 import { MotionValue } from "framer-motion";

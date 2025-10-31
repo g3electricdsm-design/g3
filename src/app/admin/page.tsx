@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { PlusIcon, PencilIcon, TrashIcon, CogIcon, ChartBarIcon, PhotoIcon, EnvelopeIcon, EyeIcon, HomeIcon, UserIcon } from '@heroicons/react/24/outline';
@@ -14,7 +14,7 @@ import { getAllTestimonials, Testimonial, deleteTestimonial } from '@/data/testi
 import FormEntryModal from '@/components/FormEntryModal';
 import ContentEditor from '@/components/ContentEditor';
 
-export default function Admin() {
+function AdminContent() {
   const searchParams = useSearchParams();
   const [projects, setProjects] = useState<Project[]>(getAllProjects());
   const [services] = useState<Service[]>(getAllServices());
@@ -622,5 +622,17 @@ export default function Admin() {
       {/* Footer */}
       <Footer currentPath="/admin" />
     </div>
+  );
+}
+
+export default function Admin() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-earle-black flex items-center justify-center">
+        <div className="text-white text-xl">Loading...</div>
+      </div>
+    }>
+      <AdminContent />
+    </Suspense>
   );
 }
