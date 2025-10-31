@@ -14,6 +14,14 @@ export interface Testimonial {
 export const testimonials: Testimonial[] = [
   {
     id: 1,
+    name: "Nick",
+    location: "Waukee, IA",
+    project: "Windstorm client",
+    rating: 5,
+    text: "Austin & Lacey at G3 turned what would have been a nightmare into a dream. We had a 75-year-old tree fall onto our garage from a wind storm, and he was there to provide estimates by the end of the day. Throughout the entirety of the project, he kept in constant communication with our roofing contractors and included us in all design decisions. Dependable, safe, and fast are what you need in an electrical professional; G3 is all three.",
+  },
+  {
+    id: 2,
     name: "Sarah Johnson",
     location: "West Des Moines, IA",
     project: "Kitchen Lighting Installation",
@@ -21,7 +29,7 @@ export const testimonials: Testimonial[] = [
     text: "G3 Electric transformed our kitchen with beautiful LED lighting. The team was professional, punctual, and the quality of work exceeded our expectations. Highly recommend their services!",
   },
   {
-    id: 2,
+    id: 3,
     name: "Mike Thompson",
     location: "Des Moines, IA",
     project: "Electrical Panel Upgrade",
@@ -29,7 +37,7 @@ export const testimonials: Testimonial[] = [
     text: "Outstanding work on our electrical panel upgrade. The electricians were knowledgeable, clean, and explained everything clearly. Our home is now safer and more efficient. Thank you G3 Electric!",
   },
   {
-    id: 3,
+    id: 4,
     name: "Lisa Chen",
     location: "Ankeny, IA",
     project: "Smart Home Installation",
