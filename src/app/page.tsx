@@ -198,10 +198,7 @@ export default function Home() {
                 }}
               >
                 <motion.div 
-                  className="h-32 bg-gradient-to-br from-purple/20 to-phlox/20 flex items-center justify-center"
-                  whileHover={{ 
-                    background: "linear-gradient(135deg, rgba(109, 0, 145, 0.3), rgba(109, 0, 145, 0.5))"
-                  }}
+                  className="h-32 bg-gradient-to-br from-purple/40 to-phlox/40 flex items-center justify-center"
                 >
                   <motion.div
                     whileHover={{ 
