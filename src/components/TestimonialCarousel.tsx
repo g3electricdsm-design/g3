@@ -92,7 +92,7 @@ export default function TestimonialCarousel({
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <div className="flex gap-[72px] items-center overflow-hidden pl-[33px] pr-0 py-8">
+          <div className="flex gap-[72px] items-stretch overflow-hidden pl-[33px] pr-0 py-8">
             {/* Left side - Text content and button */}
             <div className="flex flex-col gap-[72px] items-start justify-center shrink-0 w-full md:w-[600px]">
               <div className="flex flex-col gap-[22px] items-start">
@@ -121,20 +121,18 @@ export default function TestimonialCarousel({
             </div>
             
             {/* Right side - Image (bleeds to edge) */}
-            <div className="h-[475px] overflow-hidden relative shrink-0 w-full md:w-[495px] hidden md:block">
-              <div className="absolute inset-0">
-                <Image 
-                  src={`/images/testimonials/${currentTestimonial.name.toLowerCase().replace(/\s+/g, '-')}.jpg`}
-                  alt={`${currentTestimonial.name} - Customer testimonial`}
-                  width={495}
-                  height={475}
-                  className="w-full h-[143.73%] -translate-y-[43.73%] object-cover"
-                  onError={(e) => {
-                    const target = e.target as HTMLImageElement;
-                    target.style.display = 'none';
-                  }}
-                />
-              </div>
+            <div className="overflow-hidden relative shrink-0 w-full md:w-[495px] md:mr-0 md:-mr-8 hidden md:block">
+              <Image 
+                src={`/images/testimonials/${currentTestimonial.name.toLowerCase().replace(/\s+/g, '-')}.jpg`}
+                alt={`${currentTestimonial.name} - Customer testimonial`}
+                width={495}
+                height={475}
+                className="w-full h-full object-cover"
+                onError={(e) => {
+                  const target = e.target as HTMLImageElement;
+                  target.style.display = 'none';
+                }}
+              />
             </div>
           </div>
         </motion.div>
