@@ -92,7 +92,7 @@ export default function TestimonialCarousel({
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <div className="flex gap-[72px] items-stretch overflow-hidden pl-[33px] pr-0 py-8">
+          <div className="flex gap-[72px] items-stretch overflow-hidden pl-[33px] pr-0 pb-8 max-h-[477px]">
             {/* Left side - Text content and button */}
             <div className="flex flex-col gap-[72px] items-start justify-center shrink-0 w-full md:w-[600px]">
               <div className="flex flex-col gap-[22px] items-start">
