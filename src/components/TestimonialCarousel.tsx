@@ -65,7 +65,7 @@ export default function TestimonialCarousel({
 
   return (
     <motion.section 
-      className="py-20 relative overflow-hidden testimonial-bg"
+      className="py-20 relative overflow-hidden bg-earle-black"
       style={testimonialsY && testimonialsScale ? { y: testimonialsY, scale: testimonialsScale } : undefined}
     >
       {/* Floating background elements */}
