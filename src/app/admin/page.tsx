@@ -14,6 +14,8 @@ import { getAllTestimonials, Testimonial, deleteTestimonial } from '@/data/testi
 import FormEntryModal from '@/components/FormEntryModal';
 import ContentEditor from '@/components/ContentEditor';
 
+export const dynamic = 'force-dynamic';
+
 function AdminContent() {
   const searchParams = useSearchParams();
   const [projects, setProjects] = useState<Project[]>(getAllProjects());
