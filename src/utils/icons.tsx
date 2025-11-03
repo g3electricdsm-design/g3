@@ -43,6 +43,7 @@ export function ServiceIcon({ iconName, className = "w-full h-auto" }: ServiceIc
     return null;
   }
 
+  // eslint-disable-next-line @next/next/no-img-element
   return (
     <img 
       src={iconUrl} 

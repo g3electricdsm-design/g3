@@ -1,7 +1,7 @@
 'use client';
+/* eslint-disable @next/next/no-img-element */
 
 import { useState, useEffect, useCallback } from "react";
-import Image from "next/image";
 import { getAllTestimonials } from "@/data/testimonials";
 import { motion, useTransform, useMotionValue } from "framer-motion";
 import { MotionValue } from "framer-motion";
