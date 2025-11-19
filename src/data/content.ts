@@ -143,10 +143,6 @@ export interface ContactContent {
         label: string;
         placeholder: string;
       };
-      phone: {
-        label: string;
-        placeholder: string;
-      };
       message: {
         label: string;
         placeholder: string;
@@ -461,10 +457,6 @@ export const defaultContactContent: ContactContent = {
         label: "Email Address",
         placeholder: "your.email@example.com"
       },
-      phone: {
-        label: "Phone Number",
-        placeholder: "(555) 123-4567"
-      },
       message: {
         label: "Additional Message",
         placeholder: "Any additional information or questions..."
@@ -476,15 +468,9 @@ export const defaultContactContent: ContactContent = {
     title: "Contact Information",
     items: [
       {
-        id: "phone",
-        label: "Phone",
-        value: "(555) 123-4567",
-        icon: "PhoneIcon"
-      },
-      {
         id: "email",
         label: "Email",
-        value: "info@g3electric.com",
+        value: "g3electricdsm@gmail.com",
         icon: "EnvelopeIcon"
       },
       {

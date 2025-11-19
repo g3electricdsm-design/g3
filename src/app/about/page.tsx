@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Metadata } from "next";
 import { 
   ShieldCheckIcon, 
@@ -50,11 +51,13 @@ export default function About() {
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <h2 className="font-montserrat text-4xl text-white mb-6">{content.mission.title}</h2>
-              <div className="space-y-4 font-raleway text-white-smoke">
-                <p>{content.mission.description}</p>
-              </div>
+            <div className="relative rounded-lg overflow-hidden aspect-[4/3]">
+              <Image 
+                src="/images/family.jpg" 
+                alt="Family" 
+                fill
+                className="object-cover"
+              />
             </div>
             <div className="bg-white-smoke p-8 rounded-lg">
               <div className="text-center">

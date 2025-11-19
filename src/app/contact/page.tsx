@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from "react";
-import { PhoneIcon, EnvelopeIcon, MapPinIcon, ClockIcon } from "@heroicons/react/24/outline";
+import { EnvelopeIcon, MapPinIcon, ClockIcon } from "@heroicons/react/24/outline";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 
@@ -9,7 +9,6 @@ export default function Contact() {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    phone: '',
     projectType: '',
     description: '',
     budget: '',
@@ -48,12 +47,6 @@ export default function Contact() {
       case 'projectType':
         if (!value) return 'Project type is required';
         return '';
-      case 'phone':
-        if (value && value.trim().length > 0) {
-          const phoneRegex = /^[\d\s\-\(\)\+]+$/;
-          if (!phoneRegex.test(value)) return 'Please enter a valid phone number';
-        }
-        return '';
       default:
         return '';
     }
@@ -65,9 +58,6 @@ export default function Contact() {
     newErrors.name = validateField('name', formData.name);
     newErrors.email = validateField('email', formData.email);
     newErrors.projectType = validateField('projectType', formData.projectType);
-    if (formData.phone) {
-      newErrors.phone = validateField('phone', formData.phone);
-    }
     
     setErrors(newErrors);
     return !Object.values(newErrors).some(error => error !== '');
@@ -128,7 +118,6 @@ export default function Contact() {
         setFormData({
           name: '',
           email: '',
-          phone: '',
           projectType: '',
           description: '',
           budget: '',
@@ -173,19 +162,14 @@ export default function Contact() {
               
               <div className="space-y-6 mb-8">
                 <div className="flex items-start">
-                  <PhoneIcon className="h-6 w-6 text-purple mr-4 mt-1" />
-                  <div>
-                    <h3 className="font-montserrat text-lg font-semibold text-earle-black">Phone</h3>
-                    <p className="font-raleway text-earle-black">(555) 123-4567</p>
-                    <p className="font-raleway text-sm text-earle-black">Available 7 days a week</p>
-                  </div>
-                </div>
-
-                <div className="flex items-start">
                   <EnvelopeIcon className="h-6 w-6 text-purple mr-4 mt-1" />
                   <div>
                     <h3 className="font-montserrat text-lg font-semibold text-earle-black">Email</h3>
-                    <p className="font-raleway text-earle-black">info@g3electric.com</p>
+                    <p className="font-raleway text-earle-black">
+                      <a href="mailto:g3electricdsm@gmail.com" className="text-purple hover:text-phlox transition-colors">
+                        g3electricdsm@gmail.com
+                      </a>
+                    </p>
                     <p className="font-raleway text-sm text-earle-black">We respond within 24 hours</p>
                   </div>
                 </div>
@@ -295,30 +279,6 @@ export default function Contact() {
                       </p>
                     )}
                   </div>
-                </div>
-
-                <div>
-                  <label htmlFor="phone" className="block font-montserrat text-sm font-medium text-earle-black mb-2">
-                    Phone Number
-                  </label>
-                    <input
-                      type="tel"
-                      id="phone"
-                      name="phone"
-                      value={formData.phone}
-                      onChange={handleInputChange}
-                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-purple focus:border-purple font-raleway text-earle-black ${
-                        errors.phone ? 'border-red-500' : 'border-gray-300'
-                      }`}
-                      placeholder="(555) 123-4567"
-                      aria-describedby="phone-error"
-                      aria-invalid={errors.phone ? 'true' : 'false'}
-                    />
-                    {errors.phone && (
-                      <p id="phone-error" className="mt-1 text-sm text-red-600 font-raleway" role="alert">
-                        {errors.phone}
-                      </p>
-                    )}
                 </div>
 
                 {/* Project Details */}
