@@ -191,8 +191,8 @@ function AdminContent() {
                     <div key={project.id} className="bg-white rounded-lg p-4 shadow-sm border border-gray-200">
                       <div className="flex items-start justify-between mb-3">
                         <div className="flex-1">
-                          <h4 className="font-montserrat text-lg font-semibold text-earle-black">{project.title}</h4>
-                          <p className="font-raleway text-sm uppercase text-earle-black">{project.category} • {project.type}</p>
+                          <h4 className="font-montserrat text-lg font-semibold text-gray-900">{project.title}</h4>
+                          <p className="font-raleway text-sm uppercase text-gray-700 font-medium">{project.category} • {project.type}</p>
                         </div>
                         <div className="flex items-center gap-1">
                           <Link
@@ -200,7 +200,7 @@ function AdminContent() {
                             className="p-2 hover:bg-purple/10 rounded-lg transition-colors"
                             title="Edit project"
                           >
-                            <PencilIcon className="h-4 w-4 text-earle-black" />
+                            <PencilIcon className="h-4 w-4 text-gray-800" />
                           </Link>
                           <button
                             onClick={() => handleDelete(project.id)}
@@ -211,8 +211,8 @@ function AdminContent() {
                           </button>
                         </div>
                       </div>
-                      <p className="font-raleway text-sm mb-3 line-clamp-2 text-earle-black">{project.description}</p>
-                      <div className="flex items-center justify-between text-xs text-earle-black">
+                      <p className="font-raleway text-sm mb-3 line-clamp-2 text-gray-800">{project.description}</p>
+                      <div className="flex items-center justify-between text-xs text-gray-700 font-medium">
                         <span>{project.client}</span>
                         <span>{project.completed}</span>
                       </div>
