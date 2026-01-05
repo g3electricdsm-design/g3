@@ -143,10 +143,6 @@ export interface ContactContent {
         label: string;
         placeholder: string;
       };
-      phone: {
-        label: string;
-        placeholder: string;
-      };
       message: {
         label: string;
         placeholder: string;
@@ -369,7 +365,7 @@ export const defaultPricingContent: PricingContent = {
 export const defaultAboutContent: AboutContent = {
   hero: {
     title: "About G3 Electric",
-    description: "Your trusted partner for safe, dependable electrical services. We've been serving our community with excellence and integrity."
+    description: "G3 was founded in 2022 from a desire to provide safe, reliable and affordable electrical services.  We take pride in delivering top-tier craftsmanship with a personal touch, treating every home and business as if it were our own.  We cherish our relationships with all our customers."
   },
   mission: {
     title: "Our Mission",
@@ -461,10 +457,6 @@ export const defaultContactContent: ContactContent = {
         label: "Email Address",
         placeholder: "your.email@example.com"
       },
-      phone: {
-        label: "Phone Number",
-        placeholder: "(555) 123-4567"
-      },
       message: {
         label: "Additional Message",
         placeholder: "Any additional information or questions..."
@@ -476,21 +468,15 @@ export const defaultContactContent: ContactContent = {
     title: "Contact Information",
     items: [
       {
-        id: "phone",
-        label: "Phone",
-        value: "(555) 123-4567",
-        icon: "PhoneIcon"
-      },
-      {
         id: "email",
         label: "Email",
-        value: "info@g3electric.com",
+        value: "g3electricdsm@gmail.com",
         icon: "EnvelopeIcon"
       },
       {
         id: "hours",
         label: "Business Hours",
-        value: "Mon-Fri: 8AM-6PM, Sat: 9AM-4PM",
+        value: "Scheduled working hours: Monday-Friday 8am-5pm. Saturdays, Sundays, and anything outside the scheduled working hours are for emergency only.",
         icon: "ClockIcon"
       },
       {

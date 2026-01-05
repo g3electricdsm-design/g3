@@ -92,7 +92,7 @@ export default function FormEntryModal({ entry, onClose, onUpdateStatus, onAddNo
 
                 <div className="flex items-center gap-3">
                   <EnvelopeIcon className="h-5 w-5 text-purple" />
-                  <a href={`mailto:${entry.customerInfo.email}`} className="text-purple hover:text-phlox">
+                  <a href={`mailto:${entry.customerInfo.email}`} className="font-medium">
                     {entry.customerInfo.email}
                   </a>
                 </div>
@@ -100,7 +100,7 @@ export default function FormEntryModal({ entry, onClose, onUpdateStatus, onAddNo
                 {entry.customerInfo.phone && (
                   <div className="flex items-center gap-3">
                     <PhoneIcon className="h-5 w-5 text-purple" />
-                    <a href={`tel:${entry.customerInfo.phone}`} className="text-purple hover:text-phlox">
+                    <a href={`tel:${entry.customerInfo.phone}`} className="font-medium">
                       {entry.customerInfo.phone}
                     </a>
                   </div>

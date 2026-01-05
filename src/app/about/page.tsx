@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Metadata } from "next";
 import { 
   ShieldCheckIcon, 
@@ -11,6 +12,7 @@ import {
 } from "@heroicons/react/24/outline";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import Employee from "@/components/Employee";
 import { getContent } from "@/data/content";
 
 export const metadata: Metadata = {
@@ -50,11 +52,13 @@ export default function About() {
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <h2 className="font-montserrat text-4xl text-white mb-6">{content.mission.title}</h2>
-              <div className="space-y-4 font-raleway text-white-smoke">
-                <p>{content.mission.description}</p>
-              </div>
+            <div className="relative rounded-lg overflow-hidden aspect-[4/3]">
+              <Image 
+                src="/images/family.jpg" 
+                alt="Family" 
+                fill
+                className="object-cover"
+              />
             </div>
             <div className="bg-white-smoke p-8 rounded-lg">
               <div className="text-center">
@@ -158,21 +162,19 @@ export default function About() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {content.team.map((member, index) => (
-              <div key={index} className="bg-white rounded-lg shadow-sm text-center overflow-hidden">
-                <div className="h-48 bg-gradient-to-br from-purple/20 to-phlox/20 flex items-center justify-center">
-                  <div className="w-24 h-24 bg-purple/30 rounded-full flex items-center justify-center">
-                    <UserGroupIcon className="h-12 w-12 text-purple" />
-                  </div>
-                </div>
-                <div className="p-6">
-                  <h3 className="font-montserrat text-xl font-semibold text-earle-black mb-2">{member.name}</h3>
-                  <p className="font-raleway text-purple font-medium mb-2">{member.role}</p>
-                  <p className="font-raleway text-earle-black text-sm mb-4">{member.description}</p>
-                </div>
-              </div>
-            ))}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            <Employee
+              headshot="/images/testimonials/nick.jpg"
+              employee_name="Nick Johnson"
+              yearsOfExperience={15}
+              certification="Master Electrician BA from University of Grandview"
+            />
+            <Employee
+              headshot="/images/testimonials/mike-chen.jpg"
+              employee_name="Mike Chen"
+              yearsOfExperience={12}
+              certification="Master Electrician BA from University of Grandview"
+            />
           </div>
         </div>
       </section>

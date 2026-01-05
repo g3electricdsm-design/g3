@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from "react";
-import { PhoneIcon, EnvelopeIcon, MapPinIcon, ClockIcon } from "@heroicons/react/24/outline";
+import { EnvelopeIcon, MapPinIcon, ClockIcon } from "@heroicons/react/24/outline";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 
@@ -9,7 +9,6 @@ export default function Contact() {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    phone: '',
     projectType: '',
     description: '',
     budget: '',
@@ -48,12 +47,6 @@ export default function Contact() {
       case 'projectType':
         if (!value) return 'Project type is required';
         return '';
-      case 'phone':
-        if (value && value.trim().length > 0) {
-          const phoneRegex = /^[\d\s\-\(\)\+]+$/;
-          if (!phoneRegex.test(value)) return 'Please enter a valid phone number';
-        }
-        return '';
       default:
         return '';
     }
@@ -65,9 +58,6 @@ export default function Contact() {
     newErrors.name = validateField('name', formData.name);
     newErrors.email = validateField('email', formData.email);
     newErrors.projectType = validateField('projectType', formData.projectType);
-    if (formData.phone) {
-      newErrors.phone = validateField('phone', formData.phone);
-    }
     
     setErrors(newErrors);
     return !Object.values(newErrors).some(error => error !== '');
@@ -128,7 +118,6 @@ export default function Contact() {
         setFormData({
           name: '',
           email: '',
-          phone: '',
           projectType: '',
           description: '',
           budget: '',
@@ -173,20 +162,15 @@ export default function Contact() {
               
               <div className="space-y-6 mb-8">
                 <div className="flex items-start">
-                  <PhoneIcon className="h-6 w-6 text-purple mr-4 mt-1" />
-                  <div>
-                    <h3 className="font-montserrat text-lg font-semibold text-earle-black">Phone</h3>
-                    <p className="font-raleway text-earle-black">(555) 123-4567</p>
-                    <p className="font-raleway text-sm text-earle-black">Available 7 days a week</p>
-                  </div>
-                </div>
-
-                <div className="flex items-start">
                   <EnvelopeIcon className="h-6 w-6 text-purple mr-4 mt-1" />
                   <div>
                     <h3 className="font-montserrat text-lg font-semibold text-earle-black">Email</h3>
-                    <p className="font-raleway text-earle-black">info@g3electric.com</p>
-                    <p className="font-raleway text-sm text-earle-black">We respond within 24 hours</p>
+                    <p className="font-raleway text-earle-black">
+                      <a href="mailto:g3electricdsm@gmail.com" className="font-medium text-purple hover:text-phlox">
+                        g3electricdsm@gmail.com
+                      </a>
+                    </p>
+                    <p className="font-raleway text-sm text-earle-black">For general inquiries, reach out to us at </p>
                   </div>
                 </div>
 
@@ -194,8 +178,8 @@ export default function Contact() {
                   <MapPinIcon className="h-6 w-6 text-purple mr-4 mt-1" />
                   <div>
                     <h3 className="font-montserrat text-lg font-semibold text-earle-black">Service Area</h3>
-                    <p className="font-raleway text-earle-black">Local and surrounding areas</p>
-                    <p className="font-raleway text-sm text-earle-black">Contact us for specific locations</p>
+                    <p className="font-raleway text-earle-black">We proudly serve Central Iowa and surrounding communities.</p>
+                    <p className="font-raleway text-sm text-earle-black">Please reach out for specific locations.</p>
                   </div>
                 </div>
 
@@ -203,9 +187,8 @@ export default function Contact() {
                   <ClockIcon className="h-6 w-6 text-purple mr-4 mt-1" />
                   <div>
                     <h3 className="font-montserrat text-lg font-semibold text-earle-black">Business Hours</h3>
-                    <p className="font-raleway text-earle-black">Monday - Friday: 7:00 AM - 6:00 PM</p>
-                    <p className="font-raleway text-earle-black">Saturday: 8:00 AM - 4:00 PM</p>
-                    <p className="font-raleway text-earle-black">Sunday: Emergency calls only</p>
+                    <p className="font-raleway text-earle-black">Monday-Friday 8am-5pm</p> &nbsp; &nbsp;  
+                    <p className="font-raleway text-earle-black">Saturdays, Sundays, and anything outside the scheduled working hours are reserved for emergencies.</p>
                   </div>
                 </div>
               </div>
@@ -216,7 +199,10 @@ export default function Contact() {
                   <p className="font-raleway text-earle-black mb-4">
                     Prefer to schedule a specific time? Use our online booking system to find a time that works for you.
                   </p>
-                  <button className="btn-primary focus:ring-2 focus:ring-purple focus:ring-offset-2 w-full sm:w-auto text-sm sm:text-base">
+                  <button 
+                    disabled
+                    className="btn-primary focus:ring-2 focus:ring-purple focus:ring-offset-2 w-full sm:w-auto text-sm sm:text-base"
+                  >
                     Book Online
                   </button>
                   <p className="font-raleway text-sm text-earle-black mt-2">
@@ -295,30 +281,6 @@ export default function Contact() {
                       </p>
                     )}
                   </div>
-                </div>
-
-                <div>
-                  <label htmlFor="phone" className="block font-montserrat text-sm font-medium text-earle-black mb-2">
-                    Phone Number
-                  </label>
-                    <input
-                      type="tel"
-                      id="phone"
-                      name="phone"
-                      value={formData.phone}
-                      onChange={handleInputChange}
-                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-purple focus:border-purple font-raleway text-earle-black ${
-                        errors.phone ? 'border-red-500' : 'border-gray-300'
-                      }`}
-                      placeholder="(555) 123-4567"
-                      aria-describedby="phone-error"
-                      aria-invalid={errors.phone ? 'true' : 'false'}
-                    />
-                    {errors.phone && (
-                      <p id="phone-error" className="mt-1 text-sm text-red-600 font-raleway" role="alert">
-                        {errors.phone}
-                      </p>
-                    )}
                 </div>
 
                 {/* Project Details */}
@@ -474,7 +436,7 @@ export default function Contact() {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="btn-primary w-full text-sm sm:text-base focus:ring-2 focus:ring-purple focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="btn-primary w-full text-sm sm:text-base focus:ring-2 focus:ring-purple focus:ring-offset-2"
                 >
                   {isSubmitting ? 'Sending...' : 'Request Free Quote'}
                 </button>

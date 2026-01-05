@@ -45,9 +45,16 @@ body {
     white-space: nowrap;
   }
 
-  .btn-primary:hover {
+  .btn-primary:hover:not(:disabled) {
     background-color: #5a007a;
     transform: translateY(-1px);
+  }
+
+  .btn-primary:disabled {
+    background-color: #9CA3AF;
+    color: white;
+    cursor: not-allowed;
+    opacity: 0.7;
   }
 
   @media (min-width: 640px) {
@@ -72,10 +79,18 @@ body {
     white-space: nowrap;
   }
 
-  .btn-secondary:hover {
+  .btn-secondary:hover:not(:disabled) {
     background-color: #C636FF;
     color: white;
     transform: translateY(-1px);
+  }
+
+  .btn-secondary:disabled {
+    background-color: #9CA3AF;
+    color: white;
+    border-color: #9CA3AF;
+    cursor: not-allowed;
+    opacity: 0.7;
   }
 
   @media (min-width: 640px) {
@@ -87,4 +102,32 @@ body {
   /* Testimonials section */
   .testimonial-bg {
     background-color: #748680;
+  }
+
+  /* Link styling */
+  a {
+    color: white;
+    text-decoration: underline;
+    text-decoration-color: white;
+    text-underline-offset: 3px;
+    transition: all 0.2s ease;
+  }
+
+  a:hover {
+    color: #C636FF;
+    text-decoration-color: #C636FF;
+  }
+
+  a:focus {
+    outline: 2px solid white;
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  /* Links that should not have underline (like navigation links) */
+  a.no-underline,
+  nav a,
+  .btn-primary,
+  .btn-secondary {
+    text-decoration: none;
   }
