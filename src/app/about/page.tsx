@@ -48,6 +48,37 @@ export default function About() {
         </div>
       </section>
 
+      {/* Stats Section */}
+      <section className="py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="font-montserrat text-4xl text-earle-black mb-4">By the Numbers</h2>
+            <p className="font-raleway text-lg text-earle-black max-w-3xl mx-auto">
+              Our track record speaks for itself—safety, quality, and customer satisfaction in every project.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+            <div className="text-center">
+              <div className="font-montserrat text-4xl md:text-5xl font-black text-purple mb-2">10+</div>
+              <div className="font-montserrat text-lg font-semibold text-earle-black">Years Experience</div>
+            </div>
+            <div className="text-center">
+              <div className="font-montserrat text-4xl md:text-5xl font-black text-purple mb-2">1000+</div>
+              <div className="font-montserrat text-lg font-semibold text-earle-black">Projects Completed</div>
+            </div>
+            <div className="text-center">
+              <div className="font-montserrat text-4xl md:text-5xl font-black text-purple mb-2">100%</div>
+              <div className="font-montserrat text-lg font-semibold text-earle-black">Safety Record</div>
+            </div>
+            <div className="text-center">
+              <div className="font-montserrat text-4xl md:text-5xl font-black text-purple mb-2">24/7</div>
+              <div className="font-montserrat text-lg font-semibold text-earle-black">Emergency Service</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Story Section */}
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -121,38 +152,8 @@ export default function About() {
         </div>
       </section>
 
-      {/* Stats Section */}
-      <section className="py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="font-montserrat text-4xl text-earle-black mb-4">By the Numbers</h2>
-            <p className="font-raleway text-lg text-earle-black max-w-3xl mx-auto">
-              Our track record speaks for itself—safety, quality, and customer satisfaction in every project.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            <div className="text-center">
-              <div className="font-megrim text-4xl md:text-5xl text-purple mb-2">15+</div>
-              <div className="font-montserrat text-lg font-semibold text-earle-black">Years Experience</div>
-            </div>
-            <div className="text-center">
-              <div className="font-megrim text-4xl md:text-5xl text-purple mb-2">500+</div>
-              <div className="font-montserrat text-lg font-semibold text-earle-black">Projects Completed</div>
-            </div>
-            <div className="text-center">
-              <div className="font-megrim text-4xl md:text-5xl text-purple mb-2">100%</div>
-              <div className="font-montserrat text-lg font-semibold text-earle-black">Safety Record</div>
-            </div>
-            <div className="text-center">
-              <div className="font-megrim text-4xl md:text-5xl text-purple mb-2">24/7</div>
-              <div className="font-montserrat text-lg font-semibold text-earle-black">Emergency Service</div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Team Section */}
+      {/* Team Section - Hidden for now */}
+      {false && (
       <section className="py-20 bg-white-smoke">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
@@ -178,6 +179,7 @@ export default function About() {
           </div>
         </div>
       </section>
+      )}
 
       {/* Safety Commitment */}
       <section className="py-20">
