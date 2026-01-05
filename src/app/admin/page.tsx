@@ -214,7 +214,7 @@ function AdminContent() {
                       <p className="font-raleway text-sm mb-3 line-clamp-2 text-gray-800">{project.description}</p>
                       <div className="flex items-center justify-between text-xs text-gray-700 font-medium">
                         <span>{project.client}</span>
-                        <span>{project.completed}</span>
+                        <span>{project.location}</span>
                       </div>
                     </div>
                   ))}

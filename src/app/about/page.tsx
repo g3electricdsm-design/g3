@@ -12,6 +12,7 @@ import {
 } from "@heroicons/react/24/outline";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import Employee from "@/components/Employee";
 import { getContent } from "@/data/content";
 
 export const metadata: Metadata = {
@@ -161,21 +162,19 @@ export default function About() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {content.team.map((member, index) => (
-              <div key={index} className="bg-white rounded-lg shadow-sm text-center overflow-hidden">
-                <div className="h-48 bg-gradient-to-br from-purple/20 to-phlox/20 flex items-center justify-center">
-                  <div className="w-24 h-24 bg-purple/30 rounded-full flex items-center justify-center">
-                    <UserGroupIcon className="h-12 w-12 text-purple" />
-                  </div>
-                </div>
-                <div className="p-6">
-                  <h3 className="font-montserrat text-xl font-semibold text-earle-black mb-2">{member.name}</h3>
-                  <p className="font-raleway text-purple font-medium mb-2">{member.role}</p>
-                  <p className="font-raleway text-earle-black text-sm mb-4">{member.description}</p>
-                </div>
-              </div>
-            ))}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            <Employee
+              headshot="/images/testimonials/nick.jpg"
+              employee_name="Nick Johnson"
+              yearsOfExperience={15}
+              certification="Master Electrician BA from University of Grandview"
+            />
+            <Employee
+              headshot="/images/testimonials/mike-chen.jpg"
+              employee_name="Mike Chen"
+              yearsOfExperience={12}
+              certification="Master Electrician BA from University of Grandview"
+            />
           </div>
         </div>
       </section>

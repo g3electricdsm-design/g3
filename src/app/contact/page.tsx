@@ -166,11 +166,11 @@ export default function Contact() {
                   <div>
                     <h3 className="font-montserrat text-lg font-semibold text-earle-black">Email</h3>
                     <p className="font-raleway text-earle-black">
-                      <a href="mailto:g3electricdsm@gmail.com" className="text-purple hover:text-phlox transition-colors">
+                      <a href="mailto:g3electricdsm@gmail.com" className="font-medium text-purple hover:text-phlox">
                         g3electricdsm@gmail.com
                       </a>
                     </p>
-                    <p className="font-raleway text-sm text-earle-black">We respond within 24 hours</p>
+                    <p className="font-raleway text-sm text-earle-black">For general inquiries, reach out to us at </p>
                   </div>
                 </div>
 
@@ -178,8 +178,8 @@ export default function Contact() {
                   <MapPinIcon className="h-6 w-6 text-purple mr-4 mt-1" />
                   <div>
                     <h3 className="font-montserrat text-lg font-semibold text-earle-black">Service Area</h3>
-                    <p className="font-raleway text-earle-black">Local and surrounding areas</p>
-                    <p className="font-raleway text-sm text-earle-black">Contact us for specific locations</p>
+                    <p className="font-raleway text-earle-black">We proudly serve Central Iowa and surrounding communities.</p>
+                    <p className="font-raleway text-sm text-earle-black">Please reach out for specific locations.</p>
                   </div>
                 </div>
 
@@ -187,9 +187,8 @@ export default function Contact() {
                   <ClockIcon className="h-6 w-6 text-purple mr-4 mt-1" />
                   <div>
                     <h3 className="font-montserrat text-lg font-semibold text-earle-black">Business Hours</h3>
-                    <p className="font-raleway text-earle-black">Monday - Friday: 7:00 AM - 6:00 PM</p>
-                    <p className="font-raleway text-earle-black">Saturday: 8:00 AM - 4:00 PM</p>
-                    <p className="font-raleway text-earle-black">Sunday: Emergency calls only</p>
+                    <p className="font-raleway text-earle-black">Monday-Friday 8am-5pm</p> &nbsp; &nbsp;  
+                    <p className="font-raleway text-earle-black">Saturdays, Sundays, and anything outside the scheduled working hours are reserved for emergencies.</p>
                   </div>
                 </div>
               </div>
@@ -200,7 +199,10 @@ export default function Contact() {
                   <p className="font-raleway text-earle-black mb-4">
                     Prefer to schedule a specific time? Use our online booking system to find a time that works for you.
                   </p>
-                  <button className="btn-primary focus:ring-2 focus:ring-purple focus:ring-offset-2 w-full sm:w-auto text-sm sm:text-base">
+                  <button 
+                    disabled
+                    className="btn-primary focus:ring-2 focus:ring-purple focus:ring-offset-2 w-full sm:w-auto text-sm sm:text-base"
+                  >
                     Book Online
                   </button>
                   <p className="font-raleway text-sm text-earle-black mt-2">
@@ -434,7 +436,7 @@ export default function Contact() {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="btn-primary w-full text-sm sm:text-base focus:ring-2 focus:ring-purple focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="btn-primary w-full text-sm sm:text-base focus:ring-2 focus:ring-purple focus:ring-offset-2"
                 >
                   {isSubmitting ? 'Sending...' : 'Request Free Quote'}
                 </button>

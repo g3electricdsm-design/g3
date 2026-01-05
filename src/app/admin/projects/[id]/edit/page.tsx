@@ -19,14 +19,10 @@ export default function EditProjectPage() {
     type: '',
     image: '/api/placeholder/800/600',
     description: '',
-    fullDescription: '',
     client: '',
     location: '',
-    duration: '',
-    completed: '',
     services: [],
     challenges: '',
-    results: '',
     size: 'medium'
   });
 
@@ -250,35 +246,6 @@ export default function EditProjectPage() {
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-sm font-medium text-earle-black mb-2">
-                        Duration
-                      </label>
-                      <input
-                        type="text"
-                        name="duration"
-                        value={formData.duration}
-                        onChange={handleInputChange}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple focus:border-transparent text-earle-black"
-                        placeholder="e.g., 2 weeks"
-                      />
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-medium text-earle-black mb-2">
-                        Completion Date
-                      </label>
-                      <input
-                        type="text"
-                        name="completed"
-                        value={formData.completed}
-                        onChange={handleInputChange}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple focus:border-transparent text-earle-black"
-                        placeholder="e.g., March 2024"
-                      />
-                    </div>
-                  </div>
                 </div>
 
                 {/* Project Descriptions */}
@@ -301,19 +268,6 @@ export default function EditProjectPage() {
                     />
                   </div>
 
-                  <div>
-                    <label className="block text-sm font-medium text-earle-black mb-2">
-                      Full Description
-                    </label>
-                    <textarea
-                      name="fullDescription"
-                      value={formData.fullDescription}
-                      onChange={handleInputChange}
-                      rows={4}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple focus:border-transparent text-earle-black"
-                      placeholder="Detailed project description"
-                    />
-                  </div>
 
                   {/* Services */}
                   <div>
@@ -357,34 +311,19 @@ export default function EditProjectPage() {
                     </div>
                   </div>
 
-                  {/* Challenges and Results */}
-                  <div className="space-y-4">
-                    <div>
-                      <label className="block text-sm font-medium text-earle-black mb-2">
-                        Challenges
-                      </label>
-                      <textarea
-                        name="challenges"
-                        value={formData.challenges}
-                        onChange={handleInputChange}
-                        rows={3}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple focus:border-transparent text-earle-black"
-                        placeholder="Project challenges faced"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-earle-black mb-2">
-                        Results
-                      </label>
-                      <textarea
-                        name="results"
-                        value={formData.results}
-                        onChange={handleInputChange}
-                        rows={3}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple focus:border-transparent text-earle-black"
-                        placeholder="Project results achieved"
-                      />
-                    </div>
+                  {/* Challenges */}
+                  <div>
+                    <label className="block text-sm font-medium text-earle-black mb-2">
+                      Challenges
+                    </label>
+                    <textarea
+                      name="challenges"
+                      value={formData.challenges}
+                      onChange={handleInputChange}
+                      rows={3}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple focus:border-transparent text-earle-black"
+                      placeholder="Project challenges faced"
+                    />
                   </div>
                 </div>
               </div>

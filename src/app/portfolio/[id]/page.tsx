@@ -1,7 +1,7 @@
 'use client';
 
 import Link from "next/link";
-import { ArrowLeftIcon, CalendarIcon, ClockIcon, UserIcon, BoltIcon } from "@heroicons/react/24/outline";
+import { ArrowLeftIcon, UserIcon, BoltIcon } from "@heroicons/react/24/outline";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import ProjectDetailSkeleton from "@/components/ProjectDetailSkeleton";
@@ -106,7 +106,7 @@ export default function ProjectDetail() {
               {/* Project Description */}
               <div className="mb-8">
                 <h2 className="font-montserrat text-2xl text-earle-black mb-4">Project Overview</h2>
-                <p className="font-raleway text-lg text-earle-black leading-relaxed">{project.fullDescription}</p>
+                <p className="font-raleway text-lg text-earle-black leading-relaxed">{project.description}</p>
               </div>
 
               {/* Services Provided */}
@@ -122,16 +122,10 @@ export default function ProjectDetail() {
                 </div>
               </div>
 
-              {/* Challenges & Results */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div>
-                  <h3 className="font-montserrat text-xl text-earle-black mb-3">Challenges</h3>
-                  <p className="font-raleway text-earle-black">{project.challenges}</p>
-                </div>
-                <div>
-                  <h3 className="font-montserrat text-xl text-earle-black mb-3">Results</h3>
-                  <p className="font-raleway text-earle-black">{project.results}</p>
-                </div>
+              {/* Challenges */}
+              <div className="mb-8">
+                <h3 className="font-montserrat text-xl text-earle-black mb-3">Challenges</h3>
+                <p className="font-raleway text-earle-black">{project.challenges}</p>
               </div>
             </div>
 
@@ -148,26 +142,6 @@ export default function ProjectDetail() {
                     <div className="flex-1 min-w-0">
                       <div className="font-raleway text-sm font-medium text-earle-black mb-1">Client</div>
                       <div className="font-montserrat text-earle-black text-lg">{project.client}</div>
-                    </div>
-                  </div>
-                  
-                  <div className="flex items-start gap-4">
-                    <div className="flex-shrink-0 w-10 h-10 bg-purple/10 rounded-lg flex items-center justify-center">
-                      <CalendarIcon className="h-5 w-5 text-purple" />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="font-raleway text-sm font-medium text-earle-black mb-1">Completed</div>
-                      <div className="font-montserrat text-earle-black text-lg">{project.completed}</div>
-                    </div>
-                  </div>
-                  
-                  <div className="flex items-start gap-4">
-                    <div className="flex-shrink-0 w-10 h-10 bg-purple/10 rounded-lg flex items-center justify-center">
-                      <ClockIcon className="h-5 w-5 text-purple" />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="font-raleway text-sm font-medium text-earle-black mb-1">Duration</div>
-                      <div className="font-montserrat text-earle-black text-lg">{project.duration}</div>
                     </div>
                   </div>
                   
