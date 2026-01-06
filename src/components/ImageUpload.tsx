@@ -181,12 +181,14 @@ export default function ImageUpload({ currentImage, onImageChange, projectTitle,
             />
             <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
               <button
+                type="button"
                 onClick={handleClick}
                 className="bg-white/20 backdrop-blur-sm text-white px-4 py-2 rounded-lg font-montserrat font-medium hover:bg-white/30 transition-colors mr-2"
               >
                 Change Image
               </button>
               <button
+                type="button"
                 onClick={handleRemoveImage}
                 className="bg-red-500/80 backdrop-blur-sm text-white px-4 py-2 rounded-lg font-montserrat font-medium hover:bg-red-500 transition-colors"
               >
