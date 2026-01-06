@@ -20,14 +20,10 @@ export default function ProjectForm({ project, onSave, onCancel, isOpen }: Proje
     type: '',
     image: '/api/placeholder/800/600',
     description: '',
-    fullDescription: '',
     client: '',
     location: '',
-    duration: '',
-    completed: '',
     services: [],
     challenges: '',
-    results: '',
     size: 'medium'
   });
 
@@ -44,14 +40,10 @@ export default function ProjectForm({ project, onSave, onCancel, isOpen }: Proje
         type: '',
         image: '/api/placeholder/800/600',
         description: '',
-        fullDescription: '',
         client: '',
         location: '',
-        duration: '',
-        completed: '',
         services: [],
         challenges: '',
-        results: '',
         size: 'medium'
       });
     }
@@ -199,30 +191,6 @@ export default function ProjectForm({ project, onSave, onCancel, isOpen }: Proje
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple focus:border-transparent"
                   />
                 </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-earle-black mb-2">Duration</label>
-                  <input
-                    type="text"
-                    name="duration"
-                    value={formData.duration}
-                    onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple focus:border-transparent"
-                    placeholder="e.g., 2 days, 1 week"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-earle-black mb-2">Completion Date</label>
-                  <input
-                    type="text"
-                    name="completed"
-                    value={formData.completed}
-                    onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple focus:border-transparent"
-                    placeholder="e.g., March 2024"
-                  />
-                </div>
               </div>
             </div>
 
@@ -231,7 +199,7 @@ export default function ProjectForm({ project, onSave, onCancel, isOpen }: Proje
               <h3 className="font-montserrat text-lg font-semibold text-earle-black">Project Descriptions</h3>
               
               <div>
-                <label className="block text-sm font-medium text-earle-black mb-2">Short Description</label>
+                <label className="block text-sm font-medium text-earle-black mb-2">Description</label>
                 <input
                   type="text"
                   name="description"
@@ -239,18 +207,6 @@ export default function ProjectForm({ project, onSave, onCancel, isOpen }: Proje
                   onChange={handleInputChange}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple focus:border-transparent"
                   placeholder="Brief project summary"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-earle-black mb-2">Full Description</label>
-                <textarea
-                  name="fullDescription"
-                  value={formData.fullDescription}
-                  onChange={handleInputChange}
-                  rows={4}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple focus:border-transparent"
-                  placeholder="Detailed project description"
                 />
               </div>
             </div>
@@ -296,31 +252,17 @@ export default function ProjectForm({ project, onSave, onCancel, isOpen }: Proje
               </div>
             </div>
 
-            {/* Challenges and Results */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <label className="block text-sm font-medium text-earle-black mb-2">Challenges</label>
-                <textarea
-                  name="challenges"
-                  value={formData.challenges}
-                  onChange={handleInputChange}
-                  rows={3}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple focus:border-transparent"
-                  placeholder="Project challenges faced"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-earle-black mb-2">Results</label>
-                <textarea
-                  name="results"
-                  value={formData.results}
-                  onChange={handleInputChange}
-                  rows={3}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple focus:border-transparent"
-                  placeholder="Project results achieved"
-                />
-              </div>
+            {/* Challenges */}
+            <div>
+              <label className="block text-sm font-medium text-earle-black mb-2">Challenges</label>
+              <textarea
+                name="challenges"
+                value={formData.challenges}
+                onChange={handleInputChange}
+                rows={3}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple focus:border-transparent"
+                placeholder="Project challenges faced"
+              />
             </div>
 
             {/* Project Image Upload */}
