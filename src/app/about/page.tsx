@@ -1,6 +1,7 @@
+'use client';
+
 import Link from "next/link";
-import Image from "next/image";
-import { Metadata } from "next";
+import { useState, useEffect, useRef } from "react";
 import { 
   ShieldCheckIcon, 
   BoltIcon, 
@@ -15,10 +16,93 @@ import Footer from "@/components/Footer";
 import Employee from "@/components/Employee";
 import { getContent } from "@/data/content";
 
-export const metadata: Metadata = {
-  title: "About Us",
-  description: "Licensed electricians with over 15 years of experience. Safety and quality in every project.",
-};
+// Sequential counting animation component
+function AnimatedNumber({ target, suffix = '', duration = 2000, slowEnd = false }: { target: number; suffix?: string; duration?: number; slowEnd?: boolean }) {
+  const [count, setCount] = useState(1);
+  const [hasStarted, setHasStarted] = useState(false);
+  const observerRef = useRef<HTMLDivElement>(null);
+  const animationRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    const startCounting = () => {
+      const startTime = Date.now();
+      const startValue = 1;
+      const endValue = target;
+
+      // Custom easing that really slows down at the end for slowEnd
+      const easeOutSlow = (t: number) => {
+        if (t < 0.6) {
+          // Fast progress for first 60%
+          return t * 0.6 / 0.6;
+        } else {
+          // Very slow for last 40% - really eases into the final number
+          const remaining = t - 0.6;
+          const remainingProgress = remaining / 0.4;
+          // Use a very aggressive ease-out for the last portion
+          return 0.6 + (remainingProgress * remainingProgress * remainingProgress * 0.4);
+        }
+      };
+
+      // Standard ease-out cubic
+      const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3);
+
+      const easingFunction = slowEnd ? easeOutSlow : easeOutCubic;
+
+      const animate = () => {
+        const now = Date.now();
+        const elapsed = now - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        
+        // Apply easing function for slow roll-in at the end
+        const easedProgress = easingFunction(progress);
+        const currentValue = Math.floor(startValue + (endValue - startValue) * easedProgress);
+        
+        // Make sure we don't exceed the target
+        const displayValue = Math.min(currentValue, endValue);
+        setCount(displayValue);
+
+        if (progress < 1) {
+          animationRef.current = requestAnimationFrame(animate);
+        } else {
+          setCount(endValue);
+        }
+      };
+
+      animationRef.current = requestAnimationFrame(animate);
+    };
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !hasStarted) {
+            setHasStarted(true);
+            startCounting();
+          }
+        });
+      },
+      { threshold: 0.5 }
+    );
+
+    if (observerRef.current) {
+      observer.observe(observerRef.current);
+    }
+
+    return () => {
+      if (observerRef.current) {
+        observer.unobserve(observerRef.current);
+      }
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
+      }
+    };
+  }, [hasStarted, target, duration, slowEnd]);
+
+  return (
+    <div ref={observerRef} className="font-montserrat text-4xl md:text-5xl font-black text-purple mb-2">
+      {count}{suffix}
+    </div>
+  );
+}
 
 export default function About() {
   const content = getContent().about;
@@ -60,15 +144,15 @@ export default function About() {
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             <div className="text-center">
-              <div className="font-montserrat text-4xl md:text-5xl font-black text-purple mb-2">10+</div>
+              <AnimatedNumber target={10} suffix="+" duration={4000} slowEnd={true} />
               <div className="font-montserrat text-lg font-semibold text-earle-black">Years Experience</div>
             </div>
             <div className="text-center">
-              <div className="font-montserrat text-4xl md:text-5xl font-black text-purple mb-2">1000+</div>
+              <AnimatedNumber target={1000} suffix="+" duration={3000} />
               <div className="font-montserrat text-lg font-semibold text-earle-black">Projects Completed</div>
             </div>
             <div className="text-center">
-              <div className="font-montserrat text-4xl md:text-5xl font-black text-purple mb-2">100%</div>
+              <AnimatedNumber target={100} suffix="%" duration={4000} slowEnd={true} />
               <div className="font-montserrat text-lg font-semibold text-earle-black">Safety Record</div>
             </div>
             <div className="text-center">
@@ -79,75 +163,66 @@ export default function About() {
         </div>
       </section>
 
-      {/* Story Section */}
-      <section className="py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div className="relative rounded-lg overflow-hidden aspect-[4/3]">
-              <Image 
-                src="/images/family.jpg" 
-                alt="Family" 
-                fill
-                className="object-cover"
-              />
-            </div>
-            <div className="bg-white-smoke p-8 rounded-lg">
-              <div className="text-center">
-                <div className="w-24 h-24 bg-purple rounded-full flex items-center justify-center mx-auto mb-6">
-                  <BoltIcon className="h-12 w-12 text-white" />
-                </div>
-                <h3 className="font-montserrat text-2xl font-semibold text-earle-black mb-4">Why Choose G3 Electric?</h3>
-                <ul className="space-y-3 text-left">
-                  <li className="flex items-center font-raleway text-earle-black">
-                    <CheckBadgeIcon className="h-5 w-5 text-purple mr-3 flex-shrink-0" />
-                    Licensed & Insured
-                  </li>
-                  <li className="flex items-center font-raleway text-earle-black">
-                    <CheckBadgeIcon className="h-5 w-5 text-purple mr-3 flex-shrink-0" />
-                    Safety-First Approach
-                  </li>
-                  <li className="flex items-center font-raleway text-earle-black">
-                    <CheckBadgeIcon className="h-5 w-5 text-purple mr-3 flex-shrink-0" />
-                    Code Compliance Guaranteed
-                  </li>
-                  <li className="flex items-center font-raleway text-earle-black">
-                    <CheckBadgeIcon className="h-5 w-5 text-purple mr-3 flex-shrink-0" />
-                    Quality Materials Only
-                  </li>
-                  <li className="flex items-center font-raleway text-earle-black">
-                    <CheckBadgeIcon className="h-5 w-5 text-purple mr-3 flex-shrink-0" />
-                    Honest, Transparent Pricing
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Values Section */}
+      {/* Why Choose & Values Combined Section */}
       <section className="py-20 bg-white-smoke">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="font-montserrat text-4xl text-earle-black mb-4">Our Values</h2>
-            <p className="font-raleway text-lg text-earle-black max-w-3xl mx-auto">
-              These core values guide everything we do and ensure you receive the best possible service.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {content.values.map((value, index) => {
-              const IconComponent = iconMap[value.icon as keyof typeof iconMap] || ShieldCheckIcon;
-              return (
-                <div key={index} className="text-center">
-                  <div className="w-16 h-16 bg-purple rounded-full flex items-center justify-center mx-auto mb-6">
-                    <IconComponent className="h-8 w-8 text-white" />
-                  </div>
-                  <h3 className="font-montserrat text-xl font-semibold text-earle-black mb-4">{value.title}</h3>
-                  <p className="font-raleway text-earle-black">{value.description}</p>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            {/* Why Choose G3 Electric - Left Column */}
+            <div className="bg-purple p-8 rounded-lg">
+              <div className="text-center mb-6">
+                <div className="w-24 h-24 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                  <BoltIcon className="h-12 w-12 text-white" />
                 </div>
-              );
-            })}
+                <h3 className="font-montserrat text-2xl font-semibold text-white mb-4">Why Choose G3 Electric?</h3>
+              </div>
+              <ul className="space-y-3">
+                <li className="flex items-center font-raleway text-white">
+                  <CheckBadgeIcon className="h-5 w-5 text-white mr-3 flex-shrink-0" />
+                  Licensed & Insured
+                </li>
+                <li className="flex items-center font-raleway text-white">
+                  <CheckBadgeIcon className="h-5 w-5 text-white mr-3 flex-shrink-0" />
+                  Safety-First Approach
+                </li>
+                <li className="flex items-center font-raleway text-white">
+                  <CheckBadgeIcon className="h-5 w-5 text-white mr-3 flex-shrink-0" />
+                  Code Compliance Guaranteed
+                </li>
+                <li className="flex items-center font-raleway text-white">
+                  <CheckBadgeIcon className="h-5 w-5 text-white mr-3 flex-shrink-0" />
+                  Quality Materials Only
+                </li>
+                <li className="flex items-center font-raleway text-white">
+                  <CheckBadgeIcon className="h-5 w-5 text-white mr-3 flex-shrink-0" />
+                  Honest, Transparent Pricing
+                </li>
+              </ul>
+            </div>
+
+            {/* Our Values - Right Column */}
+            <div className="bg-purple p-8 rounded-lg">
+              <div className="text-center mb-8">
+                <h3 className="font-montserrat text-2xl font-semibold text-white mb-4">Our Values</h3>
+                <p className="font-raleway text-white">
+                  These core values guide everything we do and ensure you receive the best possible service.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {content.values.map((value, index) => {
+                  const IconComponent = iconMap[value.icon as keyof typeof iconMap] || ShieldCheckIcon;
+                  return (
+                    <div key={index} className="text-center">
+                      <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <IconComponent className="h-8 w-8 text-white" />
+                      </div>
+                      <h4 className="font-montserrat text-lg font-semibold text-white mb-2">{value.title}</h4>
+                      <p className="font-raleway text-sm text-white">{value.description}</p>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -241,3 +316,4 @@ export default function About() {
     </div>
   );
 }
+

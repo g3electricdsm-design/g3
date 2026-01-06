@@ -178,3 +178,31 @@ export function getFormEntriesByStatus(status: string): FormEntry[] {
 export function getNewFormEntries(): FormEntry[] {
   return formEntries.filter(entry => entry.status === 'new');
 }
+
+export function deleteFormEntry(id: number): void {
+  const index = formEntries.findIndex(entry => entry.id === id);
+  if (index > -1) {
+    formEntries.splice(index, 1);
+  }
+}
+
+export function updateFormEntryAdminNotes(id: number, notes: string): void {
+  const entry = formEntries.find(e => e.id === id);
+  if (entry) {
+    entry.adminNotes = notes;
+  }
+}
+
+export function updateFormEntryUrgency(id: number, urgency: 'low' | 'medium' | 'high' | ''): void {
+  const entry = formEntries.find(e => e.id === id);
+  if (entry) {
+    if (!entry.additionalInfo) {
+      entry.additionalInfo = {};
+    }
+    if (urgency === '') {
+      delete entry.additionalInfo.urgency;
+    } else {
+      entry.additionalInfo.urgency = urgency;
+    }
+  }
+}
