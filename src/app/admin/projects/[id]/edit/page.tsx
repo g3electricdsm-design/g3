@@ -19,6 +19,7 @@ export default function EditProjectPage() {
     type: '',
     image: '/api/placeholder/800/600',
     description: '',
+    overview: '',
     client: '',
     location: '',
     services: [],
@@ -264,8 +265,24 @@ export default function EditProjectPage() {
                       value={formData.description}
                       onChange={handleInputChange}
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple focus:border-transparent text-earle-black"
-                      placeholder="Brief project summary"
+                      placeholder="Brief project summary (shown on preview cards)"
                     />
+                    <p className="mt-1 text-xs text-gray-500">This description appears on the portfolio preview cards</p>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-earle-black mb-2">
+                      Project Overview
+                    </label>
+                    <textarea
+                      name="overview"
+                      value={formData.overview || ''}
+                      onChange={handleInputChange}
+                      rows={5}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple focus:border-transparent text-earle-black"
+                      placeholder="Detailed project overview (shown on project detail page)"
+                    />
+                    <p className="mt-1 text-xs text-gray-500">This detailed overview appears on the individual project detail page</p>
                   </div>
 
 

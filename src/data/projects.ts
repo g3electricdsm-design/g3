@@ -8,6 +8,7 @@ export interface Project {
   type: string;
   image: string;
   description: string;
+  overview?: string;
   client: string;
   location: string;
   services: string[];
@@ -213,33 +214,89 @@ export const projects: Project[] = [
   }
 ];
 
-// In-memory storage for runtime updates
-let projectsData = [...projects];
+// Storage key for localStorage
+const STORAGE_KEY = 'g3_projects_data';
+
+// Helper function to load projects from localStorage
+function loadProjectsFromStorage(): Project[] {
+  if (typeof window === 'undefined') {
+    // Server-side: return default projects
+    return [...projects];
+  }
+
+  try {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (stored) {
+      const storedProjects = JSON.parse(stored) as Project[];
+      // Merge with default projects: use stored version if exists, otherwise use default
+      const mergedProjects = projects.map(defaultProject => {
+        const storedProject = storedProjects.find(p => p.id === defaultProject.id);
+        return storedProject || defaultProject;
+      });
+      // Add any new projects from storage that don't exist in defaults
+      const newProjects = storedProjects.filter(sp => !projects.find(p => p.id === sp.id));
+      return [...mergedProjects, ...newProjects];
+    }
+  } catch (error) {
+    console.error('Error loading projects from localStorage:', error);
+  }
+  
+  return [...projects];
+}
+
+// Helper function to save projects to localStorage
+function saveProjectsToStorage(projectsToSave: Project[]): void {
+  if (typeof window === 'undefined') {
+    return; // Server-side: skip saving
+  }
+
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(projectsToSave));
+  } catch (error) {
+    console.error('Error saving projects to localStorage:', error);
+  }
+}
+
+// Initialize projectsData from localStorage or defaults
+let projectsData = loadProjectsFromStorage();
 
 // Helper function to get project by ID
 export function getProjectById(id: string): Project | undefined {
-  return projects.find(project => project.id.toString() === id);
+  // Reload from storage to ensure we have latest data
+  projectsData = loadProjectsFromStorage();
+  return projectsData.find(project => project.id.toString() === id);
 }
 
 // Helper function to get all projects
 export function getAllProjects(): Project[] {
+  // Reload from storage to ensure we have latest data
+  projectsData = loadProjectsFromStorage();
   return projectsData;
 }
 
 // Helper function to update a project
 export function updateProject(updatedProject: Project): void {
+  projectsData = loadProjectsFromStorage();
   const index = projectsData.findIndex(p => p.id === updatedProject.id);
   if (index !== -1) {
     projectsData[index] = updatedProject;
+  } else {
+    // If project doesn't exist, add it
+    projectsData.push(updatedProject);
   }
+  saveProjectsToStorage(projectsData);
 }
 
 // Helper function to add a new project
 export function addProject(newProject: Project): void {
+  projectsData = loadProjectsFromStorage();
   projectsData.push(newProject);
+  saveProjectsToStorage(projectsData);
 }
 
 // Helper function to delete a project
 export function deleteProject(id: number): void {
+  projectsData = loadProjectsFromStorage();
   projectsData = projectsData.filter(p => p.id !== id);
+  saveProjectsToStorage(projectsData);
 }
