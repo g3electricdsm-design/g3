@@ -26,6 +26,22 @@ function AdminContent() {
   const [showContentEditor, setShowContentEditor] = useState(false);
   const [activeTab, setActiveTab] = useState<'projects' | 'services' | 'formEntries' | 'testimonials' | 'content' | 'analytics' | 'settings'>('projects');
 
+  // Refresh projects when component mounts or when returning to admin page
+  useEffect(() => {
+    const refreshProjects = () => {
+      setProjects(getAllProjects());
+    };
+    
+    refreshProjects();
+    
+    // Refresh when window regains focus (user navigates back)
+    window.addEventListener('focus', refreshProjects);
+    
+    return () => {
+      window.removeEventListener('focus', refreshProjects);
+    };
+  }, []);
+
   // Check for tab parameter in URL
   useEffect(() => {
     const tabParam = searchParams.get('tab');
@@ -34,6 +50,10 @@ function AdminContent() {
       // Refresh testimonials when switching to testimonials tab
       if (tabParam === 'testimonials') {
         setTestimonials(getAllTestimonials());
+      }
+      // Refresh projects when switching to projects tab
+      if (tabParam === 'projects') {
+        setProjects(getAllProjects());
       }
     }
   }, [searchParams]);

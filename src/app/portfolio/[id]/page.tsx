@@ -85,7 +85,7 @@ export default function ProjectDetail() {
       </section>
 
       {/* Project Details */}
-      <section className="py-20">
+      <section className="pt-8 pb-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
             {/* Main Content */}
@@ -104,10 +104,12 @@ export default function ProjectDetail() {
               </div>
 
               {/* Project Description */}
-              <div className="mb-8">
-                <h2 className="font-montserrat text-2xl text-earle-black mb-4">Project Overview</h2>
-                <p className="font-raleway text-lg text-earle-black leading-relaxed">{project.description}</p>
-              </div>
+              {project.overview && (
+                <div className="mb-8">
+                  <h2 className="font-montserrat text-2xl text-earle-black mb-4">Project Overview</h2>
+                  <p className="font-raleway text-lg text-earle-black leading-relaxed">{project.overview}</p>
+                </div>
+              )}
 
               {/* Services Provided */}
               <div className="mb-8">
@@ -159,7 +161,7 @@ export default function ProjectDetail() {
                 <div className="mt-8 pt-6 border-t border-gray-300">
                   <Link 
                     href="/contact" 
-                    className="w-full btn-primary text-center block"
+                    className="w-full btn-primary text-center block !text-white no-underline hover:!text-white"
                   >
                     Start Your Project
                   </Link>
