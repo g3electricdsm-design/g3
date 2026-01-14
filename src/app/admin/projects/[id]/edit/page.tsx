@@ -35,23 +35,33 @@ export default function EditProjectPage() {
   const [isSaving, setIsSaving] = useState(false);
 
   useEffect(() => {
-    const id = params.id as string;
-    
-    if (id === 'new') {
-      // Creating a new project
-      setIsLoading(false);
-    } else {
-      // Editing existing project
-      const project = getProjectById(id);
-      if (project) {
-        setFormData(project);
+    const loadProject = async () => {
+      const id = params.id as string;
+      
+      if (id === 'new') {
+        // Creating a new project
+        setIsLoading(false);
       } else {
-        // Project not found, redirect to admin
-        router.push('/admin');
-        return;
+        // Editing existing project
+        try {
+          const project = await getProjectById(id);
+          if (project) {
+            setFormData(project);
+          } else {
+            // Project not found, redirect to admin
+            router.push('/admin');
+            return;
+          }
+        } catch (error) {
+          console.error('Error loading project:', error);
+          router.push('/admin');
+          return;
+        }
+        setIsLoading(false);
       }
-      setIsLoading(false);
-    }
+    };
+
+    loadProject();
   }, [params.id, router]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -103,11 +113,11 @@ export default function EditProjectPage() {
         const newId = Date.now(); // Simple ID generation
         const newProject = { ...formData, id: newId };
         console.log('Creating new project with image:', newProject.image);
-        addProject(newProject);
+        await addProject(newProject);
       } else {
         // Update existing project
         console.log('Updating project with image:', formData.image);
-        updateProject(formData);
+        await updateProject(formData);
       }
 
       // Redirect back to admin

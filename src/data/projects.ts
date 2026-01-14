@@ -217,98 +217,94 @@ export const projects: Project[] = [
   }
 ];
 
-// Storage key for localStorage
-const STORAGE_KEY = 'g3_projects_data';
+// Import API client
+import { projectsAPI } from '@/lib/projects-api';
 
-// Helper function to load projects from localStorage
-function loadProjectsFromStorage(): Project[] {
+// Helper function to get project by ID or slug
+// This now uses the API instead of localStorage
+export async function getProjectById(idOrSlug: string): Promise<Project | undefined> {
+  if (typeof window === 'undefined') {
+    // Server-side: fallback to default projects
+    return projects.find(project => 
+      project.slug === idOrSlug || project.id.toString() === idOrSlug
+    );
+  }
+  
+  const project = await projectsAPI.getById(idOrSlug);
+  return project || undefined;
+}
+
+// Synchronous version for backward compatibility (uses cache)
+let projectsCache: Project[] | null = null;
+let cacheTimestamp = 0;
+const CACHE_DURATION = 60000; // 1 minute
+
+async function getCachedProjects(): Promise<Project[]> {
+  const now = Date.now();
+  if (projectsCache && (now - cacheTimestamp) < CACHE_DURATION) {
+    return projectsCache;
+  }
+  
+  projectsCache = await projectsAPI.getAll();
+  cacheTimestamp = now;
+  return projectsCache;
+}
+
+// Helper function to get project by slug
+export async function getProjectBySlug(slug: string): Promise<Project | undefined> {
+  if (typeof window === 'undefined') {
+    return projects.find(project => project.slug === slug);
+  }
+  return await getProjectById(slug);
+}
+
+// Helper function to get all projects
+export async function getAllProjects(): Promise<Project[]> {
   if (typeof window === 'undefined') {
     // Server-side: return default projects
     return [...projects];
   }
-
-  try {
-    const stored = localStorage.getItem(STORAGE_KEY);
-    if (stored) {
-      const storedProjects = JSON.parse(stored) as Project[];
-      // Merge with default projects: use stored version if exists, otherwise use default
-      const mergedProjects = projects.map(defaultProject => {
-        const storedProject = storedProjects.find(p => p.id === defaultProject.id);
-        return storedProject || defaultProject;
-      });
-      // Add any new projects from storage that don't exist in defaults
-      const newProjects = storedProjects.filter(sp => !projects.find(p => p.id === sp.id));
-      return [...mergedProjects, ...newProjects];
-    }
-  } catch (error) {
-    console.error('Error loading projects from localStorage:', error);
-  }
-  
-  return [...projects];
+  return await getCachedProjects();
 }
 
-// Helper function to save projects to localStorage
-function saveProjectsToStorage(projectsToSave: Project[]): void {
+// Synchronous version for components that need immediate data
+// This will return cached data or default projects
+export function getAllProjectsSync(): Project[] {
   if (typeof window === 'undefined') {
-    return; // Server-side: skip saving
+    return [...projects];
   }
-
-  try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(projectsToSave));
-  } catch (error) {
-    console.error('Error saving projects to localStorage:', error);
-  }
-}
-
-// Initialize projectsData from localStorage or defaults
-let projectsData = loadProjectsFromStorage();
-
-// Helper function to get project by ID or slug
-export function getProjectById(idOrSlug: string): Project | undefined {
-  // Reload from storage to ensure we have latest data
-  projectsData = loadProjectsFromStorage();
-  // First try to find by slug, then by ID
-  return projectsData.find(project => 
-    project.slug === idOrSlug || project.id.toString() === idOrSlug
-  );
-}
-
-// Helper function to get project by slug
-export function getProjectBySlug(slug: string): Project | undefined {
-  projectsData = loadProjectsFromStorage();
-  return projectsData.find(project => project.slug === slug);
-}
-
-// Helper function to get all projects
-export function getAllProjects(): Project[] {
-  // Reload from storage to ensure we have latest data
-  projectsData = loadProjectsFromStorage();
-  return projectsData;
+  return projectsCache || [...projects];
 }
 
 // Helper function to update a project
-export function updateProject(updatedProject: Project): void {
-  projectsData = loadProjectsFromStorage();
-  const index = projectsData.findIndex(p => p.id === updatedProject.id);
-  if (index !== -1) {
-    projectsData[index] = updatedProject;
-  } else {
-    // If project doesn't exist, add it
-    projectsData.push(updatedProject);
+export async function updateProject(updatedProject: Project): Promise<void> {
+  if (typeof window === 'undefined') {
+    return; // Server-side: skip
   }
-  saveProjectsToStorage(projectsData);
+  
+  await projectsAPI.update(updatedProject);
+  // Invalidate cache
+  projectsCache = null;
 }
 
 // Helper function to add a new project
-export function addProject(newProject: Project): void {
-  projectsData = loadProjectsFromStorage();
-  projectsData.push(newProject);
-  saveProjectsToStorage(projectsData);
+export async function addProject(newProject: Project): Promise<void> {
+  if (typeof window === 'undefined') {
+    return; // Server-side: skip
+  }
+  
+  await projectsAPI.create(newProject);
+  // Invalidate cache
+  projectsCache = null;
 }
 
 // Helper function to delete a project
-export function deleteProject(id: number): void {
-  projectsData = loadProjectsFromStorage();
-  projectsData = projectsData.filter(p => p.id !== id);
-  saveProjectsToStorage(projectsData);
+export async function deleteProject(id: number): Promise<void> {
+  if (typeof window === 'undefined') {
+    return; // Server-side: skip
+  }
+  
+  await projectsAPI.delete(id);
+  // Invalidate cache
+  projectsCache = null;
 }

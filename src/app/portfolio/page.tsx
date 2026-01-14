@@ -5,23 +5,29 @@ import Image from "next/image";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import PortfolioSkeleton from "@/components/PortfolioSkeleton";
-import { getAllProjects } from "@/data/projects";
+import { getAllProjects, Project } from "@/data/projects";
 import { getCategoryIcon, getTypeIcon } from "@/utils/icons";
 import { useState, useEffect } from "react";
 
 export default function Portfolio() {
-  const [portfolioItems, setPortfolioItems] = useState(getAllProjects());
-  const [isLoading, setIsLoading] = useState(false);
+  const [portfolioItems, setPortfolioItems] = useState<Project[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   // Refresh portfolio data when component mounts or when data might have changed
   useEffect(() => {
-    const refreshData = () => {
+    const refreshData = async () => {
       setIsLoading(true);
-      // Simulate a brief delay for smoother UX
-      setTimeout(() => {
-        setPortfolioItems(getAllProjects());
+      try {
+        const projects = await getAllProjects();
+        setPortfolioItems(projects);
+      } catch (error) {
+        console.error('Error loading projects:', error);
+        // Fallback to sync version
+        const { getAllProjectsSync } = await import('@/data/projects');
+        setPortfolioItems(getAllProjectsSync());
+      } finally {
         setIsLoading(false);
-      }, 300);
+      }
     };
 
     // Refresh on mount

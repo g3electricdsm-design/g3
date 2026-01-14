@@ -14,14 +14,20 @@ import { useState, useEffect } from "react";
 export default function ProjectDetail() {
   const params = useParams();
   const pathname = usePathname();
-  const [project, setProject] = useState(getProjectById(params.id as string));
+  const [project, setProject] = useState<Project | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const loadProject = () => {
-      const foundProject = getProjectById(params.id as string);
-      setProject(foundProject);
-      setIsLoading(false);
+    const loadProject = async () => {
+      try {
+        const foundProject = await getProjectById(params.id as string);
+        setProject(foundProject || null);
+      } catch (error) {
+        console.error('Error loading project:', error);
+        setProject(null);
+      } finally {
+        setIsLoading(false);
+      }
     };
 
     loadProject();

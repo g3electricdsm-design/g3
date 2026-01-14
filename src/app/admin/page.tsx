@@ -17,7 +17,8 @@ export const dynamic = 'force-dynamic';
 
 function AdminContent() {
   const searchParams = useSearchParams();
-  const [projects, setProjects] = useState<Project[]>(getAllProjects());
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [isLoadingProjects, setIsLoadingProjects] = useState(true);
   const [services] = useState<Service[]>(getAllServices());
   const [formEntries] = useState<FormEntry[]>(getAllFormEntries());
   const [testimonials, setTestimonials] = useState<Testimonial[]>(getAllTestimonials());
@@ -28,8 +29,19 @@ function AdminContent() {
 
   // Refresh projects when component mounts or when returning to admin page
   useEffect(() => {
-    const refreshProjects = () => {
-      setProjects(getAllProjects());
+    const refreshProjects = async () => {
+      setIsLoadingProjects(true);
+      try {
+        const allProjects = await getAllProjects();
+        setProjects(allProjects);
+      } catch (error) {
+        console.error('Error loading projects:', error);
+        // Fallback to sync version
+        const { getAllProjectsSync } = await import('@/data/projects');
+        setProjects(getAllProjectsSync());
+      } finally {
+        setIsLoadingProjects(false);
+      }
     };
     
     refreshProjects();
@@ -53,7 +65,7 @@ function AdminContent() {
       }
       // Refresh projects when switching to projects tab
       if (tabParam === 'projects') {
-        setProjects(getAllProjects());
+        getAllProjects().then(setProjects).catch(console.error);
       }
     }
   }, [searchParams]);
@@ -67,10 +79,15 @@ function AdminContent() {
     window.location.href = '/admin/login';
   };
 
-  const handleDelete = (id: number) => {
+  const handleDelete = async (id: number) => {
     if (confirm('Are you sure you want to delete this project?')) {
-      deleteProject(id);
-      setProjects(projects.filter(p => p.id !== id));
+      try {
+        await deleteProject(id);
+        setProjects(projects.filter(p => p.id !== id));
+      } catch (error) {
+        console.error('Error deleting project:', error);
+        alert('Error deleting project. Please try again.');
+      }
     }
   };
 
