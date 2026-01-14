@@ -14,6 +14,9 @@ export interface Project {
   services: string[];
   challenges: string;
   size: 'small' | 'medium' | 'large';
+  slug?: string;
+  seoTitle?: string;
+  metaDescription?: string;
 }
 
 export const projects: Project[] = [
@@ -260,11 +263,20 @@ function saveProjectsToStorage(projectsToSave: Project[]): void {
 // Initialize projectsData from localStorage or defaults
 let projectsData = loadProjectsFromStorage();
 
-// Helper function to get project by ID
-export function getProjectById(id: string): Project | undefined {
+// Helper function to get project by ID or slug
+export function getProjectById(idOrSlug: string): Project | undefined {
   // Reload from storage to ensure we have latest data
   projectsData = loadProjectsFromStorage();
-  return projectsData.find(project => project.id.toString() === id);
+  // First try to find by slug, then by ID
+  return projectsData.find(project => 
+    project.slug === idOrSlug || project.id.toString() === idOrSlug
+  );
+}
+
+// Helper function to get project by slug
+export function getProjectBySlug(slug: string): Project | undefined {
+  projectsData = loadProjectsFromStorage();
+  return projectsData.find(project => project.slug === slug);
 }
 
 // Helper function to get all projects

@@ -24,7 +24,10 @@ export default function EditProjectPage() {
     location: '',
     services: [],
     challenges: '',
-    size: 'medium'
+    size: 'medium',
+    slug: '',
+    seoTitle: '',
+    metaDescription: ''
   });
 
   const [newService, setNewService] = useState('');
@@ -355,6 +358,64 @@ export default function EditProjectPage() {
                   onImageChange={handleImageChange}
                   projectTitle={formData.title || 'New Project'}
                 />
+              </div>
+
+              {/* SEO Section */}
+              <div className="space-y-6">
+                <h3 className="font-montserrat text-2xl font-semibold text-earle-black border-b border-gray-300 pb-2">
+                  SEO Settings
+                </h3>
+                
+                <div>
+                  <label className="block text-sm font-medium text-earle-black mb-2">
+                    URL Slug
+                  </label>
+                  <input
+                    type="text"
+                    name="slug"
+                    value={formData.slug || ''}
+                    onChange={handleInputChange}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple focus:border-transparent text-earle-black"
+                    placeholder="project-slug"
+                  />
+                  <p className="mt-1 text-xs text-gray-500">Used in the URL: /portfolio/[slug]</p>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-earle-black mb-2">
+                    Title Tag
+                  </label>
+                  <input
+                    type="text"
+                    name="seoTitle"
+                    value={formData.seoTitle || ''}
+                    onChange={handleInputChange}
+                    maxLength={70}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple focus:border-transparent text-earle-black"
+                    placeholder="Title Tag (70 characters max)"
+                  />
+                  <p className="mt-1 text-xs text-gray-500">
+                    {formData.seoTitle?.length || 0}/70 characters
+                  </p>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-earle-black mb-2">
+                    Meta Description
+                  </label>
+                  <textarea
+                    name="metaDescription"
+                    value={formData.metaDescription || ''}
+                    onChange={handleInputChange}
+                    maxLength={140}
+                    rows={3}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple focus:border-transparent text-earle-black"
+                    placeholder="Meta Description (140 characters max)"
+                  />
+                  <p className="mt-1 text-xs text-gray-500">
+                    {formData.metaDescription?.length || 0}/140 characters
+                  </p>
+                </div>
               </div>
 
               {/* Form Actions */}
