@@ -1,6 +1,27 @@
 import { Project, projects as defaultProjects } from '@/data/projects';
 import { supabase, PROJECTS_TABLE } from './supabase';
 
+// Database row type (snake_case)
+interface ProjectRow {
+  id: number;
+  title: string;
+  category: string;
+  type: string;
+  image: string;
+  description: string;
+  overview?: string | null;
+  client: string;
+  location: string;
+  services: string[] | null;
+  challenges: string;
+  size: string;
+  slug?: string | null;
+  seo_title?: string | null;
+  meta_description?: string | null;
+  created_at?: string;
+  updated_at?: string;
+}
+
 // Storage interface - can be swapped for different backends
 interface ProjectsStorage {
   getAll(): Promise<Project[]>;
@@ -64,28 +85,28 @@ class InMemoryStorage implements ProjectsStorage {
 // This will be used if Supabase environment variables are set
 class SupabaseStorage implements ProjectsStorage {
   // Transform database row (snake_case) to Project (camelCase)
-  private transformRow(row: any): Project {
+  private transformRow(row: ProjectRow): Project {
     return {
       id: row.id,
       title: row.title,
-      category: row.category,
+      category: row.category as 'Residential' | 'Commercial',
       type: row.type,
       image: row.image,
       description: row.description,
-      overview: row.overview,
+      overview: row.overview || undefined,
       client: row.client,
       location: row.location,
       services: row.services || [],
       challenges: row.challenges,
-      size: row.size,
-      slug: row.slug,
-      seoTitle: row.seo_title,
-      metaDescription: row.meta_description,
+      size: row.size as 'small' | 'medium' | 'large',
+      slug: row.slug || undefined,
+      seoTitle: row.seo_title || undefined,
+      metaDescription: row.meta_description || undefined,
     };
   }
 
   // Transform Project (camelCase) to database row (snake_case)
-  private transformProject(project: Project): any {
+  private transformProject(project: Project): Omit<ProjectRow, 'created_at' | 'updated_at'> {
     return {
       id: project.id,
       title: project.title,
@@ -199,6 +220,7 @@ class SupabaseStorage implements ProjectsStorage {
     // Transform camelCase to snake_case for database
     const dbRow = this.transformProject(project);
     // Don't update the id field
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { id, ...updateData } = dbRow;
 
     const { data, error } = await supabase

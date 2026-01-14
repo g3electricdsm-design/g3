@@ -4,10 +4,11 @@ import { storage } from '@/lib/projects-storage';
 // GET - Get a single project by ID or slug
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const project = await storage.getById(params.id);
+    const { id } = await params;
+    const project = await storage.getById(id);
 
     if (!project) {
       return NextResponse.json(

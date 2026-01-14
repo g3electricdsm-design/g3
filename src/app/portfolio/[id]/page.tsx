@@ -5,7 +5,7 @@ import { ArrowLeftIcon, UserIcon, BoltIcon } from "@heroicons/react/24/outline";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import ProjectDetailSkeleton from "@/components/ProjectDetailSkeleton";
-import { getProjectById } from "@/data/projects";
+import { getProjectById, Project } from "@/data/projects";
 import { getCategoryIcon, getTypeIcon } from "@/utils/icons";
 import Image from "next/image";
 import { useParams, usePathname } from "next/navigation";
