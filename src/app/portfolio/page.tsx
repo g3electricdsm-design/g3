@@ -94,7 +94,7 @@ export default function Portfolio() {
             {portfolioItems.map((item, index) => (
               <Link
                 key={item.id}
-                href={`/portfolio/${item.id}`}
+                href={`/portfolio/${item.slug || item.id}`}
                 className={`group relative overflow-hidden rounded-lg shadow-sm hover:shadow-lg transition-all duration-300 cursor-pointer block ${getSizeClasses(item.size, index)}`}
               >
                 {/* Project Image */}

@@ -27,6 +27,33 @@ export default function ProjectDetail() {
     loadProject();
   }, [params.id]);
 
+  // Update document title and meta description
+  useEffect(() => {
+    if (project && !isLoading) {
+      const titleText = project.seoTitle || `${project.title} | G3 Electric Portfolio`;
+      
+      // Update document title - try multiple methods to ensure it works
+      if (typeof document !== 'undefined') {
+        document.title = titleText;
+        
+        // Also update the title element directly
+        const titleElement = document.querySelector('title');
+        if (titleElement) {
+          titleElement.textContent = titleText;
+        }
+      }
+
+      // Update or create meta description
+      let metaDescription = document.querySelector('meta[name="description"]') as HTMLMetaElement;
+      if (!metaDescription) {
+        metaDescription = document.createElement('meta');
+        metaDescription.name = 'description';
+        document.getElementsByTagName('head')[0].appendChild(metaDescription);
+      }
+      metaDescription.content = project.metaDescription || project.description || '';
+    }
+  }, [project, isLoading]);
+
   if (isLoading) {
     return (
       <>
