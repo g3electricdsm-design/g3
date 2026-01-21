@@ -243,10 +243,14 @@ class SupabaseStorage implements ProjectsStorage {
       .single();
 
     if (error) {
+      console.error('Supabase update error:', error);
+      console.error('Error code:', error.code);
+      console.error('Error details:', error.details);
+      console.error('Error hint:', error.hint);
       if (error.code === 'PGRST116') {
         throw new Error('Project not found');
       }
-      throw new Error(`Failed to update project: ${error.message}`);
+      throw new Error(`Failed to update project: ${error.message} (code: ${error.code})`);
     }
 
     if (!data) {

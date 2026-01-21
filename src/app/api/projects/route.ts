@@ -75,9 +75,11 @@ export async function PUT(request: NextRequest) {
       throw error;
     }
   } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
     console.error('Error updating project:', error);
+    console.error('Error details:', errorMessage);
     return NextResponse.json(
-      { success: false, error: 'Failed to update project' },
+      { success: false, error: `Failed to update project: ${errorMessage}` },
       { status: 500 }
     );
   }
