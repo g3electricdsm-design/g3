@@ -25,6 +25,7 @@ export default function EditProjectPage() {
     services: [],
     challenges: '',
     size: 'medium',
+    orientation: 'landscape',
     slug: '',
     seoTitle: '',
     metaDescription: ''
@@ -101,12 +102,35 @@ export default function EditProjectPage() {
     }
   };
 
+  const handleSizeSuggestion = (suggestedSize: string, aspectRatio: number) => {
+    // Auto-populate the size field with smart suggestion
+    console.log(`📐 Image detected: ${aspectRatio.toFixed(2)} aspect ratio → suggesting "${suggestedSize}"`);
+    setFormData(prev => ({
+      ...prev,
+      size: suggestedSize as Project['size']
+    }));
+    
+    // Auto-set orientation based on aspect ratio
+    const suggestedOrientation = aspectRatio < 1 ? 'portrait' : 'landscape';
+    setFormData(prev => ({
+      ...prev,
+      orientation: suggestedOrientation
+    }));
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSaving(true);
 
     try {
       const id = params.id as string;
+      
+      console.log('💾 Saving project with data:', {
+        title: formData.title,
+        size: formData.size,
+        orientation: formData.orientation,
+        id: formData.id
+      });
       
       if (id === 'new') {
         // Create new project
@@ -228,6 +252,32 @@ export default function EditProjectPage() {
                         required
                       />
                     </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-earle-black mb-2">
+                      Portfolio Tile Size
+                    </label>
+                    <select
+                      name="size"
+                      value={formData.size}
+                      onChange={handleInputChange}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple focus:border-transparent text-earle-black"
+                    >
+                      <option value="short">Short</option>
+                      <option value="square">Square</option>
+                      <option value="tall">Tall (square + short)</option>
+                      <option value="wide">Wide (2 columns)</option>
+                      <option value="panoramic">Panoramic (3 columns)</option>
+                      <option value="extraTall">Extra Tall (two tall stacked)</option>
+                      {/* Back-compat values */}
+                      <option value="small">Legacy: Small</option>
+                      <option value="medium">Legacy: Medium</option>
+                      <option value="large">Legacy: Large</option>
+                    </select>
+                    <p className="mt-1 text-xs text-gray-500">
+                      Controls how this project appears on the /portfolio grid.
+                    </p>
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -363,9 +413,29 @@ export default function EditProjectPage() {
                 <h3 className="font-montserrat text-2xl font-semibold text-earle-black border-b border-gray-300 pb-2">
                   Project Image
                 </h3>
+                
+                <div>
+                  <label className="block text-sm font-medium text-earle-black mb-2">
+                    Image Orientation
+                  </label>
+                  <select
+                    name="orientation"
+                    value={formData.orientation || 'landscape'}
+                    onChange={handleInputChange}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple focus:border-transparent text-earle-black"
+                  >
+                    <option value="landscape">Landscape (Wide)</option>
+                    <option value="portrait">Portrait (Tall)</option>
+                  </select>
+                  <p className="mt-1 text-xs text-gray-500">
+                    Choose the orientation that best fits your image. Portrait images will be displayed with proper aspect ratio preservation.
+                  </p>
+                </div>
+                
                 <ImageUpload
                   currentImage={formData.image}
                   onImageChange={handleImageChange}
+                  onSizeSuggestion={handleSizeSuggestion}
                   projectTitle={formData.title || 'New Project'}
                 />
               </div>

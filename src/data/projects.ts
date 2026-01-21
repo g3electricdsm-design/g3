@@ -13,7 +13,30 @@ export interface Project {
   location: string;
   services: string[];
   challenges: string;
-  size: 'small' | 'medium' | 'large';
+  // Controls portfolio grid tile sizing (Figma `portfolio_grid`)
+  // Canonical values:
+  // - short: 1 row (~180px)
+  // - square: 2 rows (~384px)
+  // - tall: 3 rows (square + short stacked)
+  // - wide: 2 cols x square height
+  // - panoramic: 3 cols x square height
+  // - extraTall: 6 rows (two tall stacked)
+  //
+  // Back-compat values (still accepted):
+  // - small -> short
+  // - medium -> square
+  // - large -> wide
+  size:
+    | 'small'
+    | 'medium'
+    | 'large'
+    | 'short'
+    | 'square'
+    | 'tall'
+    | 'wide'
+    | 'panoramic'
+    | 'extraTall';
+  orientation?: 'portrait' | 'landscape';
   slug?: string;
   seoTitle?: string;
   metaDescription?: string;
@@ -31,7 +54,8 @@ export const projects: Project[] = [
     location: "Des Moines, IA",
     services: ["LED Installation", "Under-cabinet Lighting", "Pendant Light Installation", "Recessed Lighting", "Smart Switch Integration"],
     challenges: "Working around existing cabinetry and ensuring proper electrical load distribution",
-    size: "large"
+    size: "tall",
+    orientation: "portrait"
   },
   {
     id: 2,
@@ -44,7 +68,8 @@ export const projects: Project[] = [
     location: "Cedar Rapids, IA",
     services: ["Main Service Installation", "Panel Installation", "Office Circuit Wiring", "AV System Integration", "Emergency Lighting", "Fire Safety Systems"],
     challenges: "Coordinating with multiple contractors and meeting strict commercial building codes",
-    size: "large"
+    size: "wide",
+    orientation: "landscape"
   },
   {
     id: 3,
@@ -57,7 +82,7 @@ export const projects: Project[] = [
     location: "Iowa City, IA",
     services: ["Smart Switch Installation", "Smart Outlet Installation", "Home Automation Wiring", "Security System Integration", "Audio System Wiring"],
     challenges: "Integrating with existing electrical systems while maintaining home aesthetics",
-    size: "medium"
+    size: "short"
   },
   {
     id: 4,
@@ -70,7 +95,7 @@ export const projects: Project[] = [
     location: "Davenport, IA",
     services: ["Track Lighting Installation", "Display Case Lighting", "Ambient Lighting", "Smart Controls", "Energy Management"],
     challenges: "Maintaining consistent lighting levels while highlighting merchandise effectively",
-    size: "small"
+    size: "short"
   },
   {
     id: 5,
@@ -83,7 +108,7 @@ export const projects: Project[] = [
     location: "Ames, IA",
     services: ["Ceiling Fan Installation", "Smart Control Integration", "Electrical Box Upgrades", "Remote Control Setup"],
     challenges: "Installing fans in rooms with limited ceiling access and ensuring proper support",
-    size: "small"
+    size: "panoramic"
   },
   {
     id: 6,
@@ -96,7 +121,7 @@ export const projects: Project[] = [
     location: "Des Moines, IA",
     services: ["Kitchen Equipment Circuits", "Dining Room Lighting", "Bar Electrical", "Outdoor Lighting", "Emergency Systems", "Fire Suppression Integration"],
     challenges: "Meeting commercial kitchen electrical codes and coordinating with kitchen equipment installation",
-    size: "large"
+    size: "wide"
   },
   {
     id: 7,
@@ -109,7 +134,7 @@ export const projects: Project[] = [
     location: "West Des Moines, IA",
     services: ["Landscape Lighting", "Security Lighting", "Motion Sensors", "Smart Controls", "Weatherproof Installation"],
     challenges: "Working with existing landscaping and ensuring weatherproof connections",
-    size: "medium"
+    size: "square"
   },
   {
     id: 8,

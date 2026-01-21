@@ -7,11 +7,12 @@ import Image from 'next/image';
 interface ImageUploadProps {
   currentImage?: string;
   onImageChange: (imageFile: File | null) => void;
+  onSizeSuggestion?: (suggestedSize: string, aspectRatio: number) => void;
   projectTitle?: string;
   label?: string;
 }
 
-export default function ImageUpload({ currentImage, onImageChange, projectTitle, label }: ImageUploadProps) {
+export default function ImageUpload({ currentImage, onImageChange, onSizeSuggestion, projectTitle, label }: ImageUploadProps) {
   const [preview, setPreview] = useState<string | null>(currentImage || null);
   const [isDragOver, setIsDragOver] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
@@ -22,6 +23,32 @@ export default function ImageUpload({ currentImage, onImageChange, projectTitle,
   useEffect(() => {
     setPreview(currentImage || null);
   }, [currentImage]);
+
+  // Smart size suggestion based on image aspect ratio
+  const suggestTileSize = (aspectRatio: number): string => {
+    // aspectRatio = width / height
+    // Portrait: ratio < 0.77 (e.g., 3:4 = 0.75)
+    // Square-ish: 0.77 <= ratio <= 1.3
+    // Landscape: 1.3 < ratio <= 2
+    // Wide: ratio > 2
+    
+    if (aspectRatio < 0.77) {
+      // Tall portrait image
+      return 'tall';
+    } else if (aspectRatio < 1.1) {
+      // Nearly square
+      return 'square';
+    } else if (aspectRatio < 1.6) {
+      // Slightly wide - could be square or short depending on content
+      return 'square';
+    } else if (aspectRatio < 2.3) {
+      // Wide landscape
+      return 'wide';
+    } else {
+      // Panoramic
+      return 'panoramic';
+    }
+  };
 
   const compressImage = (file: File, maxWidth: number = 2000, quality: number = 0.92): Promise<File> => {
     return new Promise((resolve) => {
@@ -102,6 +129,18 @@ export default function ImageUpload({ currentImage, onImageChange, projectTitle,
         const result = e.target?.result as string;
         setPreview(result);
         onImageChange(compressedFile);
+        
+        // Detect image dimensions and suggest size
+        if (onSizeSuggestion) {
+          const img = new window.Image();
+          img.onload = () => {
+            const aspectRatio = img.width / img.height;
+            const suggestedSize = suggestTileSize(aspectRatio);
+            onSizeSuggestion(suggestedSize, aspectRatio);
+          };
+          img.src = result;
+        }
+        
         setIsUploading(false);
         setUploadProgress(0);
       };

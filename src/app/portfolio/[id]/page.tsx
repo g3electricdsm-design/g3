@@ -96,15 +96,6 @@ export default function ProjectDetail() {
       {/* Header */}
       <section className="bg-gradient-to-br from-purple to-phlox text-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center mb-6">
-            <Link 
-              href="/portfolio" 
-              className="flex items-center text-white bg-white/10 hover:bg-white/20 px-4 py-2 rounded-lg transition-all font-raleway font-medium backdrop-blur-sm"
-            >
-              <ArrowLeftIcon className="h-5 w-5 mr-2" />
-              Back to Portfolio
-            </Link>
-          </div>
           <div className="flex items-center gap-3 mb-4">
             <span className="text-purple-300">{getCategoryIcon(project.category, 'lg')}</span>
             <span className="font-raleway text-lg uppercase">{project.category}</span>
@@ -112,7 +103,7 @@ export default function ProjectDetail() {
             <span className="text-purple-300">{getTypeIcon(project.type, 'lg')}</span>
             <span className="font-raleway text-lg uppercase">{project.type}</span>
           </div>
-          <h1 className="font-megrim text-4xl md:text-5xl mb-4">{project.title}</h1>
+          <h1 className="!font-montserrat text-5xl md:text-6xl mb-4">{project.title}</h1>
           <p className="font-raleway text-lg md:text-xl max-w-3xl">{project.description}</p>
         </div>
       </section>
@@ -124,16 +115,30 @@ export default function ProjectDetail() {
             {/* Main Content */}
             <div className="lg:col-span-2">
               {/* Project Image */}
-              <div className="mb-8">
-                <div className="aspect-video relative rounded-lg overflow-hidden">
-                  <Image
-                    src={project.image}
-                    alt={project.title}
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 66vw, 50vw"
-                  />
-                </div>
+              <div className={`mb-8 ${project.orientation === 'portrait' ? 'flex justify-center' : ''}`}>
+                {project.orientation === 'portrait' ? (
+                  <div className="relative inline-block max-w-md w-full rounded-lg overflow-hidden bg-earle-black">
+                    <Image
+                      src={project.image}
+                      alt={project.title}
+                      width={800}
+                      height={1200}
+                      className="w-full h-auto object-contain"
+                      sizes="(max-width: 768px) 100vw, 28rem"
+                      style={{ maxWidth: '100%', height: 'auto' }}
+                    />
+                  </div>
+                ) : (
+                  <div className="relative w-full aspect-video rounded-lg overflow-hidden">
+                    <Image
+                      src={project.image}
+                      alt={project.title}
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 66vw, 50vw"
+                    />
+                  </div>
+                )}
               </div>
 
               {/* Project Description */}

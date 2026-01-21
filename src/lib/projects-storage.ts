@@ -15,6 +15,7 @@ interface ProjectRow {
   services: string[] | null;
   challenges: string;
   size: string;
+  orientation?: string | null;
   slug?: string | null;
   seo_title?: string | null;
   meta_description?: string | null;
@@ -98,7 +99,17 @@ class SupabaseStorage implements ProjectsStorage {
       location: row.location,
       services: row.services || [],
       challenges: row.challenges,
-      size: row.size as 'small' | 'medium' | 'large',
+      size: row.size as
+        | 'small'
+        | 'medium'
+        | 'large'
+        | 'short'
+        | 'square'
+        | 'tall'
+        | 'wide'
+        | 'panoramic'
+        | 'extraTall',
+      orientation: (row.orientation as 'portrait' | 'landscape') || 'landscape',
       slug: row.slug || undefined,
       seoTitle: row.seo_title || undefined,
       metaDescription: row.meta_description || undefined,
@@ -120,6 +131,7 @@ class SupabaseStorage implements ProjectsStorage {
       services: project.services,
       challenges: project.challenges,
       size: project.size,
+      orientation: project.orientation || 'landscape',
       slug: project.slug,
       seo_title: project.seoTitle,
       meta_description: project.metaDescription,

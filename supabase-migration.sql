@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS projects (
   location TEXT NOT NULL,
   services JSONB NOT NULL DEFAULT '[]'::jsonb,
   challenges TEXT NOT NULL,
-  size TEXT NOT NULL CHECK (size IN ('small', 'medium', 'large')),
+  size TEXT NOT NULL CHECK (size IN ('small', 'medium', 'large', 'short', 'square', 'tall', 'wide', 'panoramic', 'extraTall')),
   slug TEXT,
   "seoTitle" TEXT,
   "metaDescription" TEXT,
