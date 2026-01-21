@@ -13,18 +13,43 @@ export default function Portfolio() {
   const [portfolioItems, setPortfolioItems] = useState<Project[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
+  // Smart grid packing: sort items to minimize gaps
+  const sortForOptimalPacking = (projects: Project[]) => {
+    // Priority order: place larger/wider items first to minimize gaps
+    return [...projects].sort((a, b) => {
+      const sizeOrder: Record<string, number> = {
+        'panoramic': 1,  // 3 cols - place first
+        'wide': 2,       // 2 cols
+        'extraTall': 3,  // 6 rows
+        'tall': 4,       // 3 rows
+        'square': 5,     // 2 rows
+        'short': 6,      // 1 row
+        'large': 2,      // back-compat
+        'medium': 5,     // back-compat
+        'small': 6,      // back-compat
+      };
+      
+      const orderA = sizeOrder[a.size] || 5;
+      const orderB = sizeOrder[b.size] || 5;
+      
+      return orderA - orderB;
+    });
+  };
+
   // Refresh portfolio data when component mounts or when data might have changed
   useEffect(() => {
     const refreshData = async () => {
       setIsLoading(true);
       try {
         const projects = await getAllProjects();
-        setPortfolioItems(projects);
+        const sorted = sortForOptimalPacking(projects);
+        setPortfolioItems(sorted);
       } catch (error) {
         console.error('Error loading projects:', error);
         // Fallback to sync version
         const { getAllProjectsSync } = await import('@/data/projects');
-        setPortfolioItems(getAllProjectsSync());
+        const fallbackProjects = getAllProjectsSync();
+        setPortfolioItems(sortForOptimalPacking(fallbackProjects));
       } finally {
         setIsLoading(false);
       }
@@ -138,7 +163,7 @@ export default function Portfolio() {
               </Link>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[220px] md:auto-rows-[180px]">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[220px] md:auto-rows-[180px]" style={{ gridAutoFlow: 'dense' }}>
             {portfolioItems.map((item) => (
               <Link
                 key={item.id}

@@ -172,7 +172,7 @@ export default function EditProjectPage() {
       <Navigation currentPath="/admin" />
 
       {/* Header */}
-      <section className="bg-gradient-to-br from-purple to-phlox text-white py-16">
+      <section className="bg-gradient-to-br from-purple to-phlox text-white pt-16 pb-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center mb-6">
             <Link 
@@ -196,10 +196,46 @@ export default function EditProjectPage() {
       </section>
 
       {/* Form Section */}
-      <section className="py-12">
+      <section className="pb-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-white-smoke rounded-lg shadow-xl p-8">
             <form onSubmit={handleSubmit} className="space-y-8">
+              {/* Project Image Upload */}
+              <div className="space-y-4 mb-6">
+                <h3 className="font-montserrat text-2xl font-semibold text-earle-black border-b border-gray-300 pb-2">
+                  Project Image
+                </h3>
+                
+                <div>
+                  <label className="block text-sm font-medium text-earle-black mb-2">
+                    Portfolio Tile Size
+                  </label>
+                  <select
+                    name="size"
+                    value={formData.size}
+                    onChange={handleInputChange}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple focus:border-transparent text-earle-black"
+                  >
+                    <option value="short">Short (1 row tall)</option>
+                    <option value="square">Square (2 rows tall, 1 column wide)</option>
+                    <option value="tall">Tall (3 rows tall, 1 column wide)</option>
+                    <option value="wide">Wide (2 rows tall, 2 columns wide)</option>
+                    <option value="panoramic">Panoramic (2 rows tall, 3 columns wide)</option>
+                    <option value="extraTall">Extra Tall (6 rows tall, 1 column wide)</option>
+                  </select>
+                  <p className="mt-1 text-xs text-gray-500">
+                    Controls how this project appears on the /portfolio grid. Auto-suggested based on your image aspect ratio.
+                  </p>
+                </div>
+                
+                <ImageUpload
+                  currentImage={formData.image}
+                  onImageChange={handleImageChange}
+                  onSizeSuggestion={handleSizeSuggestion}
+                  projectTitle={formData.title || 'New Project'}
+                />
+              </div>
+
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 {/* Basic Information */}
                 <div className="space-y-6">
@@ -252,32 +288,6 @@ export default function EditProjectPage() {
                         required
                       />
                     </div>
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-earle-black mb-2">
-                      Portfolio Tile Size
-                    </label>
-                    <select
-                      name="size"
-                      value={formData.size}
-                      onChange={handleInputChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple focus:border-transparent text-earle-black"
-                    >
-                      <option value="short">Short</option>
-                      <option value="square">Square</option>
-                      <option value="tall">Tall (square + short)</option>
-                      <option value="wide">Wide (2 columns)</option>
-                      <option value="panoramic">Panoramic (3 columns)</option>
-                      <option value="extraTall">Extra Tall (two tall stacked)</option>
-                      {/* Back-compat values */}
-                      <option value="small">Legacy: Small</option>
-                      <option value="medium">Legacy: Medium</option>
-                      <option value="large">Legacy: Large</option>
-                    </select>
-                    <p className="mt-1 text-xs text-gray-500">
-                      Controls how this project appears on the /portfolio grid.
-                    </p>
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -406,38 +416,6 @@ export default function EditProjectPage() {
                     />
                   </div>
                 </div>
-              </div>
-
-              {/* Project Image Upload */}
-              <div className="space-y-4">
-                <h3 className="font-montserrat text-2xl font-semibold text-earle-black border-b border-gray-300 pb-2">
-                  Project Image
-                </h3>
-                
-                <div>
-                  <label className="block text-sm font-medium text-earle-black mb-2">
-                    Image Orientation
-                  </label>
-                  <select
-                    name="orientation"
-                    value={formData.orientation || 'landscape'}
-                    onChange={handleInputChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple focus:border-transparent text-earle-black"
-                  >
-                    <option value="landscape">Landscape (Wide)</option>
-                    <option value="portrait">Portrait (Tall)</option>
-                  </select>
-                  <p className="mt-1 text-xs text-gray-500">
-                    Choose the orientation that best fits your image. Portrait images will be displayed with proper aspect ratio preservation.
-                  </p>
-                </div>
-                
-                <ImageUpload
-                  currentImage={formData.image}
-                  onImageChange={handleImageChange}
-                  onSizeSuggestion={handleSizeSuggestion}
-                  projectTitle={formData.title || 'New Project'}
-                />
               </div>
 
               {/* SEO Section */}
