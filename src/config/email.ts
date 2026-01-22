@@ -3,7 +3,7 @@
 
 export const emailConfig = {
   // Your email address where contact form submissions will be sent
-  recipientEmail: 'njthrockmorton@gmail.com', // G3 Electric contact email
+  recipientEmail: 'g3electricdsm@gmail.com', // G3 Electric Des Moines contact email
   
   // Email service configuration
   service: {
