@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { emailConfig } from '@/config/email';
+import { Resend } from 'resend';
 
 export async function POST(request: NextRequest) {
   try {
@@ -78,22 +79,45 @@ Source: G3 Electric Website Contact Form
   }
 }
 
-// Simple email sending function - replace with your preferred email service
+// Initialize Resend with API key from environment variables
+const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null;
+
+// Email sending function using Resend
 async function sendEmail({ to, subject, text }: {
   to: string;
   subject: string;
   text: string;
 }) {
-  // Option 1: Using Nodemailer (requires additional setup)
-  // Option 2: Using SendGrid (requires API key)
-  // Option 3: Using Resend (simple setup)
-  // Option 4: Using a webhook service like Formspree or Netlify Forms
-  
-  // For now, let's use a simple console log and return success
-  // Replace this with actual email sending logic
-  console.log('Email would be sent to:', to);
-  console.log('Subject:', subject);
-  console.log('Content:', text);
-  
-  return { success: true };
+  try {
+    // Check if Resend is configured
+    if (!resend) {
+      console.warn('⚠️  Resend API key not configured. Set RESEND_API_KEY in environment variables.');
+      console.log('Email would be sent to:', to);
+      console.log('Subject:', subject);
+      console.log('Content:', text);
+      return { success: false, error: 'Email service not configured' };
+    }
+
+    // Send email using Resend
+    const { data, error } = await resend.emails.send({
+      from: 'G3 Electric <onboarding@resend.dev>', // You'll update this to your domain later
+      to: [to],
+      subject: subject,
+      text: text,
+    });
+
+    if (error) {
+      console.error('Resend error:', error);
+      return { success: false, error: error.message };
+    }
+
+    console.log('✅ Email sent successfully:', data);
+    return { success: true, data };
+  } catch (error) {
+    console.error('Error sending email:', error);
+    return { 
+      success: false, 
+      error: error instanceof Error ? error.message : 'Unknown error' 
+    };
+  }
 }
