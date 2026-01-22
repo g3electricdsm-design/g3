@@ -100,7 +100,7 @@ async function sendEmail({ to, subject, text }: {
 
     // Send email using Resend
     const { data, error } = await resend.emails.send({
-      from: 'G3 Electric <onboarding@resend.dev>', // You'll update this to your domain later
+      from: 'G3 Electric <quotes@g3electricdsm.com>',
       to: [to],
       subject: subject,
       text: text,
