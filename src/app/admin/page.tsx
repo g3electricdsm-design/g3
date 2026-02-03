@@ -11,23 +11,48 @@ import { getAllServices, Service } from '@/data/services';
 import { getAllFormEntries, FormEntry } from '@/data/formEntries';
 import { getContent, updateContent } from '@/data/content';
 import { getAllTestimonials, Testimonial, deleteTestimonial } from '@/data/testimonials';
-import FormEntryModal from '@/components/FormEntryModal';
 import ContentEditor from '@/components/ContentEditor';
 
 export const dynamic = 'force-dynamic';
 
 function AdminContent() {
   const searchParams = useSearchParams();
-  const [projects, setProjects] = useState<Project[]>(getAllProjects());
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [isLoadingProjects, setIsLoadingProjects] = useState(true);
   const [services] = useState<Service[]>(getAllServices());
-  const [formEntries, setFormEntries] = useState<FormEntry[]>(getAllFormEntries());
+  const [formEntries] = useState<FormEntry[]>(getAllFormEntries());
   const [testimonials, setTestimonials] = useState<Testimonial[]>(getAllTestimonials());
   const [content, setContent] = useState(getContent());
-  const [selectedFormEntry, setSelectedFormEntry] = useState<FormEntry | null>(null);
   const [editingContent, setEditingContent] = useState<{ page: string; content: Record<string, unknown> } | null>(null);
-  const [showFormEntryModal, setShowFormEntryModal] = useState(false);
   const [showContentEditor, setShowContentEditor] = useState(false);
   const [activeTab, setActiveTab] = useState<'projects' | 'services' | 'formEntries' | 'testimonials' | 'content' | 'analytics' | 'settings'>('projects');
+
+  // Refresh projects when component mounts or when returning to admin page
+  useEffect(() => {
+    const refreshProjects = async () => {
+      setIsLoadingProjects(true);
+      try {
+        const allProjects = await getAllProjects();
+        setProjects(allProjects);
+      } catch (error) {
+        console.error('Error loading projects:', error);
+        // Fallback to sync version
+        const { getAllProjectsSync } = await import('@/data/projects');
+        setProjects(getAllProjectsSync());
+      } finally {
+        setIsLoadingProjects(false);
+      }
+    };
+    
+    refreshProjects();
+    
+    // Refresh when window regains focus (user navigates back)
+    window.addEventListener('focus', refreshProjects);
+    
+    return () => {
+      window.removeEventListener('focus', refreshProjects);
+    };
+  }, []);
 
   // Check for tab parameter in URL
   useEffect(() => {
@@ -37,6 +62,10 @@ function AdminContent() {
       // Refresh testimonials when switching to testimonials tab
       if (tabParam === 'testimonials') {
         setTestimonials(getAllTestimonials());
+      }
+      // Refresh projects when switching to projects tab
+      if (tabParam === 'projects') {
+        getAllProjects().then(setProjects).catch(console.error);
       }
     }
   }, [searchParams]);
@@ -50,10 +79,15 @@ function AdminContent() {
     window.location.href = '/admin/login';
   };
 
-  const handleDelete = (id: number) => {
+  const handleDelete = async (id: number) => {
     if (confirm('Are you sure you want to delete this project?')) {
-      deleteProject(id);
-      setProjects(projects.filter(p => p.id !== id));
+      try {
+        await deleteProject(id);
+        setProjects(projects.filter(p => p.id !== id));
+      } catch (error) {
+        console.error('Error deleting project:', error);
+        alert('Error deleting project. Please try again.');
+      }
     }
   };
 
@@ -64,28 +98,6 @@ function AdminContent() {
     }
   };
 
-  const handleViewFormEntry = (entry: FormEntry) => {
-    setSelectedFormEntry(entry);
-    setShowFormEntryModal(true);
-  };
-
-  const handleUpdateFormEntryStatus = (id: number, status: string) => {
-    setFormEntries(prev => prev.map(entry => 
-      entry.id === id ? { ...entry, status: status as 'new' | 'read' | 'contacted' | 'completed' | 'cancelled' } : entry
-    ));
-  };
-
-  const handleAddFormEntryNote = (id: number, note: string) => {
-    setFormEntries(prev => prev.map(entry => 
-      entry.id === id ? { ...entry, adminNotes: note } : entry
-    ));
-  };
-
-  const handleDeleteFormEntry = (id: number) => {
-    if (confirm('Are you sure you want to delete this form entry?')) {
-      setFormEntries(prev => prev.filter(entry => entry.id !== id));
-    }
-  };
 
   const handleEditContent = (page: string) => {
     setEditingContent({ page, content: content[page as keyof typeof content] as unknown as Record<string, unknown> });
@@ -134,12 +146,6 @@ function AdminContent() {
       {/* Content Management Dashboard */}
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Dashboard Header */}
-          <div className="mb-8">
-            <h2 className="font-montserrat text-3xl text-white mb-4">Content Management Dashboard</h2>
-            <p className="font-raleway text-white-smoke">Manage your website content, projects, and services</p>
-          </div>
-
           {/* Tab Navigation */}
           <div className="mb-8">
             <nav className="flex space-x-8">
@@ -157,13 +163,17 @@ function AdminContent() {
                   <button
                     key={tab.id}
                     onClick={() => setActiveTab(tab.id as 'projects' | 'services' | 'formEntries' | 'testimonials' | 'content' | 'analytics' | 'settings')}
-                    className={`flex items-center gap-2 px-4 py-2 rounded-lg font-montserrat font-medium transition-colors ${
+                    className={`group flex items-center gap-2 px-4 py-2 rounded-lg font-montserrat font-medium transition-colors ${
                       activeTab === tab.id
                         ? 'bg-purple text-white'
-                        : 'text-white-smoke hover:text-purple hover:bg-white-smoke/10'
+                        : 'text-white-smoke hover:text-purple hover:bg-purple/20'
                     }`}
                   >
-                    <Icon className="h-5 w-5" />
+                    <Icon className={`h-5 w-5 transition-colors ${
+                      activeTab === tab.id 
+                        ? 'text-white' 
+                        : 'text-white-smoke group-hover:text-purple'
+                    }`} />
                     {tab.name}
                   </button>
                 );
@@ -178,10 +188,10 @@ function AdminContent() {
                 <h3 className="font-montserrat text-2xl text-white">Portfolio Projects</h3>
                 <Link
                   href="/admin/projects/new/edit"
-                  className="btn-primary flex items-center gap-2"
+                  className="btn-primary inline-flex items-center gap-2"
                 >
                   <PlusIcon className="h-5 w-5" />
-                  Add New Project
+                  <span>Add New Project</span>
                 </Link>
               </div>
 
@@ -327,70 +337,52 @@ function AdminContent() {
             <div className="space-y-6">
               <div className="flex justify-between items-center">
                 <h3 className="font-montserrat text-2xl text-white">Form Entries</h3>
-                <div className="flex items-center gap-4">
-                  <span className="text-white-smoke">
-                    {formEntries.filter(e => e.status === 'new').length} new entries
-                  </span>
-                  <button className="btn-primary flex items-center gap-2">
-                    <EnvelopeIcon className="h-5 w-5" />
-                    Export Entries
-                  </button>
-                </div>
               </div>
 
               <div className="bg-white-smoke rounded-lg p-6">
-                <div className="space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {formEntries.map((entry) => (
-                    <div key={entry.id} className="bg-white rounded-lg p-4 shadow-sm border border-gray-200">
-                      <div className="flex items-start justify-between">
+                    <Link
+                      key={entry.id}
+                      href={`/admin/form-entries/${entry.id}`}
+                      className="bg-white rounded-lg p-4 shadow-sm border border-gray-200 hover:shadow-md transition-shadow cursor-pointer block"
+                    >
+                      <div className="flex items-start justify-between mb-3">
                         <div className="flex-1">
-                          <div className="flex items-center gap-3 mb-2">
-                            <h4 className="font-montserrat text-lg font-semibold">
-                              {entry.customerInfo.name}
-                            </h4>
-                            <span className={`px-2 py-1 rounded-full text-xs font-raleway font-medium uppercase ${
-                              entry.status === 'new' ? 'bg-blue-100 text-blue-800' :
-                              entry.status === 'read' ? 'bg-yellow-100 text-yellow-800' :
-                              entry.status === 'contacted' ? 'bg-purple-100 text-purple-800' :
-                              entry.status === 'completed' ? 'bg-green-100 text-green-800' :
-                              'bg-red-100 text-red-800'
-                            }`}>
-                              {entry.status.charAt(0).toUpperCase() + entry.status.slice(1)}
-                            </span>
-                            <span className="text-xs">
-                              {new Date(entry.timestamp).toLocaleDateString()}
-                            </span>
-                          </div>
-                          <p className="font-raleway text-sm mb-2">
-                            {entry.customerInfo.email} • {entry.customerInfo.phone}
+                          <h4 className="font-montserrat text-lg font-semibold text-gray-900 mb-1">
+                            {entry.customerInfo.name}
+                          </h4>
+                          <p className="font-raleway text-xs text-gray-600 mb-2">
+                            {new Date(entry.timestamp).toLocaleDateString()}
                           </p>
-                          <p className="font-raleway text-sm mb-2">
-                            <strong>Project:</strong> {entry.projectInfo.projectType} • {entry.projectInfo.description?.substring(0, 100)}...
-                          </p>
-                          {entry.projectInfo.budget && (
-                            <p className="font-raleway text-sm">
-                              <strong>Budget:</strong> {entry.projectInfo.budget}
-                            </p>
-                          )}
                         </div>
-                        <div className="flex items-center gap-2">
-                          <button
-                            onClick={() => handleViewFormEntry(entry)}
-                            className="px-3 py-1 text-sm font-medium hover:bg-purple/10 rounded-lg transition-colors"
-                            title="View details"
-                          >
-                            View entry
-                          </button>
-                          <button
-                            onClick={() => handleDeleteFormEntry(entry.id)}
-                            className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
-                            title="Delete entry"
-                          >
-                            <TrashIcon className="h-4 w-4" />
-                          </button>
-                        </div>
+                        {entry.additionalInfo?.urgency && (
+                          <span className={`px-2 py-1 rounded-full text-xs font-raleway font-medium uppercase flex-shrink-0 ${
+                            entry.additionalInfo.urgency === 'high' ? 'bg-red-100 text-red-800' :
+                            entry.additionalInfo.urgency === 'medium' ? 'bg-yellow-100 text-yellow-800' :
+                            'bg-green-100 text-green-800'
+                          }`}>
+                            {entry.additionalInfo.urgency}
+                          </span>
+                        )}
                       </div>
-                    </div>
+                      <p className="font-raleway text-sm mb-2 text-gray-800">
+                        {entry.customerInfo.email}
+                      </p>
+                      {entry.customerInfo.phone && (
+                        <p className="font-raleway text-sm mb-2 text-gray-800">
+                          {entry.customerInfo.phone}
+                        </p>
+                      )}
+                      <p className="font-raleway text-sm mb-2 text-gray-700">
+                        <span className="font-medium">Project:</span> {entry.projectInfo.projectType}
+                      </p>
+                      {entry.projectInfo.description && (
+                        <p className="font-raleway text-sm line-clamp-2 text-gray-700">
+                          {entry.projectInfo.description}
+                        </p>
+                      )}
+                    </Link>
                   ))}
                 </div>
               </div>
@@ -600,15 +592,6 @@ function AdminContent() {
             </div>
           )}
 
-
-          {/* Form Entry Modal */}
-          <FormEntryModal
-            entry={selectedFormEntry}
-            onClose={() => setShowFormEntryModal(false)}
-            onUpdateStatus={handleUpdateFormEntryStatus}
-            onAddNote={handleAddFormEntryNote}
-            isOpen={showFormEntryModal}
-          />
 
           {/* Content Editor Modal */}
           <ContentEditor

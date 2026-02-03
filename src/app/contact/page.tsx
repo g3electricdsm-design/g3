@@ -145,7 +145,7 @@ export default function Contact() {
       {/* Header */}
       <section className="bg-gradient-to-br from-purple to-phlox text-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h1 className="font-megrim text-5xl md:text-6xl mb-4">Get Your Free Quote</h1>
+          <h1 className="font-megrim text-5xl md:text-6xl mb-4">Contact G3</h1>
           <p className="font-raleway text-lg md:text-xl max-w-3xl">
             Ready to start your electrical project? Fill out the form below and we&apos;ll get back to you within 24 hours with a detailed quote.
           </p>

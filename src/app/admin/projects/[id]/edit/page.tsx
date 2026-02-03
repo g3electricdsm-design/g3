@@ -19,11 +19,16 @@ export default function EditProjectPage() {
     type: '',
     image: '/api/placeholder/800/600',
     description: '',
+    overview: '',
     client: '',
     location: '',
     services: [],
     challenges: '',
-    size: 'medium'
+    size: 'medium',
+    orientation: 'landscape',
+    slug: '',
+    seoTitle: '',
+    metaDescription: ''
   });
 
   const [newService, setNewService] = useState('');
@@ -31,23 +36,33 @@ export default function EditProjectPage() {
   const [isSaving, setIsSaving] = useState(false);
 
   useEffect(() => {
-    const id = params.id as string;
-    
-    if (id === 'new') {
-      // Creating a new project
-      setIsLoading(false);
-    } else {
-      // Editing existing project
-      const project = getProjectById(id);
-      if (project) {
-        setFormData(project);
+    const loadProject = async () => {
+      const id = params.id as string;
+      
+      if (id === 'new') {
+        // Creating a new project
+        setIsLoading(false);
       } else {
-        // Project not found, redirect to admin
-        router.push('/admin');
-        return;
+        // Editing existing project
+        try {
+          const project = await getProjectById(id);
+          if (project) {
+            setFormData(project);
+          } else {
+            // Project not found, redirect to admin
+            router.push('/admin');
+            return;
+          }
+        } catch (error) {
+          console.error('Error loading project:', error);
+          router.push('/admin');
+          return;
+        }
+        setIsLoading(false);
       }
-      setIsLoading(false);
-    }
+    };
+
+    loadProject();
   }, [params.id, router]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -87,6 +102,22 @@ export default function EditProjectPage() {
     }
   };
 
+  const handleSizeSuggestion = (suggestedSize: string, aspectRatio: number) => {
+    // Auto-populate the size field with smart suggestion
+    console.log(`📐 Image detected: ${aspectRatio.toFixed(2)} aspect ratio → suggesting "${suggestedSize}"`);
+    setFormData(prev => ({
+      ...prev,
+      size: suggestedSize as Project['size']
+    }));
+    
+    // Auto-set orientation based on aspect ratio
+    const suggestedOrientation = aspectRatio < 1 ? 'portrait' : 'landscape';
+    setFormData(prev => ({
+      ...prev,
+      orientation: suggestedOrientation
+    }));
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSaving(true);
@@ -94,16 +125,23 @@ export default function EditProjectPage() {
     try {
       const id = params.id as string;
       
+      console.log('💾 Saving project with data:', {
+        title: formData.title,
+        size: formData.size,
+        orientation: formData.orientation,
+        id: formData.id
+      });
+      
       if (id === 'new') {
         // Create new project
         const newId = Date.now(); // Simple ID generation
         const newProject = { ...formData, id: newId };
         console.log('Creating new project with image:', newProject.image);
-        addProject(newProject);
+        await addProject(newProject);
       } else {
         // Update existing project
         console.log('Updating project with image:', formData.image);
-        updateProject(formData);
+        await updateProject(formData);
       }
 
       // Redirect back to admin
@@ -134,7 +172,7 @@ export default function EditProjectPage() {
       <Navigation currentPath="/admin" />
 
       {/* Header */}
-      <section className="bg-gradient-to-br from-purple to-phlox text-white py-16">
+      <section className="bg-gradient-to-br from-purple to-phlox text-white pt-16 pb-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center mb-6">
             <Link 
@@ -158,10 +196,46 @@ export default function EditProjectPage() {
       </section>
 
       {/* Form Section */}
-      <section className="py-12">
+      <section className="pb-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-white-smoke rounded-lg shadow-xl p-8">
             <form onSubmit={handleSubmit} className="space-y-8">
+              {/* Project Image Upload */}
+              <div className="space-y-4 mb-6">
+                <h3 className="font-montserrat text-2xl font-semibold text-earle-black border-b border-gray-300 pb-2">
+                  Project Image
+                </h3>
+                
+                <div>
+                  <label className="block text-sm font-medium text-earle-black mb-2">
+                    Portfolio Tile Size
+                  </label>
+                  <select
+                    name="size"
+                    value={formData.size}
+                    onChange={handleInputChange}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple focus:border-transparent text-earle-black"
+                  >
+                    <option value="short">Short (1 row tall)</option>
+                    <option value="square">Square (2 rows tall, 1 column wide)</option>
+                    <option value="tall">Tall (3 rows tall, 1 column wide)</option>
+                    <option value="wide">Wide (2 rows tall, 2 columns wide)</option>
+                    <option value="panoramic">Panoramic (2 rows tall, 3 columns wide)</option>
+                    <option value="extraTall">Extra Tall (6 rows tall, 1 column wide)</option>
+                  </select>
+                  <p className="mt-1 text-xs text-gray-500">
+                    Controls how this project appears on the /portfolio grid. Auto-suggested based on your image aspect ratio.
+                  </p>
+                </div>
+                
+                <ImageUpload
+                  currentImage={formData.image}
+                  onImageChange={handleImageChange}
+                  onSizeSuggestion={handleSizeSuggestion}
+                  projectTitle={formData.title || 'New Project'}
+                />
+              </div>
+
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 {/* Basic Information */}
                 <div className="space-y-6">
@@ -264,8 +338,24 @@ export default function EditProjectPage() {
                       value={formData.description}
                       onChange={handleInputChange}
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple focus:border-transparent text-earle-black"
-                      placeholder="Brief project summary"
+                      placeholder="Brief project summary (shown on preview cards)"
                     />
+                    <p className="mt-1 text-xs text-gray-500">This description appears on the portfolio preview cards</p>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-earle-black mb-2">
+                      Project Overview
+                    </label>
+                    <textarea
+                      name="overview"
+                      value={formData.overview || ''}
+                      onChange={handleInputChange}
+                      rows={5}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple focus:border-transparent text-earle-black"
+                      placeholder="Detailed project overview (shown on project detail page)"
+                    />
+                    <p className="mt-1 text-xs text-gray-500">This detailed overview appears on the individual project detail page</p>
                   </div>
 
 
@@ -328,16 +418,62 @@ export default function EditProjectPage() {
                 </div>
               </div>
 
-              {/* Project Image Upload */}
-              <div className="space-y-4">
+              {/* SEO Section */}
+              <div className="space-y-6">
                 <h3 className="font-montserrat text-2xl font-semibold text-earle-black border-b border-gray-300 pb-2">
-                  Project Image
+                  SEO Settings
                 </h3>
-                <ImageUpload
-                  currentImage={formData.image}
-                  onImageChange={handleImageChange}
-                  projectTitle={formData.title || 'New Project'}
-                />
+                
+                <div>
+                  <label className="block text-sm font-medium text-earle-black mb-2">
+                    URL Slug
+                  </label>
+                  <input
+                    type="text"
+                    name="slug"
+                    value={formData.slug || ''}
+                    onChange={handleInputChange}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple focus:border-transparent text-earle-black"
+                    placeholder="project-slug"
+                  />
+                  <p className="mt-1 text-xs text-gray-500">Used in the URL: /portfolio/[slug]</p>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-earle-black mb-2">
+                    Title Tag
+                  </label>
+                  <input
+                    type="text"
+                    name="seoTitle"
+                    value={formData.seoTitle || ''}
+                    onChange={handleInputChange}
+                    maxLength={70}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple focus:border-transparent text-earle-black"
+                    placeholder="Title Tag (70 characters max)"
+                  />
+                  <p className="mt-1 text-xs text-gray-500">
+                    {formData.seoTitle?.length || 0}/70 characters
+                  </p>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-earle-black mb-2">
+                    Meta Description
+                  </label>
+                  <textarea
+                    name="metaDescription"
+                    value={formData.metaDescription || ''}
+                    onChange={handleInputChange}
+                    maxLength={140}
+                    rows={3}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple focus:border-transparent text-earle-black"
+                    placeholder="Meta Description (140 characters max)"
+                  />
+                  <p className="mt-1 text-xs text-gray-500">
+                    {formData.metaDescription?.length || 0}/140 characters
+                  </p>
+                </div>
               </div>
 
               {/* Form Actions */}

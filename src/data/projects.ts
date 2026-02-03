@@ -8,11 +8,38 @@ export interface Project {
   type: string;
   image: string;
   description: string;
+  overview?: string;
   client: string;
   location: string;
   services: string[];
   challenges: string;
-  size: 'small' | 'medium' | 'large';
+  // Controls portfolio grid tile sizing (Figma `portfolio_grid`)
+  // Canonical values:
+  // - short: 1 row (~180px)
+  // - square: 2 rows (~384px)
+  // - tall: 3 rows (square + short stacked)
+  // - wide: 2 cols x square height
+  // - panoramic: 3 cols x square height
+  // - extraTall: 6 rows (two tall stacked)
+  //
+  // Back-compat values (still accepted):
+  // - small -> short
+  // - medium -> square
+  // - large -> wide
+  size:
+    | 'small'
+    | 'medium'
+    | 'large'
+    | 'short'
+    | 'square'
+    | 'tall'
+    | 'wide'
+    | 'panoramic'
+    | 'extraTall';
+  orientation?: 'portrait' | 'landscape';
+  slug?: string;
+  seoTitle?: string;
+  metaDescription?: string;
 }
 
 export const projects: Project[] = [
@@ -27,7 +54,8 @@ export const projects: Project[] = [
     location: "Des Moines, IA",
     services: ["LED Installation", "Under-cabinet Lighting", "Pendant Light Installation", "Recessed Lighting", "Smart Switch Integration"],
     challenges: "Working around existing cabinetry and ensuring proper electrical load distribution",
-    size: "large"
+    size: "tall",
+    orientation: "portrait"
   },
   {
     id: 2,
@@ -40,7 +68,8 @@ export const projects: Project[] = [
     location: "Cedar Rapids, IA",
     services: ["Main Service Installation", "Panel Installation", "Office Circuit Wiring", "AV System Integration", "Emergency Lighting", "Fire Safety Systems"],
     challenges: "Coordinating with multiple contractors and meeting strict commercial building codes",
-    size: "large"
+    size: "wide",
+    orientation: "landscape"
   },
   {
     id: 3,
@@ -53,7 +82,7 @@ export const projects: Project[] = [
     location: "Iowa City, IA",
     services: ["Smart Switch Installation", "Smart Outlet Installation", "Home Automation Wiring", "Security System Integration", "Audio System Wiring"],
     challenges: "Integrating with existing electrical systems while maintaining home aesthetics",
-    size: "medium"
+    size: "short"
   },
   {
     id: 4,
@@ -66,7 +95,7 @@ export const projects: Project[] = [
     location: "Davenport, IA",
     services: ["Track Lighting Installation", "Display Case Lighting", "Ambient Lighting", "Smart Controls", "Energy Management"],
     challenges: "Maintaining consistent lighting levels while highlighting merchandise effectively",
-    size: "small"
+    size: "short"
   },
   {
     id: 5,
@@ -79,7 +108,7 @@ export const projects: Project[] = [
     location: "Ames, IA",
     services: ["Ceiling Fan Installation", "Smart Control Integration", "Electrical Box Upgrades", "Remote Control Setup"],
     challenges: "Installing fans in rooms with limited ceiling access and ensuring proper support",
-    size: "small"
+    size: "panoramic"
   },
   {
     id: 6,
@@ -92,7 +121,7 @@ export const projects: Project[] = [
     location: "Des Moines, IA",
     services: ["Kitchen Equipment Circuits", "Dining Room Lighting", "Bar Electrical", "Outdoor Lighting", "Emergency Systems", "Fire Suppression Integration"],
     challenges: "Meeting commercial kitchen electrical codes and coordinating with kitchen equipment installation",
-    size: "large"
+    size: "wide"
   },
   {
     id: 7,
@@ -105,7 +134,7 @@ export const projects: Project[] = [
     location: "West Des Moines, IA",
     services: ["Landscape Lighting", "Security Lighting", "Motion Sensors", "Smart Controls", "Weatherproof Installation"],
     challenges: "Working with existing landscaping and ensuring weatherproof connections",
-    size: "medium"
+    size: "square"
   },
   {
     id: 8,
@@ -213,33 +242,94 @@ export const projects: Project[] = [
   }
 ];
 
-// In-memory storage for runtime updates
-let projectsData = [...projects];
+// Import API client
+import { projectsAPI } from '@/lib/projects-api';
 
-// Helper function to get project by ID
-export function getProjectById(id: string): Project | undefined {
-  return projects.find(project => project.id.toString() === id);
+// Helper function to get project by ID or slug
+// This now uses the API instead of localStorage
+export async function getProjectById(idOrSlug: string): Promise<Project | undefined> {
+  if (typeof window === 'undefined') {
+    // Server-side: fallback to default projects
+    return projects.find(project => 
+      project.slug === idOrSlug || project.id.toString() === idOrSlug
+    );
+  }
+  
+  const project = await projectsAPI.getById(idOrSlug);
+  return project || undefined;
+}
+
+// Synchronous version for backward compatibility (uses cache)
+let projectsCache: Project[] | null = null;
+let cacheTimestamp = 0;
+const CACHE_DURATION = 60000; // 1 minute
+
+async function getCachedProjects(): Promise<Project[]> {
+  const now = Date.now();
+  if (projectsCache && (now - cacheTimestamp) < CACHE_DURATION) {
+    return projectsCache;
+  }
+  
+  projectsCache = await projectsAPI.getAll();
+  cacheTimestamp = now;
+  return projectsCache;
+}
+
+// Helper function to get project by slug
+export async function getProjectBySlug(slug: string): Promise<Project | undefined> {
+  if (typeof window === 'undefined') {
+    return projects.find(project => project.slug === slug);
+  }
+  return await getProjectById(slug);
 }
 
 // Helper function to get all projects
-export function getAllProjects(): Project[] {
-  return projectsData;
+export async function getAllProjects(): Promise<Project[]> {
+  if (typeof window === 'undefined') {
+    // Server-side: return default projects
+    return [...projects];
+  }
+  return await getCachedProjects();
+}
+
+// Synchronous version for components that need immediate data
+// This will return cached data or default projects
+export function getAllProjectsSync(): Project[] {
+  if (typeof window === 'undefined') {
+    return [...projects];
+  }
+  return projectsCache || [...projects];
 }
 
 // Helper function to update a project
-export function updateProject(updatedProject: Project): void {
-  const index = projectsData.findIndex(p => p.id === updatedProject.id);
-  if (index !== -1) {
-    projectsData[index] = updatedProject;
+export async function updateProject(updatedProject: Project): Promise<void> {
+  if (typeof window === 'undefined') {
+    return; // Server-side: skip
   }
+  
+  await projectsAPI.update(updatedProject);
+  // Invalidate cache
+  projectsCache = null;
 }
 
 // Helper function to add a new project
-export function addProject(newProject: Project): void {
-  projectsData.push(newProject);
+export async function addProject(newProject: Project): Promise<void> {
+  if (typeof window === 'undefined') {
+    return; // Server-side: skip
+  }
+  
+  await projectsAPI.create(newProject);
+  // Invalidate cache
+  projectsCache = null;
 }
 
 // Helper function to delete a project
-export function deleteProject(id: number): void {
-  projectsData = projectsData.filter(p => p.id !== id);
+export async function deleteProject(id: number): Promise<void> {
+  if (typeof window === 'undefined') {
+    return; // Server-side: skip
+  }
+  
+  await projectsAPI.delete(id);
+  // Invalidate cache
+  projectsCache = null;
 }

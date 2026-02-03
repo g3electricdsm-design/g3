@@ -12,12 +12,14 @@
     "security-audit": "npm audit --audit-level moderate",
     "depcheck": "depcheck",
     "deploy": "vercel --prod --force --yes",
-    "deploy:clear-cache": "./scripts/deploy.sh"
+    "deploy:clear-cache": "./scripts/deploy.sh",
+    "verify-setup": "node scripts/verify-setup.js"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.7",
     "@heroicons/react": "^2.2.0",
     "@next/font": "^14.2.15",
+    "@supabase/supabase-js": "^2.90.1",
     "animate.css": "^4.1.1",
     "aos": "^2.3.4",
     "framer-motion": "^12.23.12",
@@ -25,7 +27,8 @@
     "lucide-react": "^0.542.0",
     "next": "^16.1.6",
     "react": "19.1.0",
-    "react-dom": "19.1.0"
+    "react-dom": "19.1.0",
+    "resend": "^6.8.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

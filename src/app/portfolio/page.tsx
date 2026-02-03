@@ -5,23 +5,54 @@ import Image from "next/image";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import PortfolioSkeleton from "@/components/PortfolioSkeleton";
-import { getAllProjects } from "@/data/projects";
+import { getAllProjects, Project } from "@/data/projects";
 import { getCategoryIcon, getTypeIcon } from "@/utils/icons";
 import { useState, useEffect } from "react";
 
 export default function Portfolio() {
-  const [portfolioItems, setPortfolioItems] = useState(getAllProjects());
-  const [isLoading, setIsLoading] = useState(false);
+  const [portfolioItems, setPortfolioItems] = useState<Project[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Smart grid packing: sort items to minimize gaps
+  const sortForOptimalPacking = (projects: Project[]) => {
+    // Priority order: place larger/wider items first to minimize gaps
+    return [...projects].sort((a, b) => {
+      const sizeOrder: Record<string, number> = {
+        'panoramic': 1,  // 3 cols - place first
+        'wide': 2,       // 2 cols
+        'extraTall': 3,  // 6 rows
+        'tall': 4,       // 3 rows
+        'square': 5,     // 2 rows
+        'short': 6,      // 1 row
+        'large': 2,      // back-compat
+        'medium': 5,     // back-compat
+        'small': 6,      // back-compat
+      };
+      
+      const orderA = sizeOrder[a.size] || 5;
+      const orderB = sizeOrder[b.size] || 5;
+      
+      return orderA - orderB;
+    });
+  };
 
   // Refresh portfolio data when component mounts or when data might have changed
   useEffect(() => {
-    const refreshData = () => {
+    const refreshData = async () => {
       setIsLoading(true);
-      // Simulate a brief delay for smoother UX
-      setTimeout(() => {
-        setPortfolioItems(getAllProjects());
+      try {
+        const projects = await getAllProjects();
+        const sorted = sortForOptimalPacking(projects);
+        setPortfolioItems(sorted);
+      } catch (error) {
+        console.error('Error loading projects:', error);
+        // Fallback to sync version
+        const { getAllProjectsSync } = await import('@/data/projects');
+        const fallbackProjects = getAllProjectsSync();
+        setPortfolioItems(sortForOptimalPacking(fallbackProjects));
+      } finally {
         setIsLoading(false);
-      }, 300);
+      }
     };
 
     // Refresh on mount
@@ -35,22 +66,64 @@ export default function Portfolio() {
     };
   }, []);
 
-  const getSizeClasses = (size: string, index: number) => {
-    // First project spans 3 columns wide
-    if (index === 0) {
-      return 'md:col-span-3 md:row-span-2';
+  const getSizeClasses = (item: Project) => {
+    const normalize = (size: Project['size']) => {
+      // Back-compat mapping
+      if (size === 'small') return 'short';
+      if (size === 'medium') return 'square';
+      if (size === 'large') return 'wide';
+      return size;
+    };
+
+    const size = normalize(item.size);
+    console.log(`🎨 Rendering ${item.title}: size="${item.size}" → normalized="${size}", orientation="${item.orientation}"`);
+    // Note: orientation affects image cropping, not tile sizing.
+
+    // Figma proportions (node `61:1243`):
+    // - short: ~189px
+    // - square: 384px
+    // - tall portrait: 617px (≈ square + short + gap)
+    // We approximate using grid rows: md:auto-rows-[180px] + gap-6 (24px)
+    // - short: 1 row = 180px
+    // - square: 2 rows = 180*2 + 24 = 384px
+    // - tall: 3 rows = 180*3 + 48 = 588px (matches the "square + short" intent)
+    const spanToClasses = (span: 1 | 2 | 3 | 6) => {
+      if (span === 6) return { base: 'row-span-6', md: 'md:row-span-6' };
+      if (span === 3) return { base: 'row-span-3', md: 'md:row-span-3' };
+      if (span === 2) return { base: 'row-span-2', md: 'md:row-span-2' };
+      return { base: 'row-span-1', md: 'md:row-span-1' };
+    };
+
+    const effectiveSize = size;
+
+    if (effectiveSize === 'panoramic') {
+      const s = spanToClasses(2);
+      return `${s.base} md:col-span-3 ${s.md}`;
     }
-    
-    switch (size) {
-      case 'large':
-        return 'md:col-span-2 md:row-span-2';
-      case 'medium':
-        return 'md:col-span-1 md:row-span-1';
-      case 'small':
-        return 'md:col-span-1 md:row-span-1';
-      default:
-        return 'md:col-span-1 md:row-span-1';
+
+    if (effectiveSize === 'wide') {
+      const s = spanToClasses(2);
+      return `${s.base} md:col-span-2 ${s.md}`;
     }
+
+    if (effectiveSize === 'extraTall') {
+      const s = spanToClasses(6);
+      return `${s.base} md:col-span-1 ${s.md}`;
+    }
+
+    if (effectiveSize === 'tall') {
+      const s = spanToClasses(3);
+      return `${s.base} md:col-span-1 ${s.md}`;
+    }
+
+    if (effectiveSize === 'short') {
+      const s = spanToClasses(1);
+      return `${s.base} md:col-span-1 ${s.md}`;
+    }
+
+    // square
+    const s = spanToClasses(2);
+    return `${s.base} md:col-span-1 ${s.md}`;
   };
 
 
@@ -90,12 +163,12 @@ export default function Portfolio() {
               </Link>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[minmax(200px,auto)]">
-            {portfolioItems.map((item, index) => (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[220px] md:auto-rows-[180px]" style={{ gridAutoFlow: 'dense' }}>
+            {portfolioItems.map((item) => (
               <Link
                 key={item.id}
-                href={`/portfolio/${item.id}`}
-                className={`group relative overflow-hidden rounded-lg shadow-sm hover:shadow-lg transition-all duration-300 cursor-pointer block ${getSizeClasses(item.size, index)}`}
+                href={`/portfolio/${item.slug || item.id}`}
+                className={`group relative overflow-hidden rounded-lg shadow-sm hover:shadow-lg transition-all duration-300 cursor-pointer block ${getSizeClasses(item)}`}
               >
                 {/* Project Image */}
                 <div className="absolute inset-0">

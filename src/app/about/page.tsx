@@ -1,6 +1,7 @@
+'use client';
+
 import Link from "next/link";
-import Image from "next/image";
-import { Metadata } from "next";
+import { useState, useEffect, useRef } from "react";
 import { 
   ShieldCheckIcon, 
   BoltIcon, 
@@ -15,11 +16,6 @@ import Footer from "@/components/Footer";
 import Employee from "@/components/Employee";
 import AnimatedCounter from "@/components/AnimatedCounter";
 import { getContent } from "@/data/content";
-
-export const metadata: Metadata = {
-  title: "About Us",
-  description: "Licensed electricians with over 15 years of experience. Safety and quality in every project.",
-};
 
 export default function About() {
   const content = getContent().about;
@@ -86,75 +82,66 @@ export default function About() {
         </div>
       </section>
 
-      {/* Story Section */}
-      <section className="py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div className="relative rounded-lg overflow-hidden aspect-[4/3]">
-              <Image 
-                src="/images/family.jpg" 
-                alt="Family" 
-                fill
-                className="object-cover"
-              />
-            </div>
-            <div className="bg-white-smoke p-8 rounded-lg">
-              <div className="text-center">
-                <div className="w-24 h-24 bg-purple rounded-full flex items-center justify-center mx-auto mb-6">
-                  <BoltIcon className="h-12 w-12 text-white" />
-                </div>
-                <h3 className="font-montserrat text-2xl font-semibold text-earle-black mb-4">Why Choose G3 Electric?</h3>
-                <ul className="space-y-3 text-left">
-                  <li className="flex items-center font-raleway text-earle-black">
-                    <CheckBadgeIcon className="h-5 w-5 text-purple mr-3 flex-shrink-0" />
-                    Licensed & Insured
-                  </li>
-                  <li className="flex items-center font-raleway text-earle-black">
-                    <CheckBadgeIcon className="h-5 w-5 text-purple mr-3 flex-shrink-0" />
-                    Safety-First Approach
-                  </li>
-                  <li className="flex items-center font-raleway text-earle-black">
-                    <CheckBadgeIcon className="h-5 w-5 text-purple mr-3 flex-shrink-0" />
-                    Code Compliance Guaranteed
-                  </li>
-                  <li className="flex items-center font-raleway text-earle-black">
-                    <CheckBadgeIcon className="h-5 w-5 text-purple mr-3 flex-shrink-0" />
-                    Quality Materials Only
-                  </li>
-                  <li className="flex items-center font-raleway text-earle-black">
-                    <CheckBadgeIcon className="h-5 w-5 text-purple mr-3 flex-shrink-0" />
-                    Honest, Transparent Pricing
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Values Section */}
+      {/* Why Choose & Values Combined Section */}
       <section className="py-20 bg-white-smoke">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="font-montserrat text-4xl text-earle-black mb-4">Our Values</h2>
-            <p className="font-raleway text-lg text-earle-black max-w-3xl mx-auto">
-              These core values guide everything we do and ensure you receive the best possible service.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {content.values.map((value, index) => {
-              const IconComponent = iconMap[value.icon as keyof typeof iconMap] || ShieldCheckIcon;
-              return (
-                <div key={index} className="text-center">
-                  <div className="w-16 h-16 bg-purple rounded-full flex items-center justify-center mx-auto mb-6">
-                    <IconComponent className="h-8 w-8 text-white" />
-                  </div>
-                  <h3 className="font-montserrat text-xl font-semibold text-earle-black mb-4">{value.title}</h3>
-                  <p className="font-raleway text-earle-black">{value.description}</p>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            {/* Why Choose G3 Electric - Left Column */}
+            <div className="bg-purple p-8 rounded-lg">
+              <div className="text-center mb-6">
+                <div className="w-24 h-24 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                  <BoltIcon className="h-12 w-12 text-white" />
                 </div>
-              );
-            })}
+                <h3 className="font-montserrat text-2xl font-semibold text-white mb-4">Why Choose G3 Electric?</h3>
+              </div>
+              <ul className="space-y-3">
+                <li className="flex items-center font-raleway text-white">
+                  <CheckBadgeIcon className="h-5 w-5 text-white mr-3 flex-shrink-0" />
+                  Licensed & Insured
+                </li>
+                <li className="flex items-center font-raleway text-white">
+                  <CheckBadgeIcon className="h-5 w-5 text-white mr-3 flex-shrink-0" />
+                  Safety-First Approach
+                </li>
+                <li className="flex items-center font-raleway text-white">
+                  <CheckBadgeIcon className="h-5 w-5 text-white mr-3 flex-shrink-0" />
+                  Code Compliance Guaranteed
+                </li>
+                <li className="flex items-center font-raleway text-white">
+                  <CheckBadgeIcon className="h-5 w-5 text-white mr-3 flex-shrink-0" />
+                  Quality Materials Only
+                </li>
+                <li className="flex items-center font-raleway text-white">
+                  <CheckBadgeIcon className="h-5 w-5 text-white mr-3 flex-shrink-0" />
+                  Honest, Transparent Pricing
+                </li>
+              </ul>
+            </div>
+
+            {/* Our Values - Right Column */}
+            <div className="bg-purple p-8 rounded-lg">
+              <div className="text-center mb-8">
+                <h3 className="font-montserrat text-2xl font-semibold text-white mb-4">Our Values</h3>
+                <p className="font-raleway text-white">
+                  These core values guide everything we do and ensure you receive the best possible service.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {content.values.map((value, index) => {
+                  const IconComponent = iconMap[value.icon as keyof typeof iconMap] || ShieldCheckIcon;
+                  return (
+                    <div key={index} className="text-center">
+                      <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <IconComponent className="h-8 w-8 text-white" />
+                      </div>
+                      <h4 className="font-montserrat text-lg font-semibold text-white mb-2">{value.title}</h4>
+                      <p className="font-raleway text-sm text-white">{value.description}</p>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -248,3 +235,4 @@ export default function About() {
     </div>
   );
 }
+

@@ -28,6 +28,24 @@ body {
     font-family: var(--font-montserrat), sans-serif;
   }
 
+  /* Select dropdown styling - position arrow 16px from right */
+  select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23ffffff' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right 16px center;
+    background-repeat: no-repeat;
+    background-size: 1.5em 1.5em;
+    padding-right: 44px !important;
+  }
+
+  /* Ensure it overrides any Tailwind classes */
+  select.focus\:ring-2,
+  select.focus\:ring-purple {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23ffffff' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e") !important;
+  }
+
   /* Button styling */
   .btn-primary {
     background-color: #6D0091;
@@ -130,4 +148,44 @@ body {
   .btn-primary,
   .btn-secondary {
     text-decoration: none;
+  }
+
+  /* Buttons on white backgrounds - default to purple */
+  .bg-white button:not(.btn-primary):not(.btn-secondary):not(:disabled),
+  .bg-white-smoke button:not(.btn-primary):not(.btn-secondary):not(:disabled) {
+    background-color: #6D0091;
+    color: #FFFFFF;
+    border: none;
+  }
+
+  .bg-white button:not(.btn-primary):not(.btn-secondary):not(:disabled):hover,
+  .bg-white-smoke button:not(.btn-primary):not(.btn-secondary):not(:disabled):hover {
+    background-color: #C636FF;
+  }
+
+  /* Secondary style buttons on white backgrounds (outlined) */
+  .bg-white button.btn-outline,
+  .bg-white-smoke button.btn-outline {
+    background-color: transparent;
+    color: #6D0091;
+    border: 2px solid #6D0091;
+  }
+
+  .bg-white button.btn-outline:hover,
+  .bg-white-smoke button.btn-outline:hover {
+    background-color: #6D0091;
+    color: #FFFFFF;
+  }
+
+  /* Links on white backgrounds should be purple */
+  .bg-white a:not(.no-underline),
+  .bg-white-smoke a:not(.no-underline) {
+    color: #6D0091;
+    text-decoration-color: #6D0091;
+  }
+
+  .bg-white a:not(.no-underline):hover,
+  .bg-white-smoke a:not(.no-underline):hover {
+    color: #C636FF;
+    text-decoration-color: #C636FF;
   }

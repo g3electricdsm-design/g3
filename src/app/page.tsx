@@ -9,7 +9,7 @@ import TestimonialCarousel from "@/components/TestimonialCarousel";
 import SimplePixelZap from "@/components/SimplePixelZap";
 import AnimatedCounter from "@/components/AnimatedCounter";
 import { getContent } from "@/data/content";
-import { useEffect } from "react";
+import { useEffect, useState, useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
@@ -41,6 +41,95 @@ export default function Home() {
   // Testimonials parallax
   const testimonialsY = useTransform(scrollYProgress, [0.4, 0.9], [0, -30]);
   const testimonialsScale = useTransform(scrollYProgress, [0.4, 0.9], [1, 1.05]);
+  
+  // Sequential counting animation component
+  function AnimatedNumber({ target, suffix = '', duration = 2000, slowEnd = false }: { target: number; suffix?: string; duration?: number; slowEnd?: boolean }) {
+    const [count, setCount] = useState(1);
+    const [hasStarted, setHasStarted] = useState(false);
+    const observerRef = useRef<HTMLDivElement>(null);
+    const animationRef = useRef<number | null>(null);
+
+    useEffect(() => {
+      const startCounting = () => {
+        const startTime = Date.now();
+        const startValue = 1;
+        const endValue = target;
+
+        // Custom easing that really slows down at the end for slowEnd
+        const easeOutSlow = (t: number) => {
+          if (t < 0.6) {
+            // Fast progress for first 60%
+            return t * 0.6 / 0.6;
+          } else {
+            // Very slow for last 40% - really eases into the final number
+            const remaining = t - 0.6;
+            const remainingProgress = remaining / 0.4;
+            // Use a very aggressive ease-out for the last portion
+            return 0.6 + (remainingProgress * remainingProgress * remainingProgress * 0.4);
+          }
+        };
+
+        // Standard ease-out cubic
+        const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3);
+
+        const easingFunction = slowEnd ? easeOutSlow : easeOutCubic;
+
+        const animate = () => {
+          const now = Date.now();
+          const elapsed = now - startTime;
+          const progress = Math.min(elapsed / duration, 1);
+          
+          // Apply easing function for slow roll-in at the end
+          const easedProgress = easingFunction(progress);
+          const currentValue = Math.floor(startValue + (endValue - startValue) * easedProgress);
+          
+          // Make sure we don't exceed the target
+          const displayValue = Math.min(currentValue, endValue);
+          setCount(displayValue);
+
+          if (progress < 1) {
+            animationRef.current = requestAnimationFrame(animate);
+          } else {
+            setCount(endValue);
+          }
+        };
+
+        animationRef.current = requestAnimationFrame(animate);
+      };
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting && !hasStarted) {
+              setHasStarted(true);
+              startCounting();
+            }
+          });
+        },
+        { threshold: 0.5 }
+      );
+
+      if (observerRef.current) {
+        observer.observe(observerRef.current);
+      }
+
+      return () => {
+        if (observerRef.current) {
+          observer.unobserve(observerRef.current);
+        }
+        if (animationRef.current) {
+          cancelAnimationFrame(animationRef.current);
+        }
+      };
+    }, [hasStarted, target, duration, slowEnd]);
+
+    return (
+      <div ref={observerRef} className="font-montserrat text-4xl md:text-5xl font-black text-purple mb-2">
+        {count}{suffix}
+      </div>
+    );
+  }
+  
   return (
     <div className="min-h-screen bg-earle-black">
       {/* Pixel Zap Animation */}
@@ -259,6 +348,30 @@ export default function Home() {
           </div>
         </div>
       </motion.section>
+
+      {/* By the Numbers Section */}
+      <section className="py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+            <div className="text-center">
+              <AnimatedNumber target={10} suffix="+" duration={4000} slowEnd={true} />
+              <div className="font-montserrat text-lg font-semibold text-white">Years Experience</div>
+            </div>
+            <div className="text-center">
+              <AnimatedNumber target={1000} suffix="+" duration={3000} />
+              <div className="font-montserrat text-lg font-semibold text-white">Projects Completed</div>
+            </div>
+            <div className="text-center">
+              <AnimatedNumber target={100} suffix="%" duration={4000} slowEnd={true} />
+              <div className="font-montserrat text-lg font-semibold text-white">Safety Record</div>
+            </div>
+            <div className="text-center">
+              <div className="font-montserrat text-4xl md:text-5xl font-black text-purple mb-2">24/7</div>
+              <div className="font-montserrat text-lg font-semibold text-white">Emergency Service</div>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* Testimonials Section */}
       <TestimonialCarousel 
