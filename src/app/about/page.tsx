@@ -13,6 +13,7 @@ import {
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import Employee from "@/components/Employee";
+import AnimatedCounter from "@/components/AnimatedCounter";
 import { getContent } from "@/data/content";
 
 export const metadata: Metadata = {
@@ -60,15 +61,21 @@ export default function About() {
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             <div className="text-center">
-              <div className="font-montserrat text-4xl md:text-5xl font-black text-purple mb-2">10+</div>
+              <div className="font-montserrat text-4xl md:text-5xl font-black text-purple mb-2">
+                <AnimatedCounter end={10} suffix="+" duration={1800} className="inline-block" />
+              </div>
               <div className="font-montserrat text-lg font-semibold text-earle-black">Years Experience</div>
             </div>
             <div className="text-center">
-              <div className="font-montserrat text-4xl md:text-5xl font-black text-purple mb-2">1000+</div>
+              <div className="font-montserrat text-4xl md:text-5xl font-black text-purple mb-2">
+                <AnimatedCounter end={1000} suffix="+" duration={2200} className="inline-block" />
+              </div>
               <div className="font-montserrat text-lg font-semibold text-earle-black">Projects Completed</div>
             </div>
             <div className="text-center">
-              <div className="font-montserrat text-4xl md:text-5xl font-black text-purple mb-2">100%</div>
+              <div className="font-montserrat text-4xl md:text-5xl font-black text-purple mb-2">
+                <AnimatedCounter end={100} suffix="%" duration={1500} className="inline-block" />
+              </div>
               <div className="font-montserrat text-lg font-semibold text-earle-black">Safety Record</div>
             </div>
             <div className="text-center">

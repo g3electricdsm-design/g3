@@ -7,6 +7,7 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import TestimonialCarousel from "@/components/TestimonialCarousel";
 import SimplePixelZap from "@/components/SimplePixelZap";
+import AnimatedCounter from "@/components/AnimatedCounter";
 import { getContent } from "@/data/content";
 import { useEffect } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
@@ -147,6 +148,42 @@ export default function Home() {
                 </Link>
               </motion.div>
             </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Stats / By the Numbers */}
+      <section className="py-20 bg-earle-black text-white relative overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="font-montserrat text-4xl text-white mb-4">By the Numbers</h2>
+            <p className="font-raleway text-lg text-white-smoke max-w-3xl mx-auto">
+              Our track record speaks for itself—safety, quality, and customer satisfaction in every project.
+            </p>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+            <div className="text-center">
+              <div className="font-montserrat text-4xl md:text-5xl font-black text-purple mb-2">
+                <AnimatedCounter end={10} suffix="+" duration={1800} className="inline-block" />
+              </div>
+              <div className="font-montserrat text-lg font-semibold text-white-smoke">Years Experience</div>
+            </div>
+            <div className="text-center">
+              <div className="font-montserrat text-4xl md:text-5xl font-black text-purple mb-2">
+                <AnimatedCounter end={1000} suffix="+" duration={2200} className="inline-block" />
+              </div>
+              <div className="font-montserrat text-lg font-semibold text-white-smoke">Projects Completed</div>
+            </div>
+            <div className="text-center">
+              <div className="font-montserrat text-4xl md:text-5xl font-black text-purple mb-2">
+                <AnimatedCounter end={100} suffix="%" duration={1500} className="inline-block" />
+              </div>
+              <div className="font-montserrat text-lg font-semibold text-white-smoke">Safety Record</div>
+            </div>
+            <div className="text-center">
+              <div className="font-montserrat text-4xl md:text-5xl font-black text-purple mb-2">24/7</div>
+              <div className="font-montserrat text-lg font-semibold text-white-smoke">Emergency Service</div>
+            </div>
           </div>
         </div>
       </section>
