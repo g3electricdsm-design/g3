@@ -13,7 +13,7 @@ export default function Footer({ currentPath }: FooterProps) {
         <div className="text-center">
           <h3 className="font-megrim text-2xl text-white mb-4">G3 Electric</h3>
           <p className="font-raleway text-white-smoke mb-4">Safe & Dependable Electrical Services</p>
-          <div className="flex justify-center space-x-6">
+          <div className="flex flex-wrap justify-center gap-x-6 gap-y-3">
             <Link 
               href="/services" 
               className={`font-raleway transition-colors ${

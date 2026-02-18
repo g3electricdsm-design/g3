@@ -3,6 +3,16 @@
 :root {
   --background: #242729;
   --foreground: #F2F2F2;
+
+  /* Fluid typography scale */
+  --text-hero: clamp(2.25rem, 9vw, 9rem);
+  --text-sub: clamp(1.375rem, 3.5vw, 3rem);
+  --text-section: clamp(1.75rem, 4.5vw, 3.75rem);
+  --text-body: clamp(1rem, 1.5vw, 1.25rem);
+
+  /* Fluid spacing scale */
+  --space-section-x: clamp(1rem, 5vw, 2rem);
+  --space-section-y: clamp(3rem, 7vw, 5rem);
 }
 
 @theme inline {
@@ -188,4 +198,15 @@ body {
   .bg-white-smoke a:not(.no-underline):hover {
     color: #C636FF;
     text-decoration-color: #C636FF;
+  }
+
+  /* Fluid typography utilities */
+  .text-fluid-hero { font-size: var(--text-hero); }
+  .text-fluid-sub { font-size: var(--text-sub); }
+  .text-fluid-section { font-size: var(--text-section); }
+  .text-fluid-body { font-size: var(--text-body); }
+
+  /* Fluid spacing utility */
+  .section-padding {
+    padding: var(--space-section-y) var(--space-section-x);
   }

@@ -163,7 +163,7 @@ export default function Portfolio() {
               </Link>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[220px] md:auto-rows-[180px]" style={{ gridAutoFlow: 'dense' }}>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[clamp(160px,28vw,220px)]" style={{ gridAutoFlow: 'dense' }}>
             {portfolioItems.map((item) => (
               <Link
                 key={item.id}

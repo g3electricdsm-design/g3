@@ -50,14 +50,14 @@ export default function MobileMenu({ currentPath }: MobileMenuProps) {
         {isOpen && (
           <motion.div
             initial={{ height: 0 }}
-            animate={{ height: 'calc(100vh - 64px)' }}
+            animate={{ height: 'calc(100dvh - 64px)' }}
             exit={{ height: 0 }}
             transition={{ duration: 0.5, ease: 'easeInOut' }}
             className="fixed top-16 left-0 right-0 z-50 overflow-hidden"
             style={{ backgroundColor: '#242729' }}
             id="mobile-menu"
           >
-            <div className="flex items-center justify-center h-full px-4">
+            <div className="flex items-center justify-center h-full px-4 overflow-y-auto">
               <div className="flex flex-col space-y-12">
                 {navigation.map((item) => (
                   <Link

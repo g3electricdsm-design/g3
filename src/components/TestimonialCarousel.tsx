@@ -93,27 +93,24 @@ export default function TestimonialCarousel({
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <div className="flex gap-[72px] items-stretch overflow-hidden pl-[33px] pr-0 pb-8 max-h-[477px]">
+          <div className="flex flex-col lg:flex-row gap-6 lg:gap-16 items-stretch overflow-hidden p-6 lg:p-8">
             {/* Left side - Text content and button */}
-            <div className="flex flex-col gap-[72px] items-start justify-center shrink-0 w-full md:w-[600px]">
-              <div className="flex flex-col gap-[22px] items-start">
+            <div className="flex flex-col gap-8 lg:gap-12 items-start justify-center w-full lg:flex-[55]">
+              <div className="flex flex-col gap-5 items-start">
                 <div className="flex flex-col gap-2 items-start">
-                  {/* Client name and location */}
-                  <div className="font-montserrat font-semibold text-2xl text-white leading-8">
+                  <div className="font-montserrat font-semibold text-xl sm:text-2xl text-white leading-7 sm:leading-8">
                     {currentTestimonial.name}, a {currentTestimonial.location} client said
                   </div>
                   
-                  {/* Testimonial text */}
-                  <div className="font-raleway text-base text-white-smoke leading-6">
+                  <div className="font-raleway text-sm sm:text-base text-white-smoke leading-6">
                     &ldquo;{currentTestimonial.text}&rdquo;
                   </div>
                 </div>
               </div>
               
-              {/* Next button */}
               <button
                 onClick={nextTestimonial}
-                className="bg-earle-black text-white px-[10px] py-[10px] rounded-lg hover:opacity-90 transition-opacity focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-hookers-green"
+                className="bg-earle-black text-white px-3 py-2.5 rounded-lg hover:opacity-90 transition-opacity focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-hookers-green"
                 aria-label="Next testimonial"
                 type="button"
               >
@@ -121,38 +118,34 @@ export default function TestimonialCarousel({
               </button>
             </div>
             
-            {/* Right side - Image (bleeds to edge) */}
+            {/* Right side - Image */}
             <div 
-              className="overflow-hidden relative shrink-0 w-full md:w-[495px] hidden md:block h-[476px]"
+              className="overflow-hidden relative hidden lg:flex lg:flex-[45] min-h-[320px] rounded-lg"
               onMouseEnter={() => setIsHovering(true)}
               onMouseLeave={() => setIsHovering(false)}
             >
-              <div className="absolute inset-0 overflow-hidden">
-                {/* Primary image */}
-                {currentTestimonial.image && (
-                  <img
-                    src={currentTestimonial.image}
-                    alt={`${currentTestimonial.name} - Customer testimonial`}
-                    className={`absolute h-[143.73%] left-[-1.62%] top-[-43.73%] w-[103.59%] object-cover transition-opacity duration-1000 ease-in-out ${isHovering && currentTestimonial.image2 ? 'opacity-0' : 'opacity-100'}`}
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.style.display = 'none';
-                    }}
-                  />
-                )}
-                {/* Hover image */}
-                {currentTestimonial.image2 && (
-                  <img
-                    src={currentTestimonial.image2}
-                    alt={`${currentTestimonial.name} - After`}
-                    className={`absolute h-[143.73%] left-[-1.62%] top-[-43.73%] w-[103.59%] object-cover transition-opacity duration-1000 ease-in-out ${isHovering ? 'opacity-100' : 'opacity-0'}`}
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.style.display = 'none';
-                    }}
-                  />
-                )}
-              </div>
+              {currentTestimonial.image && (
+                <img
+                  src={currentTestimonial.image}
+                  alt={`${currentTestimonial.name} - Customer testimonial`}
+                  className={`w-full h-full object-cover transition-opacity duration-1000 ease-in-out ${isHovering && currentTestimonial.image2 ? 'opacity-0' : 'opacity-100'}`}
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    target.style.display = 'none';
+                  }}
+                />
+              )}
+              {currentTestimonial.image2 && (
+                <img
+                  src={currentTestimonial.image2}
+                  alt={`${currentTestimonial.name} - After`}
+                  className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out ${isHovering ? 'opacity-100' : 'opacity-0'}`}
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    target.style.display = 'none';
+                  }}
+                />
+              )}
             </div>
           </div>
         </motion.div>
