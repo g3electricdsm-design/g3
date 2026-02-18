@@ -17,7 +17,14 @@ export async function GET(
       );
     }
 
-    return NextResponse.json({ success: true, data: project });
+    return NextResponse.json(
+      { success: true, data: project },
+      {
+        headers: {
+          'Cache-Control': 's-maxage=60, stale-while-revalidate=300',
+        },
+      }
+    );
   } catch (error) {
     console.error('Error reading project:', error);
     return NextResponse.json(

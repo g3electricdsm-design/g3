@@ -6,7 +6,7 @@ import Image from 'next/image';
 
 interface ImageUploadProps {
   currentImage?: string;
-  onImageChange: (imageFile: File | null) => void;
+  onImageChange: (imageUrl: string | null) => void;
   onSizeSuggestion?: (suggestedSize: string, aspectRatio: number) => void;
   projectTitle?: string;
   label?: string;
@@ -19,35 +19,16 @@ export default function ImageUpload({ currentImage, onImageChange, onSizeSuggest
   const [uploadProgress, setUploadProgress] = useState(0);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  // Update preview when currentImage changes
   useEffect(() => {
     setPreview(currentImage || null);
   }, [currentImage]);
 
-  // Smart size suggestion based on image aspect ratio
   const suggestTileSize = (aspectRatio: number): string => {
-    // aspectRatio = width / height
-    // Portrait: ratio < 0.77 (e.g., 3:4 = 0.75)
-    // Square-ish: 0.77 <= ratio <= 1.3
-    // Landscape: 1.3 < ratio <= 2
-    // Wide: ratio > 2
-    
-    if (aspectRatio < 0.77) {
-      // Tall portrait image
-      return 'tall';
-    } else if (aspectRatio < 1.1) {
-      // Nearly square
-      return 'square';
-    } else if (aspectRatio < 1.6) {
-      // Slightly wide - could be square or short depending on content
-      return 'square';
-    } else if (aspectRatio < 2.3) {
-      // Wide landscape
-      return 'wide';
-    } else {
-      // Panoramic
-      return 'panoramic';
-    }
+    if (aspectRatio < 0.77) return 'tall';
+    if (aspectRatio < 1.1) return 'square';
+    if (aspectRatio < 1.6) return 'square';
+    if (aspectRatio < 2.3) return 'wide';
+    return 'panoramic';
   };
 
   const compressImage = (file: File, maxWidth: number = 2000, quality: number = 0.92): Promise<File> => {
@@ -60,7 +41,6 @@ export default function ImageUpload({ currentImage, onImageChange, onSizeSuggest
           let width = img.width;
           let height = img.height;
 
-          // Resize if larger than maxWidth
           if (width > maxWidth) {
             height = (height * maxWidth) / width;
             width = maxWidth;
@@ -68,18 +48,16 @@ export default function ImageUpload({ currentImage, onImageChange, onSizeSuggest
 
           canvas.width = width;
           canvas.height = height;
-
           const ctx = canvas.getContext('2d');
           ctx?.drawImage(img, 0, 0, width, height);
 
           canvas.toBlob(
             (blob) => {
               if (blob) {
-                const compressedFile = new File([blob], file.name, {
+                resolve(new File([blob], file.name, {
                   type: 'image/jpeg',
                   lastModified: Date.now()
-                });
-                resolve(compressedFile);
+                }));
               } else {
                 resolve(file);
               }
@@ -94,77 +72,75 @@ export default function ImageUpload({ currentImage, onImageChange, onSizeSuggest
     });
   };
 
+  async function uploadToStorage(file: File): Promise<string> {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    const response = await fetch('/api/upload', {
+      method: 'POST',
+      body: formData,
+    });
+
+    const result = await response.json();
+    if (!result.success) {
+      throw new Error(result.error || 'Upload failed');
+    }
+    return result.url;
+  }
+
   const handleFileSelect = async (file: File) => {
-    // Validate file type
     if (!file.type.startsWith('image/')) {
       alert('Please select a valid image file (PNG, JPG, GIF, etc.)');
       return;
     }
 
-    // Validate file size (10MB limit)
-    const maxSize = 10 * 1024 * 1024; // 10MB
+    const maxSize = 10 * 1024 * 1024;
     if (file.size > maxSize) {
       alert('File size must be less than 10MB');
       return;
     }
 
     setIsUploading(true);
-    setUploadProgress(50); // Show progress during compression
+    setUploadProgress(30);
 
     try {
-      // Compress image to max 2000px width with 92% quality for good balance
       const compressedFile = await compressImage(file, 2000, 0.92);
-      setUploadProgress(80);
+      setUploadProgress(60);
 
-      const reader = new FileReader();
-      
-      reader.onprogress = (e) => {
-        if (e.lengthComputable) {
-          const progress = 80 + (e.loaded / e.total) * 20; // Remaining 20% for reading
-          setUploadProgress(progress);
-        }
-      };
+      let imageUrl: string;
+      try {
+        imageUrl = await uploadToStorage(compressedFile);
+      } catch {
+        // Fallback to base64 if Supabase Storage isn't configured
+        imageUrl = await new Promise<string>((resolve) => {
+          const reader = new FileReader();
+          reader.onload = (e) => resolve(e.target?.result as string);
+          reader.readAsDataURL(compressedFile);
+        });
+      }
 
-      reader.onload = (e) => {
-        const result = e.target?.result as string;
-        setPreview(result);
-        onImageChange(compressedFile);
-        
-        // Detect image dimensions and suggest size
-        if (onSizeSuggestion) {
-          const img = new window.Image();
-          img.onload = () => {
-            const aspectRatio = img.width / img.height;
-            const suggestedSize = suggestTileSize(aspectRatio);
-            onSizeSuggestion(suggestedSize, aspectRatio);
-          };
-          img.src = result;
-        }
-        
-        setIsUploading(false);
-        setUploadProgress(0);
-      };
+      setUploadProgress(90);
+      setPreview(imageUrl);
+      onImageChange(imageUrl);
 
-      reader.onerror = () => {
-        alert('Error reading file. Please try again.');
-        setIsUploading(false);
-        setUploadProgress(0);
-      };
+      if (onSizeSuggestion) {
+        const localUrl = URL.createObjectURL(compressedFile);
+        const img = new window.Image();
+        img.onload = () => {
+          const aspectRatio = img.width / img.height;
+          onSizeSuggestion(suggestTileSize(aspectRatio), aspectRatio);
+          URL.revokeObjectURL(localUrl);
+        };
+        img.src = localUrl;
+      }
 
-      reader.readAsDataURL(compressedFile);
+      setUploadProgress(100);
     } catch (error) {
-      console.error('Error compressing image:', error);
-      alert('Error processing image. Using original file.');
-      // Fallback to original file if compression fails
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const result = e.target?.result as string;
-        setPreview(result);
-        onImageChange(file);
-        setIsUploading(false);
-        setUploadProgress(0);
-      };
-      reader.readAsDataURL(file);
+      console.error('Error uploading image:', error);
+      alert('Error uploading image. Please try again.');
+    } finally {
+      setIsUploading(false);
+      setUploadProgress(0);
     }
   };
 
@@ -172,39 +148,24 @@ export default function ImageUpload({ currentImage, onImageChange, onSizeSuggest
     e.preventDefault();
     setIsDragOver(false);
     const file = e.dataTransfer.files[0];
-    if (file) {
-      handleFileSelect(file);
-    }
+    if (file) handleFileSelect(file);
   };
 
-  const handleDragOver = (e: React.DragEvent) => {
-    e.preventDefault();
-    setIsDragOver(true);
-  };
-
-  const handleDragLeave = (e: React.DragEvent) => {
-    e.preventDefault();
-    setIsDragOver(false);
-  };
+  const handleDragOver = (e: React.DragEvent) => { e.preventDefault(); setIsDragOver(true); };
+  const handleDragLeave = (e: React.DragEvent) => { e.preventDefault(); setIsDragOver(false); };
 
   const handleFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (file) {
-      handleFileSelect(file);
-    }
+    if (file) handleFileSelect(file);
   };
 
   const handleRemoveImage = () => {
     setPreview(null);
     onImageChange(null);
-    if (fileInputRef.current) {
-      fileInputRef.current.value = '';
-    }
+    if (fileInputRef.current) fileInputRef.current.value = '';
   };
 
-  const handleClick = () => {
-    fileInputRef.current?.click();
-  };
+  const handleClick = () => { fileInputRef.current?.click(); };
 
   return (
     <div className="w-full">

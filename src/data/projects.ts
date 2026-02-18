@@ -37,6 +37,7 @@ export interface Project {
     | 'panoramic'
     | 'extraTall';
   orientation?: 'portrait' | 'landscape';
+  gallery?: string[];
   slug?: string;
   seoTitle?: string;
   metaDescription?: string;
@@ -262,7 +263,7 @@ export async function getProjectById(idOrSlug: string): Promise<Project | undefi
 // Synchronous version for backward compatibility (uses cache)
 let projectsCache: Project[] | null = null;
 let cacheTimestamp = 0;
-const CACHE_DURATION = 60000; // 1 minute
+const CACHE_DURATION = 300000; // 5 minutes
 
 async function getCachedProjects(): Promise<Project[]> {
   const now = Date.now();

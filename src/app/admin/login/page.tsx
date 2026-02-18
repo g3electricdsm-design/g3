@@ -19,19 +19,23 @@ export default function AdminLogin() {
     setIsLoading(true);
     setError('');
 
-    // Simple password check (in production, this would be server-side)
-    if (password === 'G3Electric2024!') {
-      // Store authentication state in cookies
-      document.cookie = `admin_authenticated=true; path=/; max-age=${24 * 60 * 60}`; // 24 hours
-      document.cookie = `admin_timestamp=${Date.now()}; path=/; max-age=${24 * 60 * 60}`; // 24 hours
-      
-      // Redirect to admin page
-      router.push('/admin');
-    } else {
-      setError('Invalid password. Please try again.');
+    try {
+      const res = await fetch('/api/admin/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password }),
+      });
+
+      if (res.ok) {
+        router.push('/admin');
+      } else {
+        setError('Invalid password. Please try again.');
+      }
+    } catch {
+      setError('An error occurred. Please try again.');
+    } finally {
+      setIsLoading(false);
     }
-    
-    setIsLoading(false);
   };
 
   return (

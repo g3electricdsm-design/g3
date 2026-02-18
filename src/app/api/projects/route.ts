@@ -1,8 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { Project } from '@/data/projects';
 import { storage } from '@/lib/projects-storage';
+import { isAuthenticated, SESSION_COOKIE } from '@/lib/auth';
 
-// GET - Get all projects
+function unauthorized() {
+  return NextResponse.json(
+    { success: false, error: 'Unauthorized' },
+    { status: 401 }
+  );
+}
+
+// GET - Get all projects (public)
 export async function GET() {
   try {
     const projects = await storage.getAll();
@@ -16,12 +24,15 @@ export async function GET() {
   }
 }
 
-// POST - Create a new project
+// POST - Create a new project (admin only)
 export async function POST(request: NextRequest) {
+  if (!(await isAuthenticated(request.cookies.get(SESSION_COOKIE)?.value))) {
+    return unauthorized();
+  }
+
   try {
     const project: Project = await request.json();
-    
-    // Validate required fields
+
     if (!project.title || !project.category || !project.type) {
       return NextResponse.json(
         { success: false, error: 'Missing required fields' },
@@ -30,8 +41,7 @@ export async function POST(request: NextRequest) {
     }
 
     const projects = await storage.getAll();
-    
-    // Check if ID already exists
+
     if (project.id && project.id !== 0 && projects.find(p => p.id === project.id)) {
       return NextResponse.json(
         { success: false, error: 'Project with this ID already exists' },
@@ -50,11 +60,15 @@ export async function POST(request: NextRequest) {
   }
 }
 
-// PUT - Update an existing project
+// PUT - Update an existing project (admin only)
 export async function PUT(request: NextRequest) {
+  if (!(await isAuthenticated(request.cookies.get(SESSION_COOKIE)?.value))) {
+    return unauthorized();
+  }
+
   try {
     const project: Project = await request.json();
-    
+
     if (!project.id) {
       return NextResponse.json(
         { success: false, error: 'Project ID is required' },
@@ -75,18 +89,20 @@ export async function PUT(request: NextRequest) {
       throw error;
     }
   } catch (error) {
-    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
     console.error('Error updating project:', error);
-    console.error('Error details:', errorMessage);
     return NextResponse.json(
-      { success: false, error: `Failed to update project: ${errorMessage}` },
+      { success: false, error: 'Failed to update project' },
       { status: 500 }
     );
   }
 }
 
-// DELETE - Delete a project
+// DELETE - Delete a project (admin only)
 export async function DELETE(request: NextRequest) {
+  if (!(await isAuthenticated(request.cookies.get(SESSION_COOKIE)?.value))) {
+    return unauthorized();
+  }
+
   try {
     const { searchParams } = new URL(request.url);
     const id = parseInt(searchParams.get('id') || '0');

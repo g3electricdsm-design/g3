@@ -51,33 +51,15 @@ export default function EditTestimonialPage() {
     setFormData(prev => ({ ...prev, [name]: name === 'rating' ? parseInt(value) : value }));
   };
 
-  const handleImageChange = (imageFile: File | null) => {
-    if (imageFile) {
-      // Convert file to base64 data URL for persistence
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const dataUrl = e.target?.result as string;
-        setFormData(prev => ({
-          ...prev,
-          image: dataUrl
-        }));
-      };
-      reader.readAsDataURL(imageFile);
+  const handleImageChange = (imageUrl: string | null) => {
+    if (imageUrl) {
+      setFormData(prev => ({ ...prev, image: imageUrl }));
     }
   };
 
-  const handleImage2Change = (imageFile: File | null) => {
-    if (imageFile) {
-      // Convert file to base64 data URL for persistence
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const dataUrl = e.target?.result as string;
-        setFormData(prev => ({
-          ...prev,
-          image2: dataUrl
-        }));
-      };
-      reader.readAsDataURL(imageFile);
+  const handleImage2Change = (imageUrl: string | null) => {
+    if (imageUrl) {
+      setFormData(prev => ({ ...prev, image2: imageUrl }));
     }
   };
 

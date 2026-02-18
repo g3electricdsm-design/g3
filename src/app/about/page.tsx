@@ -1,7 +1,6 @@
 'use client';
 
 import Link from "next/link";
-import { useState, useEffect, useRef } from "react";
 import { 
   ShieldCheckIcon, 
   BoltIcon, 
@@ -12,97 +11,10 @@ import {
   UserGroupIcon
 } from "@heroicons/react/24/outline";
 import Navigation from "@/components/Navigation";
+import AnimatedNumber from "@/components/AnimatedNumber";
 import Footer from "@/components/Footer";
 import Employee from "@/components/Employee";
 import { getContent } from "@/data/content";
-
-// Sequential counting animation component
-function AnimatedNumber({ target, suffix = '', duration = 2000, slowEnd = false }: { target: number; suffix?: string; duration?: number; slowEnd?: boolean }) {
-  const [count, setCount] = useState(1);
-  const [hasStarted, setHasStarted] = useState(false);
-  const observerRef = useRef<HTMLDivElement>(null);
-  const animationRef = useRef<number | null>(null);
-
-  useEffect(() => {
-    const startCounting = () => {
-      const startTime = Date.now();
-      const startValue = 1;
-      const endValue = target;
-
-      // Custom easing that really slows down at the end for slowEnd
-      const easeOutSlow = (t: number) => {
-        if (t < 0.6) {
-          // Fast progress for first 60%
-          return t * 0.6 / 0.6;
-        } else {
-          // Very slow for last 40% - really eases into the final number
-          const remaining = t - 0.6;
-          const remainingProgress = remaining / 0.4;
-          // Use a very aggressive ease-out for the last portion
-          return 0.6 + (remainingProgress * remainingProgress * remainingProgress * 0.4);
-        }
-      };
-
-      // Standard ease-out cubic
-      const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3);
-
-      const easingFunction = slowEnd ? easeOutSlow : easeOutCubic;
-
-      const animate = () => {
-        const now = Date.now();
-        const elapsed = now - startTime;
-        const progress = Math.min(elapsed / duration, 1);
-        
-        // Apply easing function for slow roll-in at the end
-        const easedProgress = easingFunction(progress);
-        const currentValue = Math.floor(startValue + (endValue - startValue) * easedProgress);
-        
-        // Make sure we don't exceed the target
-        const displayValue = Math.min(currentValue, endValue);
-        setCount(displayValue);
-
-        if (progress < 1) {
-          animationRef.current = requestAnimationFrame(animate);
-        } else {
-          setCount(endValue);
-        }
-      };
-
-      animationRef.current = requestAnimationFrame(animate);
-    };
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting && !hasStarted) {
-            setHasStarted(true);
-            startCounting();
-          }
-        });
-      },
-      { threshold: 0.5 }
-    );
-
-    if (observerRef.current) {
-      observer.observe(observerRef.current);
-    }
-
-    return () => {
-      if (observerRef.current) {
-        observer.unobserve(observerRef.current);
-      }
-      if (animationRef.current) {
-        cancelAnimationFrame(animationRef.current);
-      }
-    };
-  }, [hasStarted, target, duration, slowEnd]);
-
-  return (
-    <div ref={observerRef} className="font-montserrat text-4xl md:text-5xl font-black text-purple mb-2">
-      {count}{suffix}
-    </div>
-  );
-}
 
 export default function About() {
   const content = getContent().about;

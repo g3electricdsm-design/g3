@@ -1,9 +1,10 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import Link from 'next/link';
-import { ArrowLeftIcon } from '@heroicons/react/24/outline';
+import Image from 'next/image';
+import { ArrowLeftIcon, PhotoIcon, CloudArrowUpIcon } from '@heroicons/react/24/outline';
 import { Project, getProjectById, updateProject, addProject } from '@/data/projects';
 import ImageUpload from '@/components/ImageUpload';
 import Navigation from '@/components/Navigation';
@@ -26,6 +27,7 @@ export default function EditProjectPage() {
     challenges: '',
     size: 'medium',
     orientation: 'landscape',
+    gallery: [],
     slug: '',
     seoTitle: '',
     metaDescription: ''
@@ -87,18 +89,9 @@ export default function EditProjectPage() {
     }));
   };
 
-  const handleImageChange = (imageFile: File | null) => {
-    if (imageFile) {
-      // Convert file to base64 data URL for persistence
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const dataUrl = e.target?.result as string;
-        setFormData(prev => ({
-          ...prev,
-          image: dataUrl
-        }));
-      };
-      reader.readAsDataURL(imageFile);
+  const handleImageChange = (imageUrl: string | null) => {
+    if (imageUrl) {
+      setFormData(prev => ({ ...prev, image: imageUrl }));
     }
   };
 
@@ -115,6 +108,46 @@ export default function EditProjectPage() {
     setFormData(prev => ({
       ...prev,
       orientation: suggestedOrientation
+    }));
+  };
+
+  const galleryInputRef = useRef<HTMLInputElement>(null);
+  const [isGalleryUploading, setIsGalleryUploading] = useState(false);
+  const [galleryDragOver, setGalleryDragOver] = useState(false);
+
+  async function uploadFileToStorage(file: File): Promise<string> {
+    const formData = new FormData();
+    formData.append('file', file);
+    const response = await fetch('/api/upload', { method: 'POST', body: formData });
+    const result = await response.json();
+    if (!result.success) throw new Error(result.error || 'Upload failed');
+    return result.url;
+  }
+
+  const handleGalleryFiles = async (files: FileList | File[]) => {
+    const imageFiles = Array.from(files).filter(f => f.type.startsWith('image/'));
+    if (imageFiles.length === 0) return;
+
+    setIsGalleryUploading(true);
+    try {
+      const urls = await Promise.all(imageFiles.map(f => uploadFileToStorage(f)));
+      setFormData(prev => ({
+        ...prev,
+        gallery: [...(prev.gallery || []), ...urls]
+      }));
+    } catch (err) {
+      console.error('Gallery upload error:', err);
+      alert('Error uploading one or more images. Please try again.');
+    } finally {
+      setIsGalleryUploading(false);
+      if (galleryInputRef.current) galleryInputRef.current.value = '';
+    }
+  };
+
+  const handleRemoveGalleryImage = (index: number) => {
+    setFormData(prev => ({
+      ...prev,
+      gallery: (prev.gallery || []).filter((_, i) => i !== index)
     }));
   };
 
@@ -233,6 +266,81 @@ export default function EditProjectPage() {
                   onImageChange={handleImageChange}
                   onSizeSuggestion={handleSizeSuggestion}
                   projectTitle={formData.title || 'New Project'}
+                />
+              </div>
+
+              {/* Gallery Images */}
+              <div className="space-y-4 mb-6">
+                <h3 className="font-montserrat text-2xl font-semibold text-earle-black border-b border-gray-300 pb-2">
+                  Gallery Images
+                </h3>
+                <p className="text-sm text-gray-500">
+                  Additional photos shown as scrollable thumbnails below the main image on the project detail page.
+                </p>
+
+                {(formData.gallery && formData.gallery.length > 0) && (
+                  <div className="flex flex-wrap gap-3">
+                    {formData.gallery.map((src, idx) => (
+                      <div key={idx} className="relative group w-28 h-28 rounded-lg overflow-hidden border border-gray-300">
+                        <Image
+                          src={src}
+                          alt={`Gallery image ${idx + 1}`}
+                          fill
+                          className="object-cover"
+                          sizes="112px"
+                        />
+                        <button
+                          type="button"
+                          onClick={() => handleRemoveGalleryImage(idx)}
+                          className="absolute top-1 right-1 w-6 h-6 bg-red-500 text-white rounded-full text-xs flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                        >
+                          &times;
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                <div
+                  className={`border-2 border-dashed rounded-lg p-6 flex flex-col items-center justify-center cursor-pointer transition-all duration-300 ${
+                    galleryDragOver
+                      ? 'border-purple bg-purple/10 scale-[1.02] shadow-lg'
+                      : 'border-gray-300 hover:border-purple hover:bg-purple/5'
+                  } ${isGalleryUploading ? 'pointer-events-none opacity-75' : ''}`}
+                  onClick={() => galleryInputRef.current?.click()}
+                  onDrop={(e) => { e.preventDefault(); setGalleryDragOver(false); handleGalleryFiles(e.dataTransfer.files); }}
+                  onDragOver={(e) => { e.preventDefault(); setGalleryDragOver(true); }}
+                  onDragLeave={(e) => { e.preventDefault(); setGalleryDragOver(false); }}
+                >
+                  {isGalleryUploading ? (
+                    <div className="text-center">
+                      <div className="w-10 h-10 border-4 border-purple border-t-transparent rounded-full animate-spin mx-auto mb-2"></div>
+                      <p className="font-montserrat text-sm text-earle-black">Processing images...</p>
+                    </div>
+                  ) : (
+                    <>
+                      {galleryDragOver ? (
+                        <CloudArrowUpIcon className="h-10 w-10 text-purple mb-2 animate-bounce" />
+                      ) : (
+                        <PhotoIcon className="h-10 w-10 text-gray-400 mb-2" />
+                      )}
+                      <p className="font-montserrat text-sm text-earle-black">
+                        {galleryDragOver ? 'Drop images here' : 'Add Gallery Photos'}
+                      </p>
+                      <p className="font-raleway text-xs text-gray-500 mt-1">
+                        Click or drag &amp; drop multiple images
+                      </p>
+                    </>
+                  )}
+                </div>
+
+                <input
+                  ref={galleryInputRef}
+                  type="file"
+                  accept="image/*"
+                  multiple
+                  onChange={(e) => { if (e.target.files) handleGalleryFiles(e.target.files); }}
+                  className="hidden"
                 />
               </div>
 

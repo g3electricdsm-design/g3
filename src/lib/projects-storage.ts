@@ -16,6 +16,7 @@ interface ProjectRow {
   challenges: string;
   size: string;
   orientation?: string | null;
+  gallery?: string[] | null;
   slug?: string | null;
   seo_title?: string | null;
   meta_description?: string | null;
@@ -110,6 +111,7 @@ class SupabaseStorage implements ProjectsStorage {
         | 'panoramic'
         | 'extraTall',
       orientation: (row.orientation as 'portrait' | 'landscape') || 'landscape',
+      gallery: row.gallery || undefined,
       slug: row.slug || undefined,
       seoTitle: row.seo_title || undefined,
       metaDescription: row.meta_description || undefined,
@@ -132,6 +134,7 @@ class SupabaseStorage implements ProjectsStorage {
       challenges: project.challenges,
       size: project.size,
       orientation: project.orientation || 'landscape',
+      gallery: project.gallery || [],
       slug: project.slug,
       seo_title: project.seoTitle,
       meta_description: project.metaDescription,
@@ -176,18 +179,32 @@ class SupabaseStorage implements ProjectsStorage {
       throw new Error('Supabase not initialized');
     }
 
-    // Try to find by slug first, then by ID
-    const { data, error } = await supabase
+    // Try to find by slug first (using parameterized .eq() to prevent injection)
+    const { data: slugData } = await supabase
       .from(PROJECTS_TABLE)
       .select('*')
-      .or(`slug.eq.${idOrSlug},id.eq.${idOrSlug}`)
-      .single();
+      .eq('slug', idOrSlug)
+      .maybeSingle();
 
-    if (error || !data) {
-      return null;
+    if (slugData) {
+      return this.transformRow(slugData);
     }
 
-    return this.transformRow(data);
+    // Then try numeric ID
+    const numericId = parseInt(idOrSlug, 10);
+    if (!isNaN(numericId)) {
+      const { data: idData } = await supabase
+        .from(PROJECTS_TABLE)
+        .select('*')
+        .eq('id', numericId)
+        .maybeSingle();
+
+      if (idData) {
+        return this.transformRow(idData);
+      }
+    }
+
+    return null;
   }
 
   async create(project: Project): Promise<Project> {

@@ -2,28 +2,58 @@ import { NextRequest, NextResponse } from 'next/server';
 import { emailConfig } from '@/config/email';
 import { Resend } from 'resend';
 
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+function sanitizeString(value: unknown, maxLength: number): string {
+  if (typeof value !== 'string') return '';
+  return value.trim().slice(0, maxLength);
+}
+
+function validateContactForm(data: Record<string, unknown>): { valid: boolean; error?: string } {
+  const name = sanitizeString(data.name, 100);
+  const email = sanitizeString(data.email, 254);
+  const message = sanitizeString(data.message ?? data.description, 5000);
+
+  if (!name) return { valid: false, error: 'Name is required' };
+  if (!email) return { valid: false, error: 'Email address is required' };
+  if (!EMAIL_REGEX.test(email)) return { valid: false, error: 'Invalid email address' };
+  if (!message) return { valid: false, error: 'Message is required' };
+
+  return { valid: true };
+}
+
 export async function POST(request: NextRequest) {
   try {
     const formData = await request.json();
-    
-    // Extract form data
-    const {
-      name,
-      email,
-      phone,
-      projectType,
-      description,
-      budget,
-      services,
-      timeline,
-      workArea,
-      message
-    } = formData;
+
+    const validation = validateContactForm(formData);
+    if (!validation.valid) {
+      return NextResponse.json(
+        { success: false, message: validation.error },
+        { status: 400 }
+      );
+    }
+
+    // Extract and sanitize all form data
+    const name        = sanitizeString(formData.name, 100);
+    const email       = sanitizeString(formData.email, 254);
+    const phone       = sanitizeString(formData.phone, 30);
+    const projectType = sanitizeString(formData.projectType, 100);
+    const description = sanitizeString(formData.description, 5000);
+    const budget      = sanitizeString(formData.budget, 100);
+    const timeline    = sanitizeString(formData.timeline, 100);
+    const workArea    = sanitizeString(formData.workArea, 200);
+    const message     = sanitizeString(formData.message ?? formData.description, 5000);
+
+    const rawServices = formData.services;
+    const services = Array.isArray(rawServices)
+      ? rawServices.map(s => sanitizeString(s, 100)).filter(Boolean)
+      : [];
 
     // Get recipient email from configuration
     const recipientEmail = emailConfig.recipientEmail;
-    
-    // Create email content
+
+    // Build email content from sanitized values
     const emailContent = `
 New Contact Form Submission - G3 Electric
 
@@ -38,7 +68,7 @@ Project Details:
 - Budget: ${budget || 'Not specified'}
 - Timeline: ${timeline || 'Not specified'}
 - Work Area: ${workArea || 'Not specified'}
-- Services Needed: ${services && services.length > 0 ? services.join(', ') : 'None selected'}
+- Services Needed: ${services.length > 0 ? services.join(', ') : 'None selected'}
 
 Additional Message:
 ${message || 'No additional message'}

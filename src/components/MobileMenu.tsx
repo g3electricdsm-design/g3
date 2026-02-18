@@ -69,7 +69,7 @@ export default function MobileMenu({ currentPath }: MobileMenuProps) {
                     <span className={`text-5xl text-white font-montserrat transition-all duration-300 ${
                       isCurrentPath(item.href) 
                         ? 'font-bold' 
-                        : 'font-light group-hover:font-bold'
+                        : 'font-normal group-hover:font-bold'
                     }`}>
                       {item.name}
                     </span>

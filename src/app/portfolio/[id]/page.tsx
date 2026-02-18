@@ -1,99 +1,55 @@
-'use client';
-
 import Link from "next/link";
-import { ArrowLeftIcon, UserIcon, BoltIcon } from "@heroicons/react/24/outline";
+import { UserIcon, BoltIcon } from "@heroicons/react/24/outline";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
-import ProjectDetailSkeleton from "@/components/ProjectDetailSkeleton";
-import { getProjectById, Project } from "@/data/projects";
+import ProjectImageGallery from "@/components/ProjectImageGallery";
 import { getCategoryIcon, getTypeIcon } from "@/utils/icons";
-import Image from "next/image";
-import { useParams, usePathname } from "next/navigation";
-import { useState, useEffect } from "react";
+import { storage } from "@/lib/projects-storage";
+import { notFound } from "next/navigation";
+import { Metadata } from "next";
 
-export default function ProjectDetail() {
-  const params = useParams();
-  const pathname = usePathname();
-  const [project, setProject] = useState<Project | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+export const revalidate = 60;
 
-  useEffect(() => {
-    const loadProject = async () => {
-      try {
-        const foundProject = await getProjectById(params.id as string);
-        setProject(foundProject || null);
-      } catch (error) {
-        console.error('Error loading project:', error);
-        setProject(null);
-      } finally {
-        setIsLoading(false);
-      }
-    };
+export async function generateStaticParams() {
+  const projects = await storage.getAll();
+  return projects.flatMap((project) => {
+    const params = [{ id: project.id.toString() }];
+    if (project.slug) params.push({ id: project.slug });
+    return params;
+  });
+}
 
-    loadProject();
-  }, [params.id]);
+export async function generateMetadata(
+  { params }: { params: Promise<{ id: string }> }
+): Promise<Metadata> {
+  const { id } = await params;
+  const project = await storage.getById(id);
+  if (!project) return { title: "Project Not Found" };
 
-  // Update document title and meta description
-  useEffect(() => {
-    if (project && !isLoading) {
-      const titleText = project.seoTitle || `${project.title} | G3 Electric Portfolio`;
-      
-      // Update document title - try multiple methods to ensure it works
-      if (typeof document !== 'undefined') {
-        document.title = titleText;
-        
-        // Also update the title element directly
-        const titleElement = document.querySelector('title');
-        if (titleElement) {
-          titleElement.textContent = titleText;
-        }
-      }
+  const title = project.seoTitle || `${project.title} | G3 Electric Portfolio`;
+  const description = project.metaDescription || project.description || "";
 
-      // Update or create meta description
-      let metaDescription = document.querySelector('meta[name="description"]') as HTMLMetaElement;
-      if (!metaDescription) {
-        metaDescription = document.createElement('meta');
-        metaDescription.name = 'description';
-        document.getElementsByTagName('head')[0].appendChild(metaDescription);
-      }
-      metaDescription.content = project.metaDescription || project.description || '';
-    }
-  }, [project, isLoading]);
+  return {
+    title,
+    description,
+    openGraph: { title, description },
+  };
+}
 
-  if (isLoading) {
-    return (
-      <>
-        <Navigation currentPath="/portfolio" />
-        <ProjectDetailSkeleton />
-        <Footer currentPath="/portfolio" />
-      </>
-    );
-  }
+export default async function ProjectDetail(
+  { params }: { params: Promise<{ id: string }> }
+) {
+  const { id } = await params;
+  const project = await storage.getById(id);
 
   if (!project) {
-    return (
-      <div className="min-h-screen bg-white">
-        <Navigation currentPath="/portfolio" />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-          <div className="text-center">
-            <h1 className="font-megrim text-4xl text-earle-black mb-4">Project Not Found</h1>
-            <p className="font-raleway text-lg text-earle-black mb-8">The project you&apos;re looking for doesn&apos;t exist.</p>
-            <Link href="/portfolio" className="btn-primary">
-              Back to Portfolio
-            </Link>
-          </div>
-        </div>
-      </div>
-    );
+    notFound();
   }
-
 
   return (
     <div className="min-h-screen bg-earle-black">
-      {/* Navigation */}
       <Navigation currentPath="/portfolio" />
 
-      {/* Header */}
       <section className="bg-gradient-to-br from-purple to-phlox text-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-3 mb-4">
@@ -108,40 +64,17 @@ export default function ProjectDetail() {
         </div>
       </section>
 
-      {/* Project Details */}
       <section className="pt-8 pb-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-            {/* Main Content */}
             <div className="lg:col-span-2">
-              {/* Project Image */}
-              <div className={`mb-8 ${project.orientation === 'portrait' ? 'flex justify-center' : ''}`}>
-                {project.orientation === 'portrait' ? (
-                  <div className="relative inline-block max-w-md w-full rounded-lg overflow-hidden bg-earle-black">
-                    <Image
-                      src={project.image}
-                      alt={project.title}
-                      width={800}
-                      height={1200}
-                      className="w-full h-auto object-contain"
-                      sizes="(max-width: 768px) 100vw, 28rem"
-                      style={{ maxWidth: '100%', height: 'auto' }}
-                    />
-                  </div>
-                ) : (
-                  <div className="relative w-full aspect-video rounded-lg overflow-hidden">
-                    <Image
-                      src={project.image}
-                      alt={project.title}
-                      fill
-                      className="object-cover"
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 66vw, 50vw"
-                    />
-                  </div>
-                )}
-              </div>
+              <ProjectImageGallery
+                mainImage={project.image}
+                title={project.title}
+                orientation={project.orientation}
+                gallery={project.gallery}
+              />
 
-              {/* Project Description */}
               {project.overview && (
                 <div className="mb-8">
                   <h2 className="font-montserrat text-2xl text-earle-black mb-4">Project Overview</h2>
@@ -149,7 +82,6 @@ export default function ProjectDetail() {
                 </div>
               )}
 
-              {/* Services Provided */}
               <div className="mb-8">
                 <h2 className="font-montserrat text-2xl text-earle-black mb-4">Services Provided</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -162,14 +94,12 @@ export default function ProjectDetail() {
                 </div>
               </div>
 
-              {/* Challenges */}
               <div className="mb-8">
                 <h3 className="font-montserrat text-xl text-earle-black mb-3">Challenges</h3>
                 <p className="font-raleway text-earle-black">{project.challenges}</p>
               </div>
             </div>
 
-            {/* Sidebar */}
             <div className="lg:col-span-1">
               <div className="bg-white-smoke rounded-lg p-6 lg:sticky lg:top-8">
                 <h3 className="font-montserrat text-xl text-earle-black mb-6">Project Details</h3>
@@ -210,8 +140,7 @@ export default function ProjectDetail() {
         </div>
       </section>
 
-      {/* Footer */}
-      <Footer currentPath={pathname} />
+      <Footer currentPath="/portfolio" />
     </div>
   );
 }

@@ -74,14 +74,9 @@ export default function ProjectForm({ project, onSave, onCancel, isOpen }: Proje
     }));
   };
 
-  const handleImageChange = (imageFile: File | null) => {
-    if (imageFile) {
-      // Create a permanent image URL and update the form data
-      const imageUrl = URL.createObjectURL(imageFile);
-      setFormData(prev => ({
-        ...prev,
-        image: imageUrl
-      }));
+  const handleImageChange = (imageUrl: string | null) => {
+    if (imageUrl) {
+      setFormData(prev => ({ ...prev, image: imageUrl }));
     }
   };
 

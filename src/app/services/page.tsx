@@ -39,19 +39,19 @@ export default function Services() {
           <div className="flex flex-col items-center gap-8">
             {content.services.map((service, index) => {
               return (
-                <div key={index} className="w-full max-w-[1200px] bg-earle-black border border-white/10 rounded-2xl pl-[33px] pr-[100px] py-[32px] hover:border-purple/50 hover:shadow-xl transition-all shadow-lg">
-                  <div className="flex items-center justify-between gap-6">
-                    <div className="flex flex-col gap-[22px] max-w-[600px]">
+                <div key={index} className="w-full max-w-[1200px] bg-earle-black border border-white/10 rounded-2xl p-6 md:px-10 md:py-8 hover:border-purple/50 hover:shadow-xl transition-all shadow-lg">
+                  <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 md:gap-10">
+                    <div className="flex flex-col gap-5 w-full md:flex-1">
                       <div className="flex flex-col gap-2">
-                        <h3 className="font-montserrat text-2xl font-semibold text-white">{service.title}</h3>
-                        <p className="font-raleway text-white-smoke">{service.description}</p>
+                        <h3 className="font-montserrat text-xl sm:text-2xl font-semibold text-white">{service.title}</h3>
+                        <p className="font-raleway text-sm sm:text-base text-white-smoke">{service.description}</p>
                       </div>
                       
-                      <div className="flex flex-col gap-4">
-                        <h4 className="font-montserrat text-lg font-semibold text-white">What We Include:</h4>
+                      <div className="flex flex-col gap-3">
+                        <h4 className="font-montserrat text-base sm:text-lg font-semibold text-white">What We Include:</h4>
                         <ul className="space-y-2">
                           {service.features.map((feature, featureIndex) => (
-                            <li key={featureIndex} className="flex items-center font-raleway text-white-smoke">
+                            <li key={featureIndex} className="flex items-center font-raleway text-sm sm:text-base text-white-smoke">
                               <div className="w-3 h-3 bg-phlox rounded-full mr-3 flex-shrink-0"></div>
                               {feature}
                             </li>
@@ -60,8 +60,8 @@ export default function Services() {
                       </div>
                     </div>
                     
-                    <div className="w-[252px] h-[252px] bg-purple/10 rounded-2xl flex items-center justify-center flex-shrink-0 relative overflow-clip p-[10%]">
-                      <ServiceIcon iconName={getServiceIcon(service.id)} className="w-full h-auto scale-[3]" />
+                    <div className="hidden md:flex w-40 h-40 lg:w-[252px] lg:h-[252px] bg-purple/10 rounded-2xl items-center justify-center flex-shrink-0 overflow-hidden p-4">
+                      <ServiceIcon iconName={getServiceIcon(service.id)} className="w-full h-full" />
                     </div>
                   </div>
                 </div>
@@ -117,7 +117,7 @@ export default function Services() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-4 gap-8">
             <div className="text-center">
               <div className="w-12 h-12 bg-purple text-white rounded-full flex items-center justify-center mx-auto mb-4 font-montserrat font-bold text-xl">1</div>
               <h3 className="font-montserrat text-lg font-semibold text-earle-black mb-2">Free Consultation</h3>
