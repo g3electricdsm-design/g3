@@ -42,9 +42,7 @@ export default function Home() {
   const heroY = useTransform(scrollYProgress, [0, 1], [0, -100]);
   const heroScale = useTransform(scrollYProgress, [0, 1], [1, 1.2]);
   
-  // Services section parallax
-  const servicesY = useTransform(scrollYProgress, [0.2, 0.8], [0, -50]);
-  const servicesOpacity = useTransform(scrollYProgress, [0.2, 0.4], [0, 1]);
+  // Services section (no scroll-based opacity so content stays visible)
   
   // Testimonials parallax
   const testimonialsY = useTransform(scrollYProgress, [0.4, 0.9], [0, -30]);
@@ -162,25 +160,22 @@ export default function Home() {
       </section>
 
       {/* Services Preview with Parallax Effects */}
-      <motion.section 
-        className="py-20 bg-earle-black relative overflow-hidden"
-        style={{ y: servicesY }}
-      >
-        {/* Background parallax elements */}
-        <motion.div 
+      <section className="py-20 bg-earle-black relative overflow-hidden">
+        {/* Background gradient */}
+        <div 
           className="absolute inset-0 opacity-10"
           style={{ 
-            background: "radial-gradient(circle at 20% 50%, rgba(109, 0, 145, 0.3) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(109, 0, 145, 0.2) 0%, transparent 50%)",
-            y: useTransform(scrollYProgress, [0.2, 0.8], [0, -100])
+            background: "radial-gradient(circle at 20% 50%, rgba(109, 0, 145, 0.3) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(109, 0, 145, 0.2) 0%, transparent 50%)"
           }}
         />
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <motion.div 
             className="text-center mb-16"
-            data-aos="fade-up"
-            data-aos-duration="1000"
-            style={{ opacity: servicesOpacity }}
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ duration: 0.35, ease: "easeOut" }}
           >
             <h2 className="font-montserrat text-4xl text-white mb-4">{content.services.title}</h2>
             <p className="font-raleway text-lg text-white-smoke max-w-2xl mx-auto">
@@ -192,36 +187,35 @@ export default function Home() {
             {content.services.items.map((service, index) => (
               <motion.div 
                 key={index} 
-                className="bg-white-smoke rounded-lg shadow-sm text-center hover:shadow-md transition-shadow overflow-hidden"
-                data-aos="fade-up"
-                data-aos-delay={index * 200}
-                data-aos-duration="800"
+                className="bg-white-smoke rounded-lg text-center overflow-hidden border border-white/10 shadow-lg hover:border-purple/50 hover:shadow-xl transition-all duration-300"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-40px" }}
                 whileHover={{ 
-                  y: -10,
-                  scale: 1.02,
-                  boxShadow: "0 20px 40px rgba(0, 0, 0, 0.1)"
+                  y: -3,
+                  scale: 1.01
                 }}
                 transition={{ 
-                  type: "spring", 
-                  stiffness: 300, 
-                  damping: 20 
+                  type: "spring",
+                  stiffness: 400,
+                  damping: 30,
+                  delay: index * 0.06
                 }}
               >
-                <motion.div 
-                  className="h-32 bg-gradient-to-br from-purple/60 to-phlox/60 flex items-center justify-center"
-                >
-                  <motion.div
-                    whileHover={{ 
-                      rotate: 360,
-                      scale: 1.2
-                    }}
-                    transition={{ 
-                      duration: 0.6,
-                      ease: "easeInOut"
-                    }}
-                  >
-                    <BoltIcon className="h-12 w-12 text-purple" />
-                  </motion.div>
+                <motion.div className="relative h-40 sm:h-44 overflow-hidden bg-earle-black">
+                  {service.image ? (
+                    <Image
+                      src={service.image}
+                      alt=""
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+                    />
+                  ) : (
+                    <div className="absolute inset-0 bg-gradient-to-br from-purple/60 to-phlox/60 flex items-center justify-center">
+                      <BoltIcon className="h-12 w-12 text-purple" />
+                    </div>
+                  )}
                 </motion.div>
                 <div className="p-6">
                   <h3 className="font-montserrat text-xl font-semibold text-earle-black mb-2">{service.title}</h3>
@@ -231,7 +225,7 @@ export default function Home() {
             ))}
           </div>
         </div>
-      </motion.section>
+      </section>
 
       {/* By the Numbers Section */}
       <section className="py-20">

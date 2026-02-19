@@ -20,6 +20,7 @@ interface ProjectRow {
   slug?: string | null;
   seo_title?: string | null;
   meta_description?: string | null;
+  featured?: boolean | null;
   created_at?: string;
   updated_at?: string;
 }
@@ -65,6 +66,11 @@ class InMemoryStorage implements ProjectsStorage {
     const index = this.projects.findIndex(p => p.id === project.id);
     if (index === -1) {
       throw new Error('Project not found');
+    }
+    if (project.featured) {
+      this.projects.forEach((p) => {
+        if (p.id !== project.id) p.featured = false;
+      });
     }
     this.projects[index] = project;
     return project;
@@ -115,6 +121,7 @@ class SupabaseStorage implements ProjectsStorage {
       slug: row.slug || undefined,
       seoTitle: row.seo_title || undefined,
       metaDescription: row.meta_description || undefined,
+      featured: row.featured ?? false,
     };
   }
 
@@ -138,6 +145,7 @@ class SupabaseStorage implements ProjectsStorage {
       slug: project.slug,
       seo_title: project.seoTitle,
       meta_description: project.metaDescription,
+      featured: project.featured ?? false,
     };
   }
 
@@ -244,6 +252,13 @@ class SupabaseStorage implements ProjectsStorage {
 
     if (!project.id) {
       throw new Error('Project ID is required');
+    }
+
+    if (project.featured) {
+      await supabase
+        .from(PROJECTS_TABLE)
+        .update({ featured: false })
+        .neq('id', project.id);
     }
 
     // Transform camelCase to snake_case for database

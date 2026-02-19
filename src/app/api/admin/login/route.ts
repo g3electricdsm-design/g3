@@ -24,16 +24,18 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const adminPassword = process.env.ADMIN_PASSWORD;
-    if (!adminPassword) {
+    const rawAdminPassword = process.env.ADMIN_PASSWORD;
+    if (!rawAdminPassword) {
       console.error('ADMIN_PASSWORD environment variable is not set');
       return NextResponse.json(
         { success: false, error: 'Server configuration error' },
         { status: 500 }
       );
     }
+    // Trim and strip optional surrounding quotes (e.g. from .env "value")
+    const adminPassword = rawAdminPassword.trim().replace(/^["']|["']$/g, '');
 
-    if (!safeCompare(password, adminPassword)) {
+    if (!safeCompare(password.trim(), adminPassword)) {
       return NextResponse.json(
         { success: false, error: 'Invalid password' },
         { status: 401 }

@@ -30,12 +30,14 @@ export default function EditProjectPage() {
     gallery: [],
     slug: '',
     seoTitle: '',
-    metaDescription: ''
+    metaDescription: '',
+    featured: false
   });
 
   const [newService, setNewService] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
+  const [featuredError, setFeaturedError] = useState('');
 
   useEffect(() => {
     const loadProject = async () => {
@@ -153,6 +155,13 @@ export default function EditProjectPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setFeaturedError('');
+
+    if (formData.featured && formData.size !== 'panoramic') {
+      setFeaturedError('Featured project requires Portfolio Tile Size to be Panoramic. Please set Tile Size to "Panoramic (2 rows tall, 3 columns wide)" to use Featured.');
+      return;
+    }
+
     setIsSaving(true);
 
     try {
@@ -260,6 +269,27 @@ export default function EditProjectPage() {
                     Controls how this project appears on the /portfolio grid. Auto-suggested based on your image aspect ratio.
                   </p>
                 </div>
+
+                <div className="flex items-center gap-3">
+                  <input
+                    type="checkbox"
+                    id="featured"
+                    checked={!!formData.featured}
+                    onChange={(e) => {
+                      setFormData(prev => ({ ...prev, featured: e.target.checked }));
+                      setFeaturedError('');
+                    }}
+                    className="h-4 w-4 text-purple focus:ring-purple border-gray-300 rounded"
+                  />
+                  <label htmlFor="featured" className="font-montserrat text-sm font-medium text-earle-black">
+                    Feature this project (requires Panoramic tile size above)
+                  </label>
+                </div>
+                {featuredError && (
+                  <p className="text-sm text-red-600 font-raleway" role="alert">
+                    {featuredError}
+                  </p>
+                )}
                 
                 <ImageUpload
                   currentImage={formData.image}

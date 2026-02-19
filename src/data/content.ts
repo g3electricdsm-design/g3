@@ -16,6 +16,7 @@ export interface HomepageContent {
       title: string;
       description: string;
       icon: string;
+      image?: string;
     }>;
   };
   cta: {
@@ -179,25 +180,29 @@ export const defaultHomepageContent: HomepageContent = {
         id: "lighting",
         title: "Lighting",
         description: "Custom lighting solutions for every space",
-        icon: "BoltIcon"
+        icon: "BoltIcon",
+        image: "/images/lighting-service.png"
       },
       {
         id: "residential",
         title: "Residential",
         description: "Safe electrical work for your home",
-        icon: "HomeIcon"
+        icon: "HomeIcon",
+        image: "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=600&h=400&fit=crop"
       },
       {
         id: "commercial",
         title: "Commercial",
         description: "Professional commercial electrical services",
-        icon: "BuildingOfficeIcon"
+        icon: "BuildingOfficeIcon",
+        image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=600&h=400&fit=crop"
       },
       {
         id: "safety",
         title: "Safety First",
         description: "Education and safety for your family",
-        icon: "ShieldCheckIcon"
+        icon: "ShieldCheckIcon",
+        image: "/images/safety-service.png"
       }
     ]
   },

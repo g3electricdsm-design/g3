@@ -11,7 +11,7 @@ const cspDirectives = [
   // Tailwind CSS and Framer Motion generate inline styles at runtime
   "style-src 'self' 'unsafe-inline'",
   // Supabase storage images + data URIs used by lottie-react
-  `img-src 'self' data: blob: https://${supabaseHost}`,
+  `img-src 'self' data: blob: https://${supabaseHost} https://images.unsplash.com`,
   // Supabase API calls
   `connect-src 'self' https://${supabaseHost}`,
   "font-src 'self' data:",
@@ -23,6 +23,13 @@ const cspDirectives = [
 ].join('; ');
 
 const nextConfig: NextConfig = {
+  images: {
+    remotePatterns: [
+      { protocol: 'https', hostname: 'images.unsplash.com', pathname: '/**' },
+    ],
+    // Legacy option some Next versions still check
+    domains: ['images.unsplash.com'],
+  },
   async headers() {
     return [
       {

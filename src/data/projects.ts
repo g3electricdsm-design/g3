@@ -41,6 +41,8 @@ export interface Project {
   slug?: string;
   seoTitle?: string;
   metaDescription?: string;
+  /** When true, project can be shown as featured (requires size === 'panoramic') */
+  featured?: boolean;
 }
 
 export const projects: Project[] = [

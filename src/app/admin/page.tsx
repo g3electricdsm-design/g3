@@ -3,6 +3,7 @@
 import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
+import Image from 'next/image';
 import { PlusIcon, PencilIcon, TrashIcon, CogIcon, ChartBarIcon, PhotoIcon, EnvelopeIcon, EyeIcon, HomeIcon, UserIcon } from '@heroicons/react/24/outline';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
@@ -197,37 +198,65 @@ function AdminContent() {
 
               <div className="bg-white-smoke rounded-lg p-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {projects.map((project) => (
-                    <div key={project.id} className="bg-white rounded-lg p-4 shadow-sm border border-gray-200">
-                      <div className="flex items-start justify-between mb-3">
-                        <div className="flex-1">
-                          <h4 className="font-montserrat text-lg font-semibold text-gray-900">{project.title}</h4>
-                          <p className="font-raleway text-sm uppercase text-gray-700 font-medium">{project.category} • {project.type}</p>
+                  {projects.map((project) => {
+                    const mainImage = project.image || project.gallery?.[0];
+                    return (
+                      <div key={project.id} className="bg-white rounded-lg overflow-hidden shadow-[0_4px_20px_rgba(198,54,255,0.18)] hover:shadow-[0_8px_28px_rgba(198,54,255,0.28)] transition-shadow duration-300">
+                        <div className="relative h-40 sm:h-44 bg-earle-black/10">
+                          {mainImage ? (
+                            mainImage.startsWith('http') ? (
+                              <img
+                                src={mainImage}
+                                alt=""
+                                className="absolute inset-0 w-full h-full object-cover"
+                              />
+                            ) : (
+                              <Image
+                                src={mainImage}
+                                alt=""
+                                fill
+                                className="object-cover"
+                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                              />
+                            )
+                          ) : (
+                            <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-purple/20 to-phlox/20">
+                              <PhotoIcon className="h-12 w-12 text-purple/50" />
+                            </div>
+                          )}
                         </div>
-                        <div className="flex items-center gap-1">
-                          <Link
-                            href={`/admin/projects/${project.id}/edit`}
-                            className="p-2 hover:bg-purple/10 rounded-lg transition-colors"
-                            title="Edit project"
-                          >
-                            <PencilIcon className="h-4 w-4 text-gray-800" />
-                          </Link>
-                          <button
-                            onClick={() => handleDelete(project.id)}
-                            className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
-                            title="Delete project"
-                          >
-                            <TrashIcon className="h-4 w-4" />
-                          </button>
+                        <div className="p-4">
+                          <div className="flex items-start justify-between mb-3">
+                            <div className="flex-1 min-w-0">
+                              <h4 className="font-montserrat text-lg font-semibold text-gray-900 truncate">{project.title}</h4>
+                              <p className="font-raleway text-sm uppercase text-gray-700 font-medium">{project.category} • {project.type}</p>
+                            </div>
+                            <div className="flex items-center gap-1 flex-shrink-0">
+                              <Link
+                                href={`/admin/projects/${project.id}/edit`}
+                                className="p-2 hover:bg-purple/10 rounded-lg transition-colors"
+                                title="Edit project"
+                              >
+                                <PencilIcon className="h-4 w-4 text-gray-800" />
+                              </Link>
+                              <button
+                                onClick={() => handleDelete(project.id)}
+                                className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                                title="Delete project"
+                              >
+                                <TrashIcon className="h-4 w-4" />
+                              </button>
+                            </div>
+                          </div>
+                          <p className="font-raleway text-sm mb-3 line-clamp-2 text-gray-800">{project.description}</p>
+                          <div className="flex items-center justify-between text-xs text-gray-700 font-medium">
+                            <span className="truncate mr-2">{project.client}</span>
+                            <span>{project.location}</span>
+                          </div>
                         </div>
                       </div>
-                      <p className="font-raleway text-sm mb-3 line-clamp-2 text-gray-800">{project.description}</p>
-                      <div className="flex items-center justify-between text-xs text-gray-700 font-medium">
-                        <span>{project.client}</span>
-                        <span>{project.location}</span>
-                      </div>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
               </div>
             </div>

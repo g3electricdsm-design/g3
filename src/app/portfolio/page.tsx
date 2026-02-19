@@ -71,7 +71,10 @@ function getSizeClasses(item: Project) {
 
 export default async function Portfolio() {
   const projects = await storage.getAll();
-  const portfolioItems = sortForOptimalPacking(projects);
+  const featured = projects.find((p) => p.featured);
+  const others = projects.filter((p) => !p.featured);
+  const packed = sortForOptimalPacking(others);
+  const portfolioItems = featured ? [featured, ...packed] : packed;
 
   return (
     <div className="min-h-screen bg-earle-black">
@@ -86,7 +89,7 @@ export default async function Portfolio() {
         </div>
       </section>
 
-      <section className="py-20 bg-earle-black">
+      <section className="pt-10 pb-20 bg-earle-black">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {portfolioItems.length === 0 ? (
             <div className="text-center py-16">
