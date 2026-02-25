@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabase } from '@/lib/supabase';
+import { isAuthenticated, SESSION_COOKIE } from '@/lib/auth';
 
 const BUCKET = 'project-images';
 
@@ -12,9 +13,17 @@ async function ensureBucket() {
 }
 
 export async function POST(request: NextRequest) {
+  const sessionToken = request.cookies.get(SESSION_COOKIE)?.value;
+  if (!(await isAuthenticated(sessionToken))) {
+    return NextResponse.json(
+      { success: false, error: 'Unauthorized. Please log in to the admin panel.' },
+      { status: 401 }
+    );
+  }
+
   if (!supabase) {
     return NextResponse.json(
-      { success: false, error: 'Supabase not configured' },
+      { success: false, error: 'Supabase not configured. Set NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY.' },
       { status: 500 }
     );
   }

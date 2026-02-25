@@ -120,7 +120,7 @@ export default function EditProjectPage() {
   async function uploadFileToStorage(file: File): Promise<string> {
     const formData = new FormData();
     formData.append('file', file);
-    const response = await fetch('/api/upload', { method: 'POST', body: formData });
+    const response = await fetch('/api/upload', { method: 'POST', body: formData, credentials: 'include' });
     const result = await response.json();
     if (!result.success) throw new Error(result.error || 'Upload failed');
     return result.url;
@@ -139,7 +139,8 @@ export default function EditProjectPage() {
       }));
     } catch (err) {
       console.error('Gallery upload error:', err);
-      alert('Error uploading one or more images. Please try again.');
+      const message = err instanceof Error ? err.message : 'Upload failed';
+      alert(`Error uploading images: ${message}`);
     } finally {
       setIsGalleryUploading(false);
       if (galleryInputRef.current) galleryInputRef.current.value = '';
