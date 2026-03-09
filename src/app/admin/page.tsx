@@ -298,7 +298,7 @@ function AdminContent() {
                     <div key={testimonial.id} className="bg-white rounded-lg p-4 shadow-sm border border-gray-200">
                       <div className="flex items-start justify-between mb-3">
                         <div className="flex-1">
-                          <h4 className="font-montserrat text-lg font-semibold text-earle-black">{testimonial.name}</h4>
+                          <h4 className="font-montserrat text-lg font-semibold text-gray-900">{testimonial.name}</h4>
                           <p className="font-raleway text-sm text-gray-600">{testimonial.location}</p>
                           <p className="font-raleway text-xs text-gray-500">{testimonial.project}</p>
                         </div>
@@ -319,12 +319,7 @@ function AdminContent() {
                           </button>
                         </div>
                       </div>
-                      <p className="font-raleway text-sm mb-3 line-clamp-3 text-earle-black">{testimonial.text}</p>
-                      <div className="flex items-center gap-1 text-yellow-500">
-                        {[...Array(testimonial.rating)].map((_, i) => (
-                          <span key={i}>★</span>
-                        ))}
-                      </div>
+                      <p className="font-raleway text-sm font-medium mb-3 line-clamp-3 text-gray-900">{testimonial.text}</p>
                     </div>
                   ))}
                 </div>

@@ -7,7 +7,9 @@ export interface Testimonial {
   location: string;
   project: string;
   rating: number;
+  title: string;
   text: string;
+  imageMode: 'single' | 'before-after';
   image?: string;
   image2?: string;
 }
@@ -19,6 +21,8 @@ export const testimonials: Testimonial[] = [
     location: "Waukee, IA",
     project: "Windstorm client",
     rating: 5,
+    title: "Windstorm Emergency Response",
+    imageMode: 'single',
     text: "Austin & Lacey at G3 turned what would have been a nightmare into a dream. We had a 75-year-old tree fall onto our garage from a wind storm, and he was there to provide estimates by the end of the day. Throughout the entirety of the project, he kept in constant communication with our roofing contractors and included us in all design decisions. Dependable, safe, and fast are what you need in an electrical professional; G3 is all three.",
   },
   {
@@ -27,6 +31,8 @@ export const testimonials: Testimonial[] = [
     location: "West Des Moines, IA",
     project: "Kitchen Lighting Installation",
     rating: 5,
+    title: "Kitchen Lighting Transformation",
+    imageMode: 'single',
     text: "G3 Electric transformed our kitchen with beautiful LED lighting. The team was professional, punctual, and the quality of work exceeded our expectations. Highly recommend their services!",
   },
   {
@@ -35,6 +41,8 @@ export const testimonials: Testimonial[] = [
     location: "Des Moines, IA",
     project: "Electrical Panel Upgrade",
     rating: 5,
+    title: "Electrical Panel Upgrade",
+    imageMode: 'single',
     text: "Outstanding work on our electrical panel upgrade. The electricians were knowledgeable, clean, and explained everything clearly. Our home is now safer and more efficient. Thank you G3 Electric!",
   },
   {
@@ -43,6 +51,8 @@ export const testimonials: Testimonial[] = [
     location: "Ankeny, IA",
     project: "Smart Home Installation",
     rating: 5,
+    title: "Smart Home Integration",
+    imageMode: 'single',
     text: "G3 Electric made our smart home dreams a reality. They installed smart switches, outlets, and integrated everything seamlessly. The team was patient and answered all our questions. Excellent service!",
   },
   {
@@ -51,6 +61,8 @@ export const testimonials: Testimonial[] = [
     location: "Johnston, IA",
     project: "Emergency Electrical Repair",
     rating: 5,
+    title: "Weekend Emergency, Handled Fast",
+    imageMode: 'single',
     text: "When our electrical panel failed on a weekend, G3 Electric responded quickly and fixed the issue professionally. Their emergency service is top-notch. We're grateful for their prompt and reliable service.",
   },
   {
@@ -59,6 +71,8 @@ export const testimonials: Testimonial[] = [
     location: "Clive, IA",
     project: "Outdoor Lighting System",
     rating: 5,
+    title: "Outdoor Lighting System",
+    imageMode: 'single',
     text: "The outdoor lighting system G3 Electric installed has enhanced both the security and beauty of our property. The work was done efficiently and the results are stunning. Highly professional team!",
   }
 ];

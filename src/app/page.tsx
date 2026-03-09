@@ -38,9 +38,6 @@ export default function Home() {
   const servicesY = useTransform(scrollYProgress, [0.2, 0.8], [0, -50]);
   const servicesOpacity = useTransform(scrollYProgress, [0.2, 0.4], [0, 1]);
   
-  // Testimonials parallax
-  const testimonialsY = useTransform(scrollYProgress, [0.4, 0.9], [0, -30]);
-  const testimonialsScale = useTransform(scrollYProgress, [0.4, 0.9], [1, 1.05]);
   
   // Sequential counting animation component
   function AnimatedNumber({ target, suffix = '', duration = 2000, slowEnd = false }: { target: number; suffix?: string; duration?: number; slowEnd?: boolean }) {
@@ -374,11 +371,7 @@ export default function Home() {
       </section>
 
       {/* Testimonials Section */}
-      <TestimonialCarousel 
-        testimonialsY={testimonialsY}
-        testimonialsScale={testimonialsScale}
-        scrollYProgress={scrollYProgress}
-      />
+      <TestimonialCarousel />
 
       {/* CTA Section */}
       <section className="py-20 bg-earle-black text-white relative overflow-hidden">
