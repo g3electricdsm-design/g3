@@ -153,9 +153,64 @@ export default function Contact() {
       </section>
 
       {/* Contact Content */}
-      <section className="py-10 bg-earle-black">
+      <section className="py-20 bg-earle-black">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col gap-12">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            {/* Contact Info */}
+            <div>
+              <h2 className="font-montserrat text-3xl text-white mb-8">Contact Information</h2>
+              
+              <div className="space-y-6 mb-8">
+                <div className="flex items-start">
+                  <EnvelopeIcon className="h-6 w-6 text-purple mr-4 mt-1" />
+                  <div>
+                    <h3 className="font-montserrat text-lg font-semibold text-earle-black">Email</h3>
+                    <p className="font-raleway text-earle-black">
+                      <a href="mailto:g3electricdsm@gmail.com" className="font-medium text-purple hover:text-phlox">
+                        g3electricdsm@gmail.com
+                      </a>
+                    </p>
+                    <p className="font-raleway text-sm text-earle-black">For general inquiries, reach out to us at </p>
+                  </div>
+                </div>
+
+                <div className="flex items-start">
+                  <MapPinIcon className="h-6 w-6 text-purple mr-4 mt-1" />
+                  <div>
+                    <h3 className="font-montserrat text-lg font-semibold text-earle-black">Service Area</h3>
+                    <p className="font-raleway text-earle-black">We proudly serve Central Iowa and surrounding communities.</p>
+                    <p className="font-raleway text-sm text-earle-black">Please reach out for specific locations.</p>
+                  </div>
+                </div>
+
+                <div className="flex items-start">
+                  <ClockIcon className="h-6 w-6 text-purple mr-4 mt-1" />
+                  <div>
+                    <h3 className="font-montserrat text-lg font-semibold text-earle-black">Business Hours</h3>
+                    <p className="font-raleway text-earle-black">Monday-Friday 8am-5pm</p> &nbsp; &nbsp;  
+                    <p className="font-raleway text-earle-black">Saturdays, Sundays, and anything outside the scheduled working hours are reserved for emergencies.</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Calendly Integration Placeholder */}
+                <div className="bg-white-smoke p-6 rounded-lg border border-hookers-green/20">
+                  <h3 className="font-montserrat text-xl font-semibold text-earle-black mb-4">Schedule a Consultation</h3>
+                  <p className="font-raleway text-earle-black mb-4">
+                    Prefer to schedule a specific time? Use our online booking system to find a time that works for you.
+                  </p>
+                  <button 
+                    disabled
+                    className="btn-primary focus:ring-2 focus:ring-purple focus:ring-offset-2 w-full sm:w-auto text-sm sm:text-base"
+                  >
+                    Book Online
+                  </button>
+                  <p className="font-raleway text-sm text-earle-black mt-2">
+                    *Calendly integration coming soon
+                  </p>
+                </div>
+            </div>
+
             {/* Quote Request Form */}
             <div>
               <h2 className="font-montserrat text-3xl text-earle-black mb-8">Request a Quote</h2>
@@ -278,16 +333,21 @@ export default function Contact() {
                     <label htmlFor="budget" className="block font-montserrat text-sm font-medium text-earle-black mb-2">
                       Estimated Budget
                     </label>
-                    <input
-                      type="text"
+                    <select
                       id="budget"
                       name="budget"
                       value={formData.budget}
                       onChange={handleInputChange}
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple focus:border-purple font-raleway text-earle-black"
-                      placeholder="e.g., $5,000 - $10,000 or Not sure"
                       aria-describedby="budget-error"
-                    />
+                    >
+                      <option value="">Select budget range</option>
+                      <option value="under-1000">Under $1,000</option>
+                      <option value="1000-5000">$1,000 - $5,000</option>
+                      <option value="5000-10000">$5,000 - $10,000</option>
+                      <option value="10000-25000">$10,000 - $25,000</option>
+                      <option value="over-25000">Over $25,000</option>
+                    </select>
                   </div>
                   <div>
                     <label htmlFor="timeline" className="block font-montserrat text-sm font-medium text-earle-black mb-2">
@@ -373,75 +433,18 @@ export default function Contact() {
                     />
                 </div>
 
-                <div className="flex justify-end">
-                  <button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="btn-primary w-full sm:w-auto text-sm sm:text-base focus:ring-2 focus:ring-purple focus:ring-offset-2"
-                  >
-                    {isSubmitting ? 'Sending...' : 'Request Free Quote'}
-                  </button>
-                </div>
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="btn-primary w-full text-sm sm:text-base focus:ring-2 focus:ring-purple focus:ring-offset-2"
+                >
+                  {isSubmitting ? 'Sending...' : 'Request Free Quote'}
+                </button>
 
                 <p className="font-raleway text-sm text-earle-black text-center">
                   * Required fields. We&apos;ll respond within 24 hours.
                 </p>
               </form>
-            </div>
-
-            {/* Contact Info (now below main content) */}
-            <div>
-              <h2 className="font-montserrat text-3xl text-white mb-8">Contact Information</h2>
-              
-              <div className="space-y-6 mb-8">
-                <div className="flex items-start">
-                  <EnvelopeIcon className="h-6 w-6 text-purple mr-4 mt-1" />
-                  <div>
-                    <h3 className="font-montserrat text-lg font-semibold text-earle-black">Email</h3>
-                    <p className="font-raleway text-earle-black">
-                      <a href="mailto:g3electricdsm@gmail.com" className="font-medium text-purple hover:text-phlox">
-                        g3electricdsm@gmail.com
-                      </a>
-                    </p>
-                    <p className="font-raleway text-sm text-earle-black">For general inquiries, reach out to us at </p>
-                  </div>
-                </div>
-
-                <div className="flex items-start">
-                  <MapPinIcon className="h-6 w-6 text-purple mr-4 mt-1" />
-                  <div>
-                    <h3 className="font-montserrat text-lg font-semibold text-earle-black">Service Area</h3>
-                    <p className="font-raleway text-earle-black">We proudly serve Central Iowa and surrounding communities.</p>
-                    <p className="font-raleway text-sm text-earle-black">Please reach out for specific locations.</p>
-                  </div>
-                </div>
-
-                <div className="flex items-start">
-                  <ClockIcon className="h-6 w-6 text-purple mr-4 mt-1" />
-                  <div>
-                    <h3 className="font-montserrat text-lg font-semibold text-earle-black">Business Hours</h3>
-                    <p className="font-raleway text-earle-black">Monday-Friday 8am-5pm</p> &nbsp; &nbsp;  
-                    <p className="font-raleway text-earle-black">Saturdays, Sundays, and anything outside the scheduled working hours are reserved for emergencies.</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Calendly Integration Placeholder */}
-              <div className="bg-white-smoke p-6 rounded-lg border border-hookers-green/20">
-                <h3 className="font-montserrat text-xl font-semibold text-earle-black mb-4">Schedule a Consultation</h3>
-                <p className="font-raleway text-earle-black mb-4">
-                  Prefer to schedule a specific time? Use our online booking system to find a time that works for you.
-                </p>
-                <button 
-                  disabled
-                  className="btn-primary focus:ring-2 focus:ring-purple focus:ring-offset-2 w-full sm:w-auto text-sm sm:text-base"
-                >
-                  Book Online
-                </button>
-                <p className="font-raleway text-sm text-earle-black mt-2">
-                  *Calendly integration coming soon
-                </p>
-              </div>
             </div>
           </div>
         </div>

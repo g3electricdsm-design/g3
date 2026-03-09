@@ -34,7 +34,7 @@ export default function Services() {
       </section>
 
       {/* Services Grid */}
-      <section className="py-10">
+      <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col items-center gap-8">
             {content.services.map((service, index) => {
