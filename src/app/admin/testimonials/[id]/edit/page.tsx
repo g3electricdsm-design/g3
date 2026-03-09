@@ -18,7 +18,9 @@ export default function EditTestimonialPage() {
     location: '',
     project: '',
     rating: 5,
+    title: '',
     text: '',
+    imageMode: 'single',
     image: '',
     image2: ''
   });
@@ -28,17 +30,14 @@ export default function EditTestimonialPage() {
 
   useEffect(() => {
     const id = params.id as string;
-    
+
     if (id === 'new') {
-      // Creating a new testimonial
       setIsLoading(false);
     } else {
-      // Editing existing testimonial
       const testimonial = getTestimonialById(id);
       if (testimonial) {
         setFormData(testimonial);
       } else {
-        // Testimonial not found, redirect to admin
         router.push('/admin');
         return;
       }
@@ -48,19 +47,19 @@ export default function EditTestimonialPage() {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: name === 'rating' ? parseInt(value) : value }));
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleImageModeChange = (mode: 'single' | 'before-after') => {
+    setFormData(prev => ({ ...prev, imageMode: mode }));
   };
 
   const handleImageChange = (imageFile: File | null) => {
     if (imageFile) {
-      // Convert file to base64 data URL for persistence
       const reader = new FileReader();
       reader.onload = (e) => {
         const dataUrl = e.target?.result as string;
-        setFormData(prev => ({
-          ...prev,
-          image: dataUrl
-        }));
+        setFormData(prev => ({ ...prev, image: dataUrl }));
       };
       reader.readAsDataURL(imageFile);
     }
@@ -68,14 +67,10 @@ export default function EditTestimonialPage() {
 
   const handleImage2Change = (imageFile: File | null) => {
     if (imageFile) {
-      // Convert file to base64 data URL for persistence
       const reader = new FileReader();
       reader.onload = (e) => {
         const dataUrl = e.target?.result as string;
-        setFormData(prev => ({
-          ...prev,
-          image2: dataUrl
-        }));
+        setFormData(prev => ({ ...prev, image2: dataUrl }));
       };
       reader.readAsDataURL(imageFile);
     }
@@ -87,18 +82,14 @@ export default function EditTestimonialPage() {
 
     try {
       const id = params.id as string;
-      
+
       if (id === 'new') {
-        // Create new testimonial
-        const newId = Date.now(); // Simple ID generation
-        const newTestimonial = { ...formData, id: newId };
-        addTestimonial(newTestimonial);
+        const newId = Date.now();
+        addTestimonial({ ...formData, id: newId });
       } else {
-        // Update existing testimonial
         updateTestimonial(formData);
       }
 
-      // Redirect back to admin testimonials tab
       router.push('/admin?tab=testimonials');
     } catch (error) {
       console.error('Error saving testimonial:', error);
@@ -106,10 +97,6 @@ export default function EditTestimonialPage() {
     } finally {
       setIsSaving(false);
     }
-  };
-
-  const handleCancel = () => {
-    router.push('/admin');
   };
 
   if (isLoading) {
@@ -122,15 +109,13 @@ export default function EditTestimonialPage() {
 
   return (
     <div className="min-h-screen bg-earle-black">
-      {/* Navigation */}
       <Navigation currentPath="/admin" />
 
-      {/* Header */}
       <section className="bg-gradient-to-br from-purple to-phlox text-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center mb-6">
-            <Link 
-              href="/admin" 
+            <Link
+              href="/admin"
               className="flex items-center text-white hover:text-white-smoke transition-colors"
             >
               <ArrowLeftIcon className="h-5 w-5 mr-2" />
@@ -141,25 +126,41 @@ export default function EditTestimonialPage() {
             {formData.id === 0 ? 'Add New Testimonial' : 'Edit Testimonial'}
           </h1>
           <p className="font-raleway text-lg md:text-xl max-w-3xl">
-            {formData.id === 0 
+            {formData.id === 0
               ? 'Add a new customer testimonial to showcase on your website.'
-              : 'Update testimonial details and information.'
-            }
+              : 'Update testimonial details and information.'}
           </p>
         </div>
       </section>
 
-      {/* Form Section */}
       <section className="py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-white-smoke rounded-lg shadow-xl p-8">
             <form onSubmit={handleSubmit} className="space-y-8">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                {/* Basic Information */}
-                <div className="space-y-6">
-                  <h3 className="font-montserrat text-2xl font-semibold text-earle-black border-b border-gray-300 pb-2">
-                    Basic Information
-                  </h3>
+
+              {/* Basic Information */}
+              <div>
+                <h3 className="font-montserrat text-2xl font-semibold text-earle-black border-b border-gray-300 pb-2 mb-6">
+                  Basic Information
+                </h3>
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                  <div>
+                    <label className="block text-sm font-medium text-earle-black mb-2">
+                      Testimonial Title *
+                    </label>
+                    <input
+                      type="text"
+                      name="title"
+                      value={formData.title}
+                      onChange={handleInputChange}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple focus:border-transparent text-earle-black"
+                      required
+                      placeholder="e.g., Kitchen Lighting Transformation"
+                    />
+                    <p className="mt-1 text-sm text-gray-500">
+                      A short headline displayed prominently on the testimonial card.
+                    </p>
+                  </div>
 
                   <div>
                     <label className="block text-sm font-medium text-earle-black mb-2">
@@ -193,7 +194,7 @@ export default function EditTestimonialPage() {
 
                   <div>
                     <label className="block text-sm font-medium text-earle-black mb-2">
-                      Project/Service *
+                      Project / Service *
                     </label>
                     <input
                       type="text"
@@ -205,59 +206,6 @@ export default function EditTestimonialPage() {
                       placeholder="e.g., Kitchen Lighting Installation"
                     />
                   </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-earle-black mb-2">
-                      Rating *
-                    </label>
-                    <select
-                      name="rating"
-                      value={formData.rating}
-                      onChange={handleInputChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple focus:border-transparent text-earle-black"
-                    >
-                      <option value={5}>5 Stars</option>
-                      <option value={4}>4 Stars</option>
-                      <option value={3}>3 Stars</option>
-                      <option value={2}>2 Stars</option>
-                      <option value={1}>1 Star</option>
-                    </select>
-                  </div>
-                </div>
-
-                {/* Image Upload */}
-                <div className="space-y-6">
-                  <h3 className="font-montserrat text-2xl font-semibold text-earle-black border-b border-gray-300 pb-2">
-                    Customer Photo
-                  </h3>
-
-                  <div>
-                    <label className="block text-sm font-medium text-earle-black mb-2">
-                      Upload Customer Photo (Primary)
-                    </label>
-                    <ImageUpload
-                      currentImage={formData.image}
-                      onImageChange={handleImageChange}
-                      label="Select primary photo"
-                    />
-                    <p className="mt-2 text-sm text-gray-600">
-                      Upload the primary photo of the customer for display in the testimonial.
-                    </p>
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-earle-black mb-2">
-                      Upload Second Photo (Hover)
-                    </label>
-                    <ImageUpload
-                      currentImage={formData.image2}
-                      onImageChange={handleImage2Change}
-                      label="Select hover photo"
-                    />
-                    <p className="mt-2 text-sm text-gray-600">
-                      Upload a second photo that will display on hover over the testimonial.
-                    </p>
-                  </div>
                 </div>
               </div>
 
@@ -268,7 +216,7 @@ export default function EditTestimonialPage() {
                 </h3>
                 <div>
                   <label className="block text-sm font-medium text-earle-black mb-2">
-                    Customer Testimonial *
+                    Customer Quote *
                   </label>
                   <textarea
                     name="text"
@@ -282,11 +230,84 @@ export default function EditTestimonialPage() {
                 </div>
               </div>
 
+              {/* Image Mode + Uploads */}
+              <div>
+                <h3 className="font-montserrat text-2xl font-semibold text-earle-black border-b border-gray-300 pb-2 mb-6">
+                  Images
+                </h3>
+
+                {/* Image mode — radio buttons */}
+                <div className="mb-6">
+                  <fieldset>
+                    <legend className="block text-sm font-medium text-earle-black mb-3">
+                      Image Display Format
+                    </legend>
+                    <div className="flex flex-wrap gap-6">
+                      <label className="flex items-start gap-3 cursor-pointer">
+                        <input
+                          type="radio"
+                          name="imageMode"
+                          value="single"
+                          checked={formData.imageMode === 'single'}
+                          onChange={() => handleImageModeChange('single')}
+                          className="mt-1 h-4 w-4 border-gray-300 text-purple focus:ring-purple"
+                        />
+                        <span>
+                          <span className="font-montserrat font-semibold text-sm text-earle-black block">Single Image</span>
+                          <span className="font-raleway text-sm text-gray-700">One photo displayed on the card.</span>
+                        </span>
+                      </label>
+                      <label className="flex items-start gap-3 cursor-pointer">
+                        <input
+                          type="radio"
+                          name="imageMode"
+                          value="before-after"
+                          checked={formData.imageMode === 'before-after'}
+                          onChange={() => handleImageModeChange('before-after')}
+                          className="mt-1 h-4 w-4 border-gray-300 text-purple focus:ring-purple"
+                        />
+                        <span>
+                          <span className="font-montserrat font-semibold text-sm text-earle-black block">Before &amp; After</span>
+                          <span className="font-raleway text-sm text-gray-700">Two photos shown side by side.</span>
+                        </span>
+                      </label>
+                    </div>
+                  </fieldset>
+                </div>
+
+                {/* Image uploads */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                  <div>
+                    <label className="block text-sm font-medium text-earle-black mb-2">
+                      {formData.imageMode === 'before-after' ? 'Before Image' : 'Photo'}
+                    </label>
+                    <ImageUpload
+                      currentImage={formData.image}
+                      onImageChange={handleImageChange}
+                      label={formData.imageMode === 'before-after' ? 'Select before photo' : 'Select photo'}
+                    />
+                  </div>
+
+                  {formData.imageMode === 'before-after' && (
+                    <div>
+                      <label className="block text-sm font-medium text-earle-black mb-2">
+                        After Image
+                      </label>
+                      <ImageUpload
+                        currentImage={formData.image2}
+                        onImageChange={handleImage2Change}
+                        label="Select after photo"
+                      />
+                    </div>
+                  )}
+                </div>
+              </div>
+
               {/* Form Actions */}
               <div className="flex justify-end gap-4 pt-6 border-t border-gray-300">
                 <button
                   type="button"
-                  onClick={handleCancel}
+                  onClick={() => router.push('/admin')}
                   className="px-6 py-3 border border-gray-300 rounded-lg font-montserrat font-medium text-earle-black hover:bg-gray-50 transition-colors"
                 >
                   Cancel
@@ -308,4 +329,3 @@ export default function EditTestimonialPage() {
     </div>
   );
 }
-
