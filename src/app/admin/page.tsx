@@ -198,33 +198,41 @@ function AdminContent() {
               <div className="bg-white-smoke rounded-lg p-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {projects.map((project) => (
-                    <div key={project.id} className="bg-white rounded-lg p-4 shadow-sm border border-gray-200">
-                      <div className="flex items-start justify-between mb-3">
-                        <div className="flex-1">
-                          <h4 className="font-montserrat text-lg font-semibold text-gray-900">{project.title}</h4>
-                          <p className="font-raleway text-sm uppercase text-gray-700 font-medium">{project.category} • {project.type}</p>
+                    <div key={project.id} className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+                      {project.image && (
+                        <div className="h-36 bg-gray-100">
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img src={project.image} alt={project.title} className="w-full h-full object-cover" />
                         </div>
-                        <div className="flex items-center gap-1">
-                          <Link
-                            href={`/admin/projects/${project.id}/edit`}
-                            className="p-2 hover:bg-purple/10 rounded-lg transition-colors"
-                            title="Edit project"
-                          >
-                            <PencilIcon className="h-4 w-4 text-gray-800" />
-                          </Link>
-                          <button
-                            onClick={() => handleDelete(project.id)}
-                            className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
-                            title="Delete project"
-                          >
-                            <TrashIcon className="h-4 w-4" />
-                          </button>
+                      )}
+                      <div className="p-4">
+                        <div className="flex items-start justify-between mb-3">
+                          <div className="flex-1">
+                            <h4 className="font-montserrat text-lg font-semibold text-gray-900">{project.title}</h4>
+                            <p className="font-raleway text-sm uppercase text-gray-700 font-medium">{project.category} • {project.type}</p>
+                          </div>
+                          <div className="flex items-center gap-1">
+                            <Link
+                              href={`/admin/projects/${project.id}/edit`}
+                              className="p-2 hover:bg-purple/10 rounded-lg transition-colors"
+                              title="Edit project"
+                            >
+                              <PencilIcon className="h-4 w-4 text-gray-800" />
+                            </Link>
+                            <button
+                              onClick={() => handleDelete(project.id)}
+                              className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                              title="Delete project"
+                            >
+                              <TrashIcon className="h-4 w-4" />
+                            </button>
+                          </div>
                         </div>
-                      </div>
-                      <p className="font-raleway text-sm mb-3 line-clamp-2 text-gray-800">{project.description}</p>
-                      <div className="flex items-center justify-between text-xs text-gray-700 font-medium">
-                        <span>{project.client}</span>
-                        <span>{project.location}</span>
+                        <p className="font-raleway text-sm mb-3 line-clamp-2 text-gray-800">{project.description}</p>
+                        <div className="flex items-center justify-between text-xs text-gray-700 font-medium">
+                          <span>{project.client}</span>
+                          <span>{project.location}</span>
+                        </div>
                       </div>
                     </div>
                   ))}

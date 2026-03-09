@@ -16,6 +16,7 @@ export default function ProjectDetail() {
   const pathname = usePathname();
   const [project, setProject] = useState<Project | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [activeImage, setActiveImage] = useState<string | null>(null);
 
   useEffect(() => {
     const loadProject = async () => {
@@ -115,11 +116,11 @@ export default function ProjectDetail() {
             {/* Main Content */}
             <div className="lg:col-span-2">
               {/* Project Image */}
-              <div className={`mb-8 ${project.orientation === 'portrait' ? 'flex justify-center' : ''}`}>
+              <div className={`mb-8 ${project.orientation === 'portrait' ? 'flex flex-col items-center' : ''}`}>
                 {project.orientation === 'portrait' ? (
                   <div className="relative inline-block max-w-md w-full rounded-lg overflow-hidden bg-earle-black">
                     <Image
-                      src={project.image}
+                      src={activeImage || project.image}
                       alt={project.title}
                       width={800}
                       height={1200}
@@ -131,12 +132,38 @@ export default function ProjectDetail() {
                 ) : (
                   <div className="relative w-full aspect-video rounded-lg overflow-hidden">
                     <Image
-                      src={project.image}
+                      src={activeImage || project.image}
                       alt={project.title}
                       fill
                       className="object-cover"
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 66vw, 50vw"
                     />
+                  </div>
+                )}
+
+                {project.additionalImages && project.additionalImages.length > 0 && (
+                  <div className="flex gap-3 overflow-x-auto pb-2 mt-4 snap-x scrollbar-thin">
+                    <button
+                      onClick={() => setActiveImage(null)}
+                      className={`flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden snap-start border-2 transition-all ${
+                        !activeImage ? 'border-phlox ring-2 ring-phlox/30' : 'border-transparent hover:border-white/40'
+                      }`}
+                    >
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={project.image} alt="Featured" className="w-full h-full object-cover" />
+                    </button>
+                    {project.additionalImages.map((img, i) => (
+                      <button
+                        key={i}
+                        onClick={() => setActiveImage(img)}
+                        className={`flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden snap-start border-2 transition-all ${
+                          activeImage === img ? 'border-phlox ring-2 ring-phlox/30' : 'border-transparent hover:border-white/40'
+                        }`}
+                      >
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img src={img} alt={`Gallery ${i + 1}`} className="w-full h-full object-cover" />
+                      </button>
+                    ))}
                   </div>
                 )}
               </div>

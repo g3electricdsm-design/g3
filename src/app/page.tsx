@@ -2,8 +2,8 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { BoltIcon } from "@heroicons/react/24/outline";
 import Navigation from "@/components/Navigation";
+import { AnimatedServiceIcon } from "@/components/ServiceIcons";
 import Footer from "@/components/Footer";
 import TestimonialCarousel from "@/components/TestimonialCarousel";
 import SimplePixelZap from "@/components/SimplePixelZap";
@@ -238,42 +238,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Stats / By the Numbers */}
-      <section className="py-20 bg-earle-black text-white relative overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="font-montserrat text-4xl text-white mb-4">By the Numbers</h2>
-            <p className="font-raleway text-lg text-white-smoke max-w-3xl mx-auto">
-              Our track record speaks for itself—safety, quality, and customer satisfaction in every project.
-            </p>
-          </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            <div className="text-center">
-              <div className="font-montserrat text-4xl md:text-5xl font-black text-purple mb-2">
-                <AnimatedCounter end={10} suffix="+" duration={1800} className="inline-block" />
-              </div>
-              <div className="font-montserrat text-lg font-semibold text-white-smoke">Years Experience</div>
-            </div>
-            <div className="text-center">
-              <div className="font-montserrat text-4xl md:text-5xl font-black text-purple mb-2">
-                <AnimatedCounter end={1000} suffix="+" duration={2200} className="inline-block" />
-              </div>
-              <div className="font-montserrat text-lg font-semibold text-white-smoke">Projects Completed</div>
-            </div>
-            <div className="text-center">
-              <div className="font-montserrat text-4xl md:text-5xl font-black text-purple mb-2">
-                <AnimatedCounter end={100} suffix="%" duration={1500} className="inline-block" />
-              </div>
-              <div className="font-montserrat text-lg font-semibold text-white-smoke">Safety Record</div>
-            </div>
-            <div className="text-center">
-              <div className="font-montserrat text-4xl md:text-5xl font-black text-purple mb-2">24/7</div>
-              <div className="font-montserrat text-lg font-semibold text-white-smoke">Emergency Service</div>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Services Preview with Parallax Effects */}
       <motion.section 
         className="py-20 bg-earle-black relative overflow-hidden"
@@ -289,58 +253,30 @@ export default function Home() {
         />
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <motion.div 
-            className="text-center mb-16"
-            data-aos="fade-up"
-            data-aos-duration="1000"
-            style={{ opacity: servicesOpacity }}
-          >
+          <div className="text-center mb-16">
             <h2 className="font-montserrat text-4xl text-white mb-4">{content.services.title}</h2>
             <p className="font-raleway text-lg text-white-smoke max-w-2xl mx-auto">
               {content.services.description}
             </p>
-          </motion.div>
+          </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {content.services.items.map((service, index) => (
-              <motion.div 
+              <div 
                 key={index} 
-                className="bg-white-smoke rounded-lg shadow-sm text-center hover:shadow-md transition-shadow overflow-hidden"
+                className="bg-white-smoke rounded-lg shadow-sm text-center hover:shadow-md transition-shadow overflow-hidden border-[1px] border-white-smoke"
                 data-aos="fade-up"
                 data-aos-delay={index * 200}
                 data-aos-duration="800"
-                whileHover={{ 
-                  y: -10,
-                  scale: 1.02,
-                  boxShadow: "0 20px 40px rgba(0, 0, 0, 0.1)"
-                }}
-                transition={{ 
-                  type: "spring", 
-                  stiffness: 300, 
-                  damping: 20 
-                }}
               >
-                <motion.div 
-                  className="h-32 bg-gradient-to-br from-purple/60 to-phlox/60 flex items-center justify-center"
-                >
-                  <motion.div
-                    whileHover={{ 
-                      rotate: 360,
-                      scale: 1.2
-                    }}
-                    transition={{ 
-                      duration: 0.6,
-                      ease: "easeInOut"
-                    }}
-                  >
-                    <BoltIcon className="h-12 w-12 text-purple" />
-                  </motion.div>
-                </motion.div>
+                <div className="h-48 bg-gradient-to-br from-purple/60 to-phlox/60 flex items-center justify-center p-4">
+                  <AnimatedServiceIcon serviceId={service.id} className="w-[150px] h-[150px]" />
+                </div>
                 <div className="p-6">
                   <h3 className="font-montserrat text-xl font-semibold text-earle-black mb-2">{service.title}</h3>
                   <p className="font-raleway text-earle-black">{service.description}</p>
                 </div>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>

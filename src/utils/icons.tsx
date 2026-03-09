@@ -39,7 +39,7 @@ export function ServiceIcon({ iconName, className = "w-full h-auto" }: ServiceIc
   };
 
   const iconUrl = iconMap[iconName];
-  
+
   if (!iconUrl) {
     return null;
   }
@@ -62,7 +62,8 @@ export function getServiceIcon(serviceId: string): string {
     safety: 'safety-goggles',
   };
   
-  return iconMap[serviceId] || 'power';
+  const resolved = iconMap[serviceId] || 'power';
+  return resolved;
 }
 
 export const getCategoryIcon = (category: string, size: 'sm' | 'md' | 'lg' = 'md') => {

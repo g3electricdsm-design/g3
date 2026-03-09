@@ -1,9 +1,9 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import Link from 'next/link';
-import { ArrowLeftIcon } from '@heroicons/react/24/outline';
+import { ArrowLeftIcon, StarIcon, XMarkIcon, PlusIcon } from '@heroicons/react/24/outline';
 import { Project, getProjectById, updateProject, addProject } from '@/data/projects';
 import ImageUpload from '@/components/ImageUpload';
 import Navigation from '@/components/Navigation';
@@ -34,6 +34,7 @@ export default function EditProjectPage() {
   const [newService, setNewService] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
+  const additionalImageInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     const loadProject = async () => {
@@ -116,6 +117,99 @@ export default function EditProjectPage() {
       ...prev,
       orientation: suggestedOrientation
     }));
+  };
+
+  const isHeic = (file: File): boolean => {
+    const type = file.type.toLowerCase();
+    const name = file.name.toLowerCase();
+    return type === 'image/heic' || type === 'image/heif' || name.endsWith('.heic') || name.endsWith('.heif');
+  };
+
+  const convertHeicToJpeg = async (file: File): Promise<File> => {
+    const heic2any = (await import('heic2any')).default;
+    const blob = await heic2any({ blob: file, toType: 'image/jpeg', quality: 0.92 });
+    const result = Array.isArray(blob) ? blob[0] : blob;
+    return new File([result], file.name.replace(/\.heic$/i, '.jpg').replace(/\.heif$/i, '.jpg'), {
+      type: 'image/jpeg',
+      lastModified: Date.now(),
+    });
+  };
+
+  const compressImage = (file: File, maxDimension = 2000, quality = 0.92): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const img = new window.Image();
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          let w = img.width;
+          let h = img.height;
+          const larger = Math.max(w, h);
+          if (larger > maxDimension) { const s = maxDimension / larger; w = Math.round(w * s); h = Math.round(h * s); }
+          canvas.width = w;
+          canvas.height = h;
+          canvas.getContext('2d')?.drawImage(img, 0, 0, w, h);
+          canvas.toBlob(
+            (blob) => {
+              if (!blob) { reject(new Error('Compression failed')); return; }
+              const r2 = new FileReader();
+              r2.onload = (ev) => resolve(ev.target?.result as string);
+              r2.onerror = () => reject(new Error('Read failed'));
+              r2.readAsDataURL(blob);
+            },
+            'image/jpeg',
+            quality
+          );
+        };
+        img.onerror = () => reject(new Error('Image decode failed'));
+        img.src = e.target?.result as string;
+      };
+      reader.onerror = () => reject(new Error('Read failed'));
+      reader.readAsDataURL(file);
+    });
+  };
+
+  const handleAdditionalImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (!files || files.length === 0) return;
+
+    for (const file of Array.from(files)) {
+      const isHeicFile = isHeic(file);
+      if (!file.type.startsWith('image/') && !isHeicFile) continue;
+      if (file.size > 10 * 1024 * 1024) continue;
+      try {
+        let processableFile = file;
+        if (isHeicFile) {
+          processableFile = await convertHeicToJpeg(file);
+        }
+        const dataUrl = await compressImage(processableFile);
+        setFormData(prev => ({
+          ...prev,
+          additionalImages: [...(prev.additionalImages || []), dataUrl]
+        }));
+      } catch (err) {
+        console.error('Error processing additional image:', err);
+      }
+    }
+    if (additionalImageInputRef.current) {
+      additionalImageInputRef.current.value = '';
+    }
+  };
+
+  const handleRemoveAdditionalImage = (index: number) => {
+    setFormData(prev => ({
+      ...prev,
+      additionalImages: (prev.additionalImages || []).filter((_, i) => i !== index)
+    }));
+  };
+
+  const handleSetFeatured = (index: number) => {
+    setFormData(prev => {
+      const additional = [...(prev.additionalImages || [])];
+      const newFeatured = additional[index];
+      additional[index] = prev.image;
+      return { ...prev, image: newFeatured, additionalImages: additional };
+    });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -234,6 +328,60 @@ export default function EditProjectPage() {
                   onSizeSuggestion={handleSizeSuggestion}
                   projectTitle={formData.title || 'New Project'}
                 />
+
+                <div className="mt-6">
+                  <label className="block text-sm font-medium text-earle-black mb-2">
+                    Additional Images
+                  </label>
+                  <p className="text-xs text-gray-500 mb-3">
+                    Add extra gallery images. Click the star to make an image the featured image.
+                  </p>
+
+                  <div className="flex flex-wrap gap-4 items-start">
+                    {(formData.additionalImages || []).map((img, index) => (
+                      <div key={index} className="relative group w-28 h-28 rounded-lg overflow-hidden border-2 border-gray-200 bg-gray-100 flex-shrink-0">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img src={img} alt={`Additional ${index + 1}`} className="w-full h-full object-cover" />
+                        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-1">
+                          <button
+                            type="button"
+                            onClick={() => handleSetFeatured(index)}
+                            className="p-1.5 bg-white/90 rounded-full hover:bg-yellow-100 transition-colors"
+                            title="Set as featured image"
+                          >
+                            <StarIcon className="h-4 w-4 text-yellow-600" />
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => handleRemoveAdditionalImage(index)}
+                            className="p-1.5 bg-white/90 rounded-full hover:bg-red-100 transition-colors"
+                            title="Remove image"
+                          >
+                            <XMarkIcon className="h-4 w-4 text-red-600" />
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+
+                    <button
+                      type="button"
+                      onClick={() => additionalImageInputRef.current?.click()}
+                      className="w-28 h-28 rounded-lg border-2 border-dashed border-gray-300 flex flex-col items-center justify-center text-gray-400 hover:border-purple hover:text-purple transition-colors cursor-pointer"
+                    >
+                      <PlusIcon className="h-6 w-6 mb-1" />
+                      <span className="text-xs font-medium">Add Image</span>
+                    </button>
+                  </div>
+
+                  <input
+                    ref={additionalImageInputRef}
+                    type="file"
+                    accept="image/*,.heic,.heif"
+                    multiple
+                    onChange={handleAdditionalImageUpload}
+                    className="hidden"
+                  />
+                </div>
               </div>
 
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">

@@ -37,6 +37,7 @@ export interface Project {
     | 'panoramic'
     | 'extraTall';
   orientation?: 'portrait' | 'landscape';
+  additionalImages?: string[];
   slug?: string;
   seoTitle?: string;
   metaDescription?: string;

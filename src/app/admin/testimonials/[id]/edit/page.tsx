@@ -239,7 +239,7 @@ export default function EditTestimonialPage() {
                 {/* Image mode — radio buttons */}
                 <div className="mb-6">
                   <fieldset>
-                    <legend className="block text-sm font-medium text-earle-black mb-3">
+                    <legend className="block text-sm font-medium text-white mb-3">
                       Image Display Format
                     </legend>
                     <div className="flex flex-wrap gap-6">
@@ -253,8 +253,8 @@ export default function EditTestimonialPage() {
                           className="mt-1 h-4 w-4 border-gray-300 text-purple focus:ring-purple"
                         />
                         <span>
-                          <span className="font-montserrat font-semibold text-sm text-earle-black block">Single Image</span>
-                          <span className="font-raleway text-sm text-gray-700">One photo displayed on the card.</span>
+                          <span className="font-montserrat font-semibold text-sm text-white block">Single Image</span>
+                          <span className="font-raleway text-sm text-white">One photo displayed on the card.</span>
                         </span>
                       </label>
                       <label className="flex items-start gap-3 cursor-pointer">
@@ -267,8 +267,8 @@ export default function EditTestimonialPage() {
                           className="mt-1 h-4 w-4 border-gray-300 text-purple focus:ring-purple"
                         />
                         <span>
-                          <span className="font-montserrat font-semibold text-sm text-earle-black block">Before &amp; After</span>
-                          <span className="font-raleway text-sm text-gray-700">Two photos shown side by side.</span>
+                          <span className="font-montserrat font-semibold text-sm text-white block">Before &amp; After</span>
+                          <span className="font-raleway text-sm text-white">Two photos shown side by side.</span>
                         </span>
                       </label>
                     </div>

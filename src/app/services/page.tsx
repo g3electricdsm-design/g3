@@ -8,7 +8,7 @@ import {
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { getContent } from "@/data/content";
-import { ServiceIcon, getServiceIcon } from "@/utils/icons";
+import { AnimatedServiceIcon } from "@/components/ServiceIcons";
 
 export const metadata: Metadata = {
   title: "Services",
@@ -34,14 +34,18 @@ export default function Services() {
       </section>
 
       {/* Services Grid */}
-      <section className="py-20">
+      <section className="pt-10 pb-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col items-center gap-8">
             {content.services.map((service, index) => {
               return (
-                <div key={index} className="w-full max-w-[1200px] bg-earle-black border border-white/10 rounded-2xl pl-[33px] pr-[100px] py-[32px] hover:border-purple/50 hover:shadow-xl transition-all shadow-lg">
-                  <div className="flex items-center justify-between gap-6">
-                    <div className="flex flex-col gap-[22px] max-w-[600px]">
+                <div key={index} className="w-full max-w-[1200px] bg-earle-black border border-white/10 rounded-2xl px-6 md:pl-8 md:pr-12 lg:pr-24 py-8 hover:border-purple/50 hover:shadow-xl transition-all shadow-lg">
+                  <div className="flex flex-col items-center md:flex-row md:items-center md:justify-between gap-6">
+                    <div className="w-[180px] h-[180px] md:w-[300px] md:h-[300px] lg:w-[450px] lg:h-[450px] bg-purple/10 rounded-2xl flex items-center justify-center flex-shrink-0 relative overflow-clip p-[10%] order-first md:order-last">
+                      <AnimatedServiceIcon serviceId={service.id} className="w-full h-full" />
+                    </div>
+
+                    <div className="flex flex-col gap-5 md:max-w-[600px] text-center md:text-left">
                       <div className="flex flex-col gap-2">
                         <h3 className="font-montserrat text-2xl font-semibold text-white">{service.title}</h3>
                         <p className="font-raleway text-white-smoke">{service.description}</p>
@@ -51,17 +55,13 @@ export default function Services() {
                         <h4 className="font-montserrat text-lg font-semibold text-white">What We Include:</h4>
                         <ul className="space-y-2">
                           {service.features.map((feature, featureIndex) => (
-                            <li key={featureIndex} className="flex items-center font-raleway text-white-smoke">
+                            <li key={featureIndex} className="flex items-center font-raleway text-white-smoke md:justify-start justify-center">
                               <div className="w-3 h-3 bg-phlox rounded-full mr-3 flex-shrink-0"></div>
                               {feature}
                             </li>
                           ))}
                         </ul>
                       </div>
-                    </div>
-                    
-                    <div className="w-[252px] h-[252px] bg-purple/10 rounded-2xl flex items-center justify-center flex-shrink-0 relative overflow-clip p-[10%]">
-                      <ServiceIcon iconName={getServiceIcon(service.id)} className="w-full h-auto scale-[3]" />
                     </div>
                   </div>
                 </div>

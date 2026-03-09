@@ -16,6 +16,7 @@ interface ProjectRow {
   challenges: string;
   size: string;
   orientation?: string | null;
+  additional_images?: string[] | null;
   slug?: string | null;
   seo_title?: string | null;
   meta_description?: string | null;
@@ -110,6 +111,7 @@ class SupabaseStorage implements ProjectsStorage {
         | 'panoramic'
         | 'extraTall',
       orientation: (row.orientation as 'portrait' | 'landscape') || 'landscape',
+      additionalImages: row.additional_images || undefined,
       slug: row.slug || undefined,
       seoTitle: row.seo_title || undefined,
       metaDescription: row.meta_description || undefined,
@@ -132,6 +134,7 @@ class SupabaseStorage implements ProjectsStorage {
       challenges: project.challenges,
       size: project.size,
       orientation: project.orientation || 'landscape',
+      additional_images: project.additionalImages || [],
       slug: project.slug,
       seo_title: project.seoTitle,
       meta_description: project.metaDescription,
@@ -190,6 +193,19 @@ class SupabaseStorage implements ProjectsStorage {
     return this.transformRow(data);
   }
 
+  private stripUnknownColumn(
+    row: Record<string, unknown>,
+    errorMessage: string
+  ): Record<string, unknown> | null {
+    const match = errorMessage.match(/Could not find the '(\w+)' column/);
+    if (match) {
+      const col = match[1];
+      const { [col]: _, ...rest } = row;
+      return rest;
+    }
+    return null;
+  }
+
   async create(project: Project): Promise<Project> {
     if (!supabase) {
       throw new Error('Supabase not initialized');
@@ -205,13 +221,25 @@ class SupabaseStorage implements ProjectsStorage {
     }
 
     // Transform camelCase to snake_case for database
-    const dbRow = this.transformProject(project);
+    let dbRow: Record<string, unknown> = this.transformProject(project);
 
-    const { data, error } = await supabase
+    let { data, error } = await supabase
       .from(PROJECTS_TABLE)
       .insert(dbRow)
       .select()
       .single();
+
+    if (error?.code === 'PGRST204') {
+      const stripped = this.stripUnknownColumn(dbRow, error.message);
+      if (stripped) {
+        dbRow = stripped;
+        ({ data, error } = await supabase
+          .from(PROJECTS_TABLE)
+          .insert(dbRow)
+          .select()
+          .single());
+      }
+    }
 
     if (error) {
       throw new Error(`Failed to create project: ${error.message}`);
@@ -231,22 +259,32 @@ class SupabaseStorage implements ProjectsStorage {
 
     // Transform camelCase to snake_case for database
     const dbRow = this.transformProject(project);
-    // Don't update the id field
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { id, ...updateData } = dbRow;
+    const { id, ...initialUpdateData } = dbRow;
+    let updateData: Record<string, unknown> = initialUpdateData;
 
-    const { data, error } = await supabase
+    let { data, error } = await supabase
       .from(PROJECTS_TABLE)
       .update(updateData)
       .eq('id', project.id)
       .select()
       .single();
 
+    if (error?.code === 'PGRST204') {
+      const stripped = this.stripUnknownColumn(updateData, error.message);
+      if (stripped) {
+        updateData = stripped;
+        ({ data, error } = await supabase
+          .from(PROJECTS_TABLE)
+          .update(updateData)
+          .eq('id', project.id)
+          .select()
+          .single());
+      }
+    }
+
     if (error) {
       console.error('Supabase update error:', error);
-      console.error('Error code:', error.code);
-      console.error('Error details:', error.details);
-      console.error('Error hint:', error.hint);
       if (error.code === 'PGRST116') {
         throw new Error('Project not found');
       }

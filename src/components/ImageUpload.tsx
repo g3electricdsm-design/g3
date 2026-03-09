@@ -14,14 +14,23 @@ interface ImageUploadProps {
 
 export default function ImageUpload({ currentImage, onImageChange, onSizeSuggestion, projectTitle, label }: ImageUploadProps) {
   const [preview, setPreview] = useState<string | null>(currentImage || null);
+  const [previewRatio, setPreviewRatio] = useState<number | null>(null);
   const [isDragOver, setIsDragOver] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
+  const [uploadStatus, setUploadStatus] = useState('');
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  // Update preview when currentImage changes
   useEffect(() => {
     setPreview(currentImage || null);
+    if (currentImage) {
+      const img = new window.Image();
+      img.onload = () => setPreviewRatio(img.width / img.height);
+      img.src = currentImage;
+    } else {
+      setPreviewRatio(null);
+    }
   }, [currentImage]);
 
   // Smart size suggestion based on image aspect ratio
@@ -50,8 +59,8 @@ export default function ImageUpload({ currentImage, onImageChange, onSizeSuggest
     }
   };
 
-  const compressImage = (file: File, maxWidth: number = 2000, quality: number = 0.92): Promise<File> => {
-    return new Promise((resolve) => {
+  const compressImage = (file: File, maxDimension: number = 2000, quality: number = 0.92): Promise<File> => {
+    return new Promise((resolve, reject) => {
       const reader = new FileReader();
       reader.onload = (e) => {
         const img = new window.Image();
@@ -60,10 +69,11 @@ export default function ImageUpload({ currentImage, onImageChange, onSizeSuggest
           let width = img.width;
           let height = img.height;
 
-          // Resize if larger than maxWidth
-          if (width > maxWidth) {
-            height = (height * maxWidth) / width;
-            width = maxWidth;
+          const larger = Math.max(width, height);
+          if (larger > maxDimension) {
+            const scale = maxDimension / larger;
+            width = Math.round(width * scale);
+            height = Math.round(height * scale);
           }
 
           canvas.width = width;
@@ -81,47 +91,81 @@ export default function ImageUpload({ currentImage, onImageChange, onSizeSuggest
                 });
                 resolve(compressedFile);
               } else {
-                resolve(file);
+                reject(new Error('Image compression failed'));
               }
             },
             'image/jpeg',
             quality
           );
         };
+        img.onerror = () => reject(new Error('Could not decode image'));
         img.src = e.target?.result as string;
       };
+      reader.onerror = () => reject(new Error('Could not read file'));
       reader.readAsDataURL(file);
     });
   };
 
+  const isHeic = (file: File): boolean => {
+    const type = file.type.toLowerCase();
+    const name = file.name.toLowerCase();
+    return type === 'image/heic' || type === 'image/heif' || name.endsWith('.heic') || name.endsWith('.heif');
+  };
+
+  const convertHeicToJpeg = async (file: File): Promise<File> => {
+    const heic2any = (await import('heic2any')).default;
+    const blob = await heic2any({ blob: file, toType: 'image/jpeg', quality: 0.92 });
+    const result = Array.isArray(blob) ? blob[0] : blob;
+    return new File([result], file.name.replace(/\.heic$/i, '.jpg').replace(/\.heif$/i, '.jpg'), {
+      type: 'image/jpeg',
+      lastModified: Date.now(),
+    });
+  };
+
   const handleFileSelect = async (file: File) => {
-    // Validate file type
-    if (!file.type.startsWith('image/')) {
-      alert('Please select a valid image file (PNG, JPG, GIF, etc.)');
+    setErrorMessage(null);
+
+    const heicFile = isHeic(file);
+
+    if (!file.type.startsWith('image/') && !heicFile) {
+      setErrorMessage(`"${file.name}" is not a supported image format. Use PNG, JPG, GIF, or HEIC.`);
       return;
     }
 
-    // Validate file size (10MB limit)
-    const maxSize = 10 * 1024 * 1024; // 10MB
+    const maxSize = 10 * 1024 * 1024;
     if (file.size > maxSize) {
-      alert('File size must be less than 10MB');
+      const sizeMB = (file.size / 1024 / 1024).toFixed(1);
+      setErrorMessage(`File is ${sizeMB} MB — the limit is 10 MB. Try a smaller image.`);
       return;
     }
 
     setIsUploading(true);
-    setUploadProgress(50); // Show progress during compression
+    setUploadProgress(10);
+    setUploadStatus(heicFile ? 'Converting HEIC...' : 'Processing...');
 
     try {
-      // Compress image to max 2000px width with 92% quality for good balance
-      const compressedFile = await compressImage(file, 2000, 0.92);
+      let processableFile = file;
+      if (heicFile) {
+        try {
+          processableFile = await convertHeicToJpeg(file);
+        } catch (heicError) {
+          console.error('HEIC conversion failed:', heicError);
+          throw new Error('Could not convert this HEIC file. Try converting it to JPG first (e.g. open in Photos and export as JPEG).');
+        }
+      }
+
+      setUploadProgress(50);
+      setUploadStatus('Compressing...');
+
+      const compressedFile = await compressImage(processableFile, 2000, 0.92);
       setUploadProgress(80);
+      setUploadStatus('Finalizing...');
 
       const reader = new FileReader();
-      
+
       reader.onprogress = (e) => {
         if (e.lengthComputable) {
-          const progress = 80 + (e.loaded / e.total) * 20; // Remaining 20% for reading
-          setUploadProgress(progress);
+          setUploadProgress(80 + (e.loaded / e.total) * 20);
         }
       };
 
@@ -129,42 +173,38 @@ export default function ImageUpload({ currentImage, onImageChange, onSizeSuggest
         const result = e.target?.result as string;
         setPreview(result);
         onImageChange(compressedFile);
-        
-        // Detect image dimensions and suggest size
-        if (onSizeSuggestion) {
-          const img = new window.Image();
-          img.onload = () => {
-            const aspectRatio = img.width / img.height;
+
+        const img = new window.Image();
+        img.onload = () => {
+          const aspectRatio = img.width / img.height;
+          setPreviewRatio(aspectRatio);
+          if (onSizeSuggestion) {
             const suggestedSize = suggestTileSize(aspectRatio);
             onSizeSuggestion(suggestedSize, aspectRatio);
-          };
-          img.src = result;
-        }
-        
+          }
+        };
+        img.src = result;
+
         setIsUploading(false);
         setUploadProgress(0);
+        setUploadStatus('');
       };
 
       reader.onerror = () => {
-        alert('Error reading file. Please try again.');
+        setErrorMessage('Could not read the processed file. Please try again.');
         setIsUploading(false);
         setUploadProgress(0);
+        setUploadStatus('');
       };
 
       reader.readAsDataURL(compressedFile);
     } catch (error) {
-      console.error('Error compressing image:', error);
-      alert('Error processing image. Using original file.');
-      // Fallback to original file if compression fails
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const result = e.target?.result as string;
-        setPreview(result);
-        onImageChange(file);
-        setIsUploading(false);
-        setUploadProgress(0);
-      };
-      reader.readAsDataURL(file);
+      console.error('Image upload error:', error);
+      const message = error instanceof Error ? error.message : 'Something went wrong processing this image. Please try a different file.';
+      setErrorMessage(message);
+      setIsUploading(false);
+      setUploadProgress(0);
+      setUploadStatus('');
     }
   };
 
@@ -196,6 +236,8 @@ export default function ImageUpload({ currentImage, onImageChange, onSizeSuggest
 
   const handleRemoveImage = () => {
     setPreview(null);
+    setPreviewRatio(null);
+    setErrorMessage(null);
     onImageChange(null);
     if (fileInputRef.current) {
       fileInputRef.current.value = '';
@@ -206,16 +248,23 @@ export default function ImageUpload({ currentImage, onImageChange, onSizeSuggest
     fileInputRef.current?.click();
   };
 
+  const isPortrait = previewRatio !== null && previewRatio < 0.9;
+
   return (
     <div className="w-full">
       {preview ? (
-        <div className="relative group">
-          <div className="aspect-video relative rounded-lg overflow-hidden">
+        <div className={`relative group ${isPortrait ? 'flex justify-center' : ''}`}>
+          <div
+            className={`relative rounded-lg overflow-hidden bg-gray-100 ${
+              isPortrait ? 'max-w-sm w-full' : 'w-full'
+            }`}
+            style={{ aspectRatio: previewRatio ? `${previewRatio}` : '16/9' }}
+          >
             <Image
               src={preview}
               alt={projectTitle || label || 'Uploaded image'}
               fill
-              className="object-cover"
+              className={isPortrait ? 'object-contain' : 'object-cover'}
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 66vw, 50vw"
             />
             <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
@@ -252,7 +301,7 @@ export default function ImageUpload({ currentImage, onImageChange, onSizeSuggest
             <div className="text-center">
               <div className="w-16 h-16 border-4 border-purple border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
               <p className="font-montserrat text-lg text-earle-black mb-2">
-                Uploading Image...
+                {uploadStatus || 'Processing...'}
               </p>
               <div className="w-48 bg-gray-200 rounded-full h-2 mb-2">
                 <div 
@@ -279,7 +328,7 @@ export default function ImageUpload({ currentImage, onImageChange, onSizeSuggest
                   {isDragOver ? 'Release to upload' : 'Click to browse or drag and drop'}
                 </p>
                 <p className="font-raleway text-xs text-gray-500 mt-1">
-                  PNG, JPG, GIF up to 10MB
+                  PNG, JPG, GIF, HEIC up to 10MB
                 </p>
               </div>
             </>
@@ -290,10 +339,26 @@ export default function ImageUpload({ currentImage, onImageChange, onSizeSuggest
       <input
         ref={fileInputRef}
         type="file"
-        accept="image/*"
+        accept="image/*,.heic,.heif"
         onChange={handleFileInputChange}
         className="hidden"
       />
+
+      {errorMessage && (
+        <div className="mt-3 flex items-start gap-2 p-3 bg-red-50 border border-red-200 rounded-lg">
+          <span className="text-red-500 flex-shrink-0 mt-0.5">&#9888;</span>
+          <div className="flex-1 min-w-0">
+            <p className="font-raleway text-sm text-red-700">{errorMessage}</p>
+          </div>
+          <button
+            type="button"
+            onClick={() => setErrorMessage(null)}
+            className="text-red-400 hover:text-red-600 flex-shrink-0 text-lg leading-none"
+          >
+            &times;
+          </button>
+        </div>
+      )}
     </div>
   );
 }
