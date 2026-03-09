@@ -46,7 +46,7 @@ export default function About() {
       </section>
 
       {/* Stats Section */}
-      <section className="py-20">
+      <section className="py-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="font-montserrat text-4xl text-earle-black mb-4">By the Numbers</h2>
