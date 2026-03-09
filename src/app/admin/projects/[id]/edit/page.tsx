@@ -34,6 +34,7 @@ export default function EditProjectPage() {
   const [newService, setNewService] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
+  const [imageError, setImageError] = useState<string | null>(null);
   const additionalImageInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -119,33 +120,51 @@ export default function EditProjectPage() {
     }));
   };
 
-  const isHeic = (file: File): boolean => {
-    const type = file.type.toLowerCase();
+  const processImage = async (file: File): Promise<string> => {
+    // Primary: server-side processing with sharp
+    try {
+      const form = new FormData();
+      form.append('file', file);
+      form.append('maxDimension', '2000');
+      form.append('quality', '85');
+      const res = await fetch('/api/image/process', { method: 'POST', body: form });
+      const json = await res.json();
+      if (json.success) return json.dataUrl;
+      throw new Error(json.error);
+    } catch (serverError) {
+      console.warn('Server processing unavailable, using client fallback:', serverError);
+    }
+
+    // Fallback: convert HEIC client-side if needed, then compress via canvas
+    let processable = file;
     const name = file.name.toLowerCase();
-    return type === 'image/heic' || type === 'image/heif' || name.endsWith('.heic') || name.endsWith('.heif');
-  };
+    const type = file.type.toLowerCase();
+    const isHeicFile = type === 'image/heic' || type === 'image/heif' || name.endsWith('.heic') || name.endsWith('.heif');
 
-  const convertHeicToJpeg = async (file: File): Promise<File> => {
-    const heic2any = (await import('heic2any')).default;
-    const blob = await heic2any({ blob: file, toType: 'image/jpeg', quality: 0.92 });
-    const result = Array.isArray(blob) ? blob[0] : blob;
-    return new File([result], file.name.replace(/\.heic$/i, '.jpg').replace(/\.heif$/i, '.jpg'), {
-      type: 'image/jpeg',
-      lastModified: Date.now(),
-    });
-  };
+    if (isHeicFile) {
+      try {
+        const heic2any = (await import('heic2any')).default;
+        const blob = await heic2any({ blob: file, toType: 'image/jpeg', quality: 0.92 });
+        const result = Array.isArray(blob) ? blob[0] : blob;
+        processable = new File([result], file.name.replace(/\.\w+$/, '.jpg'), {
+          type: 'image/jpeg',
+          lastModified: Date.now(),
+        });
+      } catch (heicErr) {
+        const msg = heicErr instanceof Error ? heicErr.message : JSON.stringify(heicErr);
+        throw new Error(`Could not convert "${file.name}". HEIC conversion failed: ${msg || 'unknown error'}. Try converting to JPG in Photos first.`);
+      }
+    }
 
-  const compressImage = (file: File, maxDimension = 2000, quality = 0.92): Promise<string> => {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
       reader.onload = (e) => {
         const img = new window.Image();
         img.onload = () => {
           const canvas = document.createElement('canvas');
-          let w = img.width;
-          let h = img.height;
+          let w = img.width, h = img.height;
           const larger = Math.max(w, h);
-          if (larger > maxDimension) { const s = maxDimension / larger; w = Math.round(w * s); h = Math.round(h * s); }
+          if (larger > 2000) { const s = 2000 / larger; w = Math.round(w * s); h = Math.round(h * s); }
           canvas.width = w;
           canvas.height = h;
           canvas.getContext('2d')?.drawImage(img, 0, 0, w, h);
@@ -158,39 +177,47 @@ export default function EditProjectPage() {
               r2.readAsDataURL(blob);
             },
             'image/jpeg',
-            quality
+            0.92
           );
         };
-        img.onerror = () => reject(new Error('Image decode failed'));
+        img.onerror = () => reject(new Error(`Could not decode "${file.name}". The file may be corrupt or unsupported.`));
         img.src = e.target?.result as string;
       };
       reader.onerror = () => reject(new Error('Read failed'));
-      reader.readAsDataURL(file);
+      reader.readAsDataURL(processable);
     });
   };
 
   const handleAdditionalImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (!files || files.length === 0) return;
+    setImageError(null);
+
+    const errors: string[] = [];
 
     for (const file of Array.from(files)) {
-      const isHeicFile = isHeic(file);
-      if (!file.type.startsWith('image/') && !isHeicFile) continue;
-      if (file.size > 10 * 1024 * 1024) continue;
+      if (!file.type.startsWith('image/') && !/\.(heic|heif)$/i.test(file.name)) continue;
+      if (file.size > 10 * 1024 * 1024) {
+        errors.push(`"${file.name}" is too large (${(file.size / 1024 / 1024).toFixed(1)} MB).`);
+        continue;
+      }
       try {
-        let processableFile = file;
-        if (isHeicFile) {
-          processableFile = await convertHeicToJpeg(file);
-        }
-        const dataUrl = await compressImage(processableFile);
+        const dataUrl = await processImage(file);
         setFormData(prev => ({
           ...prev,
           additionalImages: [...(prev.additionalImages || []), dataUrl]
         }));
       } catch (err) {
-        console.error('Error processing additional image:', err);
+        const msg = err instanceof Error ? err.message : `Failed to process "${file.name}".`;
+        errors.push(msg);
+        console.error('Error processing additional image:', msg, err);
       }
     }
+
+    if (errors.length > 0) {
+      setImageError(errors.join(' '));
+    }
+
     if (additionalImageInputRef.current) {
       additionalImageInputRef.current.value = '';
     }
@@ -381,6 +408,14 @@ export default function EditProjectPage() {
                     onChange={handleAdditionalImageUpload}
                     className="hidden"
                   />
+
+                  {imageError && (
+                    <div className="mt-3 flex items-start gap-2 p-3 bg-red-50 border border-red-200 rounded-lg">
+                      <span className="text-red-500 flex-shrink-0 mt-0.5">&#9888;</span>
+                      <p className="flex-1 font-raleway text-sm text-red-700">{imageError}</p>
+                      <button type="button" onClick={() => setImageError(null)} className="text-red-400 hover:text-red-600 flex-shrink-0 text-lg leading-none">&times;</button>
+                    </div>
+                  )}
                 </div>
               </div>
 

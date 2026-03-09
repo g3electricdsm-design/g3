@@ -59,50 +59,68 @@ export default function ImageUpload({ currentImage, onImageChange, onSizeSuggest
     }
   };
 
-  const compressImage = (file: File, maxDimension: number = 2000, quality: number = 0.92): Promise<File> => {
+  // Server-side processing via sharp (handles HEIC, WebP, TIFF, etc.)
+  const processServerSide = async (file: File): Promise<{ dataUrl: string; width: number; height: number }> => {
+    const form = new FormData();
+    form.append('file', file);
+    form.append('maxDimension', '2000');
+    form.append('quality', '85');
+
+    const res = await fetch('/api/image/process', { method: 'POST', body: form });
+    const json = await res.json();
+
+    if (!json.success) {
+      throw new Error(json.error || 'Server processing failed');
+    }
+
+    return { dataUrl: json.dataUrl, width: json.width, height: json.height };
+  };
+
+  // Client-side fallback (canvas-based, for standard browser-decodable formats)
+  const processClientSide = async (file: File): Promise<{ dataUrl: string; file: File }> => {
+    const isHeicFile = isHeic(file);
+
+    let processable = file;
+    if (isHeicFile) {
+      const heic2any = (await import('heic2any')).default;
+      const blob = await heic2any({ blob: file, toType: 'image/jpeg', quality: 0.92 });
+      const result = Array.isArray(blob) ? blob[0] : blob;
+      processable = new File([result], file.name.replace(/\.heic$/i, '.jpg').replace(/\.heif$/i, '.jpg'), {
+        type: 'image/jpeg',
+        lastModified: Date.now(),
+      });
+    }
+
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
       reader.onload = (e) => {
         const img = new window.Image();
         img.onload = () => {
           const canvas = document.createElement('canvas');
-          let width = img.width;
-          let height = img.height;
-
-          const larger = Math.max(width, height);
-          if (larger > maxDimension) {
-            const scale = maxDimension / larger;
-            width = Math.round(width * scale);
-            height = Math.round(height * scale);
-          }
-
-          canvas.width = width;
-          canvas.height = height;
-
-          const ctx = canvas.getContext('2d');
-          ctx?.drawImage(img, 0, 0, width, height);
-
+          let w = img.width, h = img.height;
+          const larger = Math.max(w, h);
+          if (larger > 2000) { const s = 2000 / larger; w = Math.round(w * s); h = Math.round(h * s); }
+          canvas.width = w;
+          canvas.height = h;
+          canvas.getContext('2d')?.drawImage(img, 0, 0, w, h);
           canvas.toBlob(
             (blob) => {
-              if (blob) {
-                const compressedFile = new File([blob], file.name, {
-                  type: 'image/jpeg',
-                  lastModified: Date.now()
-                });
-                resolve(compressedFile);
-              } else {
-                reject(new Error('Image compression failed'));
-              }
+              if (!blob) { reject(new Error('Compression failed')); return; }
+              const out = new File([blob], processable.name, { type: 'image/jpeg', lastModified: Date.now() });
+              const r2 = new FileReader();
+              r2.onload = (ev) => resolve({ dataUrl: ev.target?.result as string, file: out });
+              r2.onerror = () => reject(new Error('Could not read compressed file'));
+              r2.readAsDataURL(blob);
             },
             'image/jpeg',
-            quality
+            0.92
           );
         };
-        img.onerror = () => reject(new Error('Could not decode image'));
+        img.onerror = () => reject(new Error('Browser could not decode this image'));
         img.src = e.target?.result as string;
       };
       reader.onerror = () => reject(new Error('Could not read file'));
-      reader.readAsDataURL(file);
+      reader.readAsDataURL(processable);
     });
   };
 
@@ -110,16 +128,6 @@ export default function ImageUpload({ currentImage, onImageChange, onSizeSuggest
     const type = file.type.toLowerCase();
     const name = file.name.toLowerCase();
     return type === 'image/heic' || type === 'image/heif' || name.endsWith('.heic') || name.endsWith('.heif');
-  };
-
-  const convertHeicToJpeg = async (file: File): Promise<File> => {
-    const heic2any = (await import('heic2any')).default;
-    const blob = await heic2any({ blob: file, toType: 'image/jpeg', quality: 0.92 });
-    const result = Array.isArray(blob) ? blob[0] : blob;
-    return new File([result], file.name.replace(/\.heic$/i, '.jpg').replace(/\.heif$/i, '.jpg'), {
-      type: 'image/jpeg',
-      lastModified: Date.now(),
-    });
   };
 
   const handleFileSelect = async (file: File) => {
@@ -141,63 +149,61 @@ export default function ImageUpload({ currentImage, onImageChange, onSizeSuggest
 
     setIsUploading(true);
     setUploadProgress(10);
-    setUploadStatus(heicFile ? 'Converting HEIC...' : 'Processing...');
+    setUploadStatus('Uploading...');
 
     try {
-      let processableFile = file;
-      if (heicFile) {
-        try {
-          processableFile = await convertHeicToJpeg(file);
-        } catch (heicError) {
-          console.error('HEIC conversion failed:', heicError);
-          throw new Error('Could not convert this HEIC file. Try converting it to JPG first (e.g. open in Photos and export as JPEG).');
-        }
+      let dataUrl: string;
+      let width: number;
+      let height: number;
+      let outputFile: File;
+
+      try {
+        // Primary: server-side processing with sharp
+        setUploadProgress(30);
+        setUploadStatus(heicFile ? 'Converting HEIC...' : 'Processing...');
+        const result = await processServerSide(file);
+        dataUrl = result.dataUrl;
+        width = result.width;
+        height = result.height;
+
+        const blob = await fetch(dataUrl).then(r => r.blob());
+        outputFile = new File([blob], file.name.replace(/\.\w+$/, '.jpg'), {
+          type: 'image/jpeg',
+          lastModified: Date.now(),
+        });
+      } catch (serverError) {
+        // Fallback: client-side processing
+        console.warn('Server processing unavailable, using client-side fallback:', serverError);
+        setUploadStatus('Processing locally...');
+        const fallback = await processClientSide(file);
+        dataUrl = fallback.dataUrl;
+        outputFile = fallback.file;
+
+        const img = await new Promise<HTMLImageElement>((resolve, reject) => {
+          const i = new window.Image();
+          i.onload = () => resolve(i);
+          i.onerror = () => reject(new Error('Could not decode processed image'));
+          i.src = dataUrl;
+        });
+        width = img.width;
+        height = img.height;
       }
 
-      setUploadProgress(50);
-      setUploadStatus('Compressing...');
-
-      const compressedFile = await compressImage(processableFile, 2000, 0.92);
-      setUploadProgress(80);
+      setUploadProgress(90);
       setUploadStatus('Finalizing...');
 
-      const reader = new FileReader();
+      setPreview(dataUrl);
+      onImageChange(outputFile);
 
-      reader.onprogress = (e) => {
-        if (e.lengthComputable) {
-          setUploadProgress(80 + (e.loaded / e.total) * 20);
-        }
-      };
+      const aspectRatio = width / height;
+      setPreviewRatio(aspectRatio);
+      if (onSizeSuggestion) {
+        onSizeSuggestion(suggestTileSize(aspectRatio), aspectRatio);
+      }
 
-      reader.onload = (e) => {
-        const result = e.target?.result as string;
-        setPreview(result);
-        onImageChange(compressedFile);
-
-        const img = new window.Image();
-        img.onload = () => {
-          const aspectRatio = img.width / img.height;
-          setPreviewRatio(aspectRatio);
-          if (onSizeSuggestion) {
-            const suggestedSize = suggestTileSize(aspectRatio);
-            onSizeSuggestion(suggestedSize, aspectRatio);
-          }
-        };
-        img.src = result;
-
-        setIsUploading(false);
-        setUploadProgress(0);
-        setUploadStatus('');
-      };
-
-      reader.onerror = () => {
-        setErrorMessage('Could not read the processed file. Please try again.');
-        setIsUploading(false);
-        setUploadProgress(0);
-        setUploadStatus('');
-      };
-
-      reader.readAsDataURL(compressedFile);
+      setIsUploading(false);
+      setUploadProgress(0);
+      setUploadStatus('');
     } catch (error) {
       console.error('Image upload error:', error);
       const message = error instanceof Error ? error.message : 'Something went wrong processing this image. Please try a different file.';
