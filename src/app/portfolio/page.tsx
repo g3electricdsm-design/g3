@@ -222,7 +222,7 @@ export default function Portfolio() {
               href="/contact" 
               className="bg-purple text-white px-8 py-3 rounded-lg font-montserrat font-semibold hover:bg-phlox transition-colors inline-block"
             >
-              Start Your Project
+              Request a Free Quote
             </Link>
           </div>
         </div>

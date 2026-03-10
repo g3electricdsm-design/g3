@@ -1,3 +1,6 @@
-# Block all crawlers from indexing the G3 site (not ready for public indexing)
 User-agent: *
-Disallow: /
+Allow: /
+Disallow: /admin
+Disallow: /api
+
+Sitemap: https://g3electricdsm.com/sitemap.xml

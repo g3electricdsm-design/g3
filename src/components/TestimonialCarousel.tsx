@@ -112,7 +112,7 @@ export default function TestimonialCarousel() {
                           (e.target as HTMLImageElement).style.display = "none";
                         }}
                       />
-                      <span className="absolute bottom-3 left-3 bg-earle-black/80 text-white text-xs font-montserrat font-semibold px-3 py-1 rounded-full backdrop-blur-sm">
+                      <span className="absolute bottom-3 left-3 bg-earle-black/80 text-white text-sm font-montserrat font-semibold px-5 py-2 rounded-full backdrop-blur-sm">
                         Before
                       </span>
                     </div>
@@ -130,7 +130,7 @@ export default function TestimonialCarousel() {
                           (e.target as HTMLImageElement).style.display = "none";
                         }}
                       />
-                      <span className="absolute bottom-3 left-3 bg-purple/90 text-white text-xs font-montserrat font-semibold px-3 py-1 rounded-full backdrop-blur-sm">
+                      <span className="absolute bottom-3 left-3 bg-purple/90 text-white text-sm font-montserrat font-semibold px-5 py-2 rounded-full backdrop-blur-sm">
                         After
                       </span>
                     </div>

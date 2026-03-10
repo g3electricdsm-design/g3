@@ -34,32 +34,6 @@ export default function ProjectDetail() {
     loadProject();
   }, [params.id]);
 
-  // Update document title and meta description
-  useEffect(() => {
-    if (project && !isLoading) {
-      const titleText = project.seoTitle || `${project.title} | G3 Electric Portfolio`;
-      
-      // Update document title - try multiple methods to ensure it works
-      if (typeof document !== 'undefined') {
-        document.title = titleText;
-        
-        // Also update the title element directly
-        const titleElement = document.querySelector('title');
-        if (titleElement) {
-          titleElement.textContent = titleText;
-        }
-      }
-
-      // Update or create meta description
-      let metaDescription = document.querySelector('meta[name="description"]') as HTMLMetaElement;
-      if (!metaDescription) {
-        metaDescription = document.createElement('meta');
-        metaDescription.name = 'description';
-        document.getElementsByTagName('head')[0].appendChild(metaDescription);
-      }
-      metaDescription.content = project.metaDescription || project.description || '';
-    }
-  }, [project, isLoading]);
 
   if (isLoading) {
     return (
@@ -89,14 +63,37 @@ export default function ProjectDetail() {
   }
 
 
+  const breadcrumbJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://g3electricdsm.com' },
+      { '@type': 'ListItem', position: 2, name: 'Portfolio', item: 'https://g3electricdsm.com/portfolio' },
+      { '@type': 'ListItem', position: 3, name: project.title },
+    ],
+  };
+
   return (
     <div className="min-h-screen bg-earle-black">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
       {/* Navigation */}
       <Navigation currentPath="/portfolio" />
 
       {/* Header */}
       <section className="bg-gradient-to-br from-purple to-phlox text-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <nav aria-label="Breadcrumb" className="mb-4">
+            <ol className="flex items-center gap-2 font-raleway text-sm text-white/70">
+              <li><Link href="/" className="hover:text-white transition-colors">Home</Link></li>
+              <li aria-hidden="true">/</li>
+              <li><Link href="/portfolio" className="hover:text-white transition-colors">Portfolio</Link></li>
+              <li aria-hidden="true">/</li>
+              <li className="text-white" aria-current="page">{project.title}</li>
+            </ol>
+          </nav>
           <div className="flex items-center gap-3 mb-4">
             <span className="text-purple-300">{getCategoryIcon(project.category, 'lg')}</span>
             <span className="font-raleway text-lg uppercase">{project.category}</span>
@@ -150,7 +147,7 @@ export default function ProjectDetail() {
                       }`}
                     >
                       {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img src={project.image} alt="Featured" className="w-full h-full object-cover" />
+                      <img src={project.image} alt={`${project.title} - featured image`} className="w-full h-full object-cover" />
                     </button>
                     {project.additionalImages.map((img, i) => (
                       <button
@@ -161,7 +158,7 @@ export default function ProjectDetail() {
                         }`}
                       >
                         {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img src={img} alt={`Gallery ${i + 1}`} className="w-full h-full object-cover" />
+                        <img src={img} alt={`${project.title} - image ${i + 1}`} className="w-full h-full object-cover" />
                       </button>
                     ))}
                   </div>

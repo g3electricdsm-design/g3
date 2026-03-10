@@ -15,6 +15,16 @@ export default function Footer({ currentPath }: FooterProps) {
           <p className="font-raleway text-white-smoke mb-4">Safe & Dependable Electrical Services</p>
           <div className="flex justify-center space-x-6">
             <Link 
+              href="/" 
+              className={`font-raleway transition-colors ${
+                isActive('/') 
+                  ? 'text-purple' 
+                  : 'text-white-smoke hover:text-purple'
+              }`}
+            >
+              Home
+            </Link>
+            <Link 
               href="/services" 
               className={`font-raleway transition-colors ${
                 isActive('/services') 

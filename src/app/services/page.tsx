@@ -11,15 +11,72 @@ import { getContent } from "@/data/content";
 import { AnimatedServiceIcon } from "@/components/ServiceIcons";
 
 export const metadata: Metadata = {
-  title: "Services",
-  description: "Electrical services for your home and business. Lighting, repairs, upgrades, and more.",
+  title: "Electrical Services - Lighting, Wiring & Repairs",
+  description:
+    "Professional electrical services in Des Moines: lighting installation, residential wiring, commercial electrical, panel upgrades, and 24/7 emergency repairs. Licensed & insured.",
+  alternates: { canonical: '/services' },
+  openGraph: {
+    title: "Electrical Services by G3 Electric - Des Moines",
+    description:
+      "Lighting installation, residential wiring, commercial electrical work, and emergency repairs by licensed Des Moines electricians.",
+  },
 };
+
+function ServicesJsonLd() {
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: 'G3 Electric Services',
+    itemListElement: [
+      {
+        '@type': 'Service',
+        position: 1,
+        name: 'Lighting Installation & Design',
+        description: 'Custom lighting solutions including LED upgrades, smart lighting, outdoor landscape lighting, and fixture installation.',
+        provider: { '@type': 'Electrician', name: 'G3 Electric' },
+        areaServed: { '@type': 'City', name: 'Des Moines' },
+      },
+      {
+        '@type': 'Service',
+        position: 2,
+        name: 'Residential Electrical Work',
+        description: 'Complete home electrical services including panel upgrades, outlet installation, ceiling fans, GFCI outlets, and surge protection.',
+        provider: { '@type': 'Electrician', name: 'G3 Electric' },
+        areaServed: { '@type': 'City', name: 'Des Moines' },
+      },
+      {
+        '@type': 'Service',
+        position: 3,
+        name: 'Commercial Electrical Services',
+        description: 'Professional electrical solutions for businesses including main service installation, office wiring, emergency lighting, and energy management.',
+        provider: { '@type': 'Electrician', name: 'G3 Electric' },
+        areaServed: { '@type': 'City', name: 'Des Moines' },
+      },
+      {
+        '@type': 'Service',
+        position: 4,
+        name: 'Safety & Education',
+        description: 'Electrical safety inspections, code compliance verification, homeowner education, and emergency repair services.',
+        provider: { '@type': 'Electrician', name: 'G3 Electric' },
+        areaServed: { '@type': 'City', name: 'Des Moines' },
+      },
+    ],
+  };
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+    />
+  );
+}
 
 export default function Services() {
   const content = getContent().services;
 
   return (
     <div className="min-h-screen bg-earle-black">
+      <ServicesJsonLd />
       {/* Navigation */}
       <Navigation currentPath="/services" />
 
@@ -157,7 +214,7 @@ export default function Services() {
               href="/contact" 
               className="btn-primary w-full sm:w-auto text-sm sm:text-base"
             >
-              {content.cta.buttonText}
+              Get a Free Electrical Estimate
             </Link>
             <Link 
               href="/portfolio" 

@@ -39,8 +39,35 @@ export default function Home() {
   const servicesOpacity = useTransform(scrollYProgress, [0.2, 0.4], [0, 1]);
   
   
+  const localBusinessJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Electrician',
+    name: 'G3 Electric',
+    description: 'Professional electrical services for homes and businesses in Des Moines, Iowa. Licensed electricians providing safe, dependable residential and commercial solutions.',
+    url: 'https://g3electricdsm.com',
+    email: 'g3electricdsm@gmail.com',
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: 'Des Moines',
+      addressRegion: 'IA',
+      addressCountry: 'US',
+    },
+    areaServed: {
+      '@type': 'City',
+      name: 'Des Moines',
+    },
+    openingHours: 'Mo-Fr 08:00-17:00',
+    priceRange: '$$',
+    image: 'https://g3electricdsm.com/og-image.jpg',
+    sameAs: [],
+  };
+
   return (
     <div className="min-h-screen bg-earle-black">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessJsonLd) }}
+      />
       {/* Pixel Zap Animation */}
       <SimplePixelZap />
       

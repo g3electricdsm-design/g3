@@ -224,7 +224,7 @@ export default function About() {
               href="/contact" 
               className="btn-primary w-full sm:w-auto text-sm sm:text-base"
             >
-              Get Free Quote
+              Contact Our Electricians
             </Link>
           </div>
         </div>
