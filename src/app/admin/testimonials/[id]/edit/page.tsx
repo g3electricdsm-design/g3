@@ -27,6 +27,7 @@ export default function EditTestimonialPage() {
 
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
+  const [saveError, setSaveError] = useState<string | null>(null);
 
   useEffect(() => {
     const id = params.id as string;
@@ -85,21 +86,24 @@ export default function EditTestimonialPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSaving(true);
+    setSaveError(null);
 
     try {
       const id = params.id as string;
+      const isNew = id === 'new';
 
-      if (id === 'new') {
+      if (isNew) {
         const newId = Date.now();
         addTestimonial({ ...formData, id: newId });
       } else {
         updateTestimonial(formData);
       }
 
-      router.push('/admin?tab=testimonials');
+      const label = isNew ? 'Testimonial created' : 'Testimonial saved';
+      router.push(`/admin?tab=testimonials&toast=${encodeURIComponent(label)}&toastType=success`);
     } catch (error) {
       console.error('Error saving testimonial:', error);
-      alert('Error saving testimonial. Please try again.');
+      setSaveError('Error saving testimonial. Please try again.');
     } finally {
       setIsSaving(false);
     }
@@ -308,6 +312,15 @@ export default function EditTestimonialPage() {
                   )}
                 </div>
               </div>
+
+              {/* Save Error */}
+              {saveError && (
+                <div className="flex items-center gap-3 p-4 bg-red-50 border border-red-200 rounded-lg">
+                  <span className="text-red-500 flex-shrink-0">&#9888;</span>
+                  <p className="font-raleway text-sm text-red-700 flex-1">{saveError}</p>
+                  <button type="button" onClick={() => setSaveError(null)} className="text-red-400 hover:text-red-600 text-lg leading-none">&times;</button>
+                </div>
+              )}
 
               {/* Form Actions */}
               <div className="flex justify-end gap-4 pt-6 border-t border-gray-300">

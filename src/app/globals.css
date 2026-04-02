@@ -146,6 +146,13 @@ body {
     text-decoration: none;
   }
 
+  /* Dark text on light backgrounds */
+  .bg-white,
+  .bg-white-smoke,
+  [class*="bg-white"] {
+    color: #242729;
+  }
+
   /* Buttons on white backgrounds - default to purple */
   .bg-white button:not(.btn-primary):not(.btn-secondary):not(:disabled),
   .bg-white-smoke button:not(.btn-primary):not(.btn-secondary):not(:disabled) {
@@ -173,15 +180,70 @@ body {
     color: #FFFFFF;
   }
 
-  /* Links on white backgrounds should be purple */
-  .bg-white a:not(.no-underline),
-  .bg-white-smoke a:not(.no-underline) {
+  /* Links on white backgrounds should be purple (but not styled buttons) */
+  .bg-white a:not(.no-underline):not(.btn-primary):not(.btn-secondary),
+  .bg-white-smoke a:not(.no-underline):not(.btn-primary):not(.btn-secondary) {
     color: #6D0091;
     text-decoration-color: #6D0091;
   }
 
-  .bg-white a:not(.no-underline):hover,
-  .bg-white-smoke a:not(.no-underline):hover {
+  .bg-white a:not(.no-underline):not(.btn-primary):not(.btn-secondary):hover,
+  .bg-white-smoke a:not(.no-underline):not(.btn-primary):not(.btn-secondary):hover {
     color: #C636FF;
     text-decoration-color: #C636FF;
+  }
+
+  /*
+   * Admin form scoping — resets the dark-site globals above so that
+   * light-background editor forms get dark text and unstyled buttons.
+   */
+  .admin-form {
+    color: #242729;
+  }
+
+  .admin-form a {
+    color: #6D0091;
+    text-decoration-color: #6D0091;
+  }
+
+  .admin-form a:hover {
+    color: #C636FF;
+    text-decoration-color: #C636FF;
+  }
+
+  .admin-form a:focus {
+    outline-color: #6D0091;
+  }
+
+  .admin-form button {
+    all: revert;
+    font: inherit;
+    cursor: pointer;
+  }
+
+  .admin-form select {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23242729' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+  }
+
+  .admin-form input,
+  .admin-form textarea,
+  .admin-form select {
+    color: #242729;
+  }
+
+  .admin-form label {
+    color: #242729;
+  }
+
+  .admin-form h1, .admin-form h2, .admin-form h3,
+  .admin-form h4, .admin-form h5, .admin-form h6 {
+    color: #242729;
+  }
+
+  .admin-form p {
+    color: #242729;
+  }
+
+  .admin-form span {
+    color: #242729;
   }

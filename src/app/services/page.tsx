@@ -102,18 +102,21 @@ export default function Services() {
                       <AnimatedServiceIcon serviceId={service.id} className="w-full h-full" />
                     </div>
 
-                    <div className="flex flex-col gap-5 md:max-w-[600px] text-center md:text-left">
+                    <div className="flex flex-col items-center md:items-start gap-5 md:max-w-[600px] text-center md:text-left w-full">
                       <div className="flex flex-col gap-2">
                         <h3 className="font-montserrat text-2xl font-semibold text-white">{service.title}</h3>
                         <p className="font-raleway text-white-smoke">{service.description}</p>
                       </div>
                       
-                      <div className="flex flex-col gap-4">
+                      <div className="flex flex-col items-center md:items-start gap-4 w-full">
                         <h4 className="font-montserrat text-lg font-semibold text-white">What We Include:</h4>
-                        <ul className="space-y-2">
+                        <ul className="flex flex-col items-center md:items-start gap-2 w-full">
                           {service.features.map((feature, featureIndex) => (
-                            <li key={featureIndex} className="flex items-center font-raleway text-white-smoke md:justify-start justify-center">
-                              <div className="w-3 h-3 bg-phlox rounded-full mr-3 flex-shrink-0"></div>
+                            <li key={featureIndex} className="flex items-center font-raleway text-white-smoke">
+                              <span
+                                style={{ backgroundColor: '#C636FF', width: 12, height: 12, borderRadius: '50%', flexShrink: 0, marginRight: 12, display: 'inline-block' }}
+                                aria-hidden="true"
+                              />
                               {feature}
                             </li>
                           ))}

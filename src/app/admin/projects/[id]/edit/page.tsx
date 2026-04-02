@@ -34,6 +34,7 @@ export default function EditProjectPage() {
   const [newService, setNewService] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
+  const [saveError, setSaveError] = useState<string | null>(null);
   const [imageError, setImageError] = useState<string | null>(null);
   const additionalImageInputRef = useRef<HTMLInputElement>(null);
 
@@ -239,34 +240,24 @@ export default function EditProjectPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSaving(true);
+    setSaveError(null);
 
     try {
       const id = params.id as string;
-      
-      console.log('💾 Saving project with data:', {
-        title: formData.title,
-        size: formData.size,
-        orientation: formData.orientation,
-        id: formData.id
-      });
-      
-      if (id === 'new') {
-        // Create new project
-        const newId = Date.now(); // Simple ID generation
-        const newProject = { ...formData, id: newId };
-        console.log('Creating new project with image:', newProject.image);
-        await addProject(newProject);
+      const isNew = id === 'new';
+
+      if (isNew) {
+        const newId = Date.now();
+        await addProject({ ...formData, id: newId });
       } else {
-        // Update existing project
-        console.log('Updating project with image:', formData.image);
         await updateProject(formData);
       }
 
-      // Redirect back to admin
-      router.push('/admin');
+      const label = isNew ? 'Project created' : 'Project saved';
+      router.push(`/admin?toast=${encodeURIComponent(label)}&toastType=success`);
     } catch (error) {
       console.error('Error saving project:', error);
-      alert('Error saving project. Please try again.');
+      setSaveError('Error saving project. Please try again.');
     } finally {
       setIsSaving(false);
     }
@@ -655,6 +646,15 @@ export default function EditProjectPage() {
                   </p>
                 </div>
               </div>
+
+              {/* Save Error */}
+              {saveError && (
+                <div className="flex items-center gap-3 p-4 bg-red-50 border border-red-200 rounded-lg">
+                  <span className="text-red-500 flex-shrink-0">&#9888;</span>
+                  <p className="font-raleway text-sm text-red-700 flex-1">{saveError}</p>
+                  <button type="button" onClick={() => setSaveError(null)} className="text-red-400 hover:text-red-600 text-lg leading-none">&times;</button>
+                </div>
+              )}
 
               {/* Form Actions */}
               <div className="flex justify-end gap-4 pt-8 border-t border-gray-300">

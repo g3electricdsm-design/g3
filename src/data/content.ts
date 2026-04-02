@@ -490,18 +490,54 @@ export const defaultContactContent: ContactContent = {
 };
 
 // Content management functions
-export function getContent() {
+
+export type ContentPages = {
+  homepage: HomepageContent;
+  services: ServicesContent;
+  pricing: PricingContent;
+  about: AboutContent;
+  contact: ContactContent;
+};
+
+const defaults: ContentPages = {
+  homepage: defaultHomepageContent,
+  services: defaultServicesContent,
+  pricing: defaultPricingContent,
+  about: defaultAboutContent,
+  contact: defaultContactContent,
+};
+
+const STORAGE_PREFIX = 'g3_content_';
+
+function readFromStorage<K extends keyof ContentPages>(page: K): ContentPages[K] | null {
+  if (typeof window === 'undefined') return null;
+  try {
+    const raw = localStorage.getItem(`${STORAGE_PREFIX}${page}`);
+    if (raw) return JSON.parse(raw) as ContentPages[K];
+  } catch { /* ignore corrupt storage */ }
+  return null;
+}
+
+export function getContent(): ContentPages {
   return {
-    homepage: defaultHomepageContent,
-    services: defaultServicesContent,
-    pricing: defaultPricingContent,
-    about: defaultAboutContent,
-    contact: defaultContactContent
+    homepage: readFromStorage('homepage') ?? defaults.homepage,
+    services: readFromStorage('services') ?? defaults.services,
+    pricing: readFromStorage('pricing') ?? defaults.pricing,
+    about: readFromStorage('about') ?? defaults.about,
+    contact: readFromStorage('contact') ?? defaults.contact,
   };
 }
 
-export function updateContent(page: string, content: Record<string, unknown>) {
-  // In a real app, this would save to a database
-  console.log(`Updating ${page} content:`, content);
-  return true;
+export function getPageContent<K extends keyof ContentPages>(page: K): ContentPages[K] {
+  return readFromStorage(page) ?? defaults[page];
+}
+
+export function updateContent<K extends keyof ContentPages>(page: K, content: ContentPages[K]) {
+  if (typeof window === 'undefined') return false;
+  try {
+    localStorage.setItem(`${STORAGE_PREFIX}${page}`, JSON.stringify(content));
+    return true;
+  } catch {
+    return false;
+  }
 }

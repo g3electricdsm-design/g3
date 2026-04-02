@@ -9,9 +9,8 @@ import Footer from '@/components/Footer';
 import { getAllProjects, Project, deleteProject } from '@/data/projects';
 import { getAllServices, Service } from '@/data/services';
 import { getAllFormEntries, FormEntry } from '@/data/formEntries';
-import { getContent, updateContent } from '@/data/content';
 import { getAllTestimonials, Testimonial, deleteTestimonial } from '@/data/testimonials';
-import ContentEditor from '@/components/ContentEditor';
+import Toast from '@/components/Toast';
 
 export const dynamic = 'force-dynamic';
 
@@ -22,10 +21,7 @@ function AdminContent() {
   const [services] = useState<Service[]>(getAllServices());
   const [formEntries] = useState<FormEntry[]>(getAllFormEntries());
   const [testimonials, setTestimonials] = useState<Testimonial[]>(getAllTestimonials());
-  const [content, setContent] = useState(getContent());
-  const [editingContent, setEditingContent] = useState<{ page: string; content: Record<string, unknown> } | null>(null);
-  const [showContentEditor, setShowContentEditor] = useState(false);
-  const [activeTab, setActiveTab] = useState<'projects' | 'services' | 'formEntries' | 'testimonials' | 'content' | 'analytics' | 'settings'>('projects');
+  const [activeTab, setActiveTab] = useState<'projects' | 'services' | 'formEntries' | 'testimonials' | 'content' | 'analytics'>('projects');
 
   // Refresh projects when component mounts or when returning to admin page
   useEffect(() => {
@@ -57,7 +53,7 @@ function AdminContent() {
   // Check for tab parameter in URL
   useEffect(() => {
     const tabParam = searchParams.get('tab');
-    if (tabParam && ['projects', 'services', 'formEntries', 'testimonials', 'content', 'analytics', 'settings'].includes(tabParam)) {
+    if (tabParam && ['projects', 'services', 'formEntries', 'testimonials', 'content', 'analytics'].includes(tabParam)) {
       setActiveTab(tabParam as typeof activeTab);
       // Refresh testimonials when switching to testimonials tab
       if (tabParam === 'testimonials') {
@@ -99,27 +95,10 @@ function AdminContent() {
   };
 
 
-  const handleEditContent = (page: string) => {
-    setEditingContent({ page, content: content[page as keyof typeof content] as unknown as Record<string, unknown> });
-    setShowContentEditor(true);
-  };
-
-  const handleSaveContent = (updatedContent: { page: string; content: Record<string, unknown> }) => {
-    const newContent = { ...content };
-    (newContent as Record<string, unknown>)[updatedContent.page] = updatedContent.content;
-    setContent(newContent);
-    updateContent(updatedContent.page, updatedContent.content);
-    setShowContentEditor(false);
-    setEditingContent(null);
-  };
-
-  const handleCancelContent = () => {
-    setShowContentEditor(false);
-    setEditingContent(null);
-  };
 
   return (
     <div className="min-h-screen bg-earle-black">
+      <Toast />
       {/* Navigation */}
       <Navigation currentPath="/admin" />
 
@@ -155,14 +134,13 @@ function AdminContent() {
                 { id: 'testimonials', name: 'Testimonials', icon: UserIcon },
                 { id: 'formEntries', name: 'Form Entries', icon: EnvelopeIcon },
                 { id: 'content', name: 'Content', icon: PencilIcon },
-                { id: 'analytics', name: 'Analytics', icon: ChartBarIcon },
-                { id: 'settings', name: 'Settings', icon: CogIcon }
+                { id: 'analytics', name: 'Analytics', icon: ChartBarIcon }
               ].map((tab) => {
                 const Icon = tab.icon;
                 return (
                   <button
                     key={tab.id}
-                    onClick={() => setActiveTab(tab.id as 'projects' | 'services' | 'formEntries' | 'testimonials' | 'content' | 'analytics' | 'settings')}
+                    onClick={() => setActiveTab(tab.id as 'projects' | 'services' | 'formEntries' | 'testimonials' | 'content' | 'analytics')}
                     className={`group flex items-center gap-2 px-4 py-2 rounded-lg font-montserrat font-medium transition-colors ${
                       activeTab === tab.id
                         ? 'bg-purple text-white'
@@ -246,7 +224,9 @@ function AdminContent() {
             <div className="space-y-6">
               <div className="flex justify-between items-center">
                 <h3 className="font-montserrat text-2xl text-white">Services Management</h3>
-                <button className="bg-purple text-white px-6 py-3 rounded-lg font-montserrat font-semibold hover:bg-phlox transition-colors flex items-center gap-2">
+                <button
+                  className="btn-primary flex items-center gap-2"
+                >
                   <PlusIcon className="h-5 w-5" />
                   Add New Service
                 </button>
@@ -415,12 +395,12 @@ function AdminContent() {
                   <p className="font-raleway text-sm text-earle-black mb-4">
                     Manage hero content, service previews, and call-to-action sections.
                   </p>
-                  <button
-                    onClick={() => handleEditContent('homepage')}
-                    className="w-full btn-primary"
+                  <Link
+                    href="/admin/content/homepage/edit"
+                    className="w-full btn-primary block text-center"
                   >
                     Edit Homepage
-                  </button>
+                  </Link>
                 </div>
 
                 {/* Services Content */}
@@ -437,12 +417,12 @@ function AdminContent() {
                   <p className="font-raleway text-sm text-earle-black mb-4">
                     Update service descriptions, features, and detailed information.
                   </p>
-                  <button
-                    onClick={() => handleEditContent('services')}
-                    className="w-full bg-hookers-green text-white px-4 py-2 rounded-lg font-montserrat font-medium hover:bg-hookers-green/80 transition-colors"
+                  <Link
+                    href="/admin/content/services/edit"
+                    className="w-full btn-primary block text-center"
                   >
                     Edit Services
-                  </button>
+                  </Link>
                 </div>
 
                 {/* Pricing Content */}
@@ -459,12 +439,12 @@ function AdminContent() {
                   <p className="font-raleway text-sm text-earle-black mb-4">
                     Manage pricing tiers, service pricing, and cost information.
                   </p>
-                  <button
-                    onClick={() => handleEditContent('pricing')}
-                    className="w-full bg-phlox text-white px-4 py-2 rounded-lg font-montserrat font-medium hover:bg-phlox/80 transition-colors"
+                  <Link
+                    href="/admin/content/pricing/edit"
+                    className="w-full btn-primary block text-center"
                   >
                     Edit Pricing
-                  </button>
+                  </Link>
                 </div>
 
                 {/* About Content */}
@@ -481,12 +461,12 @@ function AdminContent() {
                   <p className="font-raleway text-sm text-earle-black mb-4">
                     Update company mission, values, team information, and story.
                   </p>
-                  <button
-                    onClick={() => handleEditContent('about')}
-                    className="w-full btn-primary"
+                  <Link
+                    href="/admin/content/about/edit"
+                    className="w-full btn-primary block text-center"
                   >
                     Edit About
-                  </button>
+                  </Link>
                 </div>
 
                 {/* Contact Content */}
@@ -503,12 +483,12 @@ function AdminContent() {
                   <p className="font-raleway text-sm text-earle-black mb-4">
                     Customize contact form fields, labels, and contact information.
                   </p>
-                  <button
-                    onClick={() => handleEditContent('contact')}
-                    className="w-full bg-hookers-green text-white px-4 py-2 rounded-lg font-montserrat font-medium hover:bg-hookers-green/80 transition-colors"
+                  <Link
+                    href="/admin/content/contact/edit"
+                    className="w-full btn-primary block text-center"
                   >
                     Edit Contact
-                  </button>
+                  </Link>
                 </div>
 
                 {/* Content Overview */}
@@ -574,36 +554,7 @@ function AdminContent() {
             </div>
           )}
 
-          {/* Settings Tab */}
-          {activeTab === 'settings' && (
-            <div className="space-y-6">
-              <h3 className="font-montserrat text-2xl text-white">Settings</h3>
-              <div className="bg-white-smoke rounded-lg p-6">
-                <h4 className="font-montserrat text-lg font-semibold text-earle-black mb-4">Data Management</h4>
-                <div className="space-y-4">
-                  <button className="w-full btn-primary">
-                    Export All Data
-                  </button>
-                  <button className="w-full btn-secondary">
-                    Import Data
-                  </button>
-                  <button className="w-full bg-red-600 text-white px-6 py-3 rounded-lg font-montserrat font-semibold hover:bg-red-700 transition-colors">
-                    Reset All Data
-                  </button>
-                </div>
-              </div>
-            </div>
-          )}
 
-
-          {/* Content Editor Modal */}
-          <ContentEditor
-            content={editingContent?.content || null}
-            onSave={handleSaveContent}
-            onCancel={handleCancelContent}
-            isOpen={showContentEditor}
-            title={editingContent?.page ? editingContent.page.charAt(0).toUpperCase() + editingContent.page.slice(1) : ''}
-          />
         </div>
       </section>
 
