@@ -284,7 +284,6 @@ export default function Contact() {
                       value={formData.budget}
                       onChange={handleInputChange}
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple focus:border-purple font-raleway text-earle-black"
-                      placeholder="e.g., $5,000 or $10k - $15k"
                       aria-describedby="budget-error"
                     />
                   </div>

@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import sharp from 'sharp';
 
 export const runtime = 'nodejs';
+export const maxDuration = 30;
 
 const MAX_UPLOAD_SIZE = 10 * 1024 * 1024; // 10 MB
 const DEFAULT_MAX_DIMENSION = 2000;

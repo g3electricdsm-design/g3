@@ -89,16 +89,13 @@ export default function EditProjectPage() {
     }));
   };
 
-  const handleImageChange = (imageFile: File | null) => {
-    if (imageFile) {
-      // Convert file to base64 data URL for persistence
+  const handleImageChange = (imageFile: File | null, dataUrl?: string) => {
+    if (dataUrl) {
+      setFormData(prev => ({ ...prev, image: dataUrl }));
+    } else if (imageFile) {
       const reader = new FileReader();
       reader.onload = (e) => {
-        const dataUrl = e.target?.result as string;
-        setFormData(prev => ({
-          ...prev,
-          image: dataUrl
-        }));
+        setFormData(prev => ({ ...prev, image: e.target?.result as string }));
       };
       reader.readAsDataURL(imageFile);
     }

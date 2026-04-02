@@ -54,25 +54,31 @@ export default function EditTestimonialPage() {
     setFormData(prev => ({ ...prev, imageMode: mode }));
   };
 
-  const handleImageChange = (imageFile: File | null) => {
-    if (imageFile) {
+  const handleImageChange = (imageFile: File | null, dataUrl?: string) => {
+    if (dataUrl) {
+      setFormData(prev => ({ ...prev, image: dataUrl }));
+    } else if (imageFile) {
       const reader = new FileReader();
       reader.onload = (e) => {
-        const dataUrl = e.target?.result as string;
-        setFormData(prev => ({ ...prev, image: dataUrl }));
+        setFormData(prev => ({ ...prev, image: e.target?.result as string }));
       };
       reader.readAsDataURL(imageFile);
+    } else {
+      setFormData(prev => ({ ...prev, image: '' }));
     }
   };
 
-  const handleImage2Change = (imageFile: File | null) => {
-    if (imageFile) {
+  const handleImage2Change = (imageFile: File | null, dataUrl?: string) => {
+    if (dataUrl) {
+      setFormData(prev => ({ ...prev, image2: dataUrl }));
+    } else if (imageFile) {
       const reader = new FileReader();
       reader.onload = (e) => {
-        const dataUrl = e.target?.result as string;
-        setFormData(prev => ({ ...prev, image2: dataUrl }));
+        setFormData(prev => ({ ...prev, image2: e.target?.result as string }));
       };
       reader.readAsDataURL(imageFile);
+    } else {
+      setFormData(prev => ({ ...prev, image2: '' }));
     }
   };
 

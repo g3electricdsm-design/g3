@@ -6,7 +6,7 @@ import Image from 'next/image';
 
 interface ImageUploadProps {
   currentImage?: string;
-  onImageChange: (imageFile: File | null) => void;
+  onImageChange: (imageFile: File | null, dataUrl?: string) => void;
   onSizeSuggestion?: (suggestedSize: string, aspectRatio: number) => void;
   projectTitle?: string;
   label?: string;
@@ -61,19 +61,37 @@ export default function ImageUpload({ currentImage, onImageChange, onSizeSuggest
 
   // Server-side processing via sharp (handles HEIC, WebP, TIFF, etc.)
   const processServerSide = async (file: File): Promise<{ dataUrl: string; width: number; height: number }> => {
-    const form = new FormData();
-    form.append('file', file);
-    form.append('maxDimension', '2000');
-    form.append('quality', '85');
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 20000);
 
-    const res = await fetch('/api/image/process', { method: 'POST', body: form });
-    const json = await res.json();
+    try {
+      const form = new FormData();
+      form.append('file', file);
+      form.append('maxDimension', '2000');
+      form.append('quality', '85');
 
-    if (!json.success) {
-      throw new Error(json.error || 'Server processing failed');
+      const res = await fetch('/api/image/process', {
+        method: 'POST',
+        body: form,
+        signal: controller.signal,
+      });
+
+      if (!res.ok) {
+        let errorMsg = `Server returned ${res.status}`;
+        try { const body = await res.json(); errorMsg = body.error || errorMsg; } catch { /* non-JSON response */ }
+        throw new Error(errorMsg);
+      }
+
+      const json = await res.json();
+
+      if (!json.success) {
+        throw new Error(json.error || 'Server processing failed');
+      }
+
+      return { dataUrl: json.dataUrl, width: json.width, height: json.height };
+    } finally {
+      clearTimeout(timeout);
     }
-
-    return { dataUrl: json.dataUrl, width: json.width, height: json.height };
   };
 
   // Client-side fallback (canvas-based, for standard browser-decodable formats)
@@ -193,7 +211,7 @@ export default function ImageUpload({ currentImage, onImageChange, onSizeSuggest
       setUploadStatus('Finalizing...');
 
       setPreview(dataUrl);
-      onImageChange(outputFile);
+      onImageChange(outputFile, dataUrl);
 
       const aspectRatio = width / height;
       setPreviewRatio(aspectRatio);
