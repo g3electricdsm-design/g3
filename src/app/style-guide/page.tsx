@@ -156,15 +156,6 @@ function Buttons() {
           <CodeSnippet code={`<button className="btn-secondary">View Our Work</button>
 <Link href="/portfolio" className="btn-secondary">View Our Work</Link>`} />
         </div>
-
-        {/* Secondary on dark with white text override */}
-        <div>
-          <p className="font-montserrat text-xs uppercase tracking-widest text-phlox mb-4">Secondary &mdash; White Text Variant (hero / dark CTA sections)</p>
-          <div className="flex flex-wrap items-center gap-4">
-            <button type="button" className="btn-secondary !text-white">View Our Work</button>
-          </div>
-          <CodeSnippet code={`<Link href="/portfolio" className="btn-secondary !text-white">View Our Work</Link>`} />
-        </div>
       </div>
     </section>
   );
@@ -542,7 +533,7 @@ function BackgroundContexts() {
           <p className="font-raleway text-white/90 mb-4">Body text on the hero gradient background.</p>
           <div className="flex gap-3">
             <button type="button" className="btn-primary text-sm">Primary</button>
-            <button type="button" className="btn-secondary !text-white text-sm">Secondary</button>
+            <button type="button" className="btn-secondary text-sm">Secondary</button>
           </div>
         </div>
       </div>

@@ -180,7 +180,7 @@ export default function Services() {
             </Link>
             <Link 
               href="/portfolio" 
-              className="btn-secondary border-white text-white hover:bg-white hover:text-purple w-full sm:w-auto text-sm sm:text-base"
+              className="btn-secondary w-full sm:w-auto text-sm sm:text-base"
             >
               View Our Work
             </Link>

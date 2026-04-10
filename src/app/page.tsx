@@ -152,7 +152,7 @@ export default function Home() {
               >
                 <Link 
                   href="/portfolio" 
-                  className="btn-secondary text-sm sm:text-lg shadow-2xl border-white !text-white hover:bg-white hover:text-purple w-full sm:w-auto block"
+                  className="btn-secondary text-sm sm:text-lg shadow-2xl w-full sm:w-auto block"
                 >
                   {content.hero.ctaSecondary}
                 </Link>
