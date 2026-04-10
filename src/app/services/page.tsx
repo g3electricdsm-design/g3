@@ -1,10 +1,5 @@
 import Link from "next/link";
 import { Metadata } from "next";
-import { 
-  ShieldCheckIcon,
-  BoltIcon,
-  WrenchScrewdriverIcon
-} from "@heroicons/react/24/outline";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { getContent } from "@/data/content";
@@ -114,7 +109,7 @@ export default function Services() {
                           {service.features.map((feature, featureIndex) => (
                             <li key={featureIndex} className="flex items-center font-raleway text-white-smoke">
                               <span
-                                style={{ backgroundColor: '#C636FF', width: 12, height: 12, borderRadius: '50%', flexShrink: 0, marginRight: 12, display: 'inline-block' }}
+                                style={{ backgroundColor: '#C636FF', width: 6, height: 6, borderRadius: '50%', flexShrink: 0, marginRight: 12, display: 'inline-block' }}
                                 aria-hidden="true"
                               />
                               {feature}
@@ -127,42 +122,6 @@ export default function Services() {
                 </div>
               );
             })}
-          </div>
-        </div>
-      </section>
-
-      {/* Safety & Quality Section */}
-      <section className="py-20 bg-white-smoke">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="font-montserrat text-4xl text-earle-black mb-4">Safety & Quality Guarantee</h2>
-            <p className="font-raleway text-lg text-earle-black max-w-3xl mx-auto">
-              Your safety is our #1 priority. Every project is completed with the highest standards of safety and quality.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="text-center">
-              <div className="w-16 h-16 bg-purple rounded-full flex items-center justify-center mx-auto mb-6">
-                <ShieldCheckIcon className="h-8 w-8 text-white" />
-              </div>
-              <h3 className="font-montserrat text-xl font-semibold text-earle-black mb-4">Licensed & Insured</h3>
-              <p className="font-raleway text-earle-black">Fully licensed electricians with comprehensive insurance coverage</p>
-            </div>
-            <div className="text-center">
-              <div className="w-16 h-16 bg-purple rounded-full flex items-center justify-center mx-auto mb-6">
-                <BoltIcon className="h-8 w-8 text-white" />
-              </div>
-              <h3 className="font-montserrat text-xl font-semibold text-earle-black mb-4">Code Compliance</h3>
-              <p className="font-raleway text-earle-black">All work meets or exceeds local electrical codes and standards</p>
-            </div>
-            <div className="text-center">
-              <div className="w-16 h-16 bg-purple rounded-full flex items-center justify-center mx-auto mb-6">
-                <WrenchScrewdriverIcon className="h-8 w-8 text-white" />
-              </div>
-              <h3 className="font-montserrat text-xl font-semibold text-earle-black mb-4">Quality Materials</h3>
-              <p className="font-raleway text-earle-black">We use only the highest quality materials and components</p>
-            </div>
           </div>
         </div>
       </section>

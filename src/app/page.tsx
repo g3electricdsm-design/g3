@@ -152,7 +152,7 @@ export default function Home() {
               >
                 <Link 
                   href="/portfolio" 
-                  className="btn-secondary text-sm sm:text-lg shadow-2xl border-white text-white hover:bg-white hover:text-purple w-full sm:w-auto block"
+                  className="btn-secondary text-sm sm:text-lg shadow-2xl border-white !text-white hover:bg-white hover:text-purple w-full sm:w-auto block"
                 >
                   {content.hero.ctaSecondary}
                 </Link>
@@ -203,7 +203,7 @@ export default function Home() {
             {content.services.items.map((service, index) => (
               <div 
                 key={index} 
-                className="bg-white-smoke rounded-lg shadow-sm text-center hover:shadow-md transition-shadow overflow-hidden border-[1px] border-white-smoke"
+                className="rounded-lg shadow-sm text-center hover:shadow-md transition-shadow overflow-hidden border border-white-smoke"
                 data-aos="fade-up"
                 data-aos-delay={index * 200}
                 data-aos-duration="800"
@@ -212,8 +212,8 @@ export default function Home() {
                   <AnimatedServiceIcon serviceId={service.id} className="w-[150px] h-[150px]" />
                 </div>
                 <div className="p-6">
-                  <h3 className="font-montserrat text-xl font-semibold text-earle-black mb-2">{service.title}</h3>
-                  <p className="font-raleway text-earle-black">{service.description}</p>
+                  <h3 className="font-montserrat text-xl font-semibold text-white mb-2">{service.title}</h3>
+                  <p className="font-raleway text-white">{service.description}</p>
                 </div>
               </div>
             ))}
