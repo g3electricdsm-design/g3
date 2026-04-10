@@ -145,17 +145,17 @@ export default function EditTestimonialPage() {
 
       <section className="py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-white-smoke rounded-lg shadow-xl p-8">
+          <div className="bg-earle-black border border-white/10 rounded-lg shadow-xl p-8">
             <form onSubmit={handleSubmit} className="space-y-8">
 
               {/* Basic Information */}
               <div>
-                <h3 className="font-montserrat text-2xl font-semibold text-earle-black border-b border-gray-300 pb-2 mb-6">
+                <h3 className="font-montserrat text-2xl font-semibold text-white border-b border-white/20 pb-2 mb-6">
                   Basic Information
                 </h3>
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-sm font-medium text-earle-black mb-2">
+                    <label className="block text-sm font-medium text-white mb-2">
                       Testimonial Title *
                     </label>
                     <input
@@ -163,7 +163,7 @@ export default function EditTestimonialPage() {
                       name="title"
                       value={formData.title}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple focus:border-transparent text-earle-black"
+                      className="w-full px-4 py-3 border border-white/20 rounded-lg focus:ring-2 focus:ring-purple focus:border-transparent text-white bg-earle-black"
                       required
                       placeholder="e.g., Kitchen Lighting Transformation"
                     />
@@ -173,7 +173,7 @@ export default function EditTestimonialPage() {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-earle-black mb-2">
+                    <label className="block text-sm font-medium text-white mb-2">
                       Customer Name *
                     </label>
                     <input
@@ -181,14 +181,14 @@ export default function EditTestimonialPage() {
                       name="name"
                       value={formData.name}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple focus:border-transparent text-earle-black"
+                      className="w-full px-4 py-3 border border-white/20 rounded-lg focus:ring-2 focus:ring-purple focus:border-transparent text-white bg-earle-black"
                       required
                       placeholder="Enter customer name"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-earle-black mb-2">
+                    <label className="block text-sm font-medium text-white mb-2">
                       Location *
                     </label>
                     <input
@@ -196,14 +196,14 @@ export default function EditTestimonialPage() {
                       name="location"
                       value={formData.location}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple focus:border-transparent text-earle-black"
+                      className="w-full px-4 py-3 border border-white/20 rounded-lg focus:ring-2 focus:ring-purple focus:border-transparent text-white bg-earle-black"
                       required
                       placeholder="e.g., Des Moines, IA"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-earle-black mb-2">
+                    <label className="block text-sm font-medium text-white mb-2">
                       Project / Service *
                     </label>
                     <input
@@ -211,7 +211,7 @@ export default function EditTestimonialPage() {
                       name="project"
                       value={formData.project}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple focus:border-transparent text-earle-black"
+                      className="w-full px-4 py-3 border border-white/20 rounded-lg focus:ring-2 focus:ring-purple focus:border-transparent text-white bg-earle-black"
                       required
                       placeholder="e.g., Kitchen Lighting Installation"
                     />
@@ -221,11 +221,11 @@ export default function EditTestimonialPage() {
 
               {/* Testimonial Text */}
               <div>
-                <h3 className="font-montserrat text-2xl font-semibold text-earle-black border-b border-gray-300 pb-2 mb-6">
+                <h3 className="font-montserrat text-2xl font-semibold text-white border-b border-white/20 pb-2 mb-6">
                   Testimonial Text
                 </h3>
                 <div>
-                  <label className="block text-sm font-medium text-earle-black mb-2">
+                  <label className="block text-sm font-medium text-white mb-2">
                     Customer Quote *
                   </label>
                   <textarea
@@ -233,7 +233,7 @@ export default function EditTestimonialPage() {
                     value={formData.text}
                     onChange={handleInputChange}
                     rows={6}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple focus:border-transparent text-earle-black"
+                    className="w-full px-4 py-3 border border-white/20 rounded-lg focus:ring-2 focus:ring-purple focus:border-transparent text-white bg-earle-black"
                     required
                     placeholder="Enter the customer's testimonial text..."
                   />
@@ -242,7 +242,7 @@ export default function EditTestimonialPage() {
 
               {/* Image Mode + Uploads */}
               <div>
-                <h3 className="font-montserrat text-2xl font-semibold text-earle-black border-b border-gray-300 pb-2 mb-6">
+                <h3 className="font-montserrat text-2xl font-semibold text-white border-b border-white/20 pb-2 mb-6">
                   Images
                 </h3>
 
@@ -288,7 +288,7 @@ export default function EditTestimonialPage() {
                 {/* Image uploads */}
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-sm font-medium text-earle-black mb-2">
+                    <label className="block text-sm font-medium text-white mb-2">
                       {formData.imageMode === 'before-after' ? 'Before Image' : 'Photo'}
                     </label>
                     <ImageUpload
@@ -300,7 +300,7 @@ export default function EditTestimonialPage() {
 
                   {formData.imageMode === 'before-after' && (
                     <div>
-                      <label className="block text-sm font-medium text-earle-black mb-2">
+                      <label className="block text-sm font-medium text-white mb-2">
                         After Image
                       </label>
                       <ImageUpload
@@ -323,11 +323,11 @@ export default function EditTestimonialPage() {
               )}
 
               {/* Form Actions */}
-              <div className="flex justify-end gap-4 pt-6 border-t border-gray-300">
+              <div className="flex justify-end gap-4 pt-6 border-t border-white/20">
                 <button
                   type="button"
                   onClick={() => router.push('/admin')}
-                  className="px-6 py-3 border border-gray-300 rounded-lg font-montserrat font-medium text-earle-black hover:bg-gray-50 transition-colors"
+                  className="px-6 py-3 border border-white/20 rounded-lg font-montserrat font-medium text-white hover:bg-white/10 transition-colors"
                 >
                   Cancel
                 </button>
