@@ -30,20 +30,30 @@ export default function EditTestimonialPage() {
   const [saveError, setSaveError] = useState<string | null>(null);
 
   useEffect(() => {
-    const id = params.id as string;
+    const loadTestimonial = async () => {
+      const id = params.id as string;
 
-    if (id === 'new') {
-      setIsLoading(false);
-    } else {
-      const testimonial = getTestimonialById(id);
-      if (testimonial) {
-        setFormData(testimonial);
+      if (id === 'new') {
+        setIsLoading(false);
       } else {
-        router.push('/admin');
-        return;
+        try {
+          const testimonial = await getTestimonialById(id);
+          if (testimonial) {
+            setFormData(testimonial);
+          } else {
+            router.push('/admin');
+            return;
+          }
+        } catch (error) {
+          console.error('Error loading testimonial:', error);
+          router.push('/admin');
+          return;
+        }
+        setIsLoading(false);
       }
-      setIsLoading(false);
-    }
+    };
+
+    loadTestimonial();
   }, [params.id, router]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -94,9 +104,9 @@ export default function EditTestimonialPage() {
 
       if (isNew) {
         const newId = Date.now();
-        addTestimonial({ ...formData, id: newId });
+        await addTestimonial({ ...formData, id: newId });
       } else {
-        updateTestimonial(formData);
+        await updateTestimonial(formData);
       }
 
       const label = isNew ? 'Testimonial created' : 'Testimonial saved';

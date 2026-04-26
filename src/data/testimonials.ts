@@ -1,6 +1,3 @@
-// Testimonials data for G3 Electric
-// This file can be easily edited to manage customer testimonials
-
 export interface Testimonial {
   id: number;
   name: string;
@@ -77,38 +74,63 @@ export const testimonials: Testimonial[] = [
   }
 ];
 
-// In-memory storage for runtime updates
-let testimonialsData = [...testimonials];
+import { testimonialsAPI } from '@/lib/testimonials-api';
 
-// Helper function to get all testimonials
-export function getAllTestimonials(): Testimonial[] {
-  return testimonialsData;
-}
+let testimonialsCache: Testimonial[] | null = null;
+let cacheTimestamp = 0;
+const CACHE_DURATION = 60000;
 
-// Helper function to get featured testimonials (for homepage)
-export function getFeaturedTestimonials(count: number = 3): Testimonial[] {
-  return testimonialsData.slice(0, count);
-}
-
-// Helper function to get testimonial by ID
-export function getTestimonialById(id: string): Testimonial | undefined {
-  return testimonialsData.find(testimonial => testimonial.id.toString() === id);
-}
-
-// Helper function to update a testimonial
-export function updateTestimonial(updatedTestimonial: Testimonial): void {
-  const index = testimonialsData.findIndex(t => t.id === updatedTestimonial.id);
-  if (index !== -1) {
-    testimonialsData[index] = updatedTestimonial;
+async function getCachedTestimonials(): Promise<Testimonial[]> {
+  const now = Date.now();
+  if (testimonialsCache && (now - cacheTimestamp) < CACHE_DURATION) {
+    return testimonialsCache;
   }
+
+  testimonialsCache = await testimonialsAPI.getAll();
+  cacheTimestamp = now;
+  return testimonialsCache;
 }
 
-// Helper function to add a new testimonial
-export function addTestimonial(newTestimonial: Testimonial): void {
-  testimonialsData.push(newTestimonial);
+export async function getTestimonialById(id: string): Promise<Testimonial | undefined> {
+  if (typeof window === 'undefined') {
+    return testimonials.find(t => t.id.toString() === id);
+  }
+
+  const result = await testimonialsAPI.getById(id);
+  return result || undefined;
 }
 
-// Helper function to delete a testimonial
-export function deleteTestimonial(id: number): void {
-  testimonialsData = testimonialsData.filter(t => t.id !== id);
+export async function getAllTestimonials(): Promise<Testimonial[]> {
+  if (typeof window === 'undefined') {
+    return [...testimonials];
+  }
+  return await getCachedTestimonials();
+}
+
+export function getAllTestimonialsSync(): Testimonial[] {
+  if (typeof window === 'undefined') {
+    return [...testimonials];
+  }
+  return testimonialsCache || [...testimonials];
+}
+
+export async function updateTestimonial(updatedTestimonial: Testimonial): Promise<void> {
+  if (typeof window === 'undefined') return;
+
+  await testimonialsAPI.update(updatedTestimonial);
+  testimonialsCache = null;
+}
+
+export async function addTestimonial(newTestimonial: Testimonial): Promise<void> {
+  if (typeof window === 'undefined') return;
+
+  await testimonialsAPI.create(newTestimonial);
+  testimonialsCache = null;
+}
+
+export async function deleteTestimonial(id: number): Promise<void> {
+  if (typeof window === 'undefined') return;
+
+  await testimonialsAPI.delete(id);
+  testimonialsCache = null;
 }

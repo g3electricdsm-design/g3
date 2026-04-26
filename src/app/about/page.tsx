@@ -71,13 +71,7 @@ export default function About() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-stretch">
             <div className="relative min-h-[280px] lg:min-h-[420px] rounded-xl overflow-hidden shadow-lg">
-              <Image
-                src="/images/hero-electrical-project.jpg"
-                alt="Electrical work by G3 Electric"
-                fill
-                className="object-cover"
-                sizes="(max-width: 1024px) 100vw, 50vw"
-              />
+              
             </div>
             <div className="flex flex-col justify-center">
               <p className="font-montserrat text-sm font-semibold uppercase tracking-widest text-purple mb-3">

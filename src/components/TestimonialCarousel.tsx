@@ -2,13 +2,20 @@
 /* eslint-disable @next/next/no-img-element */
 
 import { useState, useEffect, useCallback } from "react";
-import { getAllTestimonials } from "@/data/testimonials";
+import { getAllTestimonials, getAllTestimonialsSync, Testimonial } from "@/data/testimonials";
 import { motion } from "framer-motion";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
 
 export default function TestimonialCarousel() {
-  const allTestimonials = getAllTestimonials();
+  const [allTestimonials, setAllTestimonials] = useState<Testimonial[]>(getAllTestimonialsSync());
   const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    getAllTestimonials()
+      .then((data) => setAllTestimonials(data))
+      .catch(console.error);
+  }, []);
+
   const current = allTestimonials[currentIndex];
 
   const next = useCallback(() => {
@@ -29,6 +36,8 @@ export default function TestimonialCarousel() {
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [next, previous]);
+
+  if (!current) return null;
 
   return (
     <section className="py-20 bg-earle-black">

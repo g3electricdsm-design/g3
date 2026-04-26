@@ -18,5 +18,6 @@ if (process.env.NODE_ENV === 'development') {
   }
 }
 
-// Table name for projects
+// Table names
 export const PROJECTS_TABLE = 'projects';
+export const TESTIMONIALS_TABLE = 'testimonials';

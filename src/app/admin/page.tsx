@@ -9,7 +9,7 @@ import Footer from '@/components/Footer';
 import { getAllProjects, Project, deleteProject } from '@/data/projects';
 import { getAllServices, Service } from '@/data/services';
 import { getAllFormEntries, FormEntry } from '@/data/formEntries';
-import { getAllTestimonials, Testimonial, deleteTestimonial } from '@/data/testimonials';
+import { getAllTestimonials, getAllTestimonialsSync, Testimonial, deleteTestimonial } from '@/data/testimonials';
 import Toast from '@/components/Toast';
 
 export const dynamic = 'force-dynamic';
@@ -20,10 +20,10 @@ function AdminContent() {
   const [isLoadingProjects, setIsLoadingProjects] = useState(true);
   const [services] = useState<Service[]>(getAllServices());
   const [formEntries] = useState<FormEntry[]>(getAllFormEntries());
-  const [testimonials, setTestimonials] = useState<Testimonial[]>(getAllTestimonials());
+  const [testimonials, setTestimonials] = useState<Testimonial[]>(getAllTestimonialsSync());
   const [activeTab, setActiveTab] = useState<'projects' | 'services' | 'formEntries' | 'testimonials' | 'content' | 'analytics'>('projects');
 
-  // Refresh projects when component mounts or when returning to admin page
+  // Refresh projects and testimonials when component mounts or when returning to admin page
   useEffect(() => {
     const refreshProjects = async () => {
       setIsLoadingProjects(true);
@@ -32,21 +32,31 @@ function AdminContent() {
         setProjects(allProjects);
       } catch (error) {
         console.error('Error loading projects:', error);
-        // Fallback to sync version
         const { getAllProjectsSync } = await import('@/data/projects');
         setProjects(getAllProjectsSync());
       } finally {
         setIsLoadingProjects(false);
       }
     };
+
+    const refreshTestimonials = async () => {
+      try {
+        const allTestimonials = await getAllTestimonials();
+        setTestimonials(allTestimonials);
+      } catch (error) {
+        console.error('Error loading testimonials:', error);
+        setTestimonials(getAllTestimonialsSync());
+      }
+    };
     
     refreshProjects();
+    refreshTestimonials();
     
-    // Refresh when window regains focus (user navigates back)
-    window.addEventListener('focus', refreshProjects);
+    const refreshAll = () => { refreshProjects(); refreshTestimonials(); };
+    window.addEventListener('focus', refreshAll);
     
     return () => {
-      window.removeEventListener('focus', refreshProjects);
+      window.removeEventListener('focus', refreshAll);
     };
   }, []);
 
@@ -55,9 +65,8 @@ function AdminContent() {
     const tabParam = searchParams.get('tab');
     if (tabParam && ['projects', 'services', 'formEntries', 'testimonials', 'content', 'analytics'].includes(tabParam)) {
       setActiveTab(tabParam as typeof activeTab);
-      // Refresh testimonials when switching to testimonials tab
       if (tabParam === 'testimonials') {
-        setTestimonials(getAllTestimonials());
+        getAllTestimonials().then(setTestimonials).catch(console.error);
       }
       // Refresh projects when switching to projects tab
       if (tabParam === 'projects') {
@@ -87,10 +96,15 @@ function AdminContent() {
     }
   };
 
-  const handleDeleteTestimonial = (id: number) => {
+  const handleDeleteTestimonial = async (id: number) => {
     if (confirm('Are you sure you want to delete this testimonial?')) {
-      deleteTestimonial(id);
-      setTestimonials(testimonials.filter(t => t.id !== id));
+      try {
+        await deleteTestimonial(id);
+        setTestimonials(testimonials.filter(t => t.id !== id));
+      } catch (error) {
+        console.error('Error deleting testimonial:', error);
+        alert('Error deleting testimonial. Please try again.');
+      }
     }
   };
 
