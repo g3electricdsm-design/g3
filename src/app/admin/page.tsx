@@ -11,6 +11,7 @@ import { getAllServices, Service } from '@/data/services';
 import { getAllFormEntries, FormEntry } from '@/data/formEntries';
 import { getAllTestimonials, getAllTestimonialsSync, Testimonial, deleteTestimonial } from '@/data/testimonials';
 import Toast from '@/components/Toast';
+import AnalyticsDashboard from '@/components/admin/AnalyticsDashboard';
 
 export const dynamic = 'force-dynamic';
 
@@ -117,7 +118,7 @@ function AdminContent() {
       <Navigation currentPath="/admin" />
 
       {/* Header */}
-      <section className="bg-gradient-to-br from-purple to-phlox text-white py-16">
+      <section className="bg-earle-black text-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-start">
             <div>
@@ -544,29 +545,7 @@ function AdminContent() {
           )}
 
           {/* Analytics Tab */}
-          {activeTab === 'analytics' && (
-            <div className="space-y-6">
-              <h3 className="font-montserrat text-2xl text-white">Analytics Dashboard</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div className="bg-white-smoke rounded-lg p-6">
-                  <h4 className="font-montserrat text-lg font-semibold text-earle-black mb-2">Total Projects</h4>
-                  <p className="font-megrim text-3xl text-purple">{projects.length}</p>
-                </div>
-                <div className="bg-white-smoke rounded-lg p-6">
-                  <h4 className="font-montserrat text-lg font-semibold text-earle-black mb-2">Total Services</h4>
-                  <p className="font-megrim text-3xl text-purple">{services.length}</p>
-                </div>
-                <div className="bg-white-smoke rounded-lg p-6">
-                  <h4 className="font-montserrat text-lg font-semibold text-earle-black mb-2">Form Entries</h4>
-                  <p className="font-megrim text-3xl text-purple">{formEntries.length}</p>
-                </div>
-                <div className="bg-white-smoke rounded-lg p-6">
-                  <h4 className="font-montserrat text-lg font-semibold text-earle-black mb-2">New Entries</h4>
-                  <p className="font-megrim text-3xl text-purple">{formEntries.filter(e => e.status === 'new').length}</p>
-                </div>
-              </div>
-            </div>
-          )}
+          {activeTab === 'analytics' && <AnalyticsDashboard />}
 
 
         </div>

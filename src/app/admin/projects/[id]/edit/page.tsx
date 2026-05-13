@@ -281,7 +281,7 @@ export default function EditProjectPage() {
       <Navigation currentPath="/admin" />
 
       {/* Header */}
-      <section className="bg-gradient-to-br from-purple to-phlox text-white pt-16 pb-8">
+      <section className="bg-earle-black text-white pt-16 pb-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center mb-6">
             <Link 

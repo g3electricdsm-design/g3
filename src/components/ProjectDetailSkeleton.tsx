@@ -1,7 +1,7 @@
 export default function ProjectDetailSkeleton() {
   return (
     <div className="min-h-screen bg-earle-black">
-      <div className="bg-gradient-to-br from-purple to-phlox text-white py-16">
+      <div className="bg-earle-black text-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="h-12 bg-white/20 rounded animate-pulse mb-4 w-48"></div>
           <div className="h-8 bg-white/20 rounded animate-pulse mb-4 w-64"></div>

@@ -131,7 +131,7 @@ export default function EditTestimonialPage() {
     <div className="min-h-screen bg-earle-black">
       <Navigation currentPath="/admin" />
 
-      <section className="bg-gradient-to-br from-purple to-phlox text-white py-16">
+      <section className="bg-earle-black text-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center mb-6">
             <Link
@@ -155,7 +155,7 @@ export default function EditTestimonialPage() {
 
       <section className="py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-earle-black border border-white/10 rounded-lg shadow-xl p-8">
+          <div className="bg-earle-black border border-white/10 rounded-lg shadow-xl p-8 input-dark">
             <form onSubmit={handleSubmit} className="space-y-8">
 
               {/* Basic Information */}
@@ -305,6 +305,7 @@ export default function EditTestimonialPage() {
                       currentImage={formData.image}
                       onImageChange={handleImageChange}
                       label={formData.imageMode === 'before-after' ? 'Select before photo' : 'Select photo'}
+                      variant="dark"
                     />
                   </div>
 
@@ -317,6 +318,7 @@ export default function EditTestimonialPage() {
                         currentImage={formData.image2}
                         onImageChange={handleImage2Change}
                         label="Select after photo"
+                        variant="dark"
                       />
                     </div>
                   )}

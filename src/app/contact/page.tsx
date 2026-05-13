@@ -143,7 +143,7 @@ export default function Contact() {
       <Navigation currentPath="/contact" />
 
       {/* Header */}
-      <section className="bg-gradient-to-br from-purple to-phlox text-white py-16">
+      <section className="bg-earle-black text-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h1 className="font-megrim text-5xl md:text-6xl mb-4">Contact G3</h1>
           <p className="font-raleway text-lg md:text-xl max-w-3xl">
@@ -157,7 +157,7 @@ export default function Contact() {
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
             {/* Quote Request Form */}
             <div>
-              <h2 className="font-montserrat text-3xl text-earle-black mb-8">Request a Quote</h2>
+              <h2 className="font-montserrat text-3xl text-white-smoke mb-8">Request a Quote</h2>
               
               {/* Success/Error Messages */}
               {submitStatus === 'success' && (
@@ -178,7 +178,7 @@ export default function Contact() {
                 {/* Basic Information */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <label htmlFor="name" className="block font-montserrat text-sm font-medium text-earle-black mb-2">
+                    <label htmlFor="name" className="block font-montserrat text-sm font-medium text-white-smoke mb-2">
                       Full Name *
                     </label>
                     <input
@@ -188,7 +188,7 @@ export default function Contact() {
                       required
                       value={formData.name}
                       onChange={handleInputChange}
-                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-purple focus:border-purple font-raleway text-earle-black ${
+                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-purple focus:border-purple font-montserrat bg-white text-earle-black placeholder:text-gray-500 ${
                         errors.name ? 'border-red-500' : 'border-gray-300'
                       }`}
                       placeholder="Your full name"
@@ -202,7 +202,7 @@ export default function Contact() {
                     )}
                   </div>
                   <div>
-                    <label htmlFor="email" className="block font-montserrat text-sm font-medium text-earle-black mb-2">
+                    <label htmlFor="email" className="block font-montserrat text-sm font-medium text-white-smoke mb-2">
                       Email Address *
                     </label>
                     <input
@@ -212,7 +212,7 @@ export default function Contact() {
                       required
                       value={formData.email}
                       onChange={handleInputChange}
-                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-purple focus:border-purple font-raleway text-earle-black ${
+                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-purple focus:border-purple font-montserrat bg-white text-earle-black placeholder:text-gray-500 ${
                         errors.email ? 'border-red-500' : 'border-gray-300'
                       }`}
                       placeholder="your.email@example.com"
@@ -229,7 +229,7 @@ export default function Contact() {
 
                 {/* Project Details */}
                 <div>
-                  <label htmlFor="projectType" className="block font-montserrat text-sm font-medium text-earle-black mb-2">
+                  <label htmlFor="projectType" className="block font-montserrat text-sm font-medium text-white-smoke mb-2">
                     Project Type *
                   </label>
                     <select
@@ -238,7 +238,7 @@ export default function Contact() {
                       required
                       value={formData.projectType}
                       onChange={handleInputChange}
-                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-purple focus:border-purple font-raleway text-earle-black ${
+                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-purple focus:border-purple font-montserrat bg-white text-earle-black ${
                         errors.projectType ? 'border-red-500' : 'border-gray-300'
                       }`}
                       aria-describedby="projectType-error"
@@ -257,7 +257,7 @@ export default function Contact() {
                 </div>
 
                 <div>
-                  <label htmlFor="description" className="block font-montserrat text-sm font-medium text-earle-black mb-2">
+                  <label htmlFor="description" className="block font-montserrat text-sm font-medium text-white-smoke mb-2">
                     Project Description
                   </label>
                     <textarea
@@ -266,7 +266,7 @@ export default function Contact() {
                       rows={4}
                       value={formData.description}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple focus:border-purple font-raleway text-earle-black"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple focus:border-purple font-montserrat bg-white text-earle-black placeholder:text-gray-500"
                       placeholder="Please describe your project in detail..."
                       aria-describedby="description-error"
                     />
@@ -274,7 +274,7 @@ export default function Contact() {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <label htmlFor="budget" className="block font-montserrat text-sm font-medium text-earle-black mb-2">
+                    <label htmlFor="budget" className="block font-montserrat text-sm font-medium text-white-smoke mb-2">
                       Estimated Budget
                     </label>
                     <input
@@ -283,12 +283,12 @@ export default function Contact() {
                       name="budget"
                       value={formData.budget}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple focus:border-purple font-raleway text-earle-black"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple focus:border-purple font-montserrat bg-white text-earle-black placeholder:text-gray-500"
                       aria-describedby="budget-error"
                     />
                   </div>
                   <div>
-                    <label htmlFor="timeline" className="block font-montserrat text-sm font-medium text-earle-black mb-2">
+                    <label htmlFor="timeline" className="block font-montserrat text-sm font-medium text-white-smoke mb-2">
                       Timeline
                     </label>
                     <select
@@ -296,7 +296,7 @@ export default function Contact() {
                       name="timeline"
                       value={formData.timeline}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple focus:border-purple font-raleway text-earle-black"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple focus:border-purple font-montserrat bg-white text-earle-black"
                       aria-describedby="timeline-error"
                     >
                       <option value="">Select timeline</option>
@@ -310,7 +310,7 @@ export default function Contact() {
                 </div>
 
                 <div>
-                  <label htmlFor="workArea" className="block font-montserrat text-sm font-medium text-earle-black mb-2">
+                  <label htmlFor="workArea" className="block font-montserrat text-sm font-medium text-white-smoke mb-2">
                     Size of Work Area
                   </label>
                     <input
@@ -319,7 +319,7 @@ export default function Contact() {
                       name="workArea"
                       value={formData.workArea}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple focus:border-purple font-raleway text-earle-black"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple focus:border-purple font-montserrat bg-white text-earle-black placeholder:text-gray-500"
                       placeholder="e.g., 200 sq ft, entire house, 3 rooms, etc."
                       aria-describedby="workArea-error"
                     />
@@ -327,7 +327,7 @@ export default function Contact() {
 
                 {/* Services Needed */}
                 <div>
-                  <label className="block font-montserrat text-sm font-medium text-earle-black mb-3">
+                  <label className="block font-montserrat text-sm font-medium text-white-smoke mb-3">
                     Services Needed (select all that apply)
                   </label>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -349,14 +349,14 @@ export default function Contact() {
                           onChange={handleCheckboxChange}
                           className="h-4 w-4 text-purple focus:ring-purple border-gray-300 rounded"
                         />
-                        <span className="ml-2 font-raleway text-sm text-earle-black">{service}</span>
+                        <span className="ml-2 font-raleway text-sm text-white-smoke">{service}</span>
                       </label>
                     ))}
                   </div>
                 </div>
 
                 <div>
-                  <label htmlFor="message" className="block font-montserrat text-sm font-medium text-earle-black mb-2">
+                  <label htmlFor="message" className="block font-montserrat text-sm font-medium text-white-smoke mb-2">
                     Additional Message
                   </label>
                     <textarea
@@ -365,7 +365,7 @@ export default function Contact() {
                       rows={3}
                       value={formData.message}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple focus:border-purple font-raleway text-earle-black"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple focus:border-purple font-montserrat bg-white text-earle-black placeholder:text-gray-500"
                       placeholder="Any additional information or questions..."
                       aria-describedby="message-error"
                     />
@@ -374,12 +374,12 @@ export default function Contact() {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="btn-primary w-full text-sm sm:text-base focus:ring-2 focus:ring-purple focus:ring-offset-2"
+                  className="btn-primary w-full text-sm sm:text-base focus:ring-2 focus:ring-purple"
                 >
                   {isSubmitting ? 'Sending...' : 'Request Free Quote'}
                 </button>
 
-                <p className="font-raleway text-sm text-earle-black text-center">
+                <p className="font-raleway text-sm text-white-smoke/80 text-center">
                   * Required fields. We&apos;ll respond within 24 hours.
                 </p>
               </form>
@@ -393,31 +393,31 @@ export default function Contact() {
                 <div className="flex items-start">
                   <EnvelopeIcon className="h-6 w-6 text-purple mr-4 mt-1" />
                   <div>
-                    <h3 className="font-montserrat text-lg font-semibold text-earle-black">Email</h3>
-                    <p className="font-raleway text-earle-black">
+                    <h3 className="font-montserrat text-lg font-semibold text-white-smoke">Email</h3>
+                    <p className="font-raleway text-white-smoke">
                       <a href="mailto:g3electricdsm@gmail.com" className="font-medium text-purple hover:text-phlox">
                         g3electricdsm@gmail.com
                       </a>
                     </p>
-                    <p className="font-raleway text-sm text-earle-black">For general inquiries, reach out to us at </p>
+                    <p className="font-raleway text-sm text-white-smoke/80">For general inquiries, reach out to us at </p>
                   </div>
                 </div>
 
                 <div className="flex items-start">
                   <MapPinIcon className="h-6 w-6 text-purple mr-4 mt-1" />
                   <div>
-                    <h3 className="font-montserrat text-lg font-semibold text-earle-black">Service Area</h3>
-                    <p className="font-raleway text-earle-black">We proudly serve Central Iowa and surrounding communities.</p>
-                    <p className="font-raleway text-sm text-earle-black">Please reach out for specific locations.</p>
+                    <h3 className="font-montserrat text-lg font-semibold text-white-smoke">Service Area</h3>
+                    <p className="font-raleway text-white-smoke">We proudly serve Central Iowa and surrounding communities.</p>
+                    <p className="font-raleway text-sm text-white-smoke/80">Please reach out for specific locations.</p>
                   </div>
                 </div>
 
                 <div className="flex items-start">
                   <ClockIcon className="h-6 w-6 text-purple mr-4 mt-1" />
                   <div>
-                    <h3 className="font-montserrat text-lg font-semibold text-earle-black">Business Hours</h3>
-                    <p className="font-raleway text-earle-black">Monday-Friday 8am-5pm</p>
-                    <p className="font-raleway text-earle-black">Saturdays, Sundays, and anything outside the scheduled working hours are reserved for emergencies.</p>
+                    <h3 className="font-montserrat text-lg font-semibold text-white-smoke">Business Hours</h3>
+                    <p className="font-raleway text-white-smoke">Monday-Friday 8am-5pm</p>
+                    <p className="font-raleway text-white-smoke">Saturdays, Sundays, and anything outside the scheduled working hours are reserved for emergencies.</p>
                   </div>
                 </div>
               </div>
@@ -429,7 +429,7 @@ export default function Contact() {
                 </p>
                 <button 
                   disabled
-                  className="btn-primary focus:ring-2 focus:ring-purple focus:ring-offset-2 w-full sm:w-auto text-sm sm:text-base"
+                  className="btn-primary focus:ring-2 focus:ring-purple w-full sm:w-auto text-sm sm:text-base"
                 >
                   Book Online
                 </button>

@@ -133,7 +133,7 @@ export default function Portfolio() {
       <Navigation currentPath="/portfolio" />
 
       {/* Header */}
-      <section className="bg-gradient-to-br from-purple to-phlox text-white py-16">
+      <section className="bg-earle-black text-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h1 className="font-megrim text-5xl md:text-6xl mb-4">Portfolio</h1>
           <p className="font-raleway text-lg md:text-xl max-w-3xl">

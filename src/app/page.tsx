@@ -208,7 +208,7 @@ export default function Home() {
                 data-aos-delay={index * 200}
                 data-aos-duration="800"
               >
-                <div className="h-48 bg-gradient-to-br from-purple/60 to-phlox/60 flex items-center justify-center p-4">
+                <div className="h-48 flex items-center justify-center p-4">
                   <AnimatedServiceIcon serviceId={service.id} className="w-[150px] h-[150px]" />
                 </div>
                 <div className="p-6">
@@ -226,25 +226,25 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             <div className="text-center">
-              <div className="font-montserrat text-4xl md:text-5xl font-black text-purple mb-2">
+              <div className="font-montserrat text-4xl md:text-5xl font-black text-phlox mb-2">
                 <AnimatedCounter end={10} suffix="+" duration={2000} className="inline-block" />
               </div>
               <div className="font-montserrat text-lg font-semibold text-white">Years Experience</div>
             </div>
             <div className="text-center">
-              <div className="font-montserrat text-4xl md:text-5xl font-black text-purple mb-2">
+              <div className="font-montserrat text-4xl md:text-5xl font-black text-phlox mb-2">
                 <AnimatedCounter end={1000} suffix="+" duration={2500} className="inline-block" />
               </div>
               <div className="font-montserrat text-lg font-semibold text-white">Projects Completed</div>
             </div>
             <div className="text-center">
-              <div className="font-montserrat text-4xl md:text-5xl font-black text-purple mb-2">
+              <div className="font-montserrat text-4xl md:text-5xl font-black text-phlox mb-2">
                 <AnimatedCounter end={100} suffix="%" duration={2000} className="inline-block" />
               </div>
               <div className="font-montserrat text-lg font-semibold text-white">Safety Record</div>
             </div>
             <div className="text-center">
-              <div className="font-montserrat text-4xl md:text-5xl font-black text-purple mb-2">24/7</div>
+              <div className="font-montserrat text-4xl md:text-5xl font-black text-phlox mb-2">24/7</div>
               <div className="font-montserrat text-lg font-semibold text-white">Emergency Service</div>
             </div>
           </div>

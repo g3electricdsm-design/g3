@@ -22,7 +22,7 @@ export default function About() {
     <div className="min-h-screen bg-earle-black">
       <Navigation currentPath="/about" />
 
-      <section className="bg-gradient-to-br from-purple to-phlox text-white py-16">
+      <section className="bg-earle-black text-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h1 className="font-megrim text-5xl md:text-6xl mb-4">{content.hero.title}</h1>
           <p className="font-raleway text-lg md:text-xl max-w-3xl">
@@ -42,25 +42,25 @@ export default function About() {
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             <div className="text-center">
-              <div className="font-montserrat text-4xl md:text-5xl font-black text-purple mb-2">
+              <div className="font-montserrat text-4xl md:text-5xl font-black text-phlox mb-2">
                 <AnimatedCounter end={10} suffix="+" duration={1800} className="inline-block" />
               </div>
               <div className="font-montserrat text-lg font-semibold text-white">Years Experience</div>
             </div>
             <div className="text-center">
-              <div className="font-montserrat text-4xl md:text-5xl font-black text-purple mb-2">
+              <div className="font-montserrat text-4xl md:text-5xl font-black text-phlox mb-2">
                 <AnimatedCounter end={1000} suffix="+" duration={2200} className="inline-block" />
               </div>
               <div className="font-montserrat text-lg font-semibold text-white">Projects Completed</div>
             </div>
             <div className="text-center">
-              <div className="font-montserrat text-4xl md:text-5xl font-black text-purple mb-2">
+              <div className="font-montserrat text-4xl md:text-5xl font-black text-phlox mb-2">
                 <AnimatedCounter end={100} suffix="%" duration={1500} className="inline-block" />
               </div>
               <div className="font-montserrat text-lg font-semibold text-white">Safety Record</div>
             </div>
             <div className="text-center">
-              <div className="font-montserrat text-4xl md:text-5xl font-black text-purple mb-2">24/7</div>
+              <div className="font-montserrat text-4xl md:text-5xl font-black text-phlox mb-2">24/7</div>
               <div className="font-montserrat text-lg font-semibold text-white">Emergency Service</div>
             </div>
           </div>

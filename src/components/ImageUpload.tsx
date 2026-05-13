@@ -10,9 +10,23 @@ interface ImageUploadProps {
   onSizeSuggestion?: (suggestedSize: string, aspectRatio: number) => void;
   projectTitle?: string;
   label?: string;
+  /**
+   * Visual variant of the dropzone copy. Use "dark" when this component is
+   * rendered on a dark surface (e.g. bg-earle-black panels) so the prompt
+   * text and helper copy stay legible.
+   */
+  variant?: 'light' | 'dark';
 }
 
-export default function ImageUpload({ currentImage, onImageChange, onSizeSuggestion, projectTitle, label }: ImageUploadProps) {
+export default function ImageUpload({ currentImage, onImageChange, onSizeSuggestion, projectTitle, label, variant = 'light' }: ImageUploadProps) {
+  const isDark = variant === 'dark';
+  const dropzoneIdleBorder = isDark
+    ? 'border-white/30 hover:border-purple hover:bg-purple/10 hover:scale-102'
+    : 'border-gray-300 hover:border-purple hover:bg-purple/5 hover:scale-102';
+  const primaryTextClass = isDark ? 'text-white-smoke' : 'text-earle-black';
+  const helperTextClass = isDark ? 'text-white-smoke/80' : 'text-earle-black';
+  const mutedTextClass = isDark ? 'text-white-smoke/60' : 'text-gray-500';
+  const idleIconClass = isDark ? 'text-white-smoke/70' : 'text-gray-400';
   const [preview, setPreview] = useState<string | null>(currentImage || null);
   const [previewRatio, setPreviewRatio] = useState<number | null>(null);
   const [isDragOver, setIsDragOver] = useState(false);
@@ -314,7 +328,7 @@ export default function ImageUpload({ currentImage, onImageChange, onSizeSuggest
           className={`aspect-video border-2 border-dashed rounded-lg flex flex-col items-center justify-center cursor-pointer transition-all duration-300 ${
             isDragOver
               ? 'border-purple bg-purple/10 scale-105 shadow-lg'
-              : 'border-gray-300 hover:border-purple hover:bg-purple/5 hover:scale-102'
+              : dropzoneIdleBorder
           } ${isUploading ? 'pointer-events-none opacity-75' : ''}`}
           onDrop={handleDrop}
           onDragOver={handleDragOver}
@@ -324,7 +338,7 @@ export default function ImageUpload({ currentImage, onImageChange, onSizeSuggest
           {isUploading ? (
             <div className="text-center">
               <div className="w-16 h-16 border-4 border-purple border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-              <p className="font-montserrat text-lg text-earle-black mb-2">
+              <p className={`font-montserrat text-lg mb-2 ${primaryTextClass}`}>
                 {uploadStatus || 'Processing...'}
               </p>
               <div className="w-48 bg-gray-200 rounded-full h-2 mb-2">
@@ -333,7 +347,7 @@ export default function ImageUpload({ currentImage, onImageChange, onSizeSuggest
                   style={{ width: `${uploadProgress}%` }}
                 ></div>
               </div>
-              <p className="font-raleway text-sm text-earle-black">
+              <p className={`font-raleway text-sm ${helperTextClass}`}>
                 {Math.round(uploadProgress)}% complete
               </p>
             </div>
@@ -342,16 +356,16 @@ export default function ImageUpload({ currentImage, onImageChange, onSizeSuggest
               {isDragOver ? (
                 <CloudArrowUpIcon className="h-12 w-12 text-purple mb-4 animate-bounce" />
               ) : (
-                <PhotoIcon className="h-12 w-12 text-gray-400 mb-4" />
+                <PhotoIcon className={`h-12 w-12 mb-4 ${idleIconClass}`} />
               )}
               <div className="text-center">
-                <p className="font-montserrat text-lg text-earle-black mb-2">
+                <p className={`font-montserrat text-lg mb-2 ${primaryTextClass}`}>
                   {isDragOver ? 'Drop your image here' : label || 'Upload Image'}
                 </p>
-                <p className="font-raleway text-sm text-earle-black">
+                <p className={`font-raleway text-sm ${helperTextClass}`}>
                   {isDragOver ? 'Release to upload' : 'Click to browse or drag and drop'}
                 </p>
-                <p className="font-raleway text-xs text-gray-500 mt-1">
+                <p className={`font-raleway text-xs mt-1 ${mutedTextClass}`}>
                   PNG, JPG, GIF, HEIC up to 10MB
                 </p>
               </div>

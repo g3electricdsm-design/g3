@@ -83,7 +83,7 @@ export default function ProjectDetail() {
       <Navigation currentPath="/portfolio" />
 
       {/* Header */}
-      <section className="bg-gradient-to-br from-purple to-phlox text-white py-16">
+      <section className="bg-earle-black text-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <nav aria-label="Breadcrumb" className="mb-4">
             <ol className="flex items-center gap-2 font-raleway text-sm text-white/70">
@@ -168,14 +168,14 @@ export default function ProjectDetail() {
               {/* Project Description */}
               {project.overview && (
                 <div className="mb-8">
-                  <h2 className="font-montserrat text-2xl text-earle-black mb-4">Project Overview</h2>
-                  <p className="font-raleway text-lg text-earle-black leading-relaxed">{project.overview}</p>
+                  <h2 className="font-montserrat text-2xl text-white-smoke mb-4">Project Overview</h2>
+                  <p className="font-raleway text-lg text-white-smoke leading-relaxed">{project.overview}</p>
                 </div>
               )}
 
               {/* Services Provided */}
               <div className="mb-8">
-                <h2 className="font-montserrat text-2xl text-earle-black mb-4">Services Provided</h2>
+                <h2 className="font-montserrat text-2xl text-white-smoke mb-4">Services Provided</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                   {project.services.map((service, index) => (
                     <div key={index} className="flex items-center gap-3 p-3 bg-white-smoke rounded-lg">
@@ -188,8 +188,8 @@ export default function ProjectDetail() {
 
               {/* Challenges */}
               <div className="mb-8">
-                <h3 className="font-montserrat text-xl text-earle-black mb-3">Challenges</h3>
-                <p className="font-raleway text-earle-black">{project.challenges}</p>
+                <h3 className="font-montserrat text-xl text-white-smoke mb-3">Challenges</h3>
+                <p className="font-raleway text-white-smoke">{project.challenges}</p>
               </div>
             </div>
 

@@ -76,7 +76,7 @@ export default function Services() {
       <Navigation currentPath="/services" />
 
       {/* Header */}
-      <section className="bg-gradient-to-br from-purple to-phlox text-white py-16">
+      <section className="bg-earle-black text-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h1 className="font-megrim text-5xl md:text-6xl mb-4">{content.hero.title}</h1>
           <p className="font-raleway text-lg md:text-xl max-w-3xl">
@@ -93,7 +93,7 @@ export default function Services() {
               return (
                 <div key={index} className="w-full max-w-[1200px] bg-earle-black border border-white/10 rounded-2xl px-6 md:pl-8 md:pr-12 lg:pr-24 py-8 hover:border-purple/50 hover:shadow-xl transition-all shadow-lg">
                   <div className="flex flex-col items-center md:flex-row md:items-center md:justify-between gap-6">
-                    <div className="w-[180px] h-[180px] md:w-[300px] md:h-[300px] lg:w-[450px] lg:h-[450px] bg-purple/10 rounded-2xl flex items-center justify-center flex-shrink-0 relative overflow-clip p-[10%] order-first md:order-last">
+                    <div className="w-[180px] h-[180px] md:w-[300px] md:h-[300px] lg:w-[450px] lg:h-[450px] rounded-2xl flex items-center justify-center flex-shrink-0 relative overflow-clip p-[10%] order-first md:order-last">
                       <AnimatedServiceIcon serviceId={service.id} className="w-full h-full" />
                     </div>
 
@@ -130,8 +130,8 @@ export default function Services() {
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="font-montserrat text-4xl text-earle-black mb-4">Our Process</h2>
-            <p className="font-raleway text-lg text-earle-black max-w-3xl mx-auto">
+            <h2 className="font-montserrat text-4xl text-white-smoke mb-4">Our Process</h2>
+            <p className="font-raleway text-lg text-white-smoke max-w-3xl mx-auto">
               From initial consultation to project completion, we ensure a smooth and safe experience.
             </p>
           </div>
@@ -139,26 +139,26 @@ export default function Services() {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div className="text-center">
               <div className="w-12 h-12 bg-purple text-white rounded-full flex items-center justify-center mx-auto mb-4 font-montserrat font-bold text-xl">1</div>
-              <h3 className="font-montserrat text-lg font-semibold text-earle-black mb-2">Free Consultation</h3>
-              <p className="font-raleway text-earle-black">We assess your needs and provide a detailed quote</p>
+              <h3 className="font-montserrat text-lg font-semibold text-white-smoke mb-2">Free Consultation</h3>
+              <p className="font-raleway text-white-smoke">We assess your needs and provide a detailed quote</p>
             </div>
             
             <div className="text-center">
               <div className="w-12 h-12 bg-purple text-white rounded-full flex items-center justify-center mx-auto mb-4 font-montserrat font-bold text-xl">2</div>
-              <h3 className="font-montserrat text-lg font-semibold text-earle-black mb-2">Planning & Design</h3>
-              <p className="font-raleway text-earle-black">We create a detailed plan ensuring safety and efficiency</p>
+              <h3 className="font-montserrat text-lg font-semibold text-white-smoke mb-2">Planning & Design</h3>
+              <p className="font-raleway text-white-smoke">We create a detailed plan ensuring safety and efficiency</p>
             </div>
             
             <div className="text-center">
               <div className="w-12 h-12 bg-purple text-white rounded-full flex items-center justify-center mx-auto mb-4 font-montserrat font-bold text-xl">3</div>
-              <h3 className="font-montserrat text-lg font-semibold text-earle-black mb-2">Professional Installation</h3>
-              <p className="font-raleway text-earle-black">Licensed electricians complete your project safely</p>
+              <h3 className="font-montserrat text-lg font-semibold text-white-smoke mb-2">Professional Installation</h3>
+              <p className="font-raleway text-white-smoke">Licensed electricians complete your project safely</p>
             </div>
             
             <div className="text-center">
               <div className="w-12 h-12 bg-purple text-white rounded-full flex items-center justify-center mx-auto mb-4 font-montserrat font-bold text-xl">4</div>
-              <h3 className="font-montserrat text-lg font-semibold text-earle-black mb-2">Quality Assurance</h3>
-              <p className="font-raleway text-earle-black">We test everything and ensure code compliance</p>
+              <h3 className="font-montserrat text-lg font-semibold text-white-smoke mb-2">Quality Assurance</h3>
+              <p className="font-raleway text-white-smoke">We test everything and ensure code compliance</p>
             </div>
           </div>
         </div>

@@ -3,11 +3,26 @@
 :root {
   --background: #242729;
   --foreground: #F2F2F2;
+  /*
+   * Stop browsers in OS dark mode from auto-painting form controls
+   * (input/textarea/select/option) with their dark-mode UA styles, which
+   * was causing typed text to disappear on light cards. The site's own
+   * dark theme is achieved through explicit utility classes below.
+   */
+  color-scheme: light;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  /* Brand colors — declared here so Tailwind v4 generates utilities like
+     bg-purple, text-earle-black, bg-white-smoke, from-purple, ring-purple,
+     bg-purple/20, etc. (Tailwind v4 does not auto-load tailwind.config.ts.) */
+  --color-purple:        #6D0091;
+  --color-phlox:         #C636FF;
+  --color-earle-black:   #242729;
+  --color-white-smoke:   #F2F2F2;
+  --color-hookers-green: #748680;
   --font-megrim: var(--font-megrim);
   --font-montserrat: var(--font-montserrat);
   --font-raleway: var(--font-raleway);
@@ -19,6 +34,34 @@ body {
   font-family: var(--font-raleway), sans-serif;
 }
 
+/*
+ * Defensive baseline for form controls. Without this, any input/textarea/
+ * select that doesn't set both background-color and color explicitly can
+ * still render with dark UA styling on some browsers, hiding typed text.
+ */
+input, textarea, select {
+  background-color: #FFFFFF;
+  color: #242729;
+}
+input::placeholder,
+textarea::placeholder {
+  color: #6B7280;
+}
+
+/* Opt-in escape hatch for intentionally dark-themed form fields
+   (e.g. the testimonials editor form on a bg-earle-black panel). */
+.input-dark,
+.input-dark input,
+.input-dark textarea,
+.input-dark select {
+  background-color: #242729;
+  color: #F2F2F2;
+}
+.input-dark input::placeholder,
+.input-dark textarea::placeholder {
+  color: #9CA3AF;
+}
+
   /* Typography hierarchy */
   h1 {
     font-family: var(--font-megrim), cursive;
@@ -28,12 +71,14 @@ body {
     font-family: var(--font-montserrat), sans-serif;
   }
 
-  /* Select dropdown styling - position arrow 16px from right */
+  /* Select dropdown styling - position arrow 16px from right.
+     Default chevron is dark since the baseline above makes selects render
+     on a white field; selects on dark surfaces should add .select-dark. */
   select {
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
-    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23ffffff' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23242729' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
     background-position: right 16px center;
     background-repeat: no-repeat;
     background-size: 1.5em 1.5em;
@@ -43,29 +88,46 @@ body {
   /* Ensure it overrides any Tailwind classes */
   select.focus\:ring-2,
   select.focus\:ring-purple {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23242729' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e") !important;
+  }
+
+  /* Selects on intentionally dark surfaces keep the white chevron. */
+  select.select-dark,
+  .input-dark select {
     background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23ffffff' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e") !important;
   }
 
-  /* Button styling */
-  .btn-primary {
-    background-color: #6D0091;
-    color: white;
-    border: none;
+  /* Button styling — Gumroad-style stacked-layer hover (box-shadow approach)
+     On hover the button slides up-left and two colored shadows fan out:
+       middle layer = white-smoke (#F2F2F2)
+       back layer   = phlox (#C636FF) */
+  .btn-primary,
+  .btn-secondary {
     padding: 0.5rem 1rem;
     border-radius: 0.5rem;
     font-family: var(--font-montserrat), sans-serif;
     font-weight: 600;
-    transition: all 0.2s ease;
+    border: none;
+    outline: none;
     display: inline-block;
     text-align: center;
     text-decoration: none;
     min-width: fit-content;
     white-space: nowrap;
+    box-shadow: 0 0 0 0 #F2F2F2, 0 0 0 0 #C636FF;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
   }
 
-  .btn-primary:hover:not(:disabled) {
-    background-color: #5a007a;
-    transform: translateY(-1px);
+  .btn-primary:hover:not(:disabled),
+  .btn-secondary:hover:not(:disabled) {
+    transform: translate(-4px, -4px);
+    box-shadow: 4px 4px 0 0 #F2F2F2, 8px 8px 0 0 #C636FF;
+  }
+
+  /* Primary: purple face */
+  .btn-primary {
+    background-color: #6D0091;
+    color: white;
   }
 
   .btn-primary:disabled {
@@ -76,46 +138,23 @@ body {
   }
 
   @media (min-width: 640px) {
-    .btn-primary {
+    .btn-primary,
+    .btn-secondary {
       padding: 0.75rem 1.5rem;
     }
   }
 
+  /* Secondary: dark face */
   .btn-secondary {
     background-color: #1B1B1E;
     color: #ffffff;
-    border: 2px solid #ffffff;
-    padding: 0.5rem 1rem;
-    border-radius: 0.5rem;
-    font-family: var(--font-montserrat), sans-serif;
-    font-weight: 600;
-    transition: all 0.2s ease;
-    display: inline-block;
-    text-align: center;
-    text-decoration: none;
-    min-width: fit-content;
-    white-space: nowrap;
-  }
-
-  .btn-secondary:hover:not(:disabled) {
-    background-color: #ffffff;
-    color: #6d0091;
-    border-color: #ffffff;
-    transform: translateY(-1px);
   }
 
   .btn-secondary:disabled {
     background-color: #9CA3AF;
     color: white;
-    border-color: #9CA3AF;
     cursor: not-allowed;
     opacity: 0.7;
-  }
-
-  @media (min-width: 640px) {
-    .btn-secondary {
-      padding: 0.75rem 1.5rem;
-    }
   }
 
 
