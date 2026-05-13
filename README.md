@@ -4,7 +4,8 @@ A modern, responsive website for G3 Electric, a professional electrical services
 
 ## 🌐 **Live Website**
 **Production URL:** https://g3electricdsm.com  
-**Staging URL:** https://g3-1un3n97yo-njt-designs-projects.vercel.app
+**Staging URL:** https://g3-1un3n97yo-njt-designs-projects.vercel.app  
+**Repository:** https://github.com/g3electricdsm-design/g3
 
 ## ✨ **Features**
 

@@ -6,6 +6,7 @@
 - **Production:** https://g3electricdsm.com (when domain is connected)
 - **Staging:** https://g3-1un3n97yo-njt-designs-projects.vercel.app
 - **Local:** http://localhost:3000
+- **Repository:** https://github.com/g3electricdsm-design/g3
 
 ## 🚀 **Deployment Steps**
 
