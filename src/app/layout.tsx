@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Megrim, Montserrat, Raleway } from "next/font/google";
 import "./globals.css";
+import AnalyticsTracker from "@/components/AnalyticsTracker";
 
 const megrim = Megrim({
   variable: "--font-megrim",
@@ -79,6 +80,7 @@ export default function RootLayout({
       <body
         className={`${megrim.variable} ${montserrat.variable} ${raleway.variable} antialiased`}
       >
+        <AnalyticsTracker />
         {children}
       </body>
     </html>

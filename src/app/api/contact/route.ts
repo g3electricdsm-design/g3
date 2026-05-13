@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { emailConfig } from '@/config/email';
 import { Resend } from 'resend';
+import { supabaseAdmin } from '@/lib/supabase-admin';
 
 export async function POST(request: NextRequest) {
   try {
@@ -59,8 +60,18 @@ Source: G3 Electric Website Contact Form
     });
 
     if (emailResult.success) {
-      // Also store in your local database/state for admin panel
-      // This would integrate with your existing formEntries system
+      if (supabaseAdmin) {
+        try {
+          await supabaseAdmin.from('page_views').insert({
+            session_id: '__server__',
+            path: '/__form_submit',
+            referrer: null,
+            referrer_host: null,
+            device: null,
+            user_agent: null,
+          });
+        } catch { /* analytics should not block form submission */ }
+      }
       
       return NextResponse.json({ 
         success: true, 
