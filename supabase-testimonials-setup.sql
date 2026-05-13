@@ -46,14 +46,23 @@ CREATE POLICY "Allow public delete" ON testimonials
   FOR DELETE
   USING (true);
 
--- Step 6: Create trigger to automatically update updated_at
+-- Step 6: Create the update_updated_at_column function (idempotent)
+CREATE OR REPLACE FUNCTION update_updated_at_column()
+RETURNS TRIGGER AS $$
+BEGIN
+  NEW.updated_at = NOW();
+  RETURN NEW;
+END;
+$$ language 'plpgsql';
+
+-- Step 7: Create trigger to automatically update updated_at
 DROP TRIGGER IF EXISTS update_testimonials_updated_at ON testimonials;
 CREATE TRIGGER update_testimonials_updated_at
   BEFORE UPDATE ON testimonials
   FOR EACH ROW
   EXECUTE FUNCTION update_updated_at_column();
 
--- Step 7: Insert default testimonials
+-- Step 8: Insert default testimonials
 INSERT INTO testimonials (id, name, location, project, rating, title, text, image_mode) VALUES
 (1, 'Nick', 'Waukee, IA', 'Windstorm client', 5, 'Windstorm Emergency Response', 'Austin & Lacey at G3 turned what would have been a nightmare into a dream. We had a 75-year-old tree fall onto our garage from a wind storm, and he was there to provide estimates by the end of the day. Throughout the entirety of the project, he kept in constant communication with our roofing contractors and included us in all design decisions. Dependable, safe, and fast are what you need in an electrical professional; G3 is all three.', 'single'),
 (2, 'Sarah Johnson', 'West Des Moines, IA', 'Kitchen Lighting Installation', 5, 'Kitchen Lighting Transformation', 'G3 Electric transformed our kitchen with beautiful LED lighting. The team was professional, punctual, and the quality of work exceeded our expectations. Highly recommend their services!', 'single'),
@@ -63,7 +72,7 @@ INSERT INTO testimonials (id, name, location, project, rating, title, text, imag
 (6, 'David Wilson', 'Clive, IA', 'Outdoor Lighting System', 5, 'Outdoor Lighting System', 'The outdoor lighting system G3 Electric installed has enhanced both the security and beauty of our property. The work was done efficiently and the results are stunning. Highly professional team!', 'single')
 ON CONFLICT (id) DO NOTHING;
 
--- Step 8: Reset the sequence to continue from the highest ID
+-- Step 9: Reset the sequence to continue from the highest ID
 SELECT setval('testimonials_id_seq', (SELECT MAX(id) FROM testimonials));
 
 -- Done! Your testimonials table is now set up with default data.

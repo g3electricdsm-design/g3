@@ -106,8 +106,8 @@ class SupabaseStorage implements TestimonialsStorage {
 
     if (error) {
       console.error('Error fetching testimonials from Supabase:', error);
-      if (error.code === '42P01' || error.message?.includes('does not exist')) {
-        console.warn('Testimonials table does not exist. Please run the SQL setup script.');
+      if (this.isTableMissing(error)) {
+        console.warn('Testimonials table does not exist. Please run supabase-testimonials-setup.sql.');
         return [...defaultTestimonials];
       }
       return [...defaultTestimonials];
@@ -133,8 +133,24 @@ class SupabaseStorage implements TestimonialsStorage {
       .eq('id', id)
       .single();
 
-    if (error || !data) return null;
+    if (error) {
+      if (this.isTableMissing(error)) {
+        console.warn('Testimonials table missing — falling back to defaults for getById.');
+        return defaultTestimonials.find(t => t.id.toString() === id) || null;
+      }
+      return null;
+    }
+
+    if (!data) return null;
     return this.transformRow(data);
+  }
+
+  private isTableMissing(error: { code?: string; message?: string }): boolean {
+    return (
+      error.code === 'PGRST205' ||
+      error.code === '42P01' ||
+      !!error.message?.includes('does not exist')
+    );
   }
 
   private stripUnknownColumn(
@@ -183,6 +199,9 @@ class SupabaseStorage implements TestimonialsStorage {
     }
 
     if (error) {
+      if (this.isTableMissing(error)) {
+        throw new Error('Testimonials table is missing — please run supabase-testimonials-setup.sql in the Supabase SQL Editor.');
+      }
       throw new Error(`Failed to create testimonial: ${error.message}`);
     }
 
@@ -225,6 +244,9 @@ class SupabaseStorage implements TestimonialsStorage {
 
     if (error) {
       console.error('Supabase update error:', error);
+      if (this.isTableMissing(error)) {
+        throw new Error('Testimonials table is missing — please run supabase-testimonials-setup.sql in the Supabase SQL Editor.');
+      }
       if (error.code === 'PGRST116') {
         throw new Error('Testimonial not found');
       }
