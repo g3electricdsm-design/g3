@@ -35,7 +35,7 @@ Before you start, make sure you have:
 
 ```bash
 # Clone from GitHub
-git clone https://github.com/njt-design/g3.git client-website
+git clone https://github.com/g3electricdsm-design/g3.git client-website
 cd client-website
 
 # Remove old git history and start fresh
