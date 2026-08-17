@@ -2,6 +2,9 @@
   "name": "g3",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": ">=20.9.0"
+  },
   "scripts": {
     "dev": "next dev --turbopack -p 3001",
     "build": "next build",
@@ -16,34 +19,28 @@
     "verify-setup": "node scripts/verify-setup.js"
   },
   "dependencies": {
-    "@headlessui/react": "^2.2.7",
     "@heroicons/react": "^2.2.0",
-    "@next/font": "^14.2.15",
     "@supabase/supabase-js": "^2.90.1",
     "@tiptap/pm": "^3.22.0",
     "@tiptap/react": "^3.22.0",
     "@tiptap/starter-kit": "^3.22.0",
-    "animate.css": "^4.1.1",
-    "aos": "^2.3.4",
     "framer-motion": "^12.23.12",
     "heic2any": "^0.0.4",
-    "lottie-react": "^2.4.1",
-    "lucide-react": "^0.542.0",
     "next": "^16.1.6",
     "react": "19.1.0",
     "react-dom": "19.1.0",
-    "resend": "^6.8.0"
+    "resend": "^6.8.0",
+    "sharp": "^0.35.3"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4",
-    "@types/aos": "^3.0.7",
-    "@types/node": "^20",
+    "@types/node": "^22.20.1",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "depcheck": "^1.4.7",
     "eslint": "^9",
-    "eslint-config-next": "15.5.2",
+    "eslint-config-next": "^16.3.1",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

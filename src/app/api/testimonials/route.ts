@@ -1,6 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { Testimonial } from '@/data/testimonials';
 import { testimonialStorage } from '@/lib/testimonials-storage';
+import { isAdminRequest } from '@/lib/admin-auth';
+
+const UNAUTHORIZED = () =>
+  NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 401 });
 
 export async function GET() {
   try {
@@ -16,6 +20,7 @@ export async function GET() {
 }
 
 export async function POST(request: NextRequest) {
+  if (!(await isAdminRequest(request))) return UNAUTHORIZED();
   try {
     const testimonial: Testimonial = await request.json();
 
@@ -38,6 +43,7 @@ export async function POST(request: NextRequest) {
 }
 
 export async function PUT(request: NextRequest) {
+  if (!(await isAdminRequest(request))) return UNAUTHORIZED();
   try {
     const testimonial: Testimonial = await request.json();
 
@@ -71,6 +77,7 @@ export async function PUT(request: NextRequest) {
 }
 
 export async function DELETE(request: NextRequest) {
+  if (!(await isAdminRequest(request))) return UNAUTHORIZED();
   try {
     const { searchParams } = new URL(request.url);
     const id = parseInt(searchParams.get('id') || '0');

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import sharp from 'sharp';
+import { isAdminRequest } from '@/lib/admin-auth';
 
 export const runtime = 'nodejs';
 export const maxDuration = 30;
@@ -9,6 +10,12 @@ const DEFAULT_MAX_DIMENSION = 2000;
 const DEFAULT_QUALITY = 85;
 
 export async function POST(request: NextRequest) {
+  if (!(await isAdminRequest(request))) {
+    return NextResponse.json(
+      { success: false, error: 'Unauthorized' },
+      { status: 401 }
+    );
+  }
   try {
     const formData = await request.formData();
     const file = formData.get('file') as File | null;

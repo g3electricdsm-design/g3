@@ -122,6 +122,7 @@ textarea::placeholder {
   .btn-secondary:hover:not(:disabled) {
     transform: translate(-4px, -4px);
     box-shadow: 4px 4px 0 0 #F2F2F2, 8px 8px 0 0 #C636FF;
+    color: white;
   }
 
   /* Primary: purple face */

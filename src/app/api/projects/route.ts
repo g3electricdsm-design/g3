@@ -1,6 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { Project } from '@/data/projects';
 import { storage } from '@/lib/projects-storage';
+import { isAdminRequest } from '@/lib/admin-auth';
+
+const UNAUTHORIZED = () =>
+  NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 401 });
 
 // GET - Get all projects
 export async function GET() {
@@ -18,6 +22,7 @@ export async function GET() {
 
 // POST - Create a new project
 export async function POST(request: NextRequest) {
+  if (!(await isAdminRequest(request))) return UNAUTHORIZED();
   try {
     const project: Project = await request.json();
     
@@ -52,6 +57,7 @@ export async function POST(request: NextRequest) {
 
 // PUT - Update an existing project
 export async function PUT(request: NextRequest) {
+  if (!(await isAdminRequest(request))) return UNAUTHORIZED();
   try {
     const project: Project = await request.json();
     
@@ -87,6 +93,7 @@ export async function PUT(request: NextRequest) {
 
 // DELETE - Delete a project
 export async function DELETE(request: NextRequest) {
+  if (!(await isAdminRequest(request))) return UNAUTHORIZED();
   try {
     const { searchParams } = new URL(request.url);
     const id = parseInt(searchParams.get('id') || '0');

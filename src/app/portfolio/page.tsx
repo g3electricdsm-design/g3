@@ -220,7 +220,7 @@ export default function Portfolio() {
             </p>
             <Link 
               href="/contact" 
-              className="bg-purple text-white px-8 py-3 rounded-lg font-montserrat font-semibold hover:bg-phlox transition-colors inline-block"
+              className="btn-primary inline-block text-sm sm:text-base"
             >
               Request a Free Quote
             </Link>

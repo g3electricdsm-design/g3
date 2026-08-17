@@ -27,8 +27,7 @@ export default function AdminLogin() {
       });
 
       if (res.ok) {
-        document.cookie = `admin_authenticated=true; path=/; max-age=${24 * 60 * 60}`;
-        document.cookie = `admin_timestamp=${Date.now()}; path=/; max-age=${24 * 60 * 60}`;
+        // The API sets an httpOnly session cookie on the response
         router.push('/admin');
       } else {
         setError('Invalid password. Please try again.');

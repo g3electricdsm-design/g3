@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabaseAdmin } from '@/lib/supabase-admin';
+import { isAdminRequest } from '@/lib/admin-auth';
 
 interface PageViewRow {
   created_at: string;
@@ -11,9 +12,7 @@ interface PageViewRow {
 const OWN_HOSTS = ['g3electricdsm.com', 'www.g3electricdsm.com', 'localhost'];
 
 export async function GET(request: NextRequest) {
-  const isAuth = request.cookies.get('admin_authenticated')?.value === 'true';
-  const ts = request.cookies.get('admin_timestamp')?.value;
-  if (!isAuth || !ts || Date.now() - parseInt(ts) > 24 * 60 * 60 * 1000) {
+  if (!(await isAdminRequest(request))) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 

@@ -76,12 +76,13 @@ function AdminContent() {
     }
   }, [searchParams]);
 
-  const handleLogout = () => {
-    // Clear authentication cookies
-    document.cookie = 'admin_authenticated=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
-    document.cookie = 'admin_timestamp=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
-    
-    // Redirect to login page
+  const handleLogout = async () => {
+    // Ask the server to clear the httpOnly session cookie
+    try {
+      await fetch('/api/admin/auth', { method: 'DELETE' });
+    } catch {
+      // Even if the request fails, send the user back to login
+    }
     window.location.href = '/admin/login';
   };
 

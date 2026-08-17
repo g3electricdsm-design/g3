@@ -9,23 +9,10 @@ import TestimonialCarousel from "@/components/TestimonialCarousel";
 import SimplePixelZap from "@/components/SimplePixelZap";
 import AnimatedCounter from "@/components/AnimatedCounter";
 import { getContent } from "@/data/content";
-import { useEffect } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import AOS from 'aos';
-import 'aos/dist/aos.css';
-import 'animate.css';
 
 export default function Home() {
   const content = getContent().homepage;
-  
-  // Initialize AOS
-  useEffect(() => {
-    AOS.init({
-      duration: 1000,
-      once: true,
-      offset: 100
-    });
-  }, []);
   
   // Scroll-based animations for parallax effects
   const { scrollYProgress } = useScroll();
@@ -201,12 +188,13 @@ export default function Home() {
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {content.services.items.map((service, index) => (
-              <div 
+              <motion.div 
                 key={index} 
                 className="rounded-lg shadow-sm text-center hover:shadow-md transition-shadow overflow-hidden border border-white-smoke"
-                data-aos="fade-up"
-                data-aos-delay={index * 200}
-                data-aos-duration="800"
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ duration: 0.8, delay: index * 0.2 }}
               >
                 <div className="h-48 flex items-center justify-center p-4">
                   <AnimatedServiceIcon serviceId={service.id} className="w-[150px] h-[150px]" />
@@ -215,7 +203,7 @@ export default function Home() {
                   <h3 className="font-montserrat text-xl font-semibold text-white mb-2">{service.title}</h3>
                   <p className="font-raleway text-white">{service.description}</p>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
